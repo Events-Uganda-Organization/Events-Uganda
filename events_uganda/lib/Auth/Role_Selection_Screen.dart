@@ -203,7 +203,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 
                               // Title
                               Text(
-                                "Please tell us a little bit about\nyourself",
+                                "Please tell us a little bit\nabout yourself",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
