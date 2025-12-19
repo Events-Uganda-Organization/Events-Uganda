@@ -359,7 +359,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                                 style: TextStyle(
                                                   color: Colors.black87,
                                                   fontFamily: 'Abril Fatface',
-                                                  fontWeight: FontWeight.w800,
+                                                  fontWeight: FontWeight.w700,
                                                   fontSize: screenWidth * 0.031,
                                                 ),
                                               ),
