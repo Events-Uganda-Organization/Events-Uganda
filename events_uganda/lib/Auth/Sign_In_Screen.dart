@@ -1,4 +1,5 @@
 import 'package:events_uganda/Auth/Forgot_Password_Screen.dart';
+import 'package:events_uganda/Auth/Role_Selection_Screen.dart';
 import 'package:events_uganda/Auth/Sign_Up_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -396,7 +397,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           nextFocusNode: _passwordFocus,
                           textInputAction: TextInputAction.next,
                           iconColor: Colors.black,
-                            fontSize: screenWidth * 0.045,
+                          fontSize: screenWidth * 0.045,
                         ),
                         SizedBox(height: screen.height * 0.03),
                         _ResponsiveTextField(
@@ -408,7 +409,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           nextFocusNode: _contactFocus,
                           textInputAction: TextInputAction.next,
                           iconColor: Colors.black,
-                            fontSize: screenWidth * 0.045,
+                          fontSize: screenWidth * 0.045,
                         ),
                         SizedBox(height: screen.height * 0.016),
                         GestureDetector(
@@ -472,7 +473,12 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                               ),
                               onPressed: () {
-                                // TODO: hook up sign-in
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RoleSelectionScreen(),
+                                  ),
+                                );
                               },
                               child: Text(
                                 'Sign In',
@@ -609,7 +615,7 @@ class _RoundedField extends StatefulWidget {
     required this.nextFocusNode,
     required this.textInputAction,
     required this.accent,
-    required this.isPassword
+    required this.isPassword,
   });
 
   @override
