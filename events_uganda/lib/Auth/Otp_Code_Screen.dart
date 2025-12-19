@@ -204,22 +204,22 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                    width: 18,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF825E34),
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Container(
                                     width: 15,
                                     height: 10,
                                     decoration: BoxDecoration(
                                       color: const Color(
                                         0xFF825E34,
                                       ).withOpacity(0.3),
+                                      shape: BoxShape.rectangle,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Container(
+                                    width: 18,
+                                    height: 10,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFF825E34),
                                       shape: BoxShape.rectangle,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
