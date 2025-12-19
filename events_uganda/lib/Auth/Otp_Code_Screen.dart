@@ -415,7 +415,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                               height: 1.0,
                                             ),
                                             cursorColor: const Color(
-                                              0xFF3B82F6,
+                                              0xFFD59A00,
                                             ),
                                             onChanged: (value) {
                                               final trimmedValue = value.trim();
