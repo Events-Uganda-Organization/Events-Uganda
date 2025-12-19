@@ -294,7 +294,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               // Email field
                               _ResponsiveTextField(
                                 controller: _emailController,
-                                label: 'Email',
+                                label: 'Email/Phone Number',
                                 hint: 'Enter Your Email/ Phone Number',
                                 icon: Icons.person,
                                 focusNode: _emailFocus,
