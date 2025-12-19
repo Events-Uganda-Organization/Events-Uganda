@@ -43,7 +43,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
               left: 0,
               right: 0,
               child: Image.asset(
-                'assets/backgroundcolors/forgotpasswordscreen.png',
+                'assets/backgroundcolors/otpcodescreen.png',
                 width: screenWidth,
                 height: screenHeight * 0.9,
                 fit: BoxFit.cover,
@@ -60,7 +60,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                   width: screenWidth * 0.13,
                   height: screenWidth * 0.13,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF9EF6DA),
+                    color: const Color(0xFFF3CA9B),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Center(
