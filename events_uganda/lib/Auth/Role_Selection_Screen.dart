@@ -200,49 +200,6 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                             children: [
                               const SizedBox(height: 20),
 
-                              // Three horizontal dots
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 18,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF1BCC94),
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Container(
-                                    width: 15,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                      color: const Color(
-                                        0xFF1BCC94,
-                                      ).withOpacity(0.3),
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Container(
-                                    width: 15,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                      color: const Color(
-                                        0xFF1BCC94,
-                                      ).withOpacity(0.3),
-                                      shape: BoxShape.rectangle,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              
-
-                              SizedBox(height: screenHeight * 0.03),
 
                               // Title
                               Text(
