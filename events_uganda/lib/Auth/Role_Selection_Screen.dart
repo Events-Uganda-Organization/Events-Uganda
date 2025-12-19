@@ -122,7 +122,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               right: 0,
               child: const Center(
                 child: Text(
-                  "Let's get you\nsorted!",
+                  "Who Are You\n?!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
@@ -227,7 +227,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                 ),
                               ),
 
-                              SizedBox(height: screenHeight * 0.02),
+                              SizedBox(height: screenHeight * 0.04),
 
                               // Two white rectangles in a row
                               Builder(
