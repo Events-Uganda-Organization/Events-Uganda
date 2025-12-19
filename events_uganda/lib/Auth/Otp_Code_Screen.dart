@@ -457,7 +457,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                       colors: _isButtonEnabled && !_isLoading
                                           ? [
                                               const Color(0xFFE0E7FF),
-                                              const Color(0xFF93C5FD),
+                                              const Color(0xFFD59A00),
                                             ]
                                           : [
                                               Colors.grey[300]!,
@@ -468,7 +468,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                       end: Alignment.bottomRight,
                                     ),
                                     border: Border.all(
-                                      color: Color(0xFF235DE5),
+                                      color: Color(0xFF825E34),
                                       width: 1,
                                     ),
                                     borderRadius: BorderRadius.circular(30),
