@@ -1,3 +1,4 @@
+import 'package:events_uganda/Auth/Otp_Code_Screen.dart';
 import 'package:events_uganda/Auth/Reset_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:flutter/material.dart';
@@ -339,7 +340,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              ResetPasswordScreen(),
+                                              OTPCodeScreen(),
                                         ),
                                       );
                                     },
