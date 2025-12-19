@@ -233,7 +233,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                               Builder(
                                 builder: (context) {
                                   final double rectWidth = 170;
-                                  final double rectHeight = 220;
+                                  final double rectHeight = 250;
 
                                   // If screen is very small, scale down proportionally
                                   double scaledWidth = rectWidth;
