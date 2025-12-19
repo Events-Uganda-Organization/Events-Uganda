@@ -16,6 +16,7 @@ class RoleSelectionScreen extends StatefulWidget {
 
 class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
   final TextEditingController _emailController = TextEditingController();
+  String? _selectedRole; // Track selected role: 'customer' or 'vendor'
 
   @override
   void dispose() {
