@@ -377,7 +377,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         SizedBox(height: screen.height * 0.006),
                         Text(
-                          'Please enter the details to continue.',
+                          'Please enter either your email or phone number to continue.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Abril Fatface',
@@ -389,8 +389,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         SizedBox(height: screen.height * 0.03),
                         _ResponsiveTextField(
                           controller: _emailController,
-                          label: 'Email',
-                          hint: 'Enter Your Email',
+                          label: 'Email/Phone Number',
+                          hint: 'Enter Your Email or Phone Number',
                           icon: Icons.mail,
                           focusNode: _emailFocus,
                           nextFocusNode: _passwordFocus,
