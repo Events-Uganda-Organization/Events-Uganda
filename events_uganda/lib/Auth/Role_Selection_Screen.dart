@@ -16,11 +16,12 @@ class RoleSelectionScreen extends StatefulWidget {
 
 class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
   final TextEditingController _emailController = TextEditingController();
-  
+
   @override
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -200,7 +201,6 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                             children: [
                               const SizedBox(height: 20),
 
-
                               // Title
                               Text(
                                 "Please tell us a little bit about\nyourself",
@@ -230,41 +230,48 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                               SizedBox(height: screenHeight * 0.02),
 
                               // Two white rectangles in a row
-                              Builder(builder: (context) {
-                                final double rectWidth = 170;
-                                final double rectHeight = 184;
+                              Builder(
+                                builder: (context) {
+                                  final double rectWidth = 170;
+                                  final double rectHeight = 184;
 
-                                // If screen is very small, scale down proportionally
-                                double scaledWidth = rectWidth;
-                                double scaledHeight = rectHeight;
-                                if (screenWidth < 380) {
-                                  scaledWidth = screenWidth * 0.42;
-                                  scaledHeight = rectHeight * (scaledWidth / rectWidth);
-                                }
+                                  // If screen is very small, scale down proportionally
+                                  double scaledWidth = rectWidth;
+                                  double scaledHeight = rectHeight;
+                                  if (screenWidth < 380) {
+                                    scaledWidth = screenWidth * 0.42;
+                                    scaledHeight =
+                                        rectHeight * (scaledWidth / rectWidth);
+                                  }
 
-                                return Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: scaledWidth,
-                                      height: scaledHeight,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20),
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: scaledWidth,
+                                        height: scaledHeight,
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(255, 231, 229, 229),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(width: screenWidth * 0.04),
-                                    Container(
-                                      width: scaledWidth,
-                                      height: scaledHeight,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20),
+                                      SizedBox(width: screenWidth * 0.04),
+                                      Container(
+                                        width: scaledWidth,
+                                        height: scaledHeight,
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(255, 231, 229, 229),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                );
-                              }),
+                                    ],
+                                  );
+                                },
+                              ),
                             ],
                           ),
                         ),
