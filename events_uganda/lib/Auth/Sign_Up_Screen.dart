@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:events_uganda/Auth/Role_Selection_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -460,7 +461,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: Colors.transparent,
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(30),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RoleSelectionScreen(),
+                                  ),
+                                );
+                                },
                                 child: Center(
                                   child: Text(
                                     'Sign Up',
