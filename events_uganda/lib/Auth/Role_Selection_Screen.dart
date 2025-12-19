@@ -368,74 +368,6 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                                   fontSize: screenWidth * 0.031,
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: screenHeight * 0.04,
-                                              ),
-
-                                              // Submit Button
-                                              Container(
-                                                width: screenWidth * 0.8,
-                                                height: screenWidth * 0.13,
-                                                decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                  border: Border.all(
-                                                    color: const Color(
-                                                      0xFFF23598,
-                                                    ),
-                                                    width: 1,
-                                                  ),
-                                                  gradient:
-                                                      const LinearGradient(
-                                                        begin: Alignment
-                                                            .centerLeft,
-                                                        end: Alignment
-                                                            .centerRight,
-                                                        colors: [
-                                                          Color(0xFFE0E7FF),
-                                                          Color(0xFFEC2A8B),
-                                                        ],
-                                                      ),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black
-                                                          .withOpacity(0.2),
-                                                      blurRadius: 8,
-                                                      offset: const Offset(
-                                                        0,
-                                                        4,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                child: Material(
-                                                  color: Colors.transparent,
-                                                  child: InkWell(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          30,
-                                                        ),
-                                                    onTap: () {
-                                                      // Handle submit
-                                                    },
-                                                    child: Center(
-                                                      child: Text(
-                                                        'Continue',
-                                                        style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize:
-                                                              screenWidth *
-                                                              0.045,
-                                                          fontWeight:
-                                                              FontWeight.w800,
-                                                          fontFamily:
-                                                              'Montserrat',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
                                             ],
                                           ),
                                         ),
@@ -443,6 +375,55 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                     ],
                                   );
                                 },
+                              ),
+                              SizedBox(height: screenHeight * 0.04),
+
+                              // Submit Button
+                              Container(
+                                width: screenWidth * 0.8,
+                                height: screenWidth * 0.13,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                    color: const Color(0xFFF2355E),
+                                    width: 1,
+                                  ),
+                                  gradient: const LinearGradient(
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                    colors: [
+                                      Color(0xFFE0E7FF),
+                                      Color(0xFFF2355E),
+                                    ],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(30),
+                                    onTap: () {
+                                      // Handle submit
+                                    },
+                                    child: Center(
+                                      child: Text(
+                                        'Continue',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: screenWidth * 0.045,
+                                          fontWeight: FontWeight.w800,
+                                          fontFamily: 'Montserrat',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
