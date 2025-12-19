@@ -203,7 +203,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 
                               // Title
                               Text(
-                                "Please tell us a little bit\nabout yourself",
+                                "Please tell us a little bit about\nyourself",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
@@ -226,6 +226,45 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                   fontSize: screenWidth * 0.04,
                                 ),
                               ),
+
+                              SizedBox(height: screenHeight * 0.02),
+
+                              // Two white rectangles in a row
+                              Builder(builder: (context) {
+                                final double rectWidth = 170;
+                                final double rectHeight = 184;
+
+                                // If screen is very small, scale down proportionally
+                                double scaledWidth = rectWidth;
+                                double scaledHeight = rectHeight;
+                                if (screenWidth < 380) {
+                                  scaledWidth = screenWidth * 0.42;
+                                  scaledHeight = rectHeight * (scaledWidth / rectWidth);
+                                }
+
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: scaledWidth,
+                                      height: scaledHeight,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                    SizedBox(width: screenWidth * 0.04),
+                                    Container(
+                                      width: scaledWidth,
+                                      height: scaledHeight,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }),
                             ],
                           ),
                         ),
