@@ -251,9 +251,56 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                         width: scaledWidth,
                                         height: scaledHeight,
                                         decoration: BoxDecoration(
-                                          color: const Color.fromARGB(255, 231, 229, 229),
+                                          color: Colors.white,
                                           borderRadius: BorderRadius.circular(
                                             20,
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: scaledWidth * 0.08,
+                                            vertical: scaledHeight * 0.08,
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: scaledHeight * 0.55,
+                                                child: Image.asset(
+                                                  'assets/images/customer.png',
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: scaledHeight * 0.04,
+                                              ),
+                                              Text(
+                                                'CUSTOMER',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontFamily: 'Montserrat',
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: screenWidth * 0.045,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: scaledHeight * 0.02,
+                                              ),
+                                              Text(
+                                                'Looking for decorators, caterers, photographers & other services for my event',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.black87,
+                                                  fontFamily: 'Montserrat',
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: screenWidth * 0.032,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
@@ -262,7 +309,12 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                         width: scaledWidth,
                                         height: scaledHeight,
                                         decoration: BoxDecoration(
-                                          color: const Color.fromARGB(255, 231, 229, 229),
+                                          color: const Color.fromARGB(
+                                            255,
+                                            231,
+                                            229,
+                                            229,
+                                          ),
                                           borderRadius: BorderRadius.circular(
                                             20,
                                           ),
