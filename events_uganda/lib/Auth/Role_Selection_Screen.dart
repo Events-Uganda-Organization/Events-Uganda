@@ -92,7 +92,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               top: screenHeight * 0.15,
               left: leftVectPadding,
               child: Image.asset(
-                'assets/vectors/forgotpasswordvect.png',
+                'assets/vectors/roleselectionvect.png',
                 width: vectWidth,
                 height: vectHeight,
                 fit: BoxFit.contain,
@@ -104,7 +104,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               top: screenHeight * 0.20,
               right: screenWidth * 0.08,
               child: Image.asset(
-                'assets/vectors/forgotpasswordvect.png',
+                'assets/vectors/roleselectionvect.png',
                 width: vectWidth,
                 height: vectHeight,
                 fit: BoxFit.contain,
