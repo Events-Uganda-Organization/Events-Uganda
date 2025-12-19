@@ -248,20 +248,33 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                   return Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Container(
-                                        width: scaledWidth,
-                                        height: scaledHeight,
-                                        decoration: BoxDecoration(
-                                          color: const Color.fromARGB(
-                                            255,
-                                            220,
-                                            218,
-                                            218,
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            _selectedRole = 'customer';
+                                          });
+                                        },
+                                        child: Container(
+                                          width: scaledWidth,
+                                          height: scaledHeight,
+                                          decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                              255,
+                                              220,
+                                              218,
+                                              218,
+                                            ),
+                                            borderRadius: BorderRadius.circular(20),
+                                            boxShadow: _selectedRole == 'customer'
+                                                ? [
+                                                    BoxShadow(
+                                                      color: const Color(0xFFF2355E).withOpacity(0.6),
+                                                      blurRadius: 20,
+                                                      spreadRadius: 3,
+                                                    ),
+                                                  ]
+                                                : [],
                                           ),
-                                          borderRadius: BorderRadius.circular(
-                                            20,
-                                          ),
-                                        ),
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
                                             horizontal: scaledWidth * 0.08,
