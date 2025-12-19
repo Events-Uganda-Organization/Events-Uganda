@@ -188,7 +188,7 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
               right: 0,
               child: Center(
                 child: Text(
-                  'Everything in one\nApp',
+                  'Book Everything in one\nApp',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
@@ -205,7 +205,7 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
               right: 0,
               child: Center(
                 child: Text(
-                  'Decoration, Catering,\nPhotography & Videography,\nCar hiring, Sound & Lighting\nservices in one app',
+                  'Compare prices, check\navailability, and book services\neasily in one app on your\nphone',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
