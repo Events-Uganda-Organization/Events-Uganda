@@ -245,7 +245,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                               Container(
                                 padding: const EdgeInsets.all(20),
                                 decoration: const BoxDecoration(
-                                  color: Color(0xFF1BCC94),
+                                  color: Color(0xFF825E34),
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(50),
                                     topRight: Radius.circular(50),
