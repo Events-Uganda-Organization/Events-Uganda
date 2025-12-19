@@ -233,7 +233,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                               Builder(
                                 builder: (context) {
                                   final double rectWidth = 170;
-                                  final double rectHeight = 250;
+                                  final double rectHeight = 270;
 
                                   // If screen is very small, scale down proportionally
                                   double scaledWidth = rectWidth;
@@ -268,14 +268,14 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                                 CrossAxisAlignment.center,
                                             children: [
                                               SizedBox(
-                                                height: scaledHeight * 0.45,
+                                                height: scaledHeight * 0.43,
                                                 child: Image.asset(
                                                   'assets/images/customer.png',
                                                   fit: BoxFit.contain,
                                                 ),
                                               ),
                                               SizedBox(
-                                                height: scaledHeight * 0.04,
+                                                height: scaledHeight * 0.02,
                                               ),
                                               Text(
                                                 'CUSTOMER',
@@ -288,16 +288,16 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                                 ),
                                               ),
                                               SizedBox(
-                                                height: scaledHeight * 0.02,
+                                                height: scaledHeight * 0.01,
                                               ),
                                               Text(
-                                                'Looking for decorators,\ncaterers, photographers & other services for my event',
+                                                'Looking for decorators, photographers & other services for my event',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   color: Colors.black87,
-                                                  fontFamily: 'Montserrat',
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: screenWidth * 0.028,
+                                                  fontFamily: 'Abril Fatface',
+                                                  fontWeight: FontWeight.w800,
+                                                  fontSize: screenWidth * 0.032,
                                                 ),
                                               ),
                                             ],
