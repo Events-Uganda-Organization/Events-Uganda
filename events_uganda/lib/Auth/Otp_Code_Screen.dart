@@ -1,6 +1,7 @@
 import 'package:events_uganda/Auth/Reset_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OTPCodeScreen extends StatefulWidget {
   const OTPCodeScreen({super.key});
@@ -10,14 +11,31 @@ class OTPCodeScreen extends StatefulWidget {
 }
 
 class _OTPCodeScreenState extends State<OTPCodeScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final FocusNode _emailFocus = FocusNode();
+  final List<TextEditingController> _controllers = List.generate(
+    4,
+    (index) => TextEditingController(),
+  );
+  final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _emailFocus.dispose();
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    for (var focusNode in _focusNodes) {
+      focusNode.dispose();
+    }
     super.dispose();
+  }
+
+  void _checkOTPAndNavigate() {
+    String otp = _controllers.map((controller) => controller.text).join();
+    if (otp.length == 4) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
+      );
+    }
   }
 
   @override
@@ -290,16 +308,91 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
 
                               SizedBox(height: screenHeight * 0.04),
 
-                              // Email field
-                              _ResponsiveTextField(
-                                controller: _emailController,
-                                label: 'Email',
-                                hint: 'Enter Your Email Address',
-                                icon: Icons.person,
-                                focusNode: _emailFocus,
-                                nextFocusNode: _emailFocus,
-                                textInputAction: TextInputAction.done,
-                                iconColor: const Color(0xFF0F3D2E),
+                              // OTP input boxes
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: List.generate(4, (index) {
+                                  final otpBoxWidth = screenWidth * 0.15;
+                                  final otpBoxHeight = screenWidth * 0.20;
+
+                                  return Container(
+                                    width: otpBoxWidth,
+                                    height: otpBoxHeight,
+                                    margin: EdgeInsets.symmetric(
+                                      horizontal: screenWidth * 0.02,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: const Color(0xFFD59A00),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Stack(
+                                      alignment: Alignment.bottomCenter,
+                                      children: [
+                                        Positioned(
+                                          bottom: otpBoxHeight * 0.15,
+                                          child: Container(
+                                            width: otpBoxWidth * 0.5,
+                                            height: 2,
+                                            color: const Color(0xFFD59A00),
+                                          ),
+                                        ),
+                                        Center(
+                                          child: TextFormField(
+                                            controller: _controllers[index],
+                                            focusNode: _focusNodes[index],
+                                            textAlign: TextAlign.center,
+                                            keyboardType: TextInputType.number,
+                                            maxLength: 1,
+                                            inputFormatters: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly,
+                                              LengthLimitingTextInputFormatter(
+                                                1,
+                                              ),
+                                            ],
+                                            decoration: const InputDecoration(
+                                              counterText: '',
+                                              border: InputBorder.none,
+                                              focusedBorder: InputBorder.none,
+                                              enabledBorder: InputBorder.none,
+                                              contentPadding: EdgeInsets.zero,
+                                            ),
+                                            style: TextStyle(
+                                              fontSize: screenWidth * 0.06,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                              fontFamily: 'Poppins',
+                                              height: 1.0,
+                                            ),
+                                            cursorColor: const Color(
+                                              0xFF3B82F6,
+                                            ),
+                                            onChanged: (value) {
+                                              final trimmedValue = value.trim();
+                                              if (trimmedValue.isNotEmpty &&
+                                                  index < 3) {
+                                                _controllers[index].text =
+                                                    trimmedValue;
+                                                _focusNodes[index].unfocus();
+                                                _focusNodes[index + 1]
+                                                    .requestFocus();
+                                              } else if (trimmedValue.isEmpty &&
+                                                  index > 0) {
+                                                _focusNodes[index].unfocus();
+                                                _focusNodes[index - 1]
+                                                    .requestFocus();
+                                              }
+                                              _checkOTPAndNavigate();
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
                               ),
 
                               SizedBox(height: screenHeight * 0.04),
