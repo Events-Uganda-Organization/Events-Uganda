@@ -240,26 +240,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                 ],
                               ),
 
-                              SizedBox(height: screenHeight * 0.03),
-
-                              // Large mail icon
-                              Container(
-                                padding: const EdgeInsets.all(20),
-                                decoration: const BoxDecoration(
-                                  color: Color(0xFF1BCC94),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(50),
-                                    topRight: Radius.circular(50),
-                                    bottomRight: Radius.circular(50),
-                                    bottomLeft: Radius.circular(0),
-                                  ),
-                                ),
-                                child: const Icon(
-                                  Icons.mail,
-                                  size: 50,
-                                  color: Colors.black,
-                                ),
-                              ),
+                              
 
                               SizedBox(height: screenHeight * 0.03),
 
