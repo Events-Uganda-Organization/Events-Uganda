@@ -295,7 +295,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                   Text(
                     rating,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontSize: screenWidth * 0.028,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'Montserrat',

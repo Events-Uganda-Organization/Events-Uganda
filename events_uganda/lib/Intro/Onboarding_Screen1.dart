@@ -163,7 +163,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             right: 0,
             child: Center(
               child: Text(
-                'Your Dream Starts\nHere',
+                'Discover Event Services\nNear You',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
