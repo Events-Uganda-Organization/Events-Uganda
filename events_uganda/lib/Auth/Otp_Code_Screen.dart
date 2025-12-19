@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class OTPCodeScreen extends StatefulWidget {
-  const OTPCodeScreen({super.key});
+  final String email;
+
+  const OTPCodeScreen({super.key, required this.email});
 
   @override
   State<OTPCodeScreen> createState() => _OTPCodeScreenState();
@@ -327,15 +329,36 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
 
                               SizedBox(height: screenHeight * 0.03),
 
-                              // Title
-                              Text(
-                                "Forgot Your Password?",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize: screenWidth * 0.06,
+                              // Title - Email/Phone confirmation
+                              SizedBox(
+                                width: screenWidth * 0.8,
+                                child: RichText(
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text:
+                                            'Please enter the 4 digit code we sent to\n',
+                                        style: TextStyle(
+                                          fontSize: screenWidth * 0.04,
+                                          fontWeight: FontWeight.normal,
+                                          color: Colors.black,
+                                          fontFamily: 'Poppins',
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: widget.email,
+                                        style: TextStyle(
+                                          fontSize: screenWidth * 0.04,
+                                          fontWeight: FontWeight.normal,
+                                          color: Color(0xFF3B578F),
+                                          fontFamily: 'Poppins',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
 
