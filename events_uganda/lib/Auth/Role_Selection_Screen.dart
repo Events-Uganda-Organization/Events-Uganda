@@ -61,7 +61,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                   width: screenWidth * 0.13,
                   height: screenWidth * 0.13,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF9EF6DA),
+                    color: const Color(0xFFF2355E),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Center(
