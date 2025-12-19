@@ -179,7 +179,7 @@ class _OnboardingScreen3State extends State<OnboardingScreen3> {
             right: 0,
             child: Center(
               child: Text(
-                'Trusted Services\nEasy Payments',
+                'Trusted Services,\nEasy Payments',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,

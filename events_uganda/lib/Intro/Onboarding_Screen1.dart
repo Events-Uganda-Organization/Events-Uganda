@@ -163,7 +163,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             right: 0,
             child: Center(
               child: Text(
-                'Find trusted Decoration, Catering,\nPhotography & Videography,\nCar hiring, Sound & Lighting\nservices in one app',
+                'Discover Event\nServices Near You',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -180,7 +180,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             right: 0,
             child: Center(
               child: Text(
-                'So let\'s get you the special\ncompany to make your\nparty and ideas come to\nlife',
+                'Find trusted Decoration, Catering,\nPhotography & Videography,\nCar hiring, Sound & Lighting\nservices in one app',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,

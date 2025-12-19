@@ -278,7 +278,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                               // Description
                               Text(
-                                'Please enter your email address\nbelow to receive an OTP code.',
+                                'Please enter your email address or\nPhone Number below to receive an OTP code.',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'Abril Fatface',
