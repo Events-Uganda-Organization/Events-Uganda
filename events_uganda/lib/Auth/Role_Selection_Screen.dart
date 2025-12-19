@@ -284,7 +284,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                                   color: Colors.black,
                                                   fontFamily: 'Montserrat',
                                                   fontWeight: FontWeight.w700,
-                                                  fontSize: screenWidth * 0.045,
+                                                  fontSize: screenWidth * 0.042,
                                                 ),
                                               ),
                                               SizedBox(
@@ -296,7 +296,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                                 style: TextStyle(
                                                   color: Colors.black87,
                                                   fontFamily: 'Abril Fatface',
-                                                  fontWeight: FontWeight.w800,
+                                                  fontWeight: FontWeight.w700,
                                                   fontSize: screenWidth * 0.032,
                                                 ),
                                               ),
@@ -317,6 +317,53 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                           ),
                                           borderRadius: BorderRadius.circular(
                                             20,
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: scaledWidth * 0.08,
+                                            vertical: scaledHeight * 0.08,
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                height: scaledHeight * 0.43,
+                                                child: Image.asset(
+                                                  'assets/images/serviceprovider.png',
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: scaledHeight * 0.02,
+                                              ),
+                                              Text(
+                                                'SERVICE PROVIDER',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontFamily: 'Montserrat',
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: screenWidth * 0.040,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: scaledHeight * 0.01,
+                                              ),
+                                              Text(
+                                                'You Offer photography, catering, decoration,or other event services',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.black87,
+                                                  fontFamily: 'Abril Fatface',
+                                                  fontWeight: FontWeight.w800,
+                                                  fontSize: screenWidth * 0.031,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
