@@ -24,7 +24,14 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
   Timer? _timer;
 
   @override
+  void initState() {
+    super.initState();
+    _startCountdown();
+  }
+
+  @override
   void dispose() {
+    _timer?.cancel();
     for (var controller in _controllers) {
       controller.dispose();
     }
