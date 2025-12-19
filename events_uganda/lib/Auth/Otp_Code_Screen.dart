@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:events_uganda/Auth/Reset_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,11 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
     (index) => TextEditingController(),
   );
   final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
+
+  int _countdown = 60;
+  bool _isButtonEnabled = false;
+  bool _isLoading = false;
+  Timer? _timer;
 
   @override
   void dispose() {
@@ -36,6 +42,40 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
         MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
       );
     }
+  }
+
+  void _startCountdown() {
+    setState(() {
+      _countdown = 60;
+      _isButtonEnabled = false;
+    });
+
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_countdown > 0) {
+          _countdown--;
+        } else {
+          _isButtonEnabled = true;
+          timer.cancel();
+        }
+      });
+    });
+  }
+
+  Future<void> _resendOTP() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    // Simulate API call
+    await Future.delayed(const Duration(seconds: 2));
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    _startCountdown();
   }
 
   @override
@@ -395,58 +435,58 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                 }),
                               ),
 
-                              SizedBox(height: screenHeight * 0.04),
+                              SizedBox(height: screenHeight * 0.05),
 
-                              // Submit Button
-                              Container(
-                                width: screenWidth * 0.8,
-                                height: screenWidth * 0.13,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  border: Border.all(
-                                    color: const Color(0xFF1BCC94),
-                                    width: 1,
-                                  ),
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    colors: [
-                                      Color(0xFFE0E7FF),
-                                      Color(0xFF1BCC94),
-                                    ],
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 4),
+                              // Resend OTP Button
+                              GestureDetector(
+                                onTap: (_isButtonEnabled && !_isLoading)
+                                    ? _resendOTP
+                                    : null,
+                                child: Container(
+                                  width: screenWidth * 0.5,
+                                  height: screenHeight * 0.06,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: _isButtonEnabled && !_isLoading
+                                          ? [
+                                              const Color(0xFFE0E7FF),
+                                              const Color(0xFF93C5FD),
+                                            ]
+                                          : [
+                                              Colors.grey[300]!,
+                                              Colors.grey[500]!,
+                                            ],
+                                      stops: [0.0, 0.47],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                     ),
-                                  ],
-                                ),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: InkWell(
+                                    border: Border.all(
+                                      color: Color(0xFF235DE5),
+                                      width: 1,
+                                    ),
                                     borderRadius: BorderRadius.circular(30),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              ResetPasswordScreen(),
-                                        ),
-                                      );
-                                    },
-                                    child: Center(
-                                      child: Text(
-                                        'Submit',
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.refresh,
+                                        color: Colors.white,
+                                        size: screenWidth * 0.06,
+                                      ),
+                                      SizedBox(width: screenWidth * 0.03),
+                                      Text(
+                                        _countdown > 0
+                                            ? '$_countdown'
+                                            : 'Resend',
                                         style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: screenWidth * 0.045,
-                                          fontWeight: FontWeight.w800,
-                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.05,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          fontFamily: 'Poppins',
                                         ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
                               ),
