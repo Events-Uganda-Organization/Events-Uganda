@@ -217,7 +217,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 
                               // Description
                               Text(
-                                'Please enter your email address or\nPhone Number below to receive an OTP code.',
+                                'Kindly Select Your Role',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'Abril Fatface',
