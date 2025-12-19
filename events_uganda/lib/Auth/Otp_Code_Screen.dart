@@ -525,7 +525,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                     child: Text(
                                       'Sign In',
                                       style: TextStyle(
-                                        color: const Color(0xFF1BCC94),
+                                        color: const Color(0xFFD59A00),
                                         fontSize: screenWidth * 0.040,
                                         fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.bold,
