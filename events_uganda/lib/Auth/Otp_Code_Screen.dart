@@ -91,7 +91,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
               top: screenHeight * 0.15,
               left: leftVectPadding,
               child: Image.asset(
-                'assets/vectors/forgotpasswordvect.png',
+                'assets/vectors/otpcodevect.png',
                 width: vectWidth,
                 height: vectHeight,
                 fit: BoxFit.contain,
