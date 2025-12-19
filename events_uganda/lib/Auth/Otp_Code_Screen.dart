@@ -28,6 +28,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
   @override
   void initState() {
     super.initState();
+    print('OTPCodeScreen received email: ${widget.email}'); // Debug print
     _startCountdown();
   }
 
@@ -345,7 +346,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                           fontSize: screenWidth * 0.04,
                                           fontWeight: FontWeight.normal,
                                           color: Colors.black,
-                                          fontFamily: 'Poppins',
+                                          fontFamily: 'Montserrat',
                                         ),
                                       ),
                                       TextSpan(
@@ -353,26 +354,17 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                         style: TextStyle(
                                           fontSize: screenWidth * 0.04,
                                           fontWeight: FontWeight.normal,
-                                          color: Color(0xFF3B578F),
-                                          fontFamily: 'Poppins',
+                                          color: Color.fromARGB(
+                                            255,
+                                            234,
+                                            156,
+                                            66,
+                                          ),
+                                          fontFamily: 'Abril Fatface',
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ),
-
-                              SizedBox(height: screenHeight * 0.01),
-
-                              // Description
-                              Text(
-                                'Please enter your email address or\nPhone Number below to receive an OTP code.',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontFamily: 'Abril Fatface',
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.black,
-                                  fontSize: screenWidth * 0.04,
                                 ),
                               ),
 
@@ -393,7 +385,12 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                     ),
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: const Color(0xFFD59A00),
+                                        color: const Color.fromARGB(
+                                          255,
+                                          196,
+                                          141,
+                                          2,
+                                        ),
                                         width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(10),

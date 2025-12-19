@@ -336,11 +336,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(30),
                                     onTap: () {
+                                      final emailOrPhone = _emailController.text
+                                          .trim();
+                                      print(
+                                        'Navigating with: $emailOrPhone',
+                                      ); // Debug print
+
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => OTPCodeScreen(
-                                            email: _emailController.text.trim(),
+                                            email: emailOrPhone,
                                           ),
                                         ),
                                       );
