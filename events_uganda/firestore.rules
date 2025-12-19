@@ -1,0 +1,32 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // OTP codes collection - allow write for password reset, read only for authenticated users
+    match /otp_codes/{email} {
+      // Allow anyone to write OTP (for forgot password flow)
+      allow create, update: if true;
+      
+      // Allow read only for the user's own OTP document
+      allow read: if request.auth != null && request.auth.token.email == email;
+      
+      // Auto-delete after 10 minutes (handled by expiry check in app)
+      allow delete: if request.auth != null;
+    }
+    
+    // Mail collection - for Firebase Trigger Email extension
+    match /mail/{messageId} {
+      // Allow app to create email documents
+      allow create: if true;
+      
+      // Don't allow read/update/delete (extension handles these)
+      allow read, update, delete: if false;
+    }
+    
+    // Default rule - deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

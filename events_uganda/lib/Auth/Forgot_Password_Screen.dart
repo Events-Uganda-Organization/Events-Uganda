@@ -2,6 +2,10 @@ import 'package:events_uganda/Auth/Otp_Code_Screen.dart';
 import 'package:events_uganda/Auth/Reset_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:math';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -13,12 +17,199 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
   final FocusNode _emailFocus = FocusNode();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  bool _isLoading = false;
+  String? _verificationId;
+  int? _resendToken;
 
   @override
   void dispose() {
     _emailController.dispose();
     _emailFocus.dispose();
     super.dispose();
+  }
+
+  // Generate 4-digit OTP
+  String _generateOTP() {
+    final random = Random();
+    return (1000 + random.nextInt(9000)).toString();
+  }
+
+  // Check if input is phone number or email
+  bool _isPhoneNumber(String input) {
+    // Check if it's a Ugandan phone number (starts with 0 or +256)
+    final phoneRegex = RegExp(r'^(\+256|0)[37]\d{8}$');
+    return phoneRegex.hasMatch(input.replaceAll(' ', ''));
+  }
+
+  // Format Ugandan phone number to international format
+  String _formatPhoneNumber(String phone) {
+    phone = phone.replaceAll(' ', '');
+    if (phone.startsWith('0')) {
+      return '+256${phone.substring(1)}';
+    } else if (!phone.startsWith('+')) {
+      return '+256$phone';
+    }
+    return phone;
+  }
+
+  // Send OTP via Firebase Phone Auth
+  Future<void> _sendPhoneOTP(String phoneNumber) async {
+    try {
+      // Force native flow (no web redirect) by ensuring we're on Android/iOS
+      if (kIsWeb) {
+        throw Exception('Phone auth not supported on web');
+      }
+
+      await _auth.verifyPhoneNumber(
+        phoneNumber: _formatPhoneNumber(phoneNumber),
+        forceResendingToken: _resendToken,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // Auto-verification (Android only) - instant verification
+          print('Auto-verification completed');
+          // Don't sign in here, just navigate to OTP screen
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          setState(() => _isLoading = false);
+          print('Verification failed: ${e.code} - ${e.message}');
+
+          String errorMessage = 'Failed to send OTP';
+          if (e.code == 'invalid-phone-number') {
+            errorMessage = 'Invalid phone number format';
+          } else if (e.code == 'too-many-requests') {
+            errorMessage = 'Too many requests. Please try again later';
+          } else if (e.code == 'network-request-failed') {
+            errorMessage = 'Network error. Check your connection';
+          } else {
+            errorMessage = e.message ?? 'Failed to send OTP';
+          }
+
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(errorMessage)));
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          print('Code sent successfully. VerificationId: $verificationId');
+          setState(() {
+            _verificationId = verificationId;
+            _resendToken = resendToken;
+            _isLoading = false;
+          });
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('OTP sent to your phone')),
+          );
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OTPCodeScreen(
+                email: _emailController.text.trim(),
+                verificationId: verificationId,
+              ),
+            ),
+          );
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          print('Auto-retrieval timeout. VerificationId: $verificationId');
+          _verificationId = verificationId;
+        },
+        timeout: const Duration(seconds: 60),
+      );
+    } catch (e) {
+      setState(() => _isLoading = false);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
+    }
+  }
+
+  // Send OTP via email (stored in Firestore)
+  Future<void> _sendEmailOTP(String email) async {
+    try {
+      final otp = _generateOTP();
+      final expiryTime = DateTime.now().add(const Duration(minutes: 10));
+
+      // Store OTP in Firestore
+      await _firestore.collection('otp_codes').doc(email).set({
+        'otp': otp,
+        'email': email,
+        'expiryTime': expiryTime,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      // Trigger Firebase Extension "Trigger Email" (or custom function) by writing to 'mail'
+      // Install extension from Firebase Console and configure SMTP provider (Gmail/SendGrid/Mailgun)
+      await _firestore.collection('mail').add({
+        'to': email,
+        'message': {
+          'subject': 'Your OTP Code - Events Uganda',
+          'html':
+              '''
+            <div style="font-family: Arial, sans-serif; padding: 20px;">
+              <h2>Password Reset OTP</h2>
+              <p>Your OTP code is:</p>
+              <h1 style="color: #D59A00; letter-spacing: 5px;">$otp</h1>
+              <p>This code will expire in 10 minutes.</p>
+              <p>If you didn't request this, please ignore this email.</p>
+              <br>
+              <p>Best regards,<br/>Events Uganda Team</p>
+            </div>
+          ''',
+        },
+      });
+
+      // Dev-only: log OTP locally (remove in production)
+      // print('OTP for $email: $otp');
+
+      setState(() => _isLoading = false);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              OTPCodeScreen(email: email, verificationId: null),
+        ),
+      );
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('OTP sent to your email')));
+    } catch (e) {
+      setState(() => _isLoading = false);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error sending OTP: $e')));
+    }
+  }
+
+  // Send OTP based on input type
+  Future<void> _sendOTP() async {
+    final input = _emailController.text.trim();
+
+    if (input.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter email or phone number')),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    if (_isPhoneNumber(input)) {
+      await _sendPhoneOTP(input);
+    } else if (input.contains('@')) {
+      await _sendEmailOTP(input);
+    } else {
+      setState(() => _isLoading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter a valid email or phone number'),
+        ),
+      );
+    }
   }
 
   @override
@@ -335,29 +526,29 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   color: Colors.transparent,
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(30),
-                                    onTap: () {
-                                      final emailOrPhone = _emailController.text
-                                          .trim();
-
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => OTPCodeScreen(
-                                            email: emailOrPhone,
-                                          ),
-                                        ),
-                                      );
-                                    },
+                                    onTap: _isLoading ? null : _sendOTP,
                                     child: Center(
-                                      child: Text(
-                                        'Submit',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: screenWidth * 0.045,
-                                          fontWeight: FontWeight.w800,
-                                          fontFamily: 'Montserrat',
-                                        ),
-                                      ),
+                                      child: _isLoading
+                                          ? const SizedBox(
+                                              width: 24,
+                                              height: 24,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 2,
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                      Color
+                                                    >(Colors.black),
+                                              ),
+                                            )
+                                          : Text(
+                                              'Submit',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: screenWidth * 0.045,
+                                                fontWeight: FontWeight.w800,
+                                                fontFamily: 'Montserrat',
+                                              ),
+                                            ),
                                     ),
                                   ),
                                 ),

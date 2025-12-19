@@ -1,1 +1,49 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"events-uganda","appId":"1:830864962380:android:7842c491b29dd5988255e9","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"events-uganda","configurations":{"android":"1:830864962380:android:7842c491b29dd5988255e9","ios":"1:830864962380:ios:81c1592aefd3b38a8255e9","macos":"1:830864962380:ios:81c1592aefd3b38a8255e9","web":"1:830864962380:web:0e3fd601b9a462818255e9","windows":"1:830864962380:web:64e549f3db9bc0bd8255e9"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "events-uganda",
+          "appId": "1:830864962380:android:7842c491b29dd5988255e9",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "events-uganda",
+          "configurations": {
+            "android": "1:830864962380:android:7842c491b29dd5988255e9",
+            "ios": "1:830864962380:ios:81c1592aefd3b38a8255e9",
+            "macos": "1:830864962380:ios:81c1592aefd3b38a8255e9",
+            "web": "1:830864962380:web:0e3fd601b9a462818255e9",
+            "windows": "1:830864962380:web:64e549f3db9bc0bd8255e9"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ],
+      "environmentVariables": {
+        "GMAIL_APP_PASSWORD": "amvy yccv mjhx bhwb"
+      }
+    }
+  ],
+  "firestore": {
+    "rules": "firestore.rules"
+  }
+}

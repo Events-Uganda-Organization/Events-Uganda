@@ -3,22 +3,25 @@ import 'package:events_uganda/Auth/Reset_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OTPCodeScreen extends StatefulWidget {
   final String email;
+  final String? verificationId; // For phone OTP
 
-  const OTPCodeScreen({super.key, required this.email});
+  const OTPCodeScreen({super.key, required this.email, this.verificationId});
 
   @override
   State<OTPCodeScreen> createState() => _OTPCodeScreenState();
 }
 
 class _OTPCodeScreenState extends State<OTPCodeScreen> {
-  final List<TextEditingController> _controllers = List.generate(
-    4,
-    (index) => TextEditingController(),
-  );
-  final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
+  late final int _otpLength;
+  late final List<TextEditingController> _controllers;
+  late final List<FocusNode> _focusNodes;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   int _countdown = 60;
   bool _isButtonEnabled = false;
@@ -28,6 +31,10 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
   @override
   void initState() {
     super.initState();
+    // 6 digits for phone verification, 4 for email OTP
+    _otpLength = widget.verificationId != null ? 6 : 4;
+    _controllers = List.generate(_otpLength, (_) => TextEditingController());
+    _focusNodes = List.generate(_otpLength, (_) => FocusNode());
     print('OTPCodeScreen received email: ${widget.email}'); // Debug print
     _startCountdown();
   }
@@ -44,13 +51,107 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
     super.dispose();
   }
 
-  void _checkOTPAndNavigate() {
+  void _checkOTPAndNavigate() async {
     String otp = _controllers.map((controller) => controller.text).join();
-    if (otp.length == 4) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
+    if (otp.length == _otpLength) {
+      // Verify OTP
+      await _verifyOTP(otp);
+    }
+  }
+
+  // Verify phone OTP
+  Future<void> _verifyPhoneOTP(String otp) async {
+    try {
+      if (widget.verificationId == null) return;
+
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: widget.verificationId!,
+        smsCode: otp,
       );
+
+      await _auth.signInWithCredential(credential);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Phone verified successfully!')),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Invalid OTP: $e')));
+        // Clear OTP fields
+        for (var controller in _controllers) {
+          controller.clear();
+        }
+        _focusNodes[0].requestFocus();
+      }
+    }
+  }
+
+  // Verify email OTP
+  Future<void> _verifyEmailOTP(String otp) async {
+    try {
+      final doc = await _firestore
+          .collection('otp_codes')
+          .doc(widget.email)
+          .get();
+
+      if (!doc.exists) {
+        throw 'OTP not found';
+      }
+
+      final data = doc.data()!;
+      final storedOTP = data['otp'] as String;
+      final expiryTime = (data['expiryTime'] as Timestamp).toDate();
+
+      if (DateTime.now().isAfter(expiryTime)) {
+        throw 'OTP has expired';
+      }
+
+      if (storedOTP != otp) {
+        throw 'Invalid OTP';
+      }
+
+      // OTP is valid, delete it
+      await _firestore.collection('otp_codes').doc(widget.email).delete();
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Email verified successfully!')),
+        );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: $e')));
+        // Clear OTP fields
+        for (var controller in _controllers) {
+          controller.clear();
+        }
+        _focusNodes[0].requestFocus();
+      }
+    }
+  }
+
+  // Main verification method
+  Future<void> _verifyOTP(String otp) async {
+    if (widget.verificationId != null) {
+      // Phone OTP
+      await _verifyPhoneOTP(otp);
+    } else {
+      // Email OTP
+      await _verifyEmailOTP(otp);
     }
   }
 
@@ -349,7 +450,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                     children: [
                                       TextSpan(
                                         text:
-                                            'Please enter the 4 digit code we sent to\n',
+                                            'Please enter the $_otpLength digit code we sent to\n',
                                         style: TextStyle(
                                           fontSize: screenWidth * 0.04,
                                           fontWeight: FontWeight.normal,
@@ -360,7 +461,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                       TextSpan(
                                         text: contactTarget,
                                         style: TextStyle(
-                                          fontSize: screenWidth * 0.045,
+                                          fontSize: screenWidth * 0.042,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0XFF825E34),
                                           fontFamily: 'Montserrat',
@@ -371,14 +472,12 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                 ),
                               ),
 
-                              
-
                               SizedBox(height: screenHeight * 0.04),
 
                               // OTP input boxes
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: List.generate(4, (index) {
+                                children: List.generate(_otpLength, (index) {
                                   final otpBoxWidth = screenWidth * 0.15;
                                   final otpBoxHeight = screenWidth * 0.20;
 
@@ -445,7 +544,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                             onChanged: (value) {
                                               final trimmedValue = value.trim();
                                               if (trimmedValue.isNotEmpty &&
-                                                  index < 3) {
+                                                  index < _otpLength - 1) {
                                                 _controllers[index].text =
                                                     trimmedValue;
                                                 _focusNodes[index].unfocus();

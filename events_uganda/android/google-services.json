@@ -37,6 +37,13 @@
             {
               "client_id": "830864962380-jo43fp2jgg3ugvih9q3vg5vteioe91ib.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "830864962380-0rub0omhhdejlueq70e5h420lgujsc1c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.events.uganda"
+              }
             }
           ]
         }
