@@ -179,7 +179,7 @@ class _OnboardingScreen3State extends State<OnboardingScreen3> {
             right: 0,
             child: Center(
               child: Text(
-                'Let\'s make it\nHappen',
+                'Trusted Services\nEasy Payments',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
@@ -196,7 +196,7 @@ class _OnboardingScreen3State extends State<OnboardingScreen3> {
             right: 0,
             child: Center(
               child: Text(
-                'By continuing, you agree to\nour\nTerms and Privacy',
+                'Verified service providers,\nsecure payments, and\nsmooth event planning',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
