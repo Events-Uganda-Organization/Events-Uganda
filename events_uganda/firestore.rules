@@ -3,16 +3,10 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
-    // OTP codes collection - allow write for password reset, read only for authenticated users
+    // OTP codes collection - open access during password reset flow
     match /otp_codes/{email} {
-      // Allow anyone to write OTP (for forgot password flow)
-      allow create, update: if true;
-      
-      // Allow read only for the user's own OTP document
-      allow read: if request.auth != null && request.auth.token.email == email;
-      
-      // Auto-delete after 10 minutes (handled by expiry check in app)
-      allow delete: if request.auth != null;
+      // Allow anyone to read/write OTP for password reset (temporary, not authenticated)
+      allow read, create, update, delete: if true;
     }
     
     // Mail collection - for Firebase Trigger Email extension
