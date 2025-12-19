@@ -264,128 +264,159 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                               218,
                                               218,
                                             ),
-                                            borderRadius: BorderRadius.circular(20),
-                                            boxShadow: _selectedRole == 'customer'
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            boxShadow:
+                                                _selectedRole == 'customer'
                                                 ? [
                                                     BoxShadow(
-                                                      color: const Color(0xFFF2355E).withOpacity(0.6),
+                                                      color: const Color(
+                                                        0xFFF2355E,
+                                                      ).withOpacity(0.6),
                                                       blurRadius: 20,
                                                       spreadRadius: 3,
                                                     ),
                                                   ]
                                                 : [],
                                           ),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: scaledWidth * 0.08,
-                                            vertical: scaledHeight * 0.08,
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                height: scaledHeight * 0.43,
-                                                child: Image.asset(
-                                                  'assets/images/customer.png',
-                                                  fit: BoxFit.contain,
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: scaledWidth * 0.08,
+                                              vertical: scaledHeight * 0.08,
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  height: scaledHeight * 0.43,
+                                                  child: Image.asset(
+                                                    'assets/images/customer.png',
+                                                    fit: BoxFit.contain,
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                height: scaledHeight * 0.02,
-                                              ),
-                                              Text(
-                                                'CUSTOMER',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontFamily: 'Montserrat',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: screenWidth * 0.042,
+                                                SizedBox(
+                                                  height: scaledHeight * 0.02,
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                height: scaledHeight * 0.01,
-                                              ),
-                                              Text(
-                                                'Looking for decorators, photographers & other services for my event',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.black87,
-                                                  fontFamily: 'Abril Fatface',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: screenWidth * 0.032,
+                                                Text(
+                                                  'CUSTOMER',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: 'Montserrat',
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize:
+                                                        screenWidth * 0.042,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                                SizedBox(
+                                                  height: scaledHeight * 0.01,
+                                                ),
+                                                Text(
+                                                  'Looking for decorators, photographers & other services for my event',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.black87,
+                                                    fontFamily: 'Abril Fatface',
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize:
+                                                        screenWidth * 0.032,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                       SizedBox(width: screenWidth * 0.04),
-                                      Container(
-                                        width: scaledWidth,
-                                        height: scaledHeight,
-                                        decoration: BoxDecoration(
-                                          color: const Color.fromARGB(
-                                            255,
-                                            231,
-                                            229,
-                                            229,
-                                          ),
-                                          borderRadius: BorderRadius.circular(
-                                            20,
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              _selectedRole = 'vendor';
+                                            });
+                                          },
+                                          child: Container(
+                                            width: scaledWidth,
+                                            height: scaledHeight,
+                                            decoration: BoxDecoration(
+                                              color: const Color.fromARGB(
+                                                255,
+                                                231,
+                                                229,
+                                                229,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              boxShadow:
+                                                  _selectedRole == 'vendor'
+                                                  ? [
+                                                      BoxShadow(
+                                                        color: const Color(
+                                                          0xFFF2355E,
+                                                        ).withOpacity(0.6),
+                                                        blurRadius: 20,
+                                                        spreadRadius: 3,
+                                                      ),
+                                                    ]
+                                                  : [],
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: scaledWidth * 0.08,
+                                                vertical: scaledHeight * 0.08,
+                                              ),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  SizedBox(
+                                                    height: scaledHeight * 0.43,
+                                                    child: Image.asset(
+                                                      'assets/images/serviceprovider.png',
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: scaledHeight * 0.02,
+                                                  ),
+                                                  Text(
+                                                    'SERVICE PROVIDER',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontFamily: 'Montserrat',
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize:
+                                                          screenWidth * 0.040,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: scaledHeight * 0.01,
+                                                  ),
+                                                  Text(
+                                                    'You Offer photography, catering, decoration,or other event services',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      color: Colors.black87,
+                                                      fontFamily:
+                                                          'Abril Fatface',
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize:
+                                                          screenWidth * 0.031,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
                                         ),
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: scaledWidth * 0.08,
-                                            vertical: scaledHeight * 0.08,
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SizedBox(
-                                                height: scaledHeight * 0.43,
-                                                child: Image.asset(
-                                                  'assets/images/serviceprovider.png',
-                                                  fit: BoxFit.contain,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: scaledHeight * 0.02,
-                                              ),
-                                              Text(
-                                                'SERVICE PROVIDER',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontFamily: 'Montserrat',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: screenWidth * 0.040,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: scaledHeight * 0.01,
-                                              ),
-                                              Text(
-                                                'You Offer photography, catering, decoration,or other event services',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  color: Colors.black87,
-                                                  fontFamily: 'Abril Fatface',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: screenWidth * 0.031,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
                                     ],
                                   );
                                 },
