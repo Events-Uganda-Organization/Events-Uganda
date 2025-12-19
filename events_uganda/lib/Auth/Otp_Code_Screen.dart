@@ -159,7 +159,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                       top: screenHeight * 0.0,
                       left: -screenWidth * 0.12,
                       child: Image.asset(
-                        'assets/vectors/forgotpasswordstone.png',
+                        'assets/vectors/otpcodestone.png',
                         width: screenWidth * 0.35,
                         height: screenWidth * 0.35,
                         fit: BoxFit.cover,
@@ -173,7 +173,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                       child: Transform.flip(
                         flipX: true,
                         child: Image.asset(
-                          'assets/vectors/forgotpasswordstone.png',
+                          'assets/vectors/otpcodestone.png',
                           width: screenWidth * 0.35,
                           height: screenWidth * 0.35,
                           fit: BoxFit.cover,
