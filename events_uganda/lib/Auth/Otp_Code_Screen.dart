@@ -92,6 +92,10 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final contactTarget = widget.email.trim().isEmpty
+        ? 'your email/phone'
+        : widget.email.trim();
+    final contactLabel = contactTarget.contains('@') ? 'email' : 'phone number';
 
     // Reduced vector size
     final double vectBaseWidth = screenWidth * 0.10;
@@ -335,9 +339,13 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                 width: screenWidth * 0.8,
                                 child: RichText(
                                   textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
                                   text: TextSpan(
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: screenWidth * 0.04,
+                                      fontFamily: 'Poppins',
+                                    ),
                                     children: [
                                       TextSpan(
                                         text:
@@ -350,23 +358,20 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                         ),
                                       ),
                                       TextSpan(
-                                        text: widget.email,
+                                        text: contactTarget,
                                         style: TextStyle(
-                                          fontSize: screenWidth * 0.04,
-                                          fontWeight: FontWeight.normal,
-                                          color: Color.fromARGB(
-                                            255,
-                                            234,
-                                            156,
-                                            66,
-                                          ),
-                                          fontFamily: 'Abril Fatface',
+                                          fontSize: screenWidth * 0.045,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0XFF825E34),
+                                          fontFamily: 'Montserrat',
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
+
+                              
 
                               SizedBox(height: screenHeight * 0.04),
 

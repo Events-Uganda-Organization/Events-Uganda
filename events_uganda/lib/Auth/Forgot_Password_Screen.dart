@@ -338,9 +338,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     onTap: () {
                                       final emailOrPhone = _emailController.text
                                           .trim();
-                                      print(
-                                        'Navigating with: $emailOrPhone',
-                                      ); // Debug print
 
                                       Navigator.push(
                                         context,
