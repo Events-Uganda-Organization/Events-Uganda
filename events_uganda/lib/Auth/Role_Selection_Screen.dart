@@ -160,7 +160,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                       top: screenHeight * 0.0,
                       left: -screenWidth * 0.12,
                       child: Image.asset(
-                        'assets/vectors/forgotpasswordstone.png',
+                        'assets/vectors/roleselectstone.png',
                         width: screenWidth * 0.35,
                         height: screenWidth * 0.35,
                         fit: BoxFit.cover,
@@ -174,7 +174,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                       child: Transform.flip(
                         flipX: true,
                         child: Image.asset(
-                          'assets/vectors/forgotpasswordstone.png',
+                          'assets/vectors/roleselectstone.png',
                           width: screenWidth * 0.35,
                           height: screenWidth * 0.35,
                           fit: BoxFit.cover,
