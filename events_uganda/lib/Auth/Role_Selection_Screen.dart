@@ -44,7 +44,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
               left: 0,
               right: 0,
               child: Image.asset(
-                'assets/backgroundcolors/forgotpasswordscreen.png',
+                'assets/backgroundcolors/roleselectionscreen.png',
                 width: screenWidth,
                 height: screenHeight * 0.9,
                 fit: BoxFit.cover,
