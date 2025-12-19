@@ -158,7 +158,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                     // Top-left stone
                     Positioned(
                       top: screenHeight * 0.0,
-                      left: -screenWidth * 0.20,
+                      left: -screenWidth * 0.25,
                       child: Image.asset(
                         'assets/vectors/roleselectstone.png',
                         width: screenWidth * 0.35,
