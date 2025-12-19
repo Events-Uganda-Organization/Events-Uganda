@@ -233,7 +233,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                               Builder(
                                 builder: (context) {
                                   final double rectWidth = 170;
-                                  final double rectHeight = 184;
+                                  final double rectHeight = 220;
 
                                   // If screen is very small, scale down proportionally
                                   double scaledWidth = rectWidth;
@@ -268,7 +268,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                                 CrossAxisAlignment.center,
                                             children: [
                                               SizedBox(
-                                                height: scaledHeight * 0.55,
+                                                height: scaledHeight * 0.45,
                                                 child: Image.asset(
                                                   'assets/images/customer.png',
                                                   fit: BoxFit.contain,
@@ -291,13 +291,13 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                                 height: scaledHeight * 0.02,
                                               ),
                                               Text(
-                                                'Looking for decorators, caterers, photographers & other services for my event',
+                                                'Looking for decorators,\ncaterers, photographers & other services for my event',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   color: Colors.black87,
                                                   fontFamily: 'Montserrat',
                                                   fontWeight: FontWeight.w400,
-                                                  fontSize: screenWidth * 0.032,
+                                                  fontSize: screenWidth * 0.028,
                                                 ),
                                               ),
                                             ],
