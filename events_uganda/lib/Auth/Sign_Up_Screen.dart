@@ -116,7 +116,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } on SignInWithAppleAuthorizationException catch (e) {
       switch (e.code) {
         case AuthorizationErrorCode.canceled:
-          // User canceled - don't show error
           break;
         case AuthorizationErrorCode.failed:
         case AuthorizationErrorCode.invalidResponse:
