@@ -343,7 +343,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       constraints: BoxConstraints(
                         minHeight:
                             MediaQuery.of(context).size.height *
-                            1.2, // 120% of screen height
+                            1.2, 
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
