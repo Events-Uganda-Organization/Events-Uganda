@@ -303,8 +303,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
               ),
             ),
-
-            // White container at the bottom
             Positioned(
               top:
                   MediaQuery.of(context).size.height * 0.10 +
