@@ -100,7 +100,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              
               backgroundColor: Color(0xFF1BCC94),
               content: Text(
                 'OTP sent to your phone',
