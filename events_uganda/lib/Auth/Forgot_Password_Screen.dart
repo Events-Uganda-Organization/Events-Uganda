@@ -220,7 +220,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            // Background PNG image
             Positioned(
               top: 0,
               left: 0,
