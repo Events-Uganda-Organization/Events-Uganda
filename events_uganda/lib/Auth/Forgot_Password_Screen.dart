@@ -520,7 +520,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                               SizedBox(height: screenHeight * 0.04),
 
-                              // Sign In link
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
