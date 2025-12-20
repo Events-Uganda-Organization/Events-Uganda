@@ -114,7 +114,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'Authentication failed. Please try again later.',
       );
     } on SignInWithAppleAuthorizationException catch (e) {
-      // Handle different Apple Sign-In errors
       switch (e.code) {
         case AuthorizationErrorCode.canceled:
           // User canceled - don't show error
