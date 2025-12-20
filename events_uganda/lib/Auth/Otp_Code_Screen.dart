@@ -435,7 +435,6 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
 
                               SizedBox(height: screenHeight * 0.03),
 
-                              // Title - Email/Phone confirmation
                               SizedBox(
                                 width: screenWidth * 0.8,
                                 child: RichText(
