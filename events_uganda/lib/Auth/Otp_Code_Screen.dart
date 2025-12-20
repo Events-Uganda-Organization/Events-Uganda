@@ -621,7 +621,6 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
 
                               SizedBox(height: screenHeight * 0.04),
 
-                              // Sign In link
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
