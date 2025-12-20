@@ -209,13 +209,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final diameter = screenWidth * 0.9; // Responsive, nearly full width
+    final diameter = screenWidth * 0.9;
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
         child: Stack(
           children: [
-            // Top center image
             Positioned(
               top: MediaQuery.of(context).size.height * 0.0, // adjust as needed
               right:
