@@ -191,7 +191,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             ),
           ),
           Positioned(
-            top: screenHeight * 0.62, // Example value, tweak as needed
+            top: screenHeight * 0.62, 
             left: -screenWidth * 0.09,
             child: Image.asset(
               'assets/vectors/onboardingscreen1vect.png',
