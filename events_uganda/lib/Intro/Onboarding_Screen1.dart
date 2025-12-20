@@ -111,7 +111,6 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             ),
           ),
           Positioned(
-            // Adjust 'top' to place it below cake1.jpg
             top: screenHeight * 0.52, // Example value, tweak as needed
             left:
                 (screenWidth - (screenWidth * (600 / 390))) /
