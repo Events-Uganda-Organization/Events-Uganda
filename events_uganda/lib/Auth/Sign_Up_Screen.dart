@@ -228,7 +228,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     1.08, 
                 height:
                     MediaQuery.of(context).size.height *
-                    0.9, // responsive height
+                    0.9, 
                 fit: BoxFit.contain,
               ),
             ),
