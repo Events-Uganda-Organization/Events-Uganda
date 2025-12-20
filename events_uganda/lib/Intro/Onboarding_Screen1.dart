@@ -267,7 +267,6 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
                             ),
                           ),
                         ),
-                        // keyboard_double_arrow_right icon on the far right
                         Icon(
                           Icons.keyboard_double_arrow_right,
                           color: Colors.white,
