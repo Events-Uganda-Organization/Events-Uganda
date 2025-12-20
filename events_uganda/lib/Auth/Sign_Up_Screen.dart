@@ -216,7 +216,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Stack(
           children: [
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.0, // adjust as needed
+              top: MediaQuery.of(context).size.height * 0.0, 
               right:
                   (MediaQuery.of(context).size.width +
                       MediaQuery.of(context).size.width * 1) /
