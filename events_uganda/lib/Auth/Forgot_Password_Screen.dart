@@ -403,8 +403,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               ),
 
                               SizedBox(height: screenHeight * 0.03),
-
-                              // Large mail icon
                               Container(
                                 padding: const EdgeInsets.all(20),
                                 decoration: const BoxDecoration(
