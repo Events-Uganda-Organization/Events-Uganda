@@ -225,7 +225,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 'assets/backgroundcolors/signupscreen.png',
                 width:
                     MediaQuery.of(context).size.width *
-                    1.08, // responsive width
+                    1.08, 
                 height:
                     MediaQuery.of(context).size.height *
                     0.9, // responsive height
