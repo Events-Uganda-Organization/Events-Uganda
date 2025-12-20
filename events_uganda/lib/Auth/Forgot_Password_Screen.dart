@@ -133,8 +133,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     try {
       final otp = _generateOTP();
       final expiryTime = DateTime.now().add(const Duration(minutes: 10));
-
-      // Store OTP in Firestore
       await _firestore.collection('otp_codes').doc(email).set({
         'otp': otp,
         'email': email,
