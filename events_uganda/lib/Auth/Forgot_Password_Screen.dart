@@ -139,9 +139,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         'expiryTime': expiryTime,
         'createdAt': FieldValue.serverTimestamp(),
       });
-
-      // Trigger Firebase Extension "Trigger Email" (or custom function) by writing to 'mail'
-      // Install extension from Firebase Console and configure SMTP provider (Gmail/SendGrid/Mailgun)
       await _firestore.collection('mail').add({
         'to': email,
         'message': {
