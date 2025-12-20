@@ -435,7 +435,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                               SizedBox(height: screenHeight * 0.01),
 
-                              // Description
                               Text(
                                 'Please enter your email address or\nPhone Number below to receive an OTP code.',
                                 textAlign: TextAlign.center,
