@@ -178,8 +178,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ).showSnackBar(SnackBar(content: Text('Error sending OTP: $e')));
     }
   }
-
-  // Send OTP based on input type
   Future<void> _sendOTP() async {
     final input = _emailController.text.trim();
 
