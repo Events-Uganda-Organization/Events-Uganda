@@ -283,7 +283,6 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
           Stack(
             alignment: Alignment.topCenter,
             children: [
-              // 4th card (bottom)
               Positioned(
                 top: screenHeight * 0.04,
                 child: Transform.rotate(
