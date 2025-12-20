@@ -111,7 +111,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             ),
           ),
           Positioned(
-            top: screenHeight * 0.52, // Example value, tweak as needed
+            top: screenHeight * 0.52, 
             left:
                 (screenWidth - (screenWidth * (600 / 390))) /
                 2, // Center horizontally
