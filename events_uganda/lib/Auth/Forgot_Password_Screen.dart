@@ -422,8 +422,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               ),
 
                               SizedBox(height: screenHeight * 0.03),
-
-                              // Title
                               Text(
                                 "Forgot Your Password?",
                                 textAlign: TextAlign.center,
