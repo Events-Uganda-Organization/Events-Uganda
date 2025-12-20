@@ -247,7 +247,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
                       children: [
                         Image.asset(
                           'assets/vectors/heart.png',
-                          width: screenWidth * 0.07, // Responsive width
+                          width: screenWidth * 0.07, 
                           height: screenWidth * 0.07,
                         ),
                         Expanded(
