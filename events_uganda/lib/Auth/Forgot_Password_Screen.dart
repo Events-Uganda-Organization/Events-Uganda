@@ -324,7 +324,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 child: Stack(
                   clipBehavior: Clip.hardEdge,
                   children: [
-                    // Top-left stone
                     Positioned(
                       top: screenHeight * 0.0,
                       left: -screenWidth * 0.12,
