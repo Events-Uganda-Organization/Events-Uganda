@@ -283,8 +283,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 fit: BoxFit.contain,
               ),
             ),
-
-            // Title text
             Positioned(
               top:
                   screenHeight * 0.03 +
