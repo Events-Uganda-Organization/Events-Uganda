@@ -74,7 +74,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'lastActiveTimestamp': Timestamp.now(),
       };
 
-      // Handle Name: Apple only sends this on the FIRST login.
       if (credential.givenName != null || credential.familyName != null) {
         final name =
             "${credential.givenName ?? ''} ${credential.familyName ?? ''}"
