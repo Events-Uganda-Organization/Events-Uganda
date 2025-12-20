@@ -129,8 +129,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
-
-  // Send OTP via email (stored in Firestore)
   Future<void> _sendEmailOTP(String email) async {
     try {
       final otp = _generateOTP();
