@@ -215,7 +215,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             right: screenWidth * 0.15,
             bottom:
                 screenHeight *
-                0.02, // Adjust as needed for spacing from the bottom
+                0.02, 
             child: Center(
               child: GestureDetector(
                 onTap: () {
