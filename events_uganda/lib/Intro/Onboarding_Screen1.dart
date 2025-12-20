@@ -280,8 +280,6 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             ),
           ),
           
-          // Place this inside your widget tree (e.g., in the body of your Scaffold)
-          // In your build method, replace your Stack's card section with this:
           Stack(
             alignment: Alignment.topCenter,
             children: [
