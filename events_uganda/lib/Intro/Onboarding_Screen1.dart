@@ -211,7 +211,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             ),
           ),
           Positioned(
-            left: screenWidth * 0.15, // Add margin from left
+            left: screenWidth * 0.15, 
             right: screenWidth * 0.15,
             bottom:
                 screenHeight *
