@@ -671,8 +671,6 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
     );
   }
 }
-
-// Reusable Responsive TextField with thin border
 class _ResponsiveTextField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
