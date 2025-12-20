@@ -253,8 +253,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
               ),
             ),
-
-            // Logo
             Positioned(
               top: screenHeight * 0.0,
               left: (screenWidth - screenWidth * 0.25) / 2,
