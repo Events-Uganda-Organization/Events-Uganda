@@ -334,8 +334,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         fit: BoxFit.cover,
                       ),
                     ),
-
-                    // Bottom-right stone (flipped)
                     Positioned(
                       bottom: -screenHeight * 0.05,
                       right: -screenWidth * 0.12,
