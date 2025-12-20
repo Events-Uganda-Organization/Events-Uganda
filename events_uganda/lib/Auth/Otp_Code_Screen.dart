@@ -566,7 +566,6 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
 
                               SizedBox(height: screenHeight * 0.05),
 
-                              // Resend OTP Button
                               GestureDetector(
                                 onTap: (_isButtonEnabled && !_isLoading)
                                     ? _resendOTP
