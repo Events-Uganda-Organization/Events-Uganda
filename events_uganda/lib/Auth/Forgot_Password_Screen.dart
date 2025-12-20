@@ -97,7 +97,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             _resendToken = resendToken;
             _isLoading = false;
           });
-
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               backgroundColor: Color(0xFF1BCC94),
