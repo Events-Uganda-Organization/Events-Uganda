@@ -473,7 +473,6 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
 
                               SizedBox(height: screenHeight * 0.04),
 
-                              // OTP input boxes
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: List.generate(_otpLength, (index) {
