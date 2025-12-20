@@ -231,8 +231,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 fit: BoxFit.cover,
               ),
             ),
-
-            // Back arrow button
             Positioned(
               top: screenHeight * 0.04,
               left: screenWidth * 0.04,
