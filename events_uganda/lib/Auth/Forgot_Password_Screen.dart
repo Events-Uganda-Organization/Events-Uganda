@@ -209,7 +209,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    // Reduced vector size
     final double vectBaseWidth = screenWidth * 0.10;
     final double vectWidth = vectBaseWidth;
     final double vectHeight = vectBaseWidth * (91 / 67);
