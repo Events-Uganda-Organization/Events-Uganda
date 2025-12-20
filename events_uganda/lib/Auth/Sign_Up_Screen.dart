@@ -33,7 +33,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final bool obscureText = true;
   bool _isLoading = false;
 
-  // APPLE SIGN-UP
   Future<void> _signUpWithApple() async {
     setState(() => _isLoading = true);
     try {
