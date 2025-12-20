@@ -461,7 +461,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                               SizedBox(height: screenHeight * 0.04),
 
-                              // Submit Button
                               Container(
                                 width: screenWidth * 0.8,
                                 height: screenWidth * 0.13,
