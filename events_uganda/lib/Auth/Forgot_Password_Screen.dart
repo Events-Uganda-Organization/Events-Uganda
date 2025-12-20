@@ -448,7 +448,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                               SizedBox(height: screenHeight * 0.04),
 
-                              // Email field
                               _ResponsiveTextField(
                                 controller: _emailController,
                                 label: 'Email/Phone Number',
