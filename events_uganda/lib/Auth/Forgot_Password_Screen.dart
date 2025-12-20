@@ -158,9 +158,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         },
       });
 
-      // Dev-only: log OTP locally (remove in production)
-      // print('OTP for $email: $otp');
-
       setState(() => _isLoading = false);
 
       Navigator.push(
