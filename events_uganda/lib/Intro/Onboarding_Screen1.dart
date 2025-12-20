@@ -114,7 +114,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
             top: screenHeight * 0.52, 
             left:
                 (screenWidth - (screenWidth * (600 / 390))) /
-                2, // Center horizontally
+                2, 
             child: Image.asset(
               'assets/backgroundcolors/whitebg.png',
               width: screenWidth * (600 / 390),
