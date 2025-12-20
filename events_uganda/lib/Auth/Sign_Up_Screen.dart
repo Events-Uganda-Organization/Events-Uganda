@@ -83,7 +83,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
       }
 
-      // Check if user exists to handle 'createdAt' and default name
       final userDocRef = FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid);
