@@ -263,8 +263,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 fit: BoxFit.contain,
               ),
             ),
-
-            // Left decorative vector
             Positioned(
               top: screenHeight * 0.15,
               left: leftVectPadding,
