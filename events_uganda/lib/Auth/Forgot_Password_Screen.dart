@@ -571,7 +571,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   }
 }
 
-// Reusable Responsive TextField with thin border
 class _ResponsiveTextField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
