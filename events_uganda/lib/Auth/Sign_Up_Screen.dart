@@ -65,8 +65,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
         return;
       }
-
-      // Prepare user data to update
       final Map<String, dynamic> userData = {
         'email': user.email ?? 'hidden@privaterelay.appleid.com',
         'profilePicUrl': user.photoURL,
