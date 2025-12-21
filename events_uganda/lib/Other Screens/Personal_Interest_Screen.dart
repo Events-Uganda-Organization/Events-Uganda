@@ -173,7 +173,7 @@ class PersonalInterestScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 6),
                           Text(
-                            '',
+                            'Car Hire',
                             style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'Montserrat',
