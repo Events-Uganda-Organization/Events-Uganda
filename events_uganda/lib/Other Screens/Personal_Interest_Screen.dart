@@ -27,10 +27,11 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
     double screenWidth,
   ) {
     final isSelected = selectedInterests.contains(key);
+    final cardWidth = screenWidth * 0.35;
     return GestureDetector(
       onTap: () => _toggleSelection(key),
       child: Container(
-        width: 133,
+        width: cardWidth,
         height: 40,
         decoration: BoxDecoration(
           color: isSelected ? Colors.white : Colors.white.withOpacity(0.15),
@@ -56,6 +57,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
