@@ -49,22 +49,7 @@ class PersonalInterestScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-
-            // Title placeholder (replace with actual content as needed)
-            Center(
-              child: Text(
-                'Personal Interests',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Montserrat',
-                  fontSize: size.width * 0.08,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ),
-          ],
+            ),          ],
         ),
       ),
     );
