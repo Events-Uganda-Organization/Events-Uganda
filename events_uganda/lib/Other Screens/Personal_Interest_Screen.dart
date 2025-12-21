@@ -249,6 +249,37 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
               ),
             ),
 
+            // Start button
+            Positioned(
+              top: size.height * 0.70,
+              left: size.width * 0.04,
+              right: size.width * 0.04,
+              child: GestureDetector(
+                onTap: () {
+                  // Add button action here
+                },
+                child: Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.15),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.white, width: 2),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Start',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Montserrat',
+                        fontSize: size.width * 0.05,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
             Positioned(
               top: size.height * 0.025,
               left: size.width * 0.035,
