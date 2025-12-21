@@ -154,75 +154,19 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Decoration card
-                  Flexible(
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 156),
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.celebration,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                            SizedBox(width: 6),
-                            Text(
-                              'Decoration',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Montserrat',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  _buildInterestCard(
+                    'Decoration',
+                    Icons.celebration,
+                    'decoration',
+                    size.width,
                   ),
                   SizedBox(width: 12),
                   // Catering card
-                  Flexible(
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 156),
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.restaurant,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                            SizedBox(width: 6),
-                            Text(
-                              'Catering',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Montserrat',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  _buildInterestCard(
+                    'Catering',
+                    Icons.restaurant,
+                    'catering',
+                    size.width,
                   ),
                 ],
               ),
@@ -237,75 +181,19 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Car Hire card
-                  Flexible(
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 156),
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.directions_car,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                            SizedBox(width: 6),
-                            Text(
-                              'Car Hire',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Montserrat',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  _buildInterestCard(
+                    'Car Hire',
+                    Icons.directions_car,
+                    'carHire',
+                    size.width,
                   ),
                   SizedBox(width: 12),
                   // Photography card
-                  Flexible(
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 156),
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.camera_alt,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                            SizedBox(width: 6),
-                            Text(
-                              'Photography',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Montserrat',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  _buildInterestCard(
+                    'Photography',
+                    Icons.camera_alt,
+                    'photography',
+                    size.width,
                   ),
                 ],
               ),
@@ -320,75 +208,19 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Entertainment card
-                  Flexible(
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 156),
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.music_note,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                            SizedBox(width: 6),
-                            Text(
-                              'Entertainment',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Montserrat',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  _buildInterestCard(
+                    'Entertainment',
+                    Icons.music_note,
+                    'entertainment',
+                    size.width,
                   ),
                   SizedBox(width: 12),
                   // Venue card
-                  Flexible(
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 156),
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                            SizedBox(width: 6),
-                            Text(
-                              'Venue',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Montserrat',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  _buildInterestCard(
+                    'Venue',
+                    Icons.location_on,
+                    'venue',
+                    size.width,
                   ),
                 ],
               ),
@@ -403,67 +235,14 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // MC card
-                  Flexible(
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 156),
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(Icons.mic, color: Colors.white, size: 16),
-                            SizedBox(width: 6),
-                            Text(
-                              'MC',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Montserrat',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  _buildInterestCard('MC', Icons.mic, 'mc', size.width),
                   SizedBox(width: 12),
                   // Makeup card
-                  Flexible(
-                    child: Container(
-                      constraints: BoxConstraints(maxWidth: 156),
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(color: Colors.white, width: 2),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(Icons.face, color: Colors.white, size: 16),
-                            SizedBox(width: 6),
-                            Text(
-                              'Makeup',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Montserrat',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  _buildInterestCard(
+                    'Makeup',
+                    Icons.face,
+                    'makeup',
+                    size.width,
                   ),
                 ],
               ),
