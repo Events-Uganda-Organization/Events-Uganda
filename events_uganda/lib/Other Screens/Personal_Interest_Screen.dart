@@ -100,25 +100,28 @@ class PersonalInterestScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.white, width: 2),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.celebration,
-                            color: Colors.white,
-                            size: 16,
-                          ),
-                          SizedBox(width: 6),
-                          Text(
-                            'Decoration',
-                            style: TextStyle(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.celebration,
                               color: Colors.white,
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
+                              size: 16,
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 6),
+                            Text(
+                              'Decoration',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -133,21 +136,28 @@ class PersonalInterestScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.white, width: 2),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.restaurant, color: Colors.white, size: 16),
-                          SizedBox(width: 6),
-                          Text(
-                            'Catering',
-                            style: TextStyle(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.restaurant,
                               color: Colors.white,
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
+                              size: 16,
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 6),
+                            Text(
+                              'Catering',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -173,25 +183,28 @@ class PersonalInterestScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.white, width: 2),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.directions_car,
-                            color: Colors.white,
-                            size: 16,
-                          ),
-                          SizedBox(width: 6),
-                          Text(
-                            'Car Hire',
-                            style: TextStyle(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.directions_car,
                               color: Colors.white,
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
+                              size: 16,
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 6),
+                            Text(
+                              'Car Hire',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -206,21 +219,28 @@ class PersonalInterestScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.white, width: 2),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.camera_alt, color: Colors.white, size: 16),
-                          SizedBox(width: 6),
-                          Text(
-                            'Photography',
-                            style: TextStyle(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.camera_alt,
                               color: Colors.white,
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
+                              size: 16,
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 6),
+                            Text(
+                              'Photography',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -246,21 +266,28 @@ class PersonalInterestScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.white, width: 2),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.music_note, color: Colors.white, size: 16),
-                          SizedBox(width: 6),
-                          Text(
-                            'Entertainment',
-                            style: TextStyle(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.music_note,
                               color: Colors.white,
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
+                              size: 16,
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 6),
+                            Text(
+                              'Entertainment',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -275,25 +302,28 @@ class PersonalInterestScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.white, width: 2),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: Colors.white,
-                            size: 16,
-                          ),
-                          SizedBox(width: 6),
-                          Text(
-                            'Venue',
-                            style: TextStyle(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.location_on,
                               color: Colors.white,
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
+                              size: 16,
                             ),
-                          ),
-                        ],
+                            SizedBox(width: 6),
+                            Text(
+                              'Venue',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -348,21 +378,24 @@ class PersonalInterestScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.white, width: 2),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.face, color: Colors.white, size: 16),
-                          SizedBox(width: 6),
-                          Text(
-                            'Makeup',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(Icons.face, color: Colors.white, size: 16),
+                            SizedBox(width: 6),
+                            Text(
+                              'Makeup',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
