@@ -97,7 +97,7 @@ class PersonalInterestScreen extends StatelessWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.white, width: 2),
                       ),
                       child: Row(
@@ -130,7 +130,7 @@ class PersonalInterestScreen extends StatelessWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.15),
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.white, width: 2),
                       ),
                       child: Row(
