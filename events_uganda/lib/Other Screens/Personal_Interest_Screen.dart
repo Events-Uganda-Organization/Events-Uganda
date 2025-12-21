@@ -27,7 +27,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
     double screenWidth,
   ) {
     final isSelected = selectedInterests.contains(key);
-    final cardWidth = screenWidth * 0.35;
+    final cardWidth = screenWidth * 0.44;
     return GestureDetector(
       onTap: () => _toggleSelection(key),
       child: Container(
