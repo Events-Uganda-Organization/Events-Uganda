@@ -34,7 +34,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
       onTap: () => _toggleSelection(key),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
-        child: ui.BackdropFilter(
+        child: BackdropFilter(
           filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Container(
             width: cardWidth,
