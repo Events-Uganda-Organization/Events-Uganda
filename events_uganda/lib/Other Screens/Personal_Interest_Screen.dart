@@ -82,6 +82,79 @@ class PersonalInterestScreen extends StatelessWidget {
               ),
             ),
 
+            // Glassy rectangles row
+            Positioned(
+              top: size.height * 0.30,
+              left: size.width * 0.05,
+              right: size.width * 0.05,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Decoration card
+                  Container(
+                    width: 156,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.celebration,
+                          color: Colors.white,
+                          size: size.width * 0.12,
+                        ),
+                        SizedBox(height: size.height * 0.01),
+                        Text(
+                          'Decoration',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Montserrat',
+                            fontSize: size.width * 0.04,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: size.width * 0.04),
+                  // Catering card
+                  Container(
+                    width: 156,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.restaurant,
+                          color: Colors.white,
+                          size: size.width * 0.12,
+                        ),
+                        SizedBox(height: size.height * 0.01),
+                        Text(
+                          'Catering',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Montserrat',
+                            fontSize: size.width * 0.04,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
             Positioned(
               top: size.height * 0.025,
               left: size.width * 0.035,
