@@ -29,37 +29,35 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
     final isSelected = selectedInterests.contains(key);
     return GestureDetector(
       onTap: () => _toggleSelection(key),
-      child: Flexible(
-        child: Container(
-          constraints: BoxConstraints(maxWidth: 156),
-          height: 40,
-          decoration: BoxDecoration(
-            color: isSelected ? Colors.white : Colors.white.withOpacity(0.15),
-            borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: Colors.white, width: 2),
-          ),
-          child: Padding(
-            padding: EdgeInsets.only(left: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  icon,
+      child: Container(
+        width: 133,
+        height: 40,
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.white : Colors.white.withOpacity(0.15),
+          borderRadius: BorderRadius.circular(25),
+          border: Border.all(color: Colors.white, width: 2),
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(left: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(
+                icon,
+                color: isSelected ? Colors.black : Colors.white,
+                size: 16,
+              ),
+              SizedBox(width: 6),
+              Text(
+                label,
+                style: TextStyle(
                   color: isSelected ? Colors.black : Colors.white,
-                  size: 16,
+                  fontFamily: 'Montserrat',
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
                 ),
-                SizedBox(width: 6),
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: isSelected ? Colors.black : Colors.white,
-                    fontFamily: 'Montserrat',
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
