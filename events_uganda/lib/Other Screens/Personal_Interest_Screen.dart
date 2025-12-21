@@ -349,21 +349,24 @@ class PersonalInterestScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(25),
                         border: Border.all(color: Colors.white, width: 2),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.mic, color: Colors.white, size: 16),
-                          SizedBox(width: 6),
-                          Text(
-                            'MC',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Montserrat',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 12),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(Icons.face, color: Colors.white, size: 16),
+                            SizedBox(width: 6),
+                            Text(
+                              'Makeup',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
