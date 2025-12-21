@@ -50,7 +50,7 @@ class PersonalInterestScreen extends StatelessWidget {
 
             // Subtitle text
             Positioned(
-              top: size.height * 0.11,
+              top: size.height * 0.15,
               left: size.width * 0.08,
               right: size.width * 0.08,
               child: Text(
@@ -67,7 +67,7 @@ class PersonalInterestScreen extends StatelessWidget {
 
             // Select instruction text
             Positioned(
-              top: size.height * 0.19,
+              top: size.height * 0.24,
               left: 0,
               right: 0,
               child: Text(
