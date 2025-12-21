@@ -85,8 +85,8 @@ class PersonalInterestScreen extends StatelessWidget {
             // Glassy rectangles row
             Positioned(
               top: size.height * 0.30,
-              left: size.width * 0.05,
-              right: size.width * 0.05,
+              left: 0,
+              right: 0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -116,7 +116,7 @@ class PersonalInterestScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(width: size.width * 0.04),
+                  SizedBox(width: 12),
                   // Catering card
                   Container(
                     width: 156,
