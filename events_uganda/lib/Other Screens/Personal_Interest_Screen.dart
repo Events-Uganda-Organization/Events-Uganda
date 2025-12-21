@@ -30,8 +30,6 @@ class PersonalInterestScreen extends StatelessWidget {
                 ),
               ),
             ),
-
-            // Back button
             Positioned(
               top: size.height * 0.025,
               left: size.width * 0.035,
