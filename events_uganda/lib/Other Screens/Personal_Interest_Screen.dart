@@ -30,6 +30,24 @@ class PersonalInterestScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            // Title text below the bar
+            Positioned(
+              top: size.height * 0.05,
+              left: 0,
+              right: 0,
+              child: Text(
+                'Time To Choose',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Montserrat',
+                  fontSize: size.width * 0.08,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+
             Positioned(
               top: size.height * 0.025,
               left: size.width * 0.035,
@@ -49,7 +67,8 @@ class PersonalInterestScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),          ],
+            ),
+          ],
         ),
       ),
     );
