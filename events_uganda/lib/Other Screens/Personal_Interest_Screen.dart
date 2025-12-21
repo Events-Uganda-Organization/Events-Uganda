@@ -1,7 +1,70 @@
 import 'package:flutter/material.dart';
 
-class PersonalInterestScreen extends StatelessWidget {
+class PersonalInterestScreen extends StatefulWidget {
   const PersonalInterestScreen({super.key});
+
+  @override
+  State<PersonalInterestScreen> createState() => _PersonalInterestScreenState();
+}
+
+class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
+  final Set<String> selectedInterests = {};
+
+  void _toggleSelection(String interest) {
+    setState(() {
+      if (selectedInterests.contains(interest)) {
+        selectedInterests.remove(interest);
+      } else {
+        selectedInterests.add(interest);
+      }
+    });
+  }
+
+  Widget _buildInterestCard(
+    String label,
+    IconData icon,
+    String key,
+    double screenWidth,
+  ) {
+    final isSelected = selectedInterests.contains(key);
+    return GestureDetector(
+      onTap: () => _toggleSelection(key),
+      child: Flexible(
+        child: Container(
+          constraints: BoxConstraints(maxWidth: 156),
+          height: 40,
+          decoration: BoxDecoration(
+            color: isSelected ? Colors.white : Colors.white.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(color: Colors.white, width: 2),
+          ),
+          child: Padding(
+            padding: EdgeInsets.only(left: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  icon,
+                  color: isSelected ? Colors.black : Colors.white,
+                  size: 16,
+                ),
+                SizedBox(width: 6),
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: isSelected ? Colors.black : Colors.white,
+                    fontFamily: 'Montserrat',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
