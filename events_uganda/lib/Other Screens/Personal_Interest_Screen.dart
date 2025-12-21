@@ -18,8 +18,6 @@ class PersonalInterestScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-
-            // Page indicator bar at top center
             Positioned(
               top: size.height * 0.02,
               left: (size.width - size.width * 0.35) / 2,
