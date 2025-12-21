@@ -54,7 +54,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 style: TextStyle(
                   color: isSelected ? Colors.black : Colors.white,
                   fontFamily: 'Montserrat',
-                  fontSize: 12,
+                  fontSize: 10,
                   fontWeight: FontWeight.w700,
                 ),
                 overflow: TextOverflow.ellipsis,
