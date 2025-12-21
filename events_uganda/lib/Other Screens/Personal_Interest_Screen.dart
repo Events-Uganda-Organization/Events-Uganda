@@ -12,7 +12,6 @@ class PersonalInterestScreen extends StatelessWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            // Background artwork
             Positioned.fill(
               child: Image.asset(
                 'assets/backgroundcolors/personalinterestbg.png',
