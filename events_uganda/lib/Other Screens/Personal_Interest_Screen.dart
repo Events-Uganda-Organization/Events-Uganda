@@ -354,10 +354,10 @@ class PersonalInterestScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Icon(Icons.face, color: Colors.white, size: 16),
+                            Icon(Icons.mic, color: Colors.white, size: 16),
                             SizedBox(width: 6),
                             Text(
-                              'Makeup',
+                              'MC',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'Montserrat',
