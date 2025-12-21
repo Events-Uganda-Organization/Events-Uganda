@@ -6,6 +6,8 @@ class PersonalInterestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final double screenHeight = size.height;
+    final double screenWidth = size.width;
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -151,7 +153,7 @@ class PersonalInterestScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.04,),
+                  SizedBox(height: screenHeight * 0.04),
                 ],
               ),
             ),
