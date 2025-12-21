@@ -85,62 +85,70 @@ class PersonalInterestScreen extends StatelessWidget {
             // Glassy rectangles row
             Positioned(
               top: size.height * 0.30,
-              left: 0,
-              right: 0,
+              left: size.width * 0.04,
+              right: size.width * 0.04,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Decoration card
-                  Container(
-                    width: 156,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white, width: 2),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.celebration, color: Colors.white, size: 16),
-                        SizedBox(width: 6),
-                        Text(
-                          'Decoration',
-                          style: TextStyle(
+                  Flexible(
+                    child: Container(
+                      constraints: BoxConstraints(maxWidth: 156),
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.celebration,
                             color: Colors.white,
-                            fontFamily: 'Montserrat',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
+                            size: 16,
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 6),
+                          Text(
+                            'Decoration',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Montserrat',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(width: 12),
                   // Catering card
-                  Container(
-                    width: 156,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.white, width: 2),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.restaurant, color: Colors.white, size: 16),
-                        SizedBox(width: 6),
-                        Text(
-                          'Catering',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Montserrat',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
+                  Flexible(
+                    child: Container(
+                      constraints: BoxConstraints(maxWidth: 156),
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.restaurant, color: Colors.white, size: 16),
+                          SizedBox(width: 6),
+                          Text(
+                            'Catering',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Montserrat',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
