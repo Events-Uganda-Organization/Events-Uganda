@@ -157,7 +157,7 @@ class PersonalInterestScreen extends StatelessWidget {
 
             // Second row of rectangles
             Positioned(
-              top: size.height * 0.36,
+              top: size.height * 0.38,
               left: size.width * 0.04,
               right: size.width * 0.04,
               child: Row(
@@ -230,7 +230,7 @@ class PersonalInterestScreen extends StatelessWidget {
 
             // Third row of rectangles
             Positioned(
-              top: size.height * 0.42,
+              top: size.height * 0.46,
               left: size.width * 0.04,
               right: size.width * 0.04,
               child: Row(
@@ -303,7 +303,7 @@ class PersonalInterestScreen extends StatelessWidget {
 
             // Fourth row of rectangles
             Positioned(
-              top: size.height * 0.48,
+              top: size.height * 0.54,
               left: size.width * 0.04,
               right: size.width * 0.04,
               child: Row(
