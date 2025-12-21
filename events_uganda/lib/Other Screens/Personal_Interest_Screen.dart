@@ -1,3 +1,4 @@
+import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 
@@ -287,7 +288,12 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
               right: 0,
               child: GestureDetector(
                 onTap: () {
-                  
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CustomerHomeScreen(),
+                    ),
+                  );
                 },
                 child: Center(
                   child: Row(
