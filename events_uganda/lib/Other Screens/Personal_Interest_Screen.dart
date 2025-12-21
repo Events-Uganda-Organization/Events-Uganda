@@ -151,6 +151,7 @@ class PersonalInterestScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  SizedBox(height: screenHeight * 0.04,),
                 ],
               ),
             ),
