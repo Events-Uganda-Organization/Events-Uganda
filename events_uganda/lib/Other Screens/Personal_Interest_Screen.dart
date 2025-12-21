@@ -99,21 +99,17 @@ class PersonalInterestScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: Colors.white, width: 2),
                     ),
-                    child: Column(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.celebration,
-                          color: Colors.white,
-                          size: size.width * 0.12,
-                        ),
-                        SizedBox(height: size.height * 0.01),
+                        Icon(Icons.celebration, color: Colors.white, size: 16),
+                        SizedBox(width: 6),
                         Text(
                           'Decoration',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Montserrat',
-                            fontSize: size.width * 0.04,
+                            fontSize: 12,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -130,21 +126,17 @@ class PersonalInterestScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: Colors.white, width: 2),
                     ),
-                    child: Column(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.restaurant,
-                          color: Colors.white,
-                          size: size.width * 0.12,
-                        ),
-                        SizedBox(height: size.height * 0.01),
+                        Icon(Icons.restaurant, color: Colors.white, size: 16),
+                        SizedBox(width: 6),
                         Text(
                           'Catering',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Montserrat',
-                            fontSize: size.width * 0.04,
+                            fontSize: 12,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
