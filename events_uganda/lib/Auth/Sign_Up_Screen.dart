@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:events_uganda/Auth/Role_Selection_Screen.dart';
+import 'package:events_uganda/Other%20Screens/Role_Selection_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';

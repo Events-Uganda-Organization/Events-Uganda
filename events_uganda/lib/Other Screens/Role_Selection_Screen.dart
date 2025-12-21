@@ -1,3 +1,4 @@
+import 'package:events_uganda/Auth/Forgot_Password_Screen.dart';
 import 'package:events_uganda/Auth/Otp_Code_Screen.dart';
 import 'package:events_uganda/Auth/Reset_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
@@ -454,7 +455,12 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(30),
                                     onTap: () {
-                                      // Handle submit
+                                      Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ForgotPasswordScreen(),
+                              ),
+                            );
                                     },
                                     child: Center(
                                       child: Text(

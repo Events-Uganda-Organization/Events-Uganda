@@ -1,5 +1,5 @@
 import 'package:events_uganda/Auth/Forgot_Password_Screen.dart';
-import 'package:events_uganda/Auth/Role_Selection_Screen.dart';
+import 'package:events_uganda/Other%20Screens/Role_Selection_Screen.dart';
 import 'package:events_uganda/Auth/Sign_Up_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
