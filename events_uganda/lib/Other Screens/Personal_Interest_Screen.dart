@@ -304,8 +304,8 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
             ),
 
             Positioned(
-              top: size.height * 0.025,
-              left: size.width * 0.035,
+                            top: MediaQuery.of(context).size.height * 0.04,
+              left: MediaQuery.of(context).size.width * 0.04,
               child: GestureDetector(
                 onTap: () => Navigator.of(context).maybePop(),
                 child: Container(
