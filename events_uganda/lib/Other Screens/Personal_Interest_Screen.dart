@@ -280,6 +280,29 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
               ),
             ),
 
+            // Skip text
+            Positioned(
+              top: size.height * 0.80,
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  // Add skip action here
+                },
+                child: Center(
+                  child: Text(
+                    'Skip',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Montserrat',
+                      fontSize: size.width * 0.04,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
             Positioned(
               top: size.height * 0.025,
               left: size.width * 0.035,
