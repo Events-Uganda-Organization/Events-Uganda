@@ -19,6 +19,20 @@ class PersonalInterestScreen extends StatelessWidget {
               ),
             ),
 
+            // Page indicator bar at top center
+            Positioned(
+              top: size.height * 0.02,
+              left: (size.width - size.width * 0.35) / 2,
+              child: Container(
+                width: size.width * 0.35,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+
             // Back button
             Positioned(
               top: size.height * 0.025,
