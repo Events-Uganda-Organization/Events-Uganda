@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Personal interests entry screen with full-bleed background artwork.
 class PersonalInterestScreen extends StatelessWidget {
   const PersonalInterestScreen({super.key});
 
