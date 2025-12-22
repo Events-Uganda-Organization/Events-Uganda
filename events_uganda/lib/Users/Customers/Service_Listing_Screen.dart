@@ -850,6 +850,16 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           fontFamily: 'Montserrat',
                         ),
                       ),
+                      SizedBox(height: screenWidth * 0.008),
+                      Text(
+                        'Location',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: screenWidth * 0.025,
+                          fontFamily: 'Montserrat',
+                        ),
+                      ),
                     ],
                   ),
                 ),
