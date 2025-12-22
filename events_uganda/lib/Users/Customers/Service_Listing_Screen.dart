@@ -867,7 +867,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
             ),
             Positioned(
               bottom: 10,
-              right: 10,
+              right: 8,
               child: GestureDetector(
                 onTap: () {
                   setState(() {
