@@ -83,7 +83,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     _circleScrollController.addListener(_onCircleScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
     _forYouScrollController.addListener(_onForYouScroll);
-    _popularNowScrollController.addListener(_onPopularNowScroll);
     _startCountdown();
     _searchFocus.addListener(() {
       setState(() {
@@ -224,10 +223,37 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     String price,
   ) {
     final screenWidth = MediaQuery.of(context).size.width;
-    
+    final isCentered = index == _activePopularNowIndex;
+    final relativePosition = index - _activePopularNowIndex;
+    final angle = relativePosition == -1
+        ? -11 *
+              3.14159 /
+              180 // Left position
+        : (relativePosition == 1
+              ? 11 *
+                    3.14159 /
+                    180 // Right position
+              : 0.0);
+
+    // Adjust these values to move left/right images
+    final offsetX = relativePosition == -1
+        ? -28.0 // Left position
+        : (relativePosition == 1
+              ? 31.0 // Right position
+              : 0.0); // Center or other positions
+
+    final offsetY = relativePosition == -1
+        ? 35.0 // Left position
+        : (relativePosition == 1
+              ? -1.0 // Right position
+              : 0.0);
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
+      transform: Matrix4.identity()
+        ..translate(offsetX, isCentered ? 0.0 : offsetY)
+        ..rotateZ(isCentered ? 0.0 : angle),
       child: Stack(
         children: [
           Container(
@@ -1233,14 +1259,14 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     SizedBox(
                       height: 240,
                       child: SingleChildScrollView(
-                        controller: _popularNowScrollController,
+                        controller: _forYouScrollController,
                         scrollDirection: Axis.horizontal,
                         padding: EdgeInsets.symmetric(
                           horizontal: screenWidth * 0.04,
                         ),
                         child: Row(
                           children: [
-                            _buildPopularNowImage(
+                            _buildForYouImage(
                               'assets/images/cake4.jpg',
                               0,
                               '4.8',
@@ -1248,7 +1274,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               '1,500,000 UGX',
                             ),
                             SizedBox(width: screenWidth * 0.04),
-                            _buildPopularNowImage(
+                            _buildForYouImage(
                               'assets/images/deco3.jpg',
                               1,
                               '4.5',
@@ -1256,7 +1282,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               '2,000,000 UGX',
                             ),
                             SizedBox(width: screenWidth * 0.04),
-                            _buildPopularNowImage(
+                            _buildForYouImage(
                               'assets/images/blacknwhitemen.jpg',
                               2,
                               '4.9',
@@ -1264,7 +1290,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               '3,100,000 UGX',
                             ),
                             SizedBox(width: screenWidth * 0.04),
-                            _buildPopularNowImage(
+                            _buildForYouImage(
                               'assets/images/glassdeco.jpg',
                               3,
                               '4.7',
@@ -1308,14 +1334,14 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     SizedBox(
                       height: 240,
                       child: SingleChildScrollView(
-                        controller: _forYouScrollController,
+                        controller: _popularNowScrollController,
                         scrollDirection: Axis.horizontal,
                         padding: EdgeInsets.symmetric(
                           horizontal: screenWidth * 0.04,
                         ),
                         child: Row(
                           children: [
-                            _buildForYouImage(
+                            _buildPopularNowImage(
                               'assets/images/cake4.jpg',
                               0,
                               '4.8',
@@ -1323,7 +1349,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               '1,500,000 UGX',
                             ),
                             SizedBox(width: screenWidth * 0.04),
-                            _buildForYouImage(
+                            _buildPopularNowImage(
                               'assets/images/deco3.jpg',
                               1,
                               '4.5',
@@ -1331,7 +1357,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               '2,000,000 UGX',
                             ),
                             SizedBox(width: screenWidth * 0.04),
-                            _buildForYouImage(
+                            _buildPopularNowImage(
                               'assets/images/blacknwhitemen.jpg',
                               2,
                               '4.9',
@@ -1339,7 +1365,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               '3,100,000 UGX',
                             ),
                             SizedBox(width: screenWidth * 0.04),
-                            _buildForYouImage(
+                            _buildPopularNowImage(
                               'assets/images/glassdeco.jpg',
                               3,
                               '4.7',
