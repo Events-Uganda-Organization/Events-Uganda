@@ -1186,28 +1186,43 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
             Positioned(
               top: screenHeight * 0.20,
               left: screenWidth * 0.20,
-              child: GestureDetector(
-                onTap: _canForwardReturn
-                    ? () => Navigator.of(context).maybePop()
-                    : null,
-                child: Opacity(
-                  opacity: _canForwardReturn ? 1.0 : 0.35,
-                  child: Container(
-                    width: screenWidth * 0.12,
-                    height: screenWidth * 0.12,
-                    decoration: BoxDecoration(
-                      color: const Color(0XFFF3CA9B),
-                      borderRadius: BorderRadius.circular(15),
+              right: screenWidth * 0.04,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Catering & Food',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: screenWidth * 0.045,
+                      color: Colors.black,
                     ),
-                    child: Center(
-                      child: Icon(
-                        Icons.chevron_right,
-                        color: Colors.black,
-                        size: screenWidth * 0.10,
+                  ),
+                  GestureDetector(
+                    onTap: _canForwardReturn
+                        ? () => Navigator.of(context).maybePop()
+                        : null,
+                    child: Opacity(
+                      opacity: _canForwardReturn ? 1.0 : 0.35,
+                      child: Container(
+                        width: screenWidth * 0.12,
+                        height: screenWidth * 0.12,
+                        decoration: BoxDecoration(
+                          color: const Color(0XFFF3CA9B),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.chevron_right,
+                            color: Colors.black,
+                            size: screenWidth * 0.10,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
             Positioned(
