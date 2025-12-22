@@ -1191,7 +1191,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               left: screenWidth * 0.04,
               child: Container(
                 width: screenWidth * 0.34,
-                height: screenHeight * 0.053,
+                height: screenHeight * 0.055,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
@@ -1208,8 +1208,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      width: screenWidth * 0.08,
-                      height: screenWidth * 0.08,
+                      width: screenWidth * 0.09,
+                      height: screenWidth * 0.09,
                       decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 230, 197, 197),
                         shape: BoxShape.circle,
