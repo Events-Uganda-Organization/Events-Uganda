@@ -694,8 +694,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     final cardHeight = cardWidth * 1.185;
 
     return GestureDetector(
-      onTap: () {
-      },
+      onTap: () {},
       child: Container(
         width: cardWidth,
         height: cardHeight,
@@ -935,6 +934,16 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 'assets/backgroundcolors/normalscreen.png',
                 width: MediaQuery.of(context).size.width * 1.08,
                 height: MediaQuery.of(context).size.height * 0.9,
+                fit: BoxFit.contain,
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.02,
+              left: screenWidth * 0.02,
+              child: Image.asset(
+                'assets/images/chicken.png',
+                width: screenWidth * 0.2,
+                height: screenWidth * 0.2,
                 fit: BoxFit.contain,
               ),
             ),
