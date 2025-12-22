@@ -3,7 +3,6 @@ import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:events_uganda/Users/Customers/Service_Listing_Screen.dart';
 
 class ServiceListingScreen extends StatefulWidget {
   const ServiceListingScreen({super.key});
