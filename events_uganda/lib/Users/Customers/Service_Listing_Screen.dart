@@ -880,6 +880,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white, width: 2),
+                          borderRadius: BorderRadius.circular(30)
                         ),
                         padding: EdgeInsets.symmetric(
                           horizontal: screenWidth * 0.03,
