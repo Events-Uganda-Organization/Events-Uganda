@@ -919,8 +919,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final promoTop =
-        screenHeight * 0.19 + screenWidth * 0.12 + screenHeight * 0.02;
+    final promoTop = screenHeight * 0.35;
     final promoHeight = screenWidth * 0.46;
     return Scaffold(
       backgroundColor: Colors.white,
