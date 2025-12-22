@@ -1185,7 +1185,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
             // Forward/inactive return button (mirrors back button)
             Positioned(
               top: screenHeight * 0.20,
-              left: screenWidth * 0.20,
+              left: screenWidth * 0.11,
               right: screenWidth * 0.04,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
