@@ -166,8 +166,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     _searchFocus.dispose();
     _circleScrollController.dispose();
     _promoScrollController.dispose();
-    _popularNowScrollController.dispose();
-    _forYouScrollController.dispose();
     super.dispose();
   }
 
