@@ -687,7 +687,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     String title,
     String rating,
     int index,
-    int providersCount,
+    String priceRange,
     double screenWidth,
   ) {
     final cardWidth =
@@ -842,7 +842,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       ),
                       SizedBox(height: screenWidth * 0.008),
                       Text(
-                        '$providersCount Providers',
+                        priceRange,
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
@@ -1274,7 +1274,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                             'Provider\'s Name',
                             '4.8',
                             0,
-                            43,
+                            'UGX 500K - 2M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
@@ -1282,7 +1282,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                             'Provider\'s Name',
                             '4.6',
                             1,
-                            28,
+                            'UGX 400K - 1.5M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
@@ -1290,7 +1290,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                             'Provider\'s Name',
                             '4.9',
                             2,
-                            56,
+                            'UGX 600K - 3M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
@@ -1298,7 +1298,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                             'Provider\'s Name',
                             '4.7',
                             3,
-                            35,
+                            'UGX 300K - 1.2M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
@@ -1306,7 +1306,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                             'Provider\'s Name',
                             '4.5',
                             4,
-                            21,
+                            'UGX 200K - 800K',
                             screenWidth,
                           ),
                           _buildCategoryCard(
@@ -1314,7 +1314,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                             'Provider\'s Name',
                             '4.9',
                             5,
-                            18,
+                            'UGX 800K - 2.5M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
@@ -1322,7 +1322,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                             'Provider\'s Name',
                             '4.4',
                             6,
-                            32,
+                            'UGX 400K - 1.8M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
@@ -1330,7 +1330,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                             'Provider\'s Name',
                             '4.7',
                             7,
-                            24,
+                            'UGX 350K - 1.5M',
                             screenWidth,
                           ),
                         ],
