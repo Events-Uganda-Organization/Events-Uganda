@@ -85,8 +85,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     _promoScrollController.addListener(_onPromoScroll);
     _circleScrollController.addListener(_onCircleScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
-    _forYouScrollController.addListener(_onForYouScroll);
-    _popularNowScrollController.addListener(_onPopularNowScroll);
     _startCountdown();
     _searchFocus.addListener(() {
       setState(() {
