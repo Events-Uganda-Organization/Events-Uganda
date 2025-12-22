@@ -1185,65 +1185,251 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 ),
               ),
             ),
-            // White rectangle with circle inside it
+            // Horizontally scrollable filter rectangles
             Positioned(
               top: screenHeight * 0.268,
               left: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.34,
-                height: screenHeight * 0.055,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
+              right: screenWidth * 0.04,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    // Nearest
+                    Container(
+                      width: screenWidth * 0.34,
+                      height: screenHeight * 0.055,
+                      margin: EdgeInsets.only(right: screenWidth * 0.03),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: screenWidth * 0.01),
+                        child: Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                width: screenWidth * 0.09,
+                                height: screenWidth * 0.09,
+                                decoration: BoxDecoration(
+                                  color: const Color(0XFFF3CA9B),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.location_on,
+                                    color: Colors.black,
+                                    size: screenWidth * 0.05,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: screenWidth * 0.04),
+                            Text(
+                              'Nearest',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.03,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Rating
+                    Container(
+                      width: screenWidth * 0.34,
+                      height: screenHeight * 0.055,
+                      margin: EdgeInsets.only(right: screenWidth * 0.03),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: screenWidth * 0.01),
+                        child: Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                width: screenWidth * 0.09,
+                                height: screenWidth * 0.09,
+                                decoration: BoxDecoration(
+                                  color: const Color(0XFFF3CA9B),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.star,
+                                    color: Colors.black,
+                                    size: screenWidth * 0.05,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: screenWidth * 0.04),
+                            Text(
+                              'Rating',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.03,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Price
+                    Container(
+                      width: screenWidth * 0.34,
+                      height: screenHeight * 0.055,
+                      margin: EdgeInsets.only(right: screenWidth * 0.03),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: screenWidth * 0.01),
+                        child: Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                width: screenWidth * 0.09,
+                                height: screenWidth * 0.09,
+                                decoration: BoxDecoration(
+                                  color: const Color(0XFFF3CA9B),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.attach_money,
+                                    color: Colors.black,
+                                    size: screenWidth * 0.05,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: screenWidth * 0.04),
+                            Text(
+                              'Price',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.03,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Popular
+                    Container(
+                      width: screenWidth * 0.34,
+                      height: screenHeight * 0.055,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: screenWidth * 0.01),
+                        child: Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                width: screenWidth * 0.09,
+                                height: screenWidth * 0.09,
+                                decoration: BoxDecoration(
+                                  color: const Color(0XFFF3CA9B),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.trending_up,
+                                    color: Colors.black,
+                                    size: screenWidth * 0.05,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: screenWidth * 0.04),
+                            Text(
+                              'Popular',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.03,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(left: screenWidth * 0.01),
-                  child: Row(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          width: screenWidth * 0.09,
-                          height: screenWidth * 0.09,
-                          decoration: BoxDecoration(
-                            color: const Color(0XFFF3CA9B),
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.15),
-                                blurRadius: 8,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.location_on,
-                              color: Colors.black,
-                              size: screenWidth * 0.05,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: screenWidth * 0.05),
-                      Text(
-                        'Nearest',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
-                          fontSize: screenWidth * 0.03,
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ),
             ),
