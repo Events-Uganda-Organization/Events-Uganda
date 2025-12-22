@@ -1245,14 +1245,24 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Featured Providers',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: screenWidth * 0.045,
-                              color: Colors.black,
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'Featured Providers',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: screenWidth * 0.045,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(width: screenWidth * 0.02),
+                              Icon(
+                                Icons.verified,
+                                color: Colors.blue,
+                                size: screenWidth * 0.045,
+                              ),
+                            ],
                           ),
                         ],
                       ),
