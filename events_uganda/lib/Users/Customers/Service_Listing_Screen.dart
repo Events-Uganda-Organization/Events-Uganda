@@ -1221,6 +1221,13 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           ),
                         ],
                       ),
+                      child: Center(
+                        child: Icon(
+                          Icons.location_on,
+                          color: Colors.black,
+                          size: screenWidth * 0.05,
+                        ),
+                      ),
                     ),
                   ),
                 ),
