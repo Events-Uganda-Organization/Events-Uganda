@@ -1271,7 +1271,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         children: [
                           _buildCategoryCard(
                             'assets/images/deco5.jpg',
-                            'Decoration',
+                            'Provider\'s Name',
                             '4.8',
                             0,
                             43,
@@ -1279,7 +1279,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           ),
                           _buildCategoryCard(
                             'assets/images/catering.jpg',
-                            'Catering',
+                            'Provider\'s Name',
                             '4.6',
                             1,
                             28,
@@ -1287,7 +1287,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           ),
                           _buildCategoryCard(
                             'assets/images/photography.jpg',
-                            'Photography',
+                            'Provider\'s Name',
                             '4.9',
                             2,
                             56,
@@ -1295,7 +1295,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           ),
                           _buildCategoryCard(
                             'assets/images/carhire1.jpg',
-                            'Car Hire',
+                            'Provider\'s Name',
                             '4.7',
                             3,
                             35,
@@ -1303,7 +1303,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           ),
                           _buildCategoryCard(
                             'assets/images/cake2.jpg',
-                            'Cakes',
+                            'Provider\'s Name',
                             '4.5',
                             4,
                             21,
@@ -1311,7 +1311,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           ),
                           _buildCategoryCard(
                             'assets/images/cake4.jpg',
-                            'Wedding Cakes',
+                            'Provider\'s Name',
                             '4.9',
                             5,
                             18,
@@ -1319,7 +1319,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           ),
                           _buildCategoryCard(
                             'assets/images/deco3.jpg',
-                            'Tent Decoration',
+                            'Provider\'s Name',
                             '4.4',
                             6,
                             32,
@@ -1327,7 +1327,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           ),
                           _buildCategoryCard(
                             'assets/images/glassdeco.jpg',
-                            'Glass Decoration',
+                            'Provider\'s Name',
                             '4.7',
                             7,
                             24,
