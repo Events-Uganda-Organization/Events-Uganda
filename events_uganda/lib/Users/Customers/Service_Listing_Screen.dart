@@ -878,25 +878,22 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     return Transform.scale(
                       scale: scale,
                       child: Container(
-                        width: screenWidth * 0.1,
-                        height: screenWidth * 0.1,
                         decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: _cartedCategoryImages.contains(index)
-                                ? Colors.yellow
-                                : Colors.white,
-                            width: 2,
-                          ),
+                          border: Border.all(color: Colors.white, width: 2),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.03,
+                          vertical: screenWidth * 0.01,
                         ),
                         child: Center(
-                          child: Icon(
-                            Icons.shopping_cart_outlined,
-                            color: _cartedCategoryImages.contains(index)
-                                ? Colors.yellow
-                                : Colors.white,
-                            size: screenWidth * 0.07,
+                          child: Text(
+                            'Book',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              fontSize: screenWidth * 0.028,
+                            ),
                           ),
                         ),
                       ),
