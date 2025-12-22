@@ -1246,7 +1246,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'All Categories',
+                            'Featured Providers',
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
