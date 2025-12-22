@@ -948,6 +948,16 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               ),
             ),
             Positioned(
+              top: screenHeight * 0.001,
+              right: -screenWidth * 0.1,
+              child: Image.asset(
+                'assets/images/chicken.png',
+                width: screenWidth * 0.4,
+                height: screenWidth * 0.4,
+                fit: BoxFit.contain,
+              ),
+            ),
+            Positioned(
               top: screenHeight * 0.03,
               left: screenWidth * 0.04,
               child: Container(
