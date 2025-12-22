@@ -1191,7 +1191,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               left: screenWidth * 0.04,
               child: Container(
                 width: screenWidth * 0.34,
-                height: screenHeight * 0.048,
+                height: screenHeight * 0.05,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
