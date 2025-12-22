@@ -807,51 +807,35 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               ),
             ),
             Positioned(
-              bottom: 30,
+              bottom: 0,
               left: 0,
               right: 0,
-              child: IgnorePointer(
-                child: Container(
-                  padding: EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        Colors.black.withOpacity(0.7),
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700,
-                          fontSize: screenWidth * 0.035,
-                          fontFamily: 'Montserrat',
-                        ),
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: screenWidth * 0.035,
+                        fontFamily: 'Montserrat',
                       ),
-                      SizedBox(height: screenWidth * 0.008),
-                      Text(
-                        priceRange,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: screenWidth * 0.025,
-                          fontFamily: 'Montserrat',
-                        ),
+                    ),
+                    SizedBox(height: screenWidth * 0.008),
+                    Text(
+                      priceRange,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: screenWidth * 0.025,
+                        fontFamily: 'Montserrat',
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
