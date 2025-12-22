@@ -1214,7 +1214,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 width: screenWidth * 0.07,
                 height: screenWidth * 0.07,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFAFOFO),
+                  color: const Color(0xFFFAF0F0),
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
