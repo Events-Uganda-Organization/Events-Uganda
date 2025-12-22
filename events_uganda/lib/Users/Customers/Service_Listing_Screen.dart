@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -877,23 +878,30 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   builder: (context, scale, child) {
                     return Transform.scale(
                       scale: scale,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white, width: 2),
-                          borderRadius: BorderRadius.circular(30)
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.03,
-                          vertical: screenWidth * 0.01,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Book',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w600,
-                              fontSize: screenWidth * 0.028,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 2),
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.white.withOpacity(0.1),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.03,
+                              vertical: screenWidth * 0.01,
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Book',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: screenWidth * 0.028,
+                                ),
+                              ),
                             ),
                           ),
                         ),
