@@ -1232,7 +1232,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           ),
                         ),
                       ),
-                      SizedBox(width: screenWidth * 0.02),
+                      SizedBox(width: screenWidth * 0.05),
                       Text(
                         'Nearest',
                         style: TextStyle(
