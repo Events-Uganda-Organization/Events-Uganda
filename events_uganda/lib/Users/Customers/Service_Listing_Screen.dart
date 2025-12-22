@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:events_uganda/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AllCategoriesScreen extends StatefulWidget {
-  const AllCategoriesScreen({super.key});
+class ServiceListingScreen extends StatefulWidget {
+  const ServiceListingScreen({super.key});
 
   @override
-  State<AllCategoriesScreen> createState() => _AllCategoriesScreenState();
+  State<ServiceListingScreen> createState() => _ServiceListingScreenState();
 }
 
-class _AllCategoriesScreenState extends State<AllCategoriesScreen>
+class _ServiceListingScreenState extends State<ServiceListingScreen>
     with SingleTickerProviderStateMixin {
   final FocusNode _searchFocus = FocusNode();
   bool _isSearchFocused = false;
