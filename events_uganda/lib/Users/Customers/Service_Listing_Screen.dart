@@ -85,6 +85,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     _promoScrollController.addListener(_onPromoScroll);
     _circleScrollController.addListener(_onCircleScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
+    _forYouScrollController.addListener(_onForYouScroll);
+    _popularNowScrollController.addListener(_onPopularNowScroll);
     _startCountdown();
     _searchFocus.addListener(() {
       setState(() {
@@ -158,7 +160,30 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     }
   }
 
- 
+  void _onForYouScroll() {
+    if (!mounted) return;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final imageWidth = 184.0;
+    final spacing = screenWidth * 0.04;
+    final offset = _forYouScrollController.offset;
+    final maxScroll = _forYouScrollController.position.maxScrollExtent;
+
+    // Better calculation for determining centered image
+    int index;
+    if (offset <= (imageWidth + spacing) * 0.3) {
+      index = 0; // Left image
+    } else if (offset >= maxScroll - (imageWidth + spacing) * 0.3) {
+      index = 3; // Right image
+    } else if (offset < (imageWidth + spacing) * 1.2) {
+      index = 1;
+    } else {
+      index = 2;
+    }
+
+    if (index != _activeForYouIndex) {
+      setState(() => _activeForYouIndex = index);
+    }
+  }
 
   @override
   void dispose() {
@@ -166,6 +191,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     _searchFocus.dispose();
     _circleScrollController.dispose();
     _promoScrollController.dispose();
+    _popularNowScrollController.dispose();
+    _forYouScrollController.dispose();
     super.dispose();
   }
 
