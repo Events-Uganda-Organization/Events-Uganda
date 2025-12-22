@@ -1186,6 +1186,46 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 ),
               ),
             ),
+            // White rectangle with drop shadow
+            Positioned(
+              top: screenHeight * 0.20,
+              left: screenWidth * 0.2,
+              child: Container(
+                width: screenWidth * 0.34,
+                height: screenHeight * 0.045,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // Circle with FAFOFO color and drop shadow
+            Positioned(
+              top: screenHeight * 0.205,
+              left: screenWidth * 0.23,
+              child: Container(
+                width: screenWidth * 0.07,
+                height: screenWidth * 0.07,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFAFOFO),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             // Forward/inactive return button (mirrors back button)
             Positioned(
               top: screenHeight * 0.20,
