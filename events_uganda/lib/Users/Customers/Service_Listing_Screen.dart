@@ -343,12 +343,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         ),
                         child: Center(
                           child: Icon(
-                            _likedPopularNowImages.contains(index)
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: _likedPopularNowImages.contains(index)
-                                ? Colors.red
-                                : Colors.white,
+                            Icons.verified,
+                            color: Colors.blue,
                             size: screenWidth * 0.07,
                           ),
                         ),
@@ -566,12 +562,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         ),
                         child: Center(
                           child: Icon(
-                            _likedImages.contains(index)
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: _likedImages.contains(index)
-                                ? Colors.red
-                                : Colors.white,
+                            Icons.verified,
+                            color: Colors.blue,
                             size: screenWidth * 0.07,
                           ),
                         ),
@@ -790,12 +782,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           ),
                           child: Center(
                             child: Icon(
-                              _likedCategoryImages.contains(index)
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color: _likedCategoryImages.contains(index)
-                                  ? Colors.red
-                                  : Colors.white,
+                              Icons.verified,
+                              color: Colors.blue,
                               size: screenWidth * 0.07,
                             ),
                           ),
