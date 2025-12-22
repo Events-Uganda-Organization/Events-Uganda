@@ -807,7 +807,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               ),
             ),
             Positioned(
-              bottom: 0,
+              bottom: 30,
               left: 0,
               right: 0,
               child: IgnorePointer(
