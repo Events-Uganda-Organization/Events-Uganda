@@ -158,30 +158,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     }
   }
 
-  void _onForYouScroll() {
-    if (!mounted) return;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final imageWidth = 184.0;
-    final spacing = screenWidth * 0.04;
-    final offset = _forYouScrollController.offset;
-    final maxScroll = _forYouScrollController.position.maxScrollExtent;
-
-    // Better calculation for determining centered image
-    int index;
-    if (offset <= (imageWidth + spacing) * 0.3) {
-      index = 0; // Left image
-    } else if (offset >= maxScroll - (imageWidth + spacing) * 0.3) {
-      index = 3; // Right image
-    } else if (offset < (imageWidth + spacing) * 1.2) {
-      index = 1;
-    } else {
-      index = 2;
-    }
-
-    if (index != _activeForYouIndex) {
-      setState(() => _activeForYouIndex = index);
-    }
-  }
+ 
 
   @override
   void dispose() {
