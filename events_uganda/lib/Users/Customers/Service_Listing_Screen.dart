@@ -942,8 +942,8 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               left: screenWidth * 0.02,
               child: Image.asset(
                 'assets/images/chicken.png',
-                width: screenWidth * 0.2,
-                height: screenWidth * 0.2,
+                width: screenWidth * 0.4,
+                height: screenWidth * 0.4,
                 fit: BoxFit.contain,
               ),
             ),
