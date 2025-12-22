@@ -1186,10 +1186,10 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 ),
               ),
             ),
-            // White rectangle with drop shadow
+            // White rectangle with circle inside it
             Positioned(
-              top: screenHeight * 0.20,
-              left: screenWidth * 0.2,
+              top: screenHeight * 0.268,
+              left: screenWidth * 0.04,
               child: Container(
                 width: screenWidth * 0.34,
                 height: screenHeight * 0.045,
@@ -1204,25 +1204,26 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     ),
                   ],
                 ),
-              ),
-            ),
-            // Circle with FAFOFO color and drop shadow
-            Positioned(
-              top: screenHeight * 0.205,
-              left: screenWidth * 0.23,
-              child: Container(
-                width: screenWidth * 0.07,
-                height: screenWidth * 0.07,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFAF0F0),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
+                child: Padding(
+                  padding: EdgeInsets.only(left: screenWidth * 0.01),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      width: screenWidth * 0.07,
+                      height: screenWidth * 0.07,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFAF0F0),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.15),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
