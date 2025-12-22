@@ -1205,30 +1205,44 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 ),
                 child: Padding(
                   padding: EdgeInsets.only(left: screenWidth * 0.01),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      width: screenWidth * 0.09,
-                      height: screenWidth * 0.09,
-                      decoration: BoxDecoration(
-                        color: const Color(0XFFF3CA9B),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.15),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
+                  child: Row(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          width: screenWidth * 0.09,
+                          height: screenWidth * 0.09,
+                          decoration: BoxDecoration(
+                            color: const Color(0XFFF3CA9B),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.15),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.location_on,
-                          color: Colors.black,
-                          size: screenWidth * 0.05,
+                          child: Center(
+                            child: Icon(
+                              Icons.location_on,
+                              color: Colors.black,
+                              size: screenWidth * 0.05,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox(width: screenWidth * 0.02),
+                      Text(
+                        'Nearest',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          fontSize: screenWidth * 0.03,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
