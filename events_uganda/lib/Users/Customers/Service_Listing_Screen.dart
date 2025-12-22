@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
