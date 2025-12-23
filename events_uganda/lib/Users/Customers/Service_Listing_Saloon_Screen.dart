@@ -1744,7 +1744,7 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
                         runSpacing: screenWidth * 0.04,
                         children: [
                           _buildCategoryCard(
-                            'assets/images/saloon1.jpg',
+                            'assets/images/saloon5.jpg',
                             'Provider\'s Name',
                             '4.8',
                             8,
