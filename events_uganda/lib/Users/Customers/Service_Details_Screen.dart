@@ -204,6 +204,20 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ],
               ),
             ),
+            // Introduction image
+            Positioned(
+              top: screenHeight * 0.15,
+              left: (screenWidth - screenWidth * 0.95) / 2,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: Image.asset(
+                  'assets/images/introductionbride.jpg',
+                  width: screenWidth * 0.95,
+                  height: screenWidth * 0.95 * (336 / 350),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.2,
