@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:events_uganda/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
+import 'package:events_uganda/Users/Customers/Service_Listing_Saloon_Screen.dart';
 
 class AllCategoriesScreen extends StatefulWidget {
   const AllCategoriesScreen({super.key});
