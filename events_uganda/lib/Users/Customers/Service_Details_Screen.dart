@@ -20,6 +20,15 @@ class ServiceDetailsScreen extends StatefulWidget {
 
 class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     with SingleTickerProviderStateMixin {
+  // List of images for the glassy rectangle
+  final List<String> _galleryImages = [
+    'assets/images/introductionbride.jpg',
+    'assets/images/deco2.jpg',
+    'assets/images/deco3.jpg',
+    'assets/images/deco4.jpg',
+    'assets/images/deco5.jpg',
+  ];
+  int _selectedGalleryIndex = 0;
   final FocusNode _searchFocus = FocusNode();
   Timer? _countdownTimer;
   Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
@@ -200,7 +209,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: Image.asset(
-                  'assets/images/introductionbride.jpg',
+                  _galleryImages[_selectedGalleryIndex],
                   width: screenWidth * 0.95,
                   height: screenWidth * 0.95 * (336 / 350),
                   fit: BoxFit.cover,
@@ -237,26 +246,33 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     child: Row(
                       children: [
                         SizedBox(width: 10),
-                        ...[
-                          'assets/images/introductionbride.jpg',
-                          'assets/images/deco2.jpg',
-                          'assets/images/deco3.jpg',
-                          'assets/images/deco4.jpg',
-                          'assets/images/deco5.jpg',
-                        ].map(
-                          (img) => Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
-                                img,
-                                width: 42,
-                                height: 42,
-                                fit: BoxFit.cover,
+                        ...List.generate(_galleryImages.length, (i) => Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedGalleryIndex = i;
+                                  });
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: _selectedGalleryIndex == i
+                                          ? Border.all(color: Colors.white, width: 2)
+                                          : null,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Image.asset(
+                                      _galleryImages[i],
+                                      width: 42,
+                                      height: 42,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
+                            )),
                         const Spacer(),
                         Container(
                           width: 36,
