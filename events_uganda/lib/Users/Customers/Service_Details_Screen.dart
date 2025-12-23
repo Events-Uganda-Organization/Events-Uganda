@@ -245,6 +245,66 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         color: Colors.blue,
                         size: screenWidth * 0.055,
                       ),
+                      Spacer(),
+                      // First circle: heart with black stroke around icon
+                      Container(
+                        width: 35,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 2),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.18),
+                              blurRadius: 8,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Container(
+                            width: 22,
+                            height: 22,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.black, width: 1.4),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.favorite,
+                                color: Colors.black,
+                                size: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: screenWidth * 0.02),
+                      // Second circle: share icon
+                      Container(
+                        width: 35,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 2),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.18),
+                              blurRadius: 8,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.share,
+                            color: Colors.black,
+                            size: 18,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],
