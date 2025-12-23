@@ -18,6 +18,15 @@ service cloud.firestore {
       allow read, update, delete: if false;
     }
     
+    // Users collection - allow authenticated users to manage their own data
+    match /users/{userId} {
+      // Allow anyone to create a new user document during signup
+      allow create: if true;
+      
+      // Allow users to read/update/delete their own document
+      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+    }
+    
     // Default rule - deny all other access
     match /{document=**} {
       allow read, write: if false;
