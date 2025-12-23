@@ -210,7 +210,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             // Glassy UI Rectangle at bottom of image
             Positioned(
               top:
-                  screenHeight * 0.13 + (screenWidth * 0.95 * (336 / 350)) - 55,
+                  screenHeight * 0.12 + (screenWidth * 0.95 * (336 / 350)) - 55,
               left: (screenWidth - 315) / 2,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
