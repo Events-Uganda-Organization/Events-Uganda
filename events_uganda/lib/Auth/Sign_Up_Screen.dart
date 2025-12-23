@@ -180,8 +180,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
       _showCustomSnackBar(context, 'Please enter your email');
       return;
     }
+    if (!_emailController.text.trim().contains('@')) {
+      _showCustomSnackBar(context, 'Please enter a valid email address');
+      return;
+    }
     if (_passwordController.text.trim().isEmpty) {
       _showCustomSnackBar(context, 'Please enter your password');
+      return;
+    }
+    if (_passwordController.text.trim().length < 6) {
+      _showCustomSnackBar(context, 'Password must be at least 6 characters');
       return;
     }
     if (_phoneController.text.trim().isEmpty) {
