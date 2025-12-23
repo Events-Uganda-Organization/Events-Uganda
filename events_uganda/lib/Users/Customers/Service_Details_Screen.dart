@@ -29,11 +29,11 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     'assets/images/deco3.jpg',
     'assets/images/deco4.jpg',
     'assets/images/deco5.jpg',
-    'assets/images/deco6.jpg',
-    'assets/images/deco7.jpg',
-    'assets/images/deco8.jpg',
-    'assets/images/deco9.jpg',
-    'assets/images/deco10.jpg',
+    'assets/images/glassdeco.jpg',
+    'assets/images/brideandladies.jpg',
+    'assets/images/brideandgroom.jpg',
+    'assets/images/blacknwhitemen.jpg',
+    'assets/images/deco2.jpg',
   ];
   int _selectedGalleryIndex = 0;
   final FocusNode _searchFocus = FocusNode();
@@ -322,13 +322,18 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                         SizedBox(width: 6),
-                        if (_galleryImages.length > 5 &&
-                            _galleryScrollIndex < _galleryImages.length - 5)
+                        if (_galleryScrollIndex < _galleryImages.length - 5)
                           GestureDetector(
                             onTap: () {
                               setState(() {
                                 _galleryScrollIndex = (_galleryScrollIndex + 1)
-                                    .clamp(0, _galleryImages.length - 5);
+                                    .clamp(
+                                      0,
+                                      (_galleryImages.length - 5).clamp(
+                                        0,
+                                        _galleryImages.length,
+                                      ),
+                                    );
                               });
                               _galleryScrollController.animateTo(
                                 (_galleryScrollIndex) * 50.0,
