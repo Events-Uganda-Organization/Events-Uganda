@@ -697,16 +697,30 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
 
     return GestureDetector(
       onTap: () {
-        // Navigate to ServiceListingScreen for all categories
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ServiceListingCateringScreen(
-              category: title,
-              categoryIndex: index,
+        // Navigate to different screens based on category
+        if (index == 4) {
+          // Saloon & Makeup
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ServiceListingSaloonScreen(
+                category: title,
+                categoryIndex: index,
+              ),
             ),
-          ),
-        );
+          );
+        } else {
+          // All other categories go to Catering Screen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ServiceListingCateringScreen(
+                category: title,
+                categoryIndex: index,
+              ),
+            ),
+          );
+        }
       },
       child: Container(
         width: cardWidth,
