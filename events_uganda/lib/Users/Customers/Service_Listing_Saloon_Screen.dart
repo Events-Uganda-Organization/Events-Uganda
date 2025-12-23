@@ -1455,7 +1455,7 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Catering & Food',
+                    'Saloon & Makeup',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
