@@ -954,8 +954,8 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
               ),
             ),
             Positioned(
-              top: -screenHeight * 0.007,
-              left: -screenWidth * 0.1,
+              top: -screenHeight * 0.027,
+              left: -screenWidth * 0.2,
               child: Image.asset(
                 'assets/images/saloonvect.png',
                 width: screenWidth * 0.5,
