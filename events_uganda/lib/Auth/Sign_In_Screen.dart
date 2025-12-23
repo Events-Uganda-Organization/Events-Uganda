@@ -41,7 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
     final prefs = await SharedPreferences.getInstance();
     final savedEmailOrPhone = prefs.getString('savedEmailOrPhone') ?? '';
     final savedPassword = prefs.getString('savedPassword') ?? '';
-    
+
     setState(() {
       _emailController.text = savedEmailOrPhone;
       _passwordController.text = savedPassword;
@@ -124,6 +124,9 @@ class _SignInScreenState extends State<SignInScreen> {
         await prefs.setString('userId', querySnapshot.docs.first.id);
         await prefs.setString('userEmail', userData['email'] ?? '');
         await prefs.setString('userName', userData['fullName'] ?? '');
+
+        // Save credentials for next time
+        await _saveCredentials(emailOrPhone, password);
 
         _showCustomSnackBar(context, 'Sign in successful!');
         await Future.delayed(const Duration(seconds: 1));
