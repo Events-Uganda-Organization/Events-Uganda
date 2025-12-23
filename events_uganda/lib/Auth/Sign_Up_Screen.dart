@@ -250,12 +250,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } on FirebaseAuthException catch (e) {
       String errorMessage = 'An error occurred. Please try again.';
 
+      debugPrint('FirebaseAuthException code: ${e.code}');
+      debugPrint('FirebaseAuthException message: ${e.message}');
+
       if (e.code == 'weak-password') {
         errorMessage = 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
         errorMessage = 'An account already exists for this email.';
       } else if (e.code == 'invalid-email') {
         errorMessage = 'The email address is not valid.';
+      } else if (e.code == 'operation-not-allowed') {
+        errorMessage = 'Email/password accounts are not enabled. Please contact support.';
+      } else {
+        errorMessage = e.message ?? 'An error occurred. Please try again.';
       }
 
       _showCustomSnackBar(context, errorMessage);
