@@ -24,7 +24,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
   String _userFullName = '';
   String? _profilePicUrl;
-  
 
   Widget _buildCircleItem(
     double screenWidth,
@@ -74,13 +73,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   void initState() {
     super.initState();
     _startCountdown();
-    _searchFocus.addListener(() {
-    });
+    _searchFocus.addListener(() {});
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
   }
-
-
 
   String get _greetingText {
     final hour = DateTime.now().hour;
@@ -88,9 +84,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     if (hour < 17) return 'Good Afternoon';
     return 'Good Evening';
   }
-
-
-  
 
   @override
   void dispose() {
@@ -119,11 +112,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     final secs = _remaining.inSeconds.remainder(60);
     return '${_fmt(hours)}:${_fmt(mins)}:${_fmt(secs)}';
   }
-
-
-  
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +194,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             ),
             // Introduction image
             Positioned(
-              top: screenHeight * 0.15,
+              top: screenHeight * 0.13,
               left: (screenWidth - screenWidth * 0.95) / 2,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
@@ -291,8 +279,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
-            
-                      ],
+          ],
         ),
       ),
     );
