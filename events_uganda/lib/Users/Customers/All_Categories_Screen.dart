@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Saloon_Screen.dart';
 
@@ -135,6 +138,50 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
       }
     } catch (e) {
       debugPrint('Error loading user profile: $e');
+    }
+  }
+
+  Future<void> _uploadProfileImage() async {
+    try {
+      // Pick image from gallery
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+      if (image == null) return;
+
+      // Get current user ID
+      final prefs = await SharedPreferences.getInstance();
+      final userId = prefs.getString('userId');
+
+      if (userId == null) {
+        debugPrint('User ID not found');
+        return;
+      }
+
+      // Upload image to Firebase Storage
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('profile_pictures')
+          .child('$userId.jpg');
+
+      await storageRef.putFile(File(image.path));
+
+      // Get download URL
+      final downloadURL = await storageRef.getDownloadURL();
+
+      // Save URL to Firestore
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'profilePicUrl': downloadURL,
+      });
+
+      // Update local state
+      setState(() {
+        _profilePicUrl = downloadURL;
+      });
+
+      debugPrint('Profile picture uploaded successfully: $downloadURL');
+    } catch (e) {
+      debugPrint('Error uploading profile image: $e');
     }
   }
 
