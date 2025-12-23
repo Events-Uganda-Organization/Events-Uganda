@@ -1204,69 +1204,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.13,
-              left: screenWidth * 0.04,
-              right: screenWidth * 0.2,
-              child: Container(
-                height: screenWidth * 0.12,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
-                    color: _isSearchFocused
-                        ? const Color(0xFFCC471B)
-                        : Colors.transparent,
-                    width: 2,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 12,
-                      spreadRadius: 2,
-                      offset: const Offset(2, 7),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: screenWidth * 0.04),
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.black.withOpacity(0.5),
-                        size: screenWidth * 0.06,
-                      ),
-                    ),
-                    SizedBox(width: screenWidth * 0.03),
-                    Expanded(
-                      child: TextField(
-                        focusNode: _searchFocus,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: screenWidth * 0.04,
-                          fontFamily: 'Montserrat',
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Search for services, vendors',
-                          hintStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.5),
-                            fontSize: screenWidth * 0.035,
-                            fontFamily: 'Montserrat',
-                          ),
-                          border: InputBorder.none,
-                          isDense: true, // Add this
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: 0,
-                          ), // Change to vertical: 0
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
               top: screenHeight * 0.20,
               left: screenWidth * 0.04,
               child: GestureDetector(
