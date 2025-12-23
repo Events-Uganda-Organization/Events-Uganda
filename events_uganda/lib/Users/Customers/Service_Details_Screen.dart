@@ -234,7 +234,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         "Provider's Name",
                         style: TextStyle(
                           fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w900,
                           fontSize: screenWidth * 0.045,
                           color: Colors.black,
                         ),
