@@ -520,17 +520,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           icon: Icons.lock,
                           focusNode: _passwordFocus,
                           nextFocusNode: _contactFocus,
-                          textInputAction: TextInputAction.done,
+                          textInputAction: TextInputAction.next,
                           iconColor: Colors.black,
                           fontSize: screenWidth * 0.045,
-                          obscureText: _obscurePassword,
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                              color: Colors.black,
-                            ),
-                            onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
-                          ),
                         ),
                         SizedBox(height: screen.height * 0.016),
                         GestureDetector(
@@ -593,17 +585,15 @@ class _SignInScreenState extends State<SignInScreen> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              onPressed: _isLoading ? null : _signInUser,
-                              child: _isLoading
-                                ? SizedBox(
-                                    width: screen.width * 0.05,
-                                    height: screen.width * 0.05,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                                    ),
-                                  )
-                                : Text(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RoleSelectionScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text(
                                 'Sign In',
                                 style: TextStyle(
                                   color: Colors.black,
@@ -861,8 +851,8 @@ class _ResponsiveTextField extends StatelessWidget {
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
   final TextInputAction textInputAction;
-  final bool? obscureText;
-  final Widget? suffixIcon;
+  final Color? iconColor;
+  final double? fontSize;
 
   const _ResponsiveTextField({
     required this.controller,
@@ -874,10 +864,6 @@ class _ResponsiveTextField extends StatelessWidget {
     required this.textInputAction,
     required this.iconColor,
     required this.fontSize,
-    this.obscureText,
-    this.suffixIcontAction,
-    required this.iconColor,
-    required this.fontSize,
   });
 
   @override
@@ -886,7 +872,10 @@ class _ResponsiveTextField extends StatelessWidget {
     return SizedBox(
       width: screenWidth * 0.8,
       height: screenWidth * 0.13,
-      chobscureText: obscureText ?? false,
+      child: TextField(
+        controller: controller,
+        focusNode: focusNode,
+        textInputAction: textInputAction,
         style: TextStyle(
           fontSize: fontSize ?? screenWidth * 0.045,
           color: Colors.black,
@@ -894,11 +883,6 @@ class _ResponsiveTextField extends StatelessWidget {
         decoration: InputDecoration(
           labelText: label,
           hintText: hint,
-          prefixIcon: Icon(
-            icon,
-            color: iconColor ?? const Color.fromARGB(255, 0, 0, 0),
-          ),
-          suffixIcon: suffixIconintText: hint,
           prefixIcon: Icon(
             icon,
             color: iconColor ?? const Color.fromARGB(255, 0, 0, 0),
