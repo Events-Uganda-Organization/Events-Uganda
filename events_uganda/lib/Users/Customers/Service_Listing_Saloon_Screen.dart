@@ -968,8 +968,8 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
               right: -screenWidth * 0.1,
               child: Image.asset(
                 'assets/images/saloonvect.png',
-                width: screenWidth * 0.4,
-                height: screenWidth * 0.4,
+                width: screenWidth * 0.5,
+                height: screenWidth * 0.5,
                 fit: BoxFit.contain,
               ),
             ),
