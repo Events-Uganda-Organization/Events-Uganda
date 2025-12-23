@@ -258,7 +258,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                _galleryScrollIndex = (_galleryScrollIndex - 1).clamp(0, _galleryImages.length - 1);
+                                _galleryScrollIndex = (_galleryScrollIndex - 1)
+                                    .clamp(0, _galleryImages.length - 1);
                               });
                               _galleryScrollController.animateTo(
                                 (_galleryScrollIndex) * 50.0,
@@ -301,7 +302,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   child: Container(
                                     decoration: BoxDecoration(
                                       border: _selectedGalleryIndex == i
-                                          ? Border.all(color: Colors.white, width: 2)
+                                          ? Border.all(
+                                              color: Colors.white,
+                                              width: 2,
+                                            )
                                           : null,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -318,11 +322,13 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                         SizedBox(width: 6),
-                        if (_galleryScrollIndex < _galleryImages.length - 5)
+                        if (_galleryImages.length > 5 &&
+                            _galleryScrollIndex < _galleryImages.length - 5)
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                _galleryScrollIndex = (_galleryScrollIndex + 1).clamp(0, _galleryImages.length - 5);
+                                _galleryScrollIndex = (_galleryScrollIndex + 1)
+                                    .clamp(0, _galleryImages.length - 5);
                               });
                               _galleryScrollController.animateTo(
                                 (_galleryScrollIndex) * 50.0,
