@@ -1111,47 +1111,50 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.2,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
-                    ? ClipOval(
-                        child: Image.network(
-                          _profilePicUrl!,
-                          width: screenWidth * 0.128,
-                          height: screenWidth * 0.128,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Center(
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.black,
-                                size: screenWidth * 0.07,
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                    : Center(
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.black,
-                          size: screenWidth * 0.07,
-                        ),
+              child: GestureDetector(
+                onTap: _uploadProfileImage,
+                child: Container(
+                  width: screenWidth * 0.128,
+                  height: screenWidth * 0.128,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 3),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.15),
+                        blurRadius: 10,
+                        spreadRadius: 2,
+                        offset: const Offset(0, 7),
                       ),
+                    ],
+                  ),
+                  child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
+                      ? ClipOval(
+                          child: Image.network(
+                            _profilePicUrl!,
+                            width: screenWidth * 0.128,
+                            height: screenWidth * 0.128,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Center(
+                                child: Icon(
+                                  Icons.person,
+                                  color: Colors.black,
+                                  size: screenWidth * 0.07,
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      : Center(
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.black,
+                            size: screenWidth * 0.07,
+                          ),
+                        ),
+                ),
               ),
             ),
             Positioned(
