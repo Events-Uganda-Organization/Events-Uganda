@@ -357,7 +357,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                     // Form content
                     Padding(
                       padding: EdgeInsets.only(
-                        top: screenHeight * 0.015,
+                        top: screenHeight * 0.00,
                         left: 0,
                         right: 0,
                         bottom: 0,

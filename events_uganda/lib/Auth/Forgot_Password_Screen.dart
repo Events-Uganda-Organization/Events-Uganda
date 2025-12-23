@@ -349,7 +349,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                        top: screenHeight * 0.009,
+                        top: screenHeight * 0.00,
                         left: 0,
                         right: 0,
                         bottom: 0,
