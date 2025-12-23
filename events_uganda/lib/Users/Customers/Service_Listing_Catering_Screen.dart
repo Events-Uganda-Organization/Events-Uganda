@@ -783,7 +783,14 @@ class _ServiceListingCateringScreenState
     final cardHeight = cardWidth * 1.185;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ServiceDetailsScreen(),
+          ),
+        );
+      },
       child: Container(
         width: cardWidth,
         height: cardHeight,
