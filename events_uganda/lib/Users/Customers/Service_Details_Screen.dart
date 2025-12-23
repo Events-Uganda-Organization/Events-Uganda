@@ -1050,30 +1050,25 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 fit: BoxFit.contain,
               ),
             ),
+            // Back button
             Positioned(
-              top: screenHeight * 0.03,
-              left: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 10,
-                      offset: const Offset(0, 7),
+              top: MediaQuery.of(context).size.height * 0.04,
+              left: MediaQuery.of(context).size.width * 0.04,
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).maybePop(),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.13,
+                  height: MediaQuery.of(context).size.width * 0.13,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF3CA9B),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.chevron_left,
+                      color: Colors.black,
+                      size: MediaQuery.of(context).size.width * 0.10,
                     ),
-                  ],
-                ),
-                child: Center(
-                  child: Image.asset(
-                    'assets/vectors/menu.png',
-                    width: screenWidth * 0.07,
-                    height: screenWidth * 0.07,
-                    fit: BoxFit.contain,
                   ),
                 ),
               ),
