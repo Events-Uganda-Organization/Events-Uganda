@@ -1274,7 +1274,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                           ),
                           _buildCategoryCard(
                             'assets/images/cake2.jpg',
-                            'Cakes',
+                            'Saloon & Makeup',
                             '4.5',
                             4,
                             21,
