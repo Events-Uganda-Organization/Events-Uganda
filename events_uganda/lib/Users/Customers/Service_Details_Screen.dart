@@ -808,34 +808,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
           );
         }
       },
-      child: Container(
-        width: cardWidth,
-        height: cardHeight,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                imagePath,
-                width: cardWidth,
-                height: cardHeight,
-                fit: BoxFit.cover,
-              ),
-            ),
-            
-          ],
-        ),
-      ),
+      
     );
   }
 
