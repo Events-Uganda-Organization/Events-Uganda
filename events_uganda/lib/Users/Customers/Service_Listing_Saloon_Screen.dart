@@ -1583,7 +1583,7 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/cake4.jpg',
+                            'assets/images/saloon3.jpg',
                             'Provider\'s Name',
                             '4.9',
                             5,
