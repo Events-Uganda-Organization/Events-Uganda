@@ -20,28 +20,11 @@ class ServiceDetailsScreen extends StatefulWidget {
 class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     with SingleTickerProviderStateMixin {
   final FocusNode _searchFocus = FocusNode();
-  bool _isSearchFocused = false;
   Timer? _countdownTimer;
   Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
-  final ScrollController _promoScrollController = ScrollController();
-  int _activeCardIndex = 0;
-  final ScrollController _circleScrollController = ScrollController();
-  int _activeCircleIndex = 0;
-  final ScrollController _forYouScrollController = ScrollController();
-  int _activeForYouIndex = 1;
-  final ScrollController _popularNowScrollController = ScrollController();
-  int _activePopularNowIndex = 1;
-  final Set<int> _likedPopularNowImages = {};
-  final Set<int> _cartedPopularNowImages = {};
-  final Set<int> _likedImages = {};
-  final Set<int> _cartedImages = {};
-  final Set<int> _likedCategoryImages = {};
-  final Set<int> _cartedCategoryImages = {};
-  int _currentNavIndex = 0;
   String _userFullName = '';
   String? _profilePicUrl;
-  bool _canForwardReturn =
-      false; // Controls the right-side inactive/active return button
+  
 
   Widget _buildCircleItem(
     double screenWidth,
@@ -92,9 +75,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     super.initState();
     _startCountdown();
     _searchFocus.addListener(() {
-      setState(() {
-        _isSearchFocused = _searchFocus.hasFocus;
-      });
     });
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
