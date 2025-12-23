@@ -29,7 +29,7 @@ dependencies:
   # core
   firebase_core: ^3.6.0
   # hashing passwords
-  crypto: 
+  crypto:
   # signing in with apple
   sign_in_with_apple:
   # messaging
@@ -42,6 +42,8 @@ dependencies:
   firebase_storage:
   # image picker
   image_picker:
+  # app check for phone auth
+  firebase_app_check: ^0.3.2+10
 
 dev_dependencies:
   flutter_test:

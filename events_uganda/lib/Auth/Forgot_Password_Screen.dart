@@ -87,7 +87,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             errorMessage = 'Network error. Check your connection';
           } else if (e.code == 'web-context-cancelled') {
             errorMessage =
-                'SMS verification is being set up. Please use test numbers for now.';
+                'Verification cancelled. Please use test numbers configured in Firebase.';
+          } else if (e.code == 'missing-client-identifier') {
+            errorMessage =
+                'Real SMS requires App Check setup. Please use test phone numbers from Firebase Console for now.';
           } else {
             errorMessage = e.message ?? 'Failed to send OTP';
           }
