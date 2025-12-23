@@ -5,7 +5,14 @@ import 'package:events_uganda/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ServiceListingScreen extends StatefulWidget {
-  const ServiceListingScreen({super.key});
+  final String? category;
+  final int? categoryIndex;
+
+  const ServiceListingScreen({
+    super.key,
+    this.category,
+    this.categoryIndex,
+  });
 
   @override
   State<ServiceListingScreen> createState() => _ServiceListingScreenState();
