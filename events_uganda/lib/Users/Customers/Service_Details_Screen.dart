@@ -753,64 +753,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     );
   }
 
-  Widget _buildPromoCard(
-    double screenWidth,
-    double screenHeight,
-    double promoHeight, {
-    String imagePath = 'assets/images/nobgcar.png',
-    String mainText = 'GET YOUR SPECIAL CAR BOOKING\n',
-    String prefixText = 'UP TO ',
-    String percentageText = '30%',
-  }) {
-    final cardWidth = screenWidth * 0.82;
-    return SizedBox(
-      width: cardWidth,
-      child: Stack(clipBehavior: Clip.none, children: []),
-    );
-  }
-
-  Widget _buildCategoryCard(
-    String imagePath,
-    String title,
-    String rating,
-    int index,
-    int providersCount,
-    double screenWidth,
-  ) {
-    final cardWidth =
-        (screenWidth - (screenWidth * 0.04 * 2) - (screenWidth * 0.04)) / 2;
-    final cardHeight = cardWidth * 1.185;
-
-    return GestureDetector(
-      onTap: () {
-        // Navigate to different screens based on category
-        if (index == 4) {
-          // Saloon & Makeup
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ServiceListingSaloonScreen(
-                category: title,
-                categoryIndex: index,
-              ),
-            ),
-          );
-        } else {
-          // All other categories go to Catering Screen
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ServiceListingCateringScreen(
-                category: title,
-                categoryIndex: index,
-              ),
-            ),
-          );
-        }
-      },
-      
-    );
-  }
+  
 
   @override
   Widget build(BuildContext context) {
