@@ -8,9 +8,14 @@ class ServiceListingSaloonScreen extends StatefulWidget {
   final String? category;
   final int? categoryIndex;
 
-  const ServiceListingSaloonScreen({super.key, this.category, this.categoryIndex});
+  const ServiceListingSaloonScreen({
+    super.key,
+    this.category,
+    this.categoryIndex,
+  });
   @override
-  State<ServiceListingSaloonScreen> createState() => _ServiceListingSaloonScreenState();
+  State<ServiceListingSaloonScreen> createState() =>
+      _ServiceListingSaloonScreenState();
 }
 
 class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
@@ -1570,7 +1575,7 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/cake2.jpg',
+                            'assets/images/saloon2.jpg',
                             'Provider\'s Name',
                             '4.5',
                             4,
