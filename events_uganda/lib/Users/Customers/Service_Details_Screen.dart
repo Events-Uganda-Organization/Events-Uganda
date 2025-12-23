@@ -270,11 +270,14 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             child: Container(
                               width: 36,
                               height: 36,
-                              child: const Icon(
-                                Icons.play_arrow,
-                                color: Colors.white,
-                                size: 28,
-                                textDirection: TextDirection.rtl,
+                              alignment: Alignment.center,
+                              child: Transform.rotate(
+                                angle: 3.1416, // 180° → face left
+                                child: const Icon(
+                                  Icons.play_arrow,
+                                  color: Colors.white,
+                                  size: 28,
+                                ),
                               ),
                             ),
                           ),
