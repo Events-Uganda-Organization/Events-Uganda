@@ -102,6 +102,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     });
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
+    _loadUserProfile();
   }
 
   String get _greetingText {
@@ -109,6 +110,85 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     if (hour < 12) return 'Good Morning';
     if (hour < 17) return 'Good Afternoon';
     return 'Good Evening';
+  }
+
+  Future<void> _loadUserProfile() async {
+    try {
+      // First try to get from Firebase Auth
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null && currentUser.photoURL != null) {
+        setState(() {
+          _profilePicUrl = currentUser.photoURL;
+        });
+        return;
+      }
+
+      // If not available, get from Firestore using saved userId
+      final prefs = await SharedPreferences.getInstance();
+      final userId = prefs.getString('userId');
+
+      if (userId != null) {
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .get();
+
+        if (userDoc.exists) {
+          final data = userDoc.data();
+          if (data != null && data['profilePicUrl'] != null) {
+            setState(() {
+              _profilePicUrl = data['profilePicUrl'] as String?;
+            });
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('Error loading user profile: $e');
+    }
+  }
+
+  Future<void> _uploadProfileImage() async {
+    try {
+      // Pick image from gallery
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+      if (image == null) return;
+
+      // Get current user ID
+      final prefs = await SharedPreferences.getInstance();
+      final userId = prefs.getString('userId');
+
+      if (userId == null) {
+        debugPrint('User ID not found');
+        return;
+      }
+
+      // Upload image to Firebase Storage
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('profile_pictures')
+          .child('$userId.jpg');
+
+      await storageRef.putFile(File(image.path));
+
+      // Get download URL
+      final downloadURL = await storageRef.getDownloadURL();
+
+      // Save URL to Firestore
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'profilePicUrl': downloadURL,
+      });
+
+      // Update local state
+      setState(() {
+        _profilePicUrl = downloadURL;
+      });
+
+      debugPrint('Profile picture uploaded successfully: $downloadURL');
+    } catch (e) {
+      debugPrint('Error uploading profile image: $e');
+    }
   }
 
   void _onCircleScroll() {
