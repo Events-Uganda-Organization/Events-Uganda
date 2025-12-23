@@ -1273,7 +1273,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/cake2.jpg',
+                            'assets/images/saloon.jpg',
                             'Saloon & Makeup',
                             '4.5',
                             4,
