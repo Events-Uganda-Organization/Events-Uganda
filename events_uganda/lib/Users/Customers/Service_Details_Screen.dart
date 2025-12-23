@@ -26,17 +26,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   String _userFullName = '';
   String? _profilePicUrl;
 
-  // List of images for the glassy rectangle
-  final List<String> _galleryImages = [
-    'assets/images/introductionbride.jpg',
-    'assets/images/introductionbride.jpg',
-    'assets/images/introductionbride.jpg',
-    'assets/images/introductionbride.jpg',
-    'assets/images/introductionbride.jpg',
-  ];
-
-  int _selectedGalleryIndex = 0;
-
   Widget _buildCircleItem(
     double screenWidth,
     double screenHeight,
@@ -211,7 +200,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: Image.asset(
-                  _galleryImages[_selectedGalleryIndex],
+                  'assets/images/introductionbride.jpg',
                   width: screenWidth * 0.95,
                   height: screenWidth * 0.95 * (336 / 350),
                   fit: BoxFit.cover,
@@ -257,51 +246,42 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ].map(
                           (img) => Padding(
                             padding: const EdgeInsets.only(right: 8.0),
-                            children: [
-                              SizedBox(width: 10),
-                              ...List.generate(_galleryImages.length, (i) => Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _selectedGalleryIndex = i;
-                                        });
-                                      },
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: _selectedGalleryIndex == i
-                                                ? Border.all(color: Colors.white, width: 2)
-                                                : null,
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: Image.asset(
-                                            _galleryImages[i],
-                                            width: 42,
-                                            height: 42,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )),
-                              const Spacer(),
-                              Container(
-                                width: 36,
-                                height: 36,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.3),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.play_arrow,
-                                  color: Colors.white,
-                                  size: 28,
-                                ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                img,
+                                width: 42,
+                                height: 42,
+                                fit: BoxFit.cover,
                               ),
-                              SizedBox(width: 10),
-                            ],
+                            ),
+                          ),
+                        ),
+                        const Spacer(),
+                        Container(
+                          width: 36,
+                          height: 36,
+                          child: const Icon(
+                            Icons.play_arrow,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.03,
+              right: screenWidth * 0.2,
+              child: Container(
+                width: screenWidth * 0.128,
+                height: screenWidth * 0.128,
+                decoration: BoxDecoration(
+                  color: Colors.white,
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
