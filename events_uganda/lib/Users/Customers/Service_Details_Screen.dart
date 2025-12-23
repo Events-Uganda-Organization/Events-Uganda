@@ -243,26 +243,24 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           'assets/images/introductionbride.jpg',
                           'assets/images/introductionbride.jpg',
                           'assets/images/introductionbride.jpg',
-                        ].map((img) => Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10),
-                                child: Image.asset(
-                                  img,
-                                  width: 42,
-                                  height: 42,
-                                  fit: BoxFit.cover,
-                                ),
+                        ].map(
+                          (img) => Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.asset(
+                                img,
+                                width: 42,
+                                height: 42,
+                                fit: BoxFit.cover,
                               ),
-                            )),
+                            ),
+                          ),
+                        ),
                         const Spacer(),
                         Container(
                           width: 36,
                           height: 36,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.3),
-                            shape: BoxShape.circle,
-                          ),
                           child: const Icon(
                             Icons.play_arrow,
                             color: Colors.white,
