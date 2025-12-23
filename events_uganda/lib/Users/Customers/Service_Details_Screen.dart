@@ -20,6 +20,8 @@ class ServiceDetailsScreen extends StatefulWidget {
 
 class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     with SingleTickerProviderStateMixin {
+  final ScrollController _galleryScrollController = ScrollController();
+  int _galleryScrollIndex = 0;
   // List of images for the glassy rectangle
   final List<String> _galleryImages = [
     'assets/images/introductionbride.jpg',
@@ -27,6 +29,11 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     'assets/images/deco3.jpg',
     'assets/images/deco4.jpg',
     'assets/images/deco5.jpg',
+    'assets/images/deco6.jpg',
+    'assets/images/deco7.jpg',
+    'assets/images/deco8.jpg',
+    'assets/images/deco9.jpg',
+    'assets/images/deco10.jpg',
   ];
   int _selectedGalleryIndex = 0;
   final FocusNode _searchFocus = FocusNode();
@@ -97,6 +104,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
 
   @override
   void dispose() {
+    _galleryScrollController.dispose();
     super.dispose();
   }
 
@@ -245,8 +253,42 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     ),
                     child: Row(
                       children: [
-                        SizedBox(width: 10),
-                        ...List.generate(_galleryImages.length, (i) => Padding(
+                        SizedBox(width: 6),
+                        if (_galleryScrollIndex > 0)
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _galleryScrollIndex = (_galleryScrollIndex - 1).clamp(0, _galleryImages.length - 1);
+                              });
+                              _galleryScrollController.animateTo(
+                                (_galleryScrollIndex) * 50.0,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.ease,
+                              );
+                            },
+                            child: Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.3),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.play_arrow,
+                                color: Colors.white,
+                                size: 28,
+                                textDirection: TextDirection.rtl,
+                              ),
+                            ),
+                          ),
+                        SizedBox(width: 6),
+                        Expanded(
+                          child: ListView.builder(
+                            controller: _galleryScrollController,
+                            scrollDirection: Axis.horizontal,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: _galleryImages.length,
+                            itemBuilder: (context, i) => Padding(
                               padding: const EdgeInsets.only(right: 8.0),
                               child: GestureDetector(
                                 onTap: () {
@@ -272,18 +314,37 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   ),
                                 ),
                               ),
-                            )),
-                        const Spacer(),
-                        Container(
-                          width: 36,
-                          height: 36,
-                          child: const Icon(
-                            Icons.play_arrow,
-                            color: Colors.white,
-                            size: 28,
+                            ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 6),
+                        if (_galleryScrollIndex < _galleryImages.length - 5)
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _galleryScrollIndex = (_galleryScrollIndex + 1).clamp(0, _galleryImages.length - 5);
+                              });
+                              _galleryScrollController.animateTo(
+                                (_galleryScrollIndex) * 50.0,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.ease,
+                              );
+                            },
+                            child: Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.3),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.play_arrow,
+                                color: Colors.white,
+                                size: 28,
+                              ),
+                            ),
+                          ),
+                        SizedBox(width: 6),
                       ],
                     ),
                   ),
