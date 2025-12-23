@@ -1,12 +1,9 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Saloon_Screen.dart';
 
@@ -40,7 +37,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
   int _currentNavIndex = 0;
   String _userFullName = '';
   String? _profilePicUrl;
-  bool _isUploadingImage = false;
   bool _canForwardReturn =
       false; // Controls the right-side inactive/active return button
 
@@ -142,60 +138,39 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
     }
   }
 
-  Future<void> _uploadProfileImage() async {
-    try {
-      // Pick image from gallery
-      final ImagePicker picker = ImagePicker();
-      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+  String get _greetingText {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Good Morning';
+    if (hour < 17) return 'Good Afternoon';
+    return 'Good Evening';
+  }
 
-      if (image == null) return;
+  void _onCircleScroll() {
+    if (!mounted) return;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final itemWidth = 70.0;
+    final spacing = screenWidth * 0.03;
+    final offset = _circleScrollController.offset;
 
-      setState(() => _isUploadingImage = true);
+    final index = ((offset + itemWidth / 2) / (itemWidth + spacing))
+        .clamp(0, 4)
+        .toInt();
 
-      // Get current user ID
-      final prefs = await SharedPreferences.getInstance();
-      final userId = prefs.getString('userId');
-
-      if (userId == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User ID not found')),
-        );
-        return;
-      }
-
-      // Upload image to Firebase Storage
-      final storageRef = FirebaseStorage.instance
-          .ref()
-          .child('profile_pictures')
-          .child('$userId.jpg');
-
-      await storageRef.putFile(File(image.path));
-
-      // Get download URL
-      final downloadURL = await storageRef.getDownloadURL();
-
-      // Save URL to Firestore
-      await FirebaseFirestore.instance.collection('users').doc(userId).update({
-        'profilePicUrl': downloadURL,
-      });
-
-      // Update local state
-      setState(() {
-        _profilePicUrl = downloadURL;
-      });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Profile picture updated successfully!')),
-      );
-    } catch (e) {
-      debugPrint('Error uploading profile image: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error uploading image: $e')),
-      );
-    } finally {
-      setState(() => _isUploadingImage = false);
+    if (index != _activeCircleIndex) {
+      setState(() => _activeCircleIndex = index);
     }
   }
+
+  void _onPromoScroll() {
+    if (!mounted) return;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final cardWidth = screenWidth * 0.82;
+    final spacing = screenWidth * 0.04;
+    final offset = _promoScrollController.offset;
+
+    final index = ((offset + cardWidth / 2) / (cardWidth + spacing))
+        .clamp(0, 2)
+        .toInt();
 
     if (index != _activeCardIndex) {
       setState(() => _activeCardIndex = index);
@@ -1089,60 +1064,47 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.2,
-              child: GestureDetector(
-                onTap: _isUploadingImage ? null : _uploadProfileImage,
-                child: Container(
-                  width: screenWidth * 0.128,
-                  height: screenWidth * 0.128,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 3),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.15),
-                        blurRadius: 10,
-                        spreadRadius: 2,
-                        offset: const Offset(0, 7),
-                      ),
-                    ],
-                  ),
-                  child: _isUploadingImage
-                      ? Center(
-                          child: SizedBox(
-                            width: screenWidth * 0.06,
-                            height: screenWidth * 0.06,
-                            child: const CircularProgressIndicator(
-                              strokeWidth: 2,
-                            ),
-                          ),
-                        )
-                      : (_profilePicUrl != null && _profilePicUrl!.isNotEmpty
-                          ? ClipOval(
-                              child: Image.network(
-                                _profilePicUrl!,
-                                width: screenWidth * 0.128,
-                                height: screenWidth * 0.128,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Center(
-                                    child: Icon(
-                                      Icons.person,
-                                      color: Colors.black,
-                                      size: screenWidth * 0.07,
-                                    ),
-                                  );
-                                },
-                              ),
-                            )
-                          : Center(
+              child: Container(
+                width: screenWidth * 0.128,
+                height: screenWidth * 0.128,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 3),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 7),
+                    ),
+                  ],
+                ),
+                child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
+                    ? ClipOval(
+                        child: Image.network(
+                          _profilePicUrl!,
+                          width: screenWidth * 0.128,
+                          height: screenWidth * 0.128,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Center(
                               child: Icon(
                                 Icons.person,
                                 color: Colors.black,
                                 size: screenWidth * 0.07,
                               ),
-                            )),
-                ),
+                            );
+                          },
+                        ),
+                      )
+                    : Center(
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: screenWidth * 0.07,
+                        ),
+                      ),
               ),
             ),
             Positioned(

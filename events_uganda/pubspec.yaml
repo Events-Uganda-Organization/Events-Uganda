@@ -38,6 +38,10 @@ dependencies:
   shared_preferences:
   # cloud firestore
   cloud_firestore:
+  # firebase storage
+  firebase_storage:
+  # image picker
+  image_picker:
 
 dev_dependencies:
   flutter_test:
