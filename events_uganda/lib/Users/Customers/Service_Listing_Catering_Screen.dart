@@ -1594,6 +1594,26 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         ],
                       ),
                     ),
+                    SizedBox(height: screenWidth * 0.04),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.04,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'All Providers',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: screenWidth * 0.045,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(height: screenWidth * 0.1),
                   ],
                 ),
