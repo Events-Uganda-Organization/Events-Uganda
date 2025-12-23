@@ -117,13 +117,13 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
       // If not available, get from Firestore using saved userId
       final prefs = await SharedPreferences.getInstance();
       final userId = prefs.getString('userId');
-      
+
       if (userId != null) {
         final userDoc = await FirebaseFirestore.instance
             .collection('users')
             .doc(userId)
             .get();
-        
+
         if (userDoc.exists) {
           final data = userDoc.data();
           if (data != null && data['profilePicUrl'] != null) {
