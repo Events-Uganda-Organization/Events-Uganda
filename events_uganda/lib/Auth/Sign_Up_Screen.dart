@@ -216,6 +216,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // Update user display name
       await user.updateDisplayName(_fullNameController.text.trim());
 
+      // Get FCM token (optional, won't fail if unavailable)
+      String? fcmToken;
+      try {
+        fcmToken = await FirebaseMessaging.instance.getToken();
+      } catch (e) {
+        debugPrint('Failed to get FCM token: $e');
+      }
+
       // Save user data to Firestore
       await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
         'fullName': _fullNameController.text.trim(),
@@ -224,7 +232,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'phone': _phoneController.text.trim(),
         'authProvider': 'email',
         'createdAt': FieldValue.serverTimestamp(),
-        'fcmToken': await FirebaseMessaging.instance.getToken(),
+        'fcmToken': fcmToken,
         'lastActiveTimestamp': Timestamp.now(),
         'isAdmin': false,
       });
