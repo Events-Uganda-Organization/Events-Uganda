@@ -1,7 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'package:events_uganda/Users/Customers/All_Categories_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Bottom_Navbar.dart';
 
@@ -36,6 +41,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
   final Set<int> _cartedImages = {};
   int _currentNavIndex = 0;
   String _userFullName = '';
+  String? _profilePicUrl;
 
   Widget _buildCircleItem(
     double screenWidth,
