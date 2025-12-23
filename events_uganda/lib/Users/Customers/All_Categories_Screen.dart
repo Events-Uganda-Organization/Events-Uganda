@@ -700,8 +700,10 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                ServiceListingScreen(category: title, categoryIndex: index),
+            builder: (context) => ServiceListingScreen(
+              category: title,
+              categoryIndex: index,
+            ),
           ),
         );
       },
