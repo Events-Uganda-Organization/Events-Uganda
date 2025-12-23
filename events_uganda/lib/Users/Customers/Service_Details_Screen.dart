@@ -275,12 +275,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
 
   @override
   void dispose() {
-    _countdownTimer?.cancel();
-    _searchFocus.dispose();
-    _circleScrollController.dispose();
-    _promoScrollController.dispose();
-    _popularNowScrollController.dispose();
-    _forYouScrollController.dispose();
     super.dispose();
   }
 
