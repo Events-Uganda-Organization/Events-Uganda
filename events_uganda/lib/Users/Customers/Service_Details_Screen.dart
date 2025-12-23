@@ -344,10 +344,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             child: Container(
                               width: 36,
                               height: 36,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.3),
-                                shape: BoxShape.circle,
-                              ),
                               child: const Icon(
                                 Icons.play_arrow,
                                 color: Colors.white,
