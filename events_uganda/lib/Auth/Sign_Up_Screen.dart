@@ -170,6 +170,98 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
+  Future<void> _signUpUser() async {
+    // Validate inputs
+    if (_fullNameController.text.trim().isEmpty) {
+      _showCustomSnackBar(context, 'Please enter your full name');
+      return;
+    }
+    if (_emailController.text.trim().isEmpty) {
+      _showCustomSnackBar(context, 'Please enter your email');
+      return;
+    }
+    if (_passwordController.text.trim().isEmpty) {
+      _showCustomSnackBar(context, 'Please enter your password');
+      return;
+    }
+    if (_phoneController.text.trim().isEmpty) {
+      _showCustomSnackBar(context, 'Please enter your phone number');
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      // Create user in Firebase Auth
+      final userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      final user = userCredential.user;
+      if (user == null) {
+        _showCustomSnackBar(context, 'Failed to create user account');
+        return;
+      }
+
+      // Update user display name
+      await user.updateDisplayName(_fullNameController.text.trim());
+
+      // Save user data to Firestore
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+        'fullName': _fullNameController.text.trim(),
+        'email': _emailController.text.trim(),
+        'password': _passwordController.text.trim(),
+        'phone': _phoneController.text.trim(),
+        'authProvider': 'email',
+        'createdAt': FieldValue.serverTimestamp(),
+        'fcmToken': await FirebaseMessaging.instance.getToken(),
+        'lastActiveTimestamp': Timestamp.now(),
+        'isAdmin': false,
+      });
+
+      // Save login state
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', true);
+
+      _showCustomSnackBar(
+        context,
+        'Account created successfully!',
+        isSuccess: true,
+      );
+
+      await Future.delayed(const Duration(seconds: 2));
+
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => RoleSelectionScreen()),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = 'An error occurred. Please try again.';
+      
+      if (e.code == 'weak-password') {
+        errorMessage = 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        errorMessage = 'An account already exists for this email.';
+      } else if (e.code == 'invalid-email') {
+        errorMessage = 'The email address is not valid.';
+      }
+
+      _showCustomSnackBar(context, errorMessage);
+    } catch (e) {
+      _showCustomSnackBar(
+        context,
+        'An error occurred. Please try again later.',
+      );
+      debugPrint('Sign up error: $e');
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   Future<void> signInWithGoogle() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -452,24 +544,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: Colors.transparent,
                               child: InkWell(
                                 borderRadius: BorderRadius.circular(30),
-                                onTap: () {
-                                  Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => RoleSelectionScreen(),
-                                  ),
-                                );
-                                },
+                                onTap: _isLoading ? null : _signUpUser,
                                 child: Center(
-                                  child: Text(
-                                    'Sign Up',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: screenWidth * 0.045,
-                                      fontWeight: FontWeight.w800,
-                                      fontFamily: 'Montserrat',
-                                    ),
-                                  ),
+                                  child: _isLoading
+                                      ? SizedBox(
+                                          width: screenWidth * 0.06,
+                                          height: screenWidth * 0.06,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.black,
+                                            strokeWidth: 2,
+                                          ),
+                                        )
+                                      : Text(
+                                          'Sign Up',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: screenWidth * 0.045,
+                                            fontWeight: FontWeight.w800,
+                                            fontFamily: 'Montserrat',
+                                          ),
+                                        ),
                                 ),
                               ),
                             ),
