@@ -12,10 +12,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Enable App Check for phone authentication with debug token
+  // Enable App Check for phone authentication
+  // Debug token configured in Firebase Console will be used automatically
   await FirebaseAppCheck.instance.activate(
     androidProvider: AndroidProvider.playIntegrity,
-    androidDebugToken: '5A6C9262-7409-4D39-AECE-47B66161ABF1',
   );
 
   runApp(const MyApp());
