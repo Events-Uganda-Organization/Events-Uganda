@@ -469,9 +469,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                               child: CircularProgressIndicator(
                                                 strokeWidth: 2,
                                                 valueColor:
-                                                    AlwaysStoppedAnimation<Color>(
-                                                  Colors.black,
-                                                ),
+                                                    AlwaysStoppedAnimation<
+                                                      Color
+                                                    >(Colors.black),
                                               ),
                                             )
                                           : Text(
