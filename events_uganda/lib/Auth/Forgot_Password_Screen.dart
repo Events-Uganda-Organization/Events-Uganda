@@ -63,6 +63,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         throw Exception('Phone auth not supported on web');
       }
 
+      print('Sending OTP to: ${_formatPhoneNumber(phoneNumber)}');
+
       await _auth.verifyPhoneNumber(
         phoneNumber: _formatPhoneNumber(phoneNumber),
         forceResendingToken: _resendToken,
@@ -74,6 +76,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         verificationFailed: (FirebaseAuthException e) {
           setState(() => _isLoading = false);
           print('Verification failed: ${e.code} - ${e.message}');
+          print('Full error: $e');
 
           String errorMessage = 'Failed to send OTP';
           if (e.code == 'invalid-phone-number') {
@@ -82,6 +85,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             errorMessage = 'Too many requests. Please try again later';
           } else if (e.code == 'network-request-failed') {
             errorMessage = 'Network error. Check your connection';
+          } else if (e.code == 'web-context-cancelled') {
+            errorMessage =
+                'SMS verification is being set up. Please use test numbers for now.';
           } else {
             errorMessage = e.message ?? 'Failed to send OTP';
           }
@@ -129,6 +135,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ).showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
+
   Future<void> _sendEmailOTP(String email) async {
     try {
       final otp = _generateOTP();
@@ -178,6 +185,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ).showSnackBar(SnackBar(content: Text('Error sending OTP: $e')));
     }
   }
+
   Future<void> _sendOTP() async {
     final input = _emailController.text.trim();
 
