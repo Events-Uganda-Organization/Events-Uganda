@@ -29,6 +29,119 @@ class _SignInScreenState extends State<SignInScreen> {
 
   final bool obscureText = true;
   bool _isLoading = false;
+  bool _obscurePassword = true;
+
+  // EMAIL/PHONE + PASSWORD SIGN-IN
+  Future<void> _signInUser() async {
+    final emailOrPhone = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    // Validation
+    if (emailOrPhone.isEmpty) {
+      _showCustomSnackBar(context, 'Please enter your email or phone number');
+      return;
+    }
+    if (password.isEmpty) {
+      _showCustomSnackBar(context, 'Please enter your password');
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      String? emailToUse = emailOrPhone;
+
+      // Check if input is a phone number (contains only digits and optional +)
+      final isPhone = RegExp(r'^[\d+]+$').hasMatch(emailOrPhone);
+
+      if (isPhone) {
+        // Query Firestore to find user by phone number
+        final querySnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .where('phone', isEqualTo: emailOrPhone)
+            .limit(1)
+            .get();
+
+        if (querySnapshot.docs.isEmpty) {
+          _showCustomSnackBar(context, 'No account found with this phone number');
+          setState(() => _isLoading = false);
+          return;
+        }
+
+        emailToUse = querySnapshot.docs.first.data()['email'] as String?;
+        
+        if (emailToUse == null || emailToUse.isEmpty) {
+          _showCustomSnackBar(context, 'Account error. Please contact support.');
+          setState(() => _isLoading = false);
+          return;
+        }
+      }
+
+      // Sign in with Firebase Auth
+      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailToUse!,
+        password: password,
+      );
+
+      // Update FCM token and last active timestamp
+      final user = userCredential.user;
+      if (user != null) {
+        String? fcmToken;
+        try {
+          fcmToken = await FirebaseMessaging.instance.getToken();
+        } catch (e) {
+          debugPrint('Failed to get FCM token: $e');
+        }
+
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+          'lastActiveTimestamp': Timestamp.now(),
+          if (fcmToken != null) 'fcmToken': fcmToken,
+        });
+
+        // Save login state
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+
+        _showCustomSnackBar(context, 'Sign in successful!');
+        await Future.delayed(const Duration(seconds: 1));
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const CustomerHomeScreen()),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      String message = 'Sign in failed. Please try again.';
+      
+      switch (e.code) {
+        case 'user-not-found':
+          message = 'No account found with this email';
+          break;
+        case 'wrong-password':
+          message = 'Incorrect password';
+          break;
+        case 'invalid-email':
+          message = 'Invalid email format';
+          break;
+        case 'user-disabled':
+          message = 'This account has been disabled';
+          break;
+        case 'too-many-requests':
+          message = 'Too many attempts. Please try again later';
+          break;
+        case 'invalid-credential':
+          message = 'Invalid email or password';
+          break;
+      }
+      
+      _showCustomSnackBar(context, message);
+    } catch (e) {
+      debugPrint('Sign in error: $e');
+      _showCustomSnackBar(context, 'An error occurred. Please try again.');
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
 
   // APPLE SIGN-IN (NEW!)
   Future<void> _signInWithApple() async {
@@ -407,9 +520,17 @@ class _SignInScreenState extends State<SignInScreen> {
                           icon: Icons.lock,
                           focusNode: _passwordFocus,
                           nextFocusNode: _contactFocus,
-                          textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.done,
                           iconColor: Colors.black,
                           fontSize: screenWidth * 0.045,
+                          obscureText: _obscurePassword,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                              color: Colors.black,
+                            ),
+                            onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                          ),
                         ),
                         SizedBox(height: screen.height * 0.016),
                         GestureDetector(
@@ -472,15 +593,17 @@ class _SignInScreenState extends State<SignInScreen> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => RoleSelectionScreen(),
-                                  ),
-                                );
-                              },
-                              child: Text(
+                              onPressed: _isLoading ? null : _signInUser,
+                              child: _isLoading
+                                ? SizedBox(
+                                    width: screen.width * 0.05,
+                                    height: screen.width * 0.05,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                                    ),
+                                  )
+                                : Text(
                                 'Sign In',
                                 style: TextStyle(
                                   color: Colors.black,
@@ -738,8 +861,8 @@ class _ResponsiveTextField extends StatelessWidget {
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
   final TextInputAction textInputAction;
-  final Color? iconColor;
-  final double? fontSize;
+  final bool? obscureText;
+  final Widget? suffixIcon;
 
   const _ResponsiveTextField({
     required this.controller,
@@ -751,6 +874,10 @@ class _ResponsiveTextField extends StatelessWidget {
     required this.textInputAction,
     required this.iconColor,
     required this.fontSize,
+    this.obscureText,
+    this.suffixIcontAction,
+    required this.iconColor,
+    required this.fontSize,
   });
 
   @override
@@ -759,10 +886,7 @@ class _ResponsiveTextField extends StatelessWidget {
     return SizedBox(
       width: screenWidth * 0.8,
       height: screenWidth * 0.13,
-      child: TextField(
-        controller: controller,
-        focusNode: focusNode,
-        textInputAction: textInputAction,
+      chobscureText: obscureText ?? false,
         style: TextStyle(
           fontSize: fontSize ?? screenWidth * 0.045,
           color: Colors.black,
@@ -770,6 +894,11 @@ class _ResponsiveTextField extends StatelessWidget {
         decoration: InputDecoration(
           labelText: label,
           hintText: hint,
+          prefixIcon: Icon(
+            icon,
+            color: iconColor ?? const Color.fromARGB(255, 0, 0, 0),
+          ),
+          suffixIcon: suffixIconintText: hint,
           prefixIcon: Icon(
             icon,
             color: iconColor ?? const Color.fromARGB(255, 0, 0, 0),
