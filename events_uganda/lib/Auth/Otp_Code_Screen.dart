@@ -473,95 +473,101 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
 
                               SizedBox(height: screenHeight * 0.04),
 
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: List.generate(_otpLength, (index) {
-                                  final otpBoxWidth = screenWidth * 0.15;
-                                  final otpBoxHeight = screenWidth * 0.20;
+                              SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(_otpLength, (index) {
+                                    final otpBoxWidth = screenWidth * 0.12;
+                                    final otpBoxHeight = screenWidth * 0.15;
 
-                                  return Container(
-                                    width: otpBoxWidth,
-                                    height: otpBoxHeight,
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: screenWidth * 0.02,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: const Color.fromARGB(
-                                          255,
-                                          196,
-                                          141,
-                                          2,
-                                        ),
-                                        width: 1,
+                                    return Container(
+                                      width: otpBoxWidth,
+                                      height: otpBoxHeight,
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: screenWidth * 0.01,
                                       ),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Stack(
-                                      alignment: Alignment.bottomCenter,
-                                      children: [
-                                        Positioned(
-                                          bottom: otpBoxHeight * 0.15,
-                                          child: Container(
-                                            width: otpBoxWidth * 0.5,
-                                            height: 2,
-                                            color: const Color(0xFFD59A00),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: const Color.fromARGB(
+                                            255,
+                                            196,
+                                            141,
+                                            2,
                                           ),
+                                          width: 1,
                                         ),
-                                        Center(
-                                          child: TextFormField(
-                                            controller: _controllers[index],
-                                            focusNode: _focusNodes[index],
-                                            textAlign: TextAlign.center,
-                                            keyboardType: TextInputType.number,
-                                            maxLength: 1,
-                                            inputFormatters: [
-                                              FilteringTextInputFormatter
-                                                  .digitsOnly,
-                                              LengthLimitingTextInputFormatter(
-                                                1,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Stack(
+                                        alignment: Alignment.bottomCenter,
+                                        children: [
+                                          Positioned(
+                                            bottom: otpBoxHeight * 0.15,
+                                            child: Container(
+                                              width: otpBoxWidth * 0.5,
+                                              height: 2,
+                                              color: const Color(0xFFD59A00),
+                                            ),
+                                          ),
+                                          Center(
+                                            child: TextFormField(
+                                              controller: _controllers[index],
+                                              focusNode: _focusNodes[index],
+                                              textAlign: TextAlign.center,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              maxLength: 1,
+                                              inputFormatters: [
+                                                FilteringTextInputFormatter
+                                                    .digitsOnly,
+                                                LengthLimitingTextInputFormatter(
+                                                  1,
+                                                ),
+                                              ],
+                                              decoration: const InputDecoration(
+                                                counterText: '',
+                                                border: InputBorder.none,
+                                                focusedBorder: InputBorder.none,
+                                                enabledBorder: InputBorder.none,
+                                                contentPadding: EdgeInsets.zero,
                                               ),
-                                            ],
-                                            decoration: const InputDecoration(
-                                              counterText: '',
-                                              border: InputBorder.none,
-                                              focusedBorder: InputBorder.none,
-                                              enabledBorder: InputBorder.none,
-                                              contentPadding: EdgeInsets.zero,
+                                              style: TextStyle(
+                                                fontSize: screenWidth * 0.06,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                                fontFamily: 'Poppins',
+                                                height: 1.0,
+                                              ),
+                                              cursorColor: const Color(
+                                                0xFFD59A00,
+                                              ),
+                                              onChanged: (value) {
+                                                final trimmedValue = value
+                                                    .trim();
+                                                if (trimmedValue.isNotEmpty &&
+                                                    index < _otpLength - 1) {
+                                                  _controllers[index].text =
+                                                      trimmedValue;
+                                                  _focusNodes[index].unfocus();
+                                                  _focusNodes[index + 1]
+                                                      .requestFocus();
+                                                } else if (trimmedValue
+                                                        .isEmpty &&
+                                                    index > 0) {
+                                                  _focusNodes[index].unfocus();
+                                                  _focusNodes[index - 1]
+                                                      .requestFocus();
+                                                }
+                                                _checkOTPAndNavigate();
+                                              },
                                             ),
-                                            style: TextStyle(
-                                              fontSize: screenWidth * 0.06,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                              fontFamily: 'Poppins',
-                                              height: 1.0,
-                                            ),
-                                            cursorColor: const Color(
-                                              0xFFD59A00,
-                                            ),
-                                            onChanged: (value) {
-                                              final trimmedValue = value.trim();
-                                              if (trimmedValue.isNotEmpty &&
-                                                  index < _otpLength - 1) {
-                                                _controllers[index].text =
-                                                    trimmedValue;
-                                                _focusNodes[index].unfocus();
-                                                _focusNodes[index + 1]
-                                                    .requestFocus();
-                                              } else if (trimmedValue.isEmpty &&
-                                                  index > 0) {
-                                                _focusNodes[index].unfocus();
-                                                _focusNodes[index - 1]
-                                                    .requestFocus();
-                                              }
-                                              _checkOTPAndNavigate();
-                                            },
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                                ),
                               ),
 
                               SizedBox(height: screenHeight * 0.05),
@@ -671,6 +677,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
     );
   }
 }
+
 class _ResponsiveTextField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
