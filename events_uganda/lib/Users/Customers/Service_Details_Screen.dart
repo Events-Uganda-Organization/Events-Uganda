@@ -239,10 +239,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         SizedBox(width: 10),
                         ...[
                           'assets/images/introductionbride.jpg',
-                          'assets/images/introductionbride.jpg',
-                          'assets/images/introductionbride.jpg',
-                          'assets/images/introductionbride.jpg',
-                          'assets/images/introductionbride.jpg',
+                          'assets/images/deco2.jpg',
+                          'assets/images/deco3.jpg',
+                          'assets/images/deco4.jpg',
+                          'assets/images/deco5.jpg',
                         ].map(
                           (img) => Padding(
                             padding: const EdgeInsets.only(right: 8.0),
