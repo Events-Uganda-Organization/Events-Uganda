@@ -214,14 +214,40 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             Positioned(
               top: screenHeight * 0.13,
               left: (screenWidth - screenWidth * 0.95) / 2,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: Image.asset(
-                  _galleryImages[_selectedGalleryIndex],
-                  width: screenWidth * 0.95,
-                  height: screenWidth * 0.95 * (336 / 350),
-                  fit: BoxFit.cover,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Image.asset(
+                      _galleryImages[_selectedGalleryIndex],
+                      width: screenWidth * 0.95,
+                      height: screenWidth * 0.95 * (336 / 350),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.012),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Provider's Name",
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          fontSize: screenWidth * 0.045,
+                          color: Colors.black,
+                        ),
+                      ),
+                      SizedBox(width: screenWidth * 0.018),
+                      Icon(
+                        Icons.verified,
+                        color: Colors.blue,
+                        size: screenWidth * 0.055,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             // Glassy UI Rectangle at bottom of image
