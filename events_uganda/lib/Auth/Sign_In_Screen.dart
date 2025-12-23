@@ -49,8 +49,6 @@ class _SignInScreenState extends State<SignInScreen> {
     setState(() => _isLoading = true);
 
     try {
-      String? emailToUse = emailOrPhone;
-
       // Check if input is a phone number (contains only digits and optional +)
       final isPhone = RegExp(r'^[\d+]+$').hasMatch(emailOrPhone);
 
@@ -71,25 +69,17 @@ class _SignInScreenState extends State<SignInScreen> {
           return;
         }
 
-        emailToUse = querySnapshot.docs.first.data()['email'] as String?;
+        final userData = querySnapshot.docs.first.data();
+        final storedPassword = userData['password'] as String?;
 
-        if (emailToUse == null || emailToUse.isEmpty) {
-          _showCustomSnackBar(
-            context,
-            'Account error. Please contact support.',
-          );
+        // Verify password matches Firestore record
+        if (storedPassword != password) {
+          _showCustomSnackBar(context, 'Incorrect password');
           setState(() => _isLoading = false);
           return;
         }
-      }
 
-      // Sign in with Firebase Auth
-      final userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: emailToUse!, password: password);
-
-      // Update FCM token and last active timestamp
-      final user = userCredential.user;
-      if (user != null) {
+        // Update last active timestamp
         String? fcmToken;
         try {
           fcmToken = await FirebaseMessaging.instance.getToken();
@@ -99,7 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(user.uid)
+            .doc(querySnapshot.docs.first.id)
             .update({
               'lastActiveTimestamp': Timestamp.now(),
               if (fcmToken != null) 'fcmToken': fcmToken,
@@ -108,43 +98,79 @@ class _SignInScreenState extends State<SignInScreen> {
         // Save login state
         final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('isLoggedIn', true);
+        await prefs.setString('userId', querySnapshot.docs.first.id);
+        await prefs.setString('userEmail', userData['email'] ?? '');
+        await prefs.setString('userName', userData['fullName'] ?? '');
 
         _showCustomSnackBar(context, 'Sign in successful!');
         await Future.delayed(const Duration(seconds: 1));
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const CustomerHomeScreen()),
-        );
-      }
-    } on FirebaseAuthException catch (e) {
-      String message = 'Sign in failed. Please try again.';
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const CustomerHomeScreen()),
+          );
+        }
+      } else {
+        // Email-based sign in - query Firestore
+        final querySnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .where('email', isEqualTo: emailOrPhone)
+            .limit(1)
+            .get();
 
-      switch (e.code) {
-        case 'user-not-found':
-          message = 'No account found with this email';
-          break;
-        case 'wrong-password':
-          message = 'Incorrect password';
-          break;
-        case 'invalid-email':
-          message = 'Invalid email format';
-          break;
-        case 'user-disabled':
-          message = 'This account has been disabled';
-          break;
-        case 'too-many-requests':
-          message = 'Too many attempts. Please try again later';
-          break;
-        case 'invalid-credential':
-          message = 'Invalid email or password';
-          break;
-      }
+        if (querySnapshot.docs.isEmpty) {
+          _showCustomSnackBar(context, 'No account found with this email');
+          setState(() => _isLoading = false);
+          return;
+        }
 
-      _showCustomSnackBar(context, message);
+        final userData = querySnapshot.docs.first.data();
+        final storedPassword = userData['password'] as String?;
+
+        // Verify password matches Firestore record
+        if (storedPassword != password) {
+          _showCustomSnackBar(context, 'Incorrect password');
+          setState(() => _isLoading = false);
+          return;
+        }
+
+        // Update last active timestamp
+        String? fcmToken;
+        try {
+          fcmToken = await FirebaseMessaging.instance.getToken();
+        } catch (e) {
+          debugPrint('Failed to get FCM token: $e');
+        }
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(querySnapshot.docs.first.id)
+            .update({
+              'lastActiveTimestamp': Timestamp.now(),
+              if (fcmToken != null) 'fcmToken': fcmToken,
+            });
+
+        // Save login state
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+        await prefs.setString('userId', querySnapshot.docs.first.id);
+        await prefs.setString('userEmail', userData['email'] ?? '');
+        await prefs.setString('userName', userData['fullName'] ?? '');
+
+        _showCustomSnackBar(context, 'Sign in successful!');
+        await Future.delayed(const Duration(seconds: 1));
+
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const CustomerHomeScreen()),
+          );
+        }
+      }
     } catch (e) {
+      _showCustomSnackBar(context, 'Sign in failed. Please try again.');
       debugPrint('Sign in error: $e');
-      _showCustomSnackBar(context, 'An error occurred. Please try again.');
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
