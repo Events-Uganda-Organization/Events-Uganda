@@ -33,6 +33,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _obscurePassword = true;
   bool _isLoading = false;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedSignUpData();
+  }
+
+  Future<void> _loadSavedSignUpData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _fullNameController.text = prefs.getString('signupFullName') ?? '';
+      _emailController.text = prefs.getString('signupEmail') ?? '';
+      _passwordController.text = prefs.getString('signupPassword') ?? '';
+      _phoneController.text = prefs.getString('signupPhone') ?? '';
+    });
+  }
+
+  Future<void> _saveSignUpData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('signupFullName', _fullNameController.text.trim());
+    await prefs.setString('signupEmail', _emailController.text.trim());
+    await prefs.setString('signupPassword', _passwordController.text.trim());
+    await prefs.setString('signupPhone', _phoneController.text.trim());
+  }
+
   Future<void> _signUpWithApple() async {
     setState(() => _isLoading = true);
     try {
@@ -240,6 +264,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // Save login state
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('isLoggedIn', true);
+
+      // Save signup data for next time
+      await _saveSignUpData();
 
       _showCustomSnackBar(
         context,
