@@ -1176,56 +1176,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
-            Positioned(
-              top: screenHeight * 0.20,
-              left: screenWidth * 0.04,
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).maybePop(),
-                child: Container(
-                  width: screenWidth * 0.12,
-                  height: screenWidth * 0.12,
-                  decoration: BoxDecoration(
-                    color: const Color(0XFFF3CA9B),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.chevron_left,
-                      color: Colors.black,
-                      size: screenWidth * 0.10,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            // Forward/inactive return button (mirrors back button)
-            Positioned(
-              top: screenHeight * 0.20,
-              left: screenWidth * 0.20,
-              child: GestureDetector(
-                onTap: _canForwardReturn
-                    ? () => Navigator.of(context).maybePop()
-                    : null,
-                child: Opacity(
-                  opacity: _canForwardReturn ? 1.0 : 0.35,
-                  child: Container(
-                    width: screenWidth * 0.12,
-                    height: screenWidth * 0.12,
-                    decoration: BoxDecoration(
-                      color: const Color(0XFFF3CA9B),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.chevron_right,
-                        color: Colors.black,
-                        size: screenWidth * 0.10,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            
             Positioned(
               top: promoTop,
               left: 0,
