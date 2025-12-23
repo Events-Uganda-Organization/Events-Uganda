@@ -967,7 +967,7 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
               top: screenHeight * 0.1,
               right: -screenWidth * 0.1,
               child: Image.asset(
-                'assets/images/chicken.png',
+                'assets/images/saloonvect.png',
                 width: screenWidth * 0.4,
                 height: screenWidth * 0.4,
                 fit: BoxFit.contain,
