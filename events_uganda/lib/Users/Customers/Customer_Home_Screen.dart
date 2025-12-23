@@ -989,13 +989,31 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     ),
                   ],
                 ),
-                child: Center(
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
-                  ),
-                ),
+                child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
+                    ? ClipOval(
+                        child: Image.network(
+                          _profilePicUrl!,
+                          width: screenWidth * 0.128,
+                          height: screenWidth * 0.128,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Center(
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.black,
+                                size: screenWidth * 0.07,
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Center(
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: screenWidth * 0.07,
+                        ),
+                      ),
               ),
             ),
             Positioned(
