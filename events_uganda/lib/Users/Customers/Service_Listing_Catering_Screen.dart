@@ -683,8 +683,9 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     String rating,
     int index,
     String priceRange,
-    double screenWidth,
-  ) {
+    double screenWidth, {
+    bool showVerified = true,
+  }) {
     final cardWidth =
         (screenWidth - (screenWidth * 0.04 * 2) - (screenWidth * 0.04)) / 2;
     final cardHeight = cardWidth * 1.185;
