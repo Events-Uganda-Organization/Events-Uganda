@@ -593,15 +593,24 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                               ),
                               onPressed: _isLoading ? null : _signInUser,
-                              child: Text(
-                                'Sign In',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screen.width * 0.045,
-                                  fontWeight: FontWeight.w800,
-                                  fontFamily: 'Montserrat',
-                                ),
-                              ),
+                              child: _isLoading
+                                  ? SizedBox(
+                                      height: screen.width * 0.05,
+                                      width: screen.width * 0.05,
+                                      child: const CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                                      ),
+                                    )
+                                  : Text(
+                                      'Sign In',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: screen.width * 0.045,
+                                        fontWeight: FontWeight.w800,
+                                        fontFamily: 'Montserrat',
+                                      ),
+                                    ),
                             ),
                           ),
                         ),
