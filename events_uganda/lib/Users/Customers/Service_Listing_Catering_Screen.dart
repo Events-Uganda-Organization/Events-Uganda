@@ -792,8 +792,12 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                                     size: screenWidth * 0.07,
                                   )
                                 : Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.white,
+                                    _likedCategoryImages.contains(index)
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    color: _likedCategoryImages.contains(index)
+                                        ? Colors.red
+                                        : Colors.white,
                                     size: screenWidth * 0.07,
                                   ),
                           ),
