@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:events_uganda/Users/Customers/All_Categories_Screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,11 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
   final FocusNode _searchFocus = FocusNode();
   bool _isSearchFocused = false;
   Timer? _countdownTimer;
-  Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
+  Duration _remaining = Duration(
+    hours: Random().nextInt(24),
+    minutes: Random().nextInt(60),
+    seconds: Random().nextInt(60),
+  );
   final ScrollController _promoScrollController = ScrollController();
   int _activeCardIndex = 0;
   final ScrollController _circleScrollController = ScrollController();
