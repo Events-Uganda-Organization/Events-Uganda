@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Saloon_Screen.dart';
 
@@ -34,6 +36,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
   final Set<int> _cartedCategoryImages = {};
   int _currentNavIndex = 0;
   String _userFullName = '';
+  String? _profilePicUrl;
   bool _canForwardReturn =
       false; // Controls the right-side inactive/active return button
 
@@ -97,6 +100,42 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
     });
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
+    _loadUserProfile();
+  }
+
+  Future<void> _loadUserProfile() async {
+    try {
+      // First try to get from Firebase Auth
+      final currentUser = FirebaseAuth.instance.currentUser;
+      if (currentUser != null && currentUser.photoURL != null) {
+        setState(() {
+          _profilePicUrl = currentUser.photoURL;
+        });
+        return;
+      }
+
+      // If not available, get from Firestore using saved userId
+      final prefs = await SharedPreferences.getInstance();
+      final userId = prefs.getString('userId');
+      
+      if (userId != null) {
+        final userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .get();
+        
+        if (userDoc.exists) {
+          final data = userDoc.data();
+          if (data != null && data['profilePicUrl'] != null) {
+            setState(() {
+              _profilePicUrl = data['profilePicUrl'] as String?;
+            });
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('Error loading user profile: $e');
+    }
   }
 
   String get _greetingText {
@@ -1041,13 +1080,31 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                     ),
                   ],
                 ),
-                child: Center(
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
-                  ),
-                ),
+                child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
+                    ? ClipOval(
+                        child: Image.network(
+                          _profilePicUrl!,
+                          width: screenWidth * 0.128,
+                          height: screenWidth * 0.128,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Center(
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.black,
+                                size: screenWidth * 0.07,
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Center(
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: screenWidth * 0.07,
+                        ),
+                      ),
               ),
             ),
             Positioned(
