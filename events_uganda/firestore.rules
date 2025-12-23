@@ -23,8 +23,14 @@ service cloud.firestore {
       // Allow anyone to create a new user document during signup
       allow create: if true;
       
-      // Allow users to read/update/delete their own document
-      allow read, update, delete: if request.auth != null && request.auth.uid == userId;
+      // Allow anyone to read user documents (needed for phone/email sign-in lookup)
+      allow read: if true;
+      
+      // Allow anyone to update user documents (needed for sign-in to update lastActiveTimestamp)
+      allow update: if true;
+      
+      // Only allow users to delete their own document
+      allow delete: if request.auth != null && request.auth.uid == userId;
     }
     
     // Default rule - deny all other access
