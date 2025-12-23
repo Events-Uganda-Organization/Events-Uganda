@@ -1,23 +1,20 @@
 import 'dart:async';
-import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
-import 'package:events_uganda/Users/Customers/Service_Listing_Saloon_Screen.dart';
 
-class AllCategoriesScreen extends StatefulWidget {
-  const AllCategoriesScreen({super.key});
+class ServiceListingScreen extends StatefulWidget {
+  final String? category;
+  final int? categoryIndex;
+
+  const ServiceListingScreen({super.key, this.category, this.categoryIndex});
 
   @override
-  State<AllCategoriesScreen> createState() => _AllCategoriesScreenState();
+  State<ServiceListingScreen> createState() => _ServiceListingScreenState();
 }
 
-class _AllCategoriesScreenState extends State<AllCategoriesScreen>
+class _ServiceListingScreenState extends State<ServiceListingScreen>
     with SingleTickerProviderStateMixin {
   final FocusNode _searchFocus = FocusNode();
   bool _isSearchFocused = false;
@@ -39,7 +36,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
   final Set<int> _cartedCategoryImages = {};
   int _currentNavIndex = 0;
   String _userFullName = '';
-  String? _profilePicUrl;
   bool _canForwardReturn =
       false; // Controls the right-side inactive/active return button
 
@@ -103,86 +99,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
     });
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
-    _loadUserProfile();
-  }
-
-  Future<void> _loadUserProfile() async {
-    try {
-      // First try to get from Firebase Auth
-      final currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser != null && currentUser.photoURL != null) {
-        setState(() {
-          _profilePicUrl = currentUser.photoURL;
-        });
-        return;
-      }
-
-      // If not available, get from Firestore using saved userId
-      final prefs = await SharedPreferences.getInstance();
-      final userId = prefs.getString('userId');
-
-      if (userId != null) {
-        final userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .get();
-
-        if (userDoc.exists) {
-          final data = userDoc.data();
-          if (data != null && data['profilePicUrl'] != null) {
-            setState(() {
-              _profilePicUrl = data['profilePicUrl'] as String?;
-            });
-          }
-        }
-      }
-    } catch (e) {
-      debugPrint('Error loading user profile: $e');
-    }
-  }
-
-  Future<void> _uploadProfileImage() async {
-    try {
-      // Pick image from gallery
-      final ImagePicker picker = ImagePicker();
-      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-      if (image == null) return;
-
-      // Get current user ID
-      final prefs = await SharedPreferences.getInstance();
-      final userId = prefs.getString('userId');
-
-      if (userId == null) {
-        debugPrint('User ID not found');
-        return;
-      }
-
-      // Upload image to Firebase Storage
-      final storageRef = FirebaseStorage.instance
-          .ref()
-          .child('profile_pictures')
-          .child('$userId.jpg');
-
-      await storageRef.putFile(File(image.path));
-
-      // Get download URL
-      final downloadURL = await storageRef.getDownloadURL();
-
-      // Save URL to Firestore
-      await FirebaseFirestore.instance.collection('users').doc(userId).update({
-        'profilePicUrl': downloadURL,
-      });
-
-      // Update local state
-      setState(() {
-        _profilePicUrl = downloadURL;
-      });
-
-      debugPrint('Profile picture uploaded successfully: $downloadURL');
-    } catch (e) {
-      debugPrint('Error uploading profile image: $e');
-    }
   }
 
   String get _greetingText {
@@ -424,18 +340,14 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                         width: screenWidth * 0.1,
                         height: screenWidth * 0.1,
                         decoration: BoxDecoration(
-                          color: Colors.transparent,
+                          color: Colors.white,
                           shape: BoxShape.circle,
                           border: Border.all(color: Colors.white, width: 2),
                         ),
                         child: Center(
                           child: Icon(
-                            _likedPopularNowImages.contains(index)
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: _likedPopularNowImages.contains(index)
-                                ? Colors.red
-                                : Colors.white,
+                            Icons.verified,
+                            color: Colors.blue,
                             size: screenWidth * 0.07,
                           ),
                         ),
@@ -653,12 +565,8 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                         ),
                         child: Center(
                           child: Icon(
-                            _likedImages.contains(index)
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: _likedImages.contains(index)
-                                ? Colors.red
-                                : Colors.white,
+                            Icons.verified,
+                            color: Colors.blue,
                             size: screenWidth * 0.07,
                           ),
                         ),
@@ -774,7 +682,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
     String title,
     String rating,
     int index,
-    int providersCount,
+    String priceRange,
     double screenWidth,
   ) {
     final cardWidth =
@@ -782,32 +690,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
     final cardHeight = cardWidth * 1.185;
 
     return GestureDetector(
-      onTap: () {
-        // Navigate to different screens based on category
-        if (index == 4) {
-          // Saloon & Makeup
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ServiceListingSaloonScreen(
-                category: title,
-                categoryIndex: index,
-              ),
-            ),
-          );
-        } else {
-          // All other categories go to Catering Screen
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ServiceListingCateringScreen(
-                category: title,
-                categoryIndex: index,
-              ),
-            ),
-          );
-        }
-      },
+      onTap: () {},
       child: Container(
         width: cardWidth,
         height: cardHeight,
@@ -902,12 +785,8 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                           ),
                           child: Center(
                             child: Icon(
-                              _likedCategoryImages.contains(index)
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color: _likedCategoryImages.contains(index)
-                                  ? Colors.red
-                                  : Colors.white,
+                              Icons.verified,
+                              color: Colors.blue,
                               size: screenWidth * 0.07,
                             ),
                           ),
@@ -954,7 +833,17 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                       ),
                       SizedBox(height: screenWidth * 0.008),
                       Text(
-                        '$providersCount Providers',
+                        priceRange,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: screenWidth * 0.025,
+                          fontFamily: 'Montserrat',
+                        ),
+                      ),
+                      SizedBox(height: screenWidth * 0.008),
+                      Text(
+                        'Location',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
@@ -969,7 +858,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
             ),
             Positioned(
               bottom: 10,
-              right: 10,
+              right: 8,
               child: GestureDetector(
                 onTap: () {
                   setState(() {
@@ -990,26 +879,31 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                   builder: (context, scale, child) {
                     return Transform.scale(
                       scale: scale,
-                      child: Container(
-                        width: screenWidth * 0.1,
-                        height: screenWidth * 0.1,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: _cartedCategoryImages.contains(index)
-                                ? Colors.yellow
-                                : Colors.white,
-                            width: 2,
-                          ),
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.shopping_cart_outlined,
-                            color: _cartedCategoryImages.contains(index)
-                                ? Colors.yellow
-                                : Colors.white,
-                            size: screenWidth * 0.07,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white, width: 2),
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.white.withOpacity(0.1),
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.03,
+                              vertical: screenWidth * 0.01,
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Book',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: screenWidth * 0.028,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -1028,8 +922,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final promoTop =
-        screenHeight * 0.19 + screenWidth * 0.12 + screenHeight * 0.02;
+    final promoTop = screenHeight * 0.33;
     final promoHeight = screenWidth * 0.46;
     return Scaffold(
       backgroundColor: Colors.white,
@@ -1047,6 +940,26 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                 'assets/backgroundcolors/normalscreen.png',
                 width: MediaQuery.of(context).size.width * 1.08,
                 height: MediaQuery.of(context).size.height * 0.9,
+                fit: BoxFit.contain,
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.001,
+              left: -screenWidth * 0.1,
+              child: Image.asset(
+                'assets/images/chicken.png',
+                width: screenWidth * 0.4,
+                height: screenWidth * 0.4,
+                fit: BoxFit.contain,
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.1,
+              right: -screenWidth * 0.1,
+              child: Image.asset(
+                'assets/images/chicken.png',
+                width: screenWidth * 0.4,
+                height: screenWidth * 0.4,
                 fit: BoxFit.contain,
               ),
             ),
@@ -1127,31 +1040,13 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                     ),
                   ],
                 ),
-                child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
-                    ? ClipOval(
-                        child: Image.network(
-                          _profilePicUrl!,
-                          width: screenWidth * 0.128,
-                          height: screenWidth * 0.128,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Center(
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.black,
-                                size: screenWidth * 0.07,
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                    : Center(
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.black,
-                          size: screenWidth * 0.07,
-                        ),
-                      ),
+                child: Center(
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.black,
+                    size: screenWidth * 0.07,
+                  ),
+                ),
               ),
             ),
             Positioned(
@@ -1293,32 +1188,295 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                 ),
               ),
             ),
+            // Horizontally scrollable filter rectangles
+            Positioned(
+              top: screenHeight * 0.268,
+              left: screenWidth * 0.04,
+              right: screenWidth * 0.04,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    // Nearest
+                    Container(
+                      width: screenWidth * 0.34,
+                      height: screenHeight * 0.055,
+                      margin: EdgeInsets.only(right: screenWidth * 0.03),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: screenWidth * 0.01),
+                        child: Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                width: screenWidth * 0.09,
+                                height: screenWidth * 0.09,
+                                decoration: BoxDecoration(
+                                  color: const Color(0XFFF3CA9B),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.location_on,
+                                    color: Colors.black,
+                                    size: screenWidth * 0.05,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: screenWidth * 0.04),
+                            Text(
+                              'Nearest',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.03,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Rating
+                    Container(
+                      width: screenWidth * 0.34,
+                      height: screenHeight * 0.055,
+                      margin: EdgeInsets.only(right: screenWidth * 0.03),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: screenWidth * 0.01),
+                        child: Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                width: screenWidth * 0.09,
+                                height: screenWidth * 0.09,
+                                decoration: BoxDecoration(
+                                  color: const Color(0XFFF3CA9B),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.star,
+                                    color: Colors.black,
+                                    size: screenWidth * 0.05,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: screenWidth * 0.04),
+                            Text(
+                              'Rating',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.03,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Price
+                    Container(
+                      width: screenWidth * 0.34,
+                      height: screenHeight * 0.055,
+                      margin: EdgeInsets.only(right: screenWidth * 0.03),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: screenWidth * 0.01),
+                        child: Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                width: screenWidth * 0.09,
+                                height: screenWidth * 0.09,
+                                decoration: BoxDecoration(
+                                  color: const Color(0XFFF3CA9B),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.attach_money,
+                                    color: Colors.black,
+                                    size: screenWidth * 0.05,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: screenWidth * 0.04),
+                            Text(
+                              'Price',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.03,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Popular
+                    Container(
+                      width: screenWidth * 0.34,
+                      height: screenHeight * 0.055,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: screenWidth * 0.01),
+                        child: Row(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                width: screenWidth * 0.09,
+                                height: screenWidth * 0.09,
+                                decoration: BoxDecoration(
+                                  color: const Color(0XFFF3CA9B),
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.15),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.trending_up,
+                                    color: Colors.black,
+                                    size: screenWidth * 0.05,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: screenWidth * 0.04),
+                            Text(
+                              'Popular',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.03,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             // Forward/inactive return button (mirrors back button)
             Positioned(
               top: screenHeight * 0.20,
-              left: screenWidth * 0.20,
-              child: GestureDetector(
-                onTap: _canForwardReturn
-                    ? () => Navigator.of(context).maybePop()
-                    : null,
-                child: Opacity(
-                  opacity: _canForwardReturn ? 1.0 : 0.35,
-                  child: Container(
-                    width: screenWidth * 0.12,
-                    height: screenWidth * 0.12,
-                    decoration: BoxDecoration(
-                      color: const Color(0XFFF3CA9B),
-                      borderRadius: BorderRadius.circular(15),
+              left: screenWidth * 0.27,
+              right: screenWidth * 0.04,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Catering & Food',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: screenWidth * 0.045,
+                      color: Colors.black,
                     ),
-                    child: Center(
-                      child: Icon(
-                        Icons.chevron_right,
-                        color: Colors.black,
-                        size: screenWidth * 0.10,
+                  ),
+                  GestureDetector(
+                    onTap: _canForwardReturn
+                        ? () => Navigator.of(context).maybePop()
+                        : null,
+                    child: Opacity(
+                      opacity: _canForwardReturn ? 1.0 : 0.35,
+                      child: Container(
+                        width: screenWidth * 0.12,
+                        height: screenWidth * 0.12,
+                        decoration: BoxDecoration(
+                          color: const Color(0XFFF3CA9B),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.chevron_right,
+                            color: Colors.black,
+                            size: screenWidth * 0.10,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
             Positioned(
@@ -1337,14 +1495,24 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'All Categories',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: screenWidth * 0.045,
-                              color: Colors.black,
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'Featured Providers',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: screenWidth * 0.045,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(width: screenWidth * 0.02),
+                              Icon(
+                                Icons.verified,
+                                color: Colors.blue,
+                                size: screenWidth * 0.045,
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -1361,66 +1529,66 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                         children: [
                           _buildCategoryCard(
                             'assets/images/deco5.jpg',
-                            'Decoration',
+                            'Provider\'s Name',
                             '4.8',
                             0,
-                            43,
+                            'UGX 500K - 2M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
                             'assets/images/catering.jpg',
-                            'Catering',
+                            'Provider\'s Name',
                             '4.6',
                             1,
-                            28,
+                            'UGX 400K - 1.5M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
                             'assets/images/photography.jpg',
-                            'Photography',
+                            'Provider\'s Name',
                             '4.9',
                             2,
-                            56,
+                            'UGX 600K - 3M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
                             'assets/images/carhire1.jpg',
-                            'Car Hire',
+                            'Provider\'s Name',
                             '4.7',
                             3,
-                            35,
+                            'UGX 300K - 1.2M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloon.jpg',
-                            'Saloon & Makeup',
+                            'assets/images/cake2.jpg',
+                            'Provider\'s Name',
                             '4.5',
                             4,
-                            21,
+                            'UGX 200K - 800K',
                             screenWidth,
                           ),
                           _buildCategoryCard(
                             'assets/images/cake4.jpg',
-                            'Wedding Cakes',
+                            'Provider\'s Name',
                             '4.9',
                             5,
-                            18,
+                            'UGX 800K - 2.5M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
                             'assets/images/deco3.jpg',
-                            'Tent Decoration',
+                            'Provider\'s Name',
                             '4.4',
                             6,
-                            32,
+                            'UGX 400K - 1.8M',
                             screenWidth,
                           ),
                           _buildCategoryCard(
                             'assets/images/glassdeco.jpg',
-                            'Glass Decoration',
+                            'Provider\'s Name',
                             '4.7',
                             7,
-                            24,
+                            'UGX 350K - 1.5M',
                             screenWidth,
                           ),
                         ],

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:events_uganda/Bottom_Navbar.dart';
+import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
