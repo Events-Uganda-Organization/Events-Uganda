@@ -90,11 +90,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   @override
   void initState() {
     super.initState();
-    _promoScrollController.addListener(_onPromoScroll);
-    _circleScrollController.addListener(_onCircleScroll);
-    _popularNowScrollController.addListener(_onPopularNowScroll);
-    _forYouScrollController.addListener(_onForYouScroll);
-    _popularNowScrollController.addListener(_onPopularNowScroll);
     _startCountdown();
     _searchFocus.addListener(() {
       setState(() {
@@ -103,87 +98,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     });
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
-    _loadUserProfile();
   }
 
-  Future<void> _loadUserProfile() async {
-    try {
-      // First try to get from Firebase Auth
-      final currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser != null && currentUser.photoURL != null) {
-        setState(() {
-          _profilePicUrl = currentUser.photoURL;
-        });
-        return;
-      }
 
-      // If not available, get from Firestore using saved userId
-      final prefs = await SharedPreferences.getInstance();
-      final userId = prefs.getString('userId');
-
-      if (userId != null) {
-        final userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .get();
-
-        if (userDoc.exists) {
-          final data = userDoc.data();
-          if (data != null && data['profilePicUrl'] != null) {
-            setState(() {
-              _profilePicUrl = data['profilePicUrl'] as String?;
-            });
-          }
-        }
-      }
-    } catch (e) {
-      debugPrint('Error loading user profile: $e');
-    }
-  }
-
-  Future<void> _uploadProfileImage() async {
-    try {
-      // Pick image from gallery
-      final ImagePicker picker = ImagePicker();
-      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-      if (image == null) return;
-
-      // Get current user ID
-      final prefs = await SharedPreferences.getInstance();
-      final userId = prefs.getString('userId');
-
-      if (userId == null) {
-        debugPrint('User ID not found');
-        return;
-      }
-
-      // Upload image to Firebase Storage
-      final storageRef = FirebaseStorage.instance
-          .ref()
-          .child('profile_pictures')
-          .child('$userId.jpg');
-
-      await storageRef.putFile(File(image.path));
-
-      // Get download URL
-      final downloadURL = await storageRef.getDownloadURL();
-
-      // Save URL to Firestore
-      await FirebaseFirestore.instance.collection('users').doc(userId).update({
-        'profilePicUrl': downloadURL,
-      });
-
-      // Update local state
-      setState(() {
-        _profilePicUrl = downloadURL;
-      });
-
-      debugPrint('Profile picture uploaded successfully: $downloadURL');
-    } catch (e) {
-      debugPrint('Error uploading profile image: $e');
-    }
-  }
 
   String get _greetingText {
     final hour = DateTime.now().hour;
@@ -192,86 +109,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     return 'Good Evening';
   }
 
-  void _onCircleScroll() {
-    if (!mounted) return;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final itemWidth = 70.0;
-    final spacing = screenWidth * 0.03;
-    final offset = _circleScrollController.offset;
 
-    final index = ((offset + itemWidth / 2) / (itemWidth + spacing))
-        .clamp(0, 4)
-        .toInt();
-
-    if (index != _activeCircleIndex) {
-      setState(() => _activeCircleIndex = index);
-    }
-  }
-
-  void _onPromoScroll() {
-    if (!mounted) return;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = screenWidth * 0.82;
-    final spacing = screenWidth * 0.04;
-    final offset = _promoScrollController.offset;
-
-    final index = ((offset + cardWidth / 2) / (cardWidth + spacing))
-        .clamp(0, 2)
-        .toInt();
-
-    if (index != _activeCardIndex) {
-      setState(() => _activeCardIndex = index);
-    }
-  }
-
-  void _onPopularNowScroll() {
-    if (!mounted) return;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final imageWidth = 184.0;
-    final spacing = screenWidth * 0.04;
-    final offset = _popularNowScrollController.offset;
-    final maxScroll = _popularNowScrollController.position.maxScrollExtent;
-
-    int index;
-    if (offset <= (imageWidth + spacing) * 0.3) {
-      index = 0;
-    } else if (offset >= maxScroll - (imageWidth + spacing) * 0.3) {
-      index = 3;
-    } else if (offset < (imageWidth + spacing) * 1.2) {
-      index = 1;
-    } else {
-      index = 2;
-    }
-
-    if (index != _activePopularNowIndex) {
-      setState(() => _activePopularNowIndex = index);
-    }
-  }
-
-  void _onForYouScroll() {
-    if (!mounted) return;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final imageWidth = 184.0;
-    final spacing = screenWidth * 0.04;
-    final offset = _forYouScrollController.offset;
-    final maxScroll = _forYouScrollController.position.maxScrollExtent;
-
-    // Better calculation for determining centered image
-    int index;
-    if (offset <= (imageWidth + spacing) * 0.3) {
-      index = 0; // Left image
-    } else if (offset >= maxScroll - (imageWidth + spacing) * 0.3) {
-      index = 3; // Right image
-    } else if (offset < (imageWidth + spacing) * 1.2) {
-      index = 1;
-    } else {
-      index = 2;
-    }
-
-    if (index != _activeForYouIndex) {
-      setState(() => _activeForYouIndex = index);
-    }
-  }
+  
 
   @override
   void dispose() {
