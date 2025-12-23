@@ -63,25 +63,29 @@ class _SignInScreenState extends State<SignInScreen> {
             .get();
 
         if (querySnapshot.docs.isEmpty) {
-          _showCustomSnackBar(context, 'No account found with this phone number');
+          _showCustomSnackBar(
+            context,
+            'No account found with this phone number',
+          );
           setState(() => _isLoading = false);
           return;
         }
 
         emailToUse = querySnapshot.docs.first.data()['email'] as String?;
-        
+
         if (emailToUse == null || emailToUse.isEmpty) {
-          _showCustomSnackBar(context, 'Account error. Please contact support.');
+          _showCustomSnackBar(
+            context,
+            'Account error. Please contact support.',
+          );
           setState(() => _isLoading = false);
           return;
         }
       }
 
       // Sign in with Firebase Auth
-      final userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailToUse!,
-        password: password,
-      );
+      final userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: emailToUse!, password: password);
 
       // Update FCM token and last active timestamp
       final user = userCredential.user;
@@ -93,10 +97,13 @@ class _SignInScreenState extends State<SignInScreen> {
           debugPrint('Failed to get FCM token: $e');
         }
 
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).update({
-          'lastActiveTimestamp': Timestamp.now(),
-          if (fcmToken != null) 'fcmToken': fcmToken,
-        });
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .update({
+              'lastActiveTimestamp': Timestamp.now(),
+              if (fcmToken != null) 'fcmToken': fcmToken,
+            });
 
         // Save login state
         final prefs = await SharedPreferences.getInstance();
@@ -112,7 +119,7 @@ class _SignInScreenState extends State<SignInScreen> {
       }
     } on FirebaseAuthException catch (e) {
       String message = 'Sign in failed. Please try again.';
-      
+
       switch (e.code) {
         case 'user-not-found':
           message = 'No account found with this email';
@@ -133,7 +140,7 @@ class _SignInScreenState extends State<SignInScreen> {
           message = 'Invalid email or password';
           break;
       }
-      
+
       _showCustomSnackBar(context, message);
     } catch (e) {
       debugPrint('Sign in error: $e');
@@ -585,14 +592,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => RoleSelectionScreen(),
-                                  ),
-                                );
-                              },
+                              onPressed: _isLoading ? null : _signInUser,
                               child: Text(
                                 'Sign In',
                                 style: TextStyle(
