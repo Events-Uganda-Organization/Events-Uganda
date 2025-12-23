@@ -261,7 +261,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         errorMessage = 'The email address is not valid.';
       } else if (e.code == 'operation-not-allowed') {
         errorMessage =
-            'Email/Password sign-in not enabled in Firebase.\nGo to Firebase Console → Authentication → Sign-in method to enable it.';
+            'Email/password accounts are not enabled. Please contact support.';
       } else {
         errorMessage = e.message ?? 'An error occurred. Please try again.';
       }
