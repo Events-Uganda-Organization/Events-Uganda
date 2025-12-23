@@ -599,7 +599,10 @@ class _SignInScreenState extends State<SignInScreen> {
                                       width: screen.width * 0.05,
                                       child: const CircularProgressIndicator(
                                         strokeWidth: 2,
-                                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                              Colors.black,
+                                            ),
                                       ),
                                     )
                                   : Text(
