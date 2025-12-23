@@ -31,6 +31,29 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _isLoading = false;
   bool _obscurePassword = true;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedCredentials();
+  }
+
+  Future<void> _loadSavedCredentials() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedEmailOrPhone = prefs.getString('savedEmailOrPhone') ?? '';
+    final savedPassword = prefs.getString('savedPassword') ?? '';
+    
+    setState(() {
+      _emailController.text = savedEmailOrPhone;
+      _passwordController.text = savedPassword;
+    });
+  }
+
+  Future<void> _saveCredentials(String emailOrPhone, String password) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('savedEmailOrPhone', emailOrPhone);
+    await prefs.setString('savedPassword', password);
+  }
+
   // EMAIL/PHONE + PASSWORD SIGN-IN
   Future<void> _signInUser() async {
     final emailOrPhone = _emailController.text.trim();
@@ -157,6 +180,9 @@ class _SignInScreenState extends State<SignInScreen> {
         await prefs.setString('userId', querySnapshot.docs.first.id);
         await prefs.setString('userEmail', userData['email'] ?? '');
         await prefs.setString('userName', userData['fullName'] ?? '');
+
+        // Save credentials for next time
+        await _saveCredentials(emailOrPhone, password);
 
         _showCustomSnackBar(context, 'Sign in successful!');
         await Future.delayed(const Duration(seconds: 1));
