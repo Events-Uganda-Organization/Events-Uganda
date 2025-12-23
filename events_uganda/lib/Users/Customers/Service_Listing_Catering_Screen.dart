@@ -13,12 +13,18 @@ class ServiceListingCateringScreen extends StatefulWidget {
   final String? category;
   final int? categoryIndex;
 
-  const ServiceListingCateringScreen({super.key, this.category, this.categoryIndex});
+  const ServiceListingCateringScreen({
+    super.key,
+    this.category,
+    this.categoryIndex,
+  });
   @override
-  State<ServiceListingCateringScreen> createState() => _ServiceListingCateringScreenState();
+  State<ServiceListingCateringScreen> createState() =>
+      _ServiceListingCateringScreenState();
 }
 
-class _ServiceListingCateringScreenState extends State<ServiceListingCateringScreen>
+class _ServiceListingCateringScreenState
+    extends State<ServiceListingCateringScreen>
     with SingleTickerProviderStateMixin {
   final FocusNode _searchFocus = FocusNode();
   bool _isSearchFocused = false;
