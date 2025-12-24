@@ -257,7 +257,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.bold,
-                                    fontSize: screenWidth * 0.045,
+                                    fontSize: screenWidth * 0.035,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -266,7 +266,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   Icons.star,
                                   color: Colors.black,
                                   fill: 1.0,
-                                  size: screenWidth * 0.045,
+                                  size: screenWidth * 0.035,
                                 ),
                                 SizedBox(width: screenWidth * 0.005),
                                 Icon(
@@ -283,7 +283,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w500,
-                              fontSize: screenWidth * 0.035,
+                              fontSize: screenWidth * 0.03,
                               color: Colors.black,
                             ),
                           ),
