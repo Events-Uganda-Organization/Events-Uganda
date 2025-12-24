@@ -42,6 +42,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
   String _userFullName = '';
   String? _profilePicUrl;
+  late AnimationController _animationController;
 
   Widget _buildCircleItem(
     double screenWidth,
@@ -90,6 +91,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   @override
   void initState() {
     super.initState();
+    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
     _startCountdown();
     _searchFocus.addListener(() {});
     // Fetch user's display name if available
