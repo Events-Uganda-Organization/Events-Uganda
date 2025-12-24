@@ -680,6 +680,25 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
+            Positioned(
+              top: screenHeight * 0.69 + 40,
+              left: screenWidth * 0.02,
+              child: Container(
+                width: 178,
+                height: 35,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF3F3CC),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
