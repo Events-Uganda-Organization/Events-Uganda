@@ -325,6 +325,19 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
+            Positioned(
+              top: screenHeight * 0.61 + 50,
+              left: screenWidth * 0.33 + 10,
+              child: Text(
+                "2.8 km away from you",
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w500,
+                  fontSize: screenWidth * 0.035,
+                  color: Colors.black,
+                ),
+              ),
+            ),
             // Glassy UI Rectangle at bottom of image
             Positioned(
               top:
