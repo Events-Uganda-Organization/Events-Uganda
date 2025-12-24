@@ -248,31 +248,34 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             ),
                           ),
                           SizedBox(height: screenHeight * 0.020),
-                          Row(
-                            children: [
-                              Text(
-                                "4.8",
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: screenWidth * 0.045,
-                                  color: Colors.black,
+                          Padding(
+                            padding: EdgeInsets.only(left: screenWidth * 0.02),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "4.8",
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: screenWidth * 0.045,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(width: screenWidth * 0.01),
-                              Icon(
-                                Icons.star,
-                                color: Colors.black,
-                                fill: 1.0,
-                                size: screenWidth * 0.045,
-                              ),
-                              SizedBox(width: screenWidth * 0.01),
-                              Icon(
-                                Icons.chevron_right,
-                                color: Colors.black,
-                                size: screenWidth * 0.06,
-                              ),
-                            ],
+                                SizedBox(width: screenWidth * 0.01),
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.black,
+                                  fill: 1.0,
+                                  size: screenWidth * 0.045,
+                                ),
+                                SizedBox(width: screenWidth * 0.01),
+                                Icon(
+                                  Icons.chevron_right,
+                                  color: Colors.black,
+                                  size: screenWidth * 0.06,
+                                ),
+                              ],
+                            ),
                           ),
                           SizedBox(height: screenHeight * 0.005),
                           Text(
