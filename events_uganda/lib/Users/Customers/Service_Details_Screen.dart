@@ -257,7 +257,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.bold,
-                                    fontSize: screenWidth * 0.035,
+                                    fontSize: screenWidth * 0.038,
                                     color: Colors.black,
                                   ),
                                 ),
