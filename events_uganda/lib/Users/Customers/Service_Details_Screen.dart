@@ -248,14 +248,25 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             ),
                           ),
                           SizedBox(height: screenHeight * 0.020),
-                          Text(
-                            "4.8",
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.bold,
-                              fontSize: screenWidth * 0.04,
-                              color: Colors.black,
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                "4.8",
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: screenWidth * 0.04,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(width: screenWidth * 0.01),
+                              Icon(
+                                Icons.star,
+                                color: Colors.black,
+                                fill: 1.0,
+                                size: screenWidth * 0.04,
+                              ),
+                            ],
                           ),
                         ],
                       ),
