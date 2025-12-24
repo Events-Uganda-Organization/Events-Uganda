@@ -394,8 +394,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     screenWidth * 0.95 -
                     35, // right edge of image minus circle size
                 child: Container(
-                  width: 35,
-                  height: 35,
+                  width: 39,
+                  height: 39,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
