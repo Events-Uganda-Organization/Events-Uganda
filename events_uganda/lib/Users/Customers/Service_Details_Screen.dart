@@ -667,6 +667,19 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
+            Positioned(
+              top: screenHeight * 0.69,
+              left: screenWidth * 0.02,
+              child: Text(
+                "Starting Price",
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w900,
+                  fontSize: screenWidth * 0.048,
+                  color: Colors.black,
+                ),
+              ),
+            ),
           ],
         ),
       ),
