@@ -687,7 +687,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 width: 178,
                 height: 35,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF3F3CC),
+                  color: const Color(0xFFF3CA9B),
                   borderRadius: BorderRadius.circular(15),
                   boxShadow: [
                     BoxShadow(
