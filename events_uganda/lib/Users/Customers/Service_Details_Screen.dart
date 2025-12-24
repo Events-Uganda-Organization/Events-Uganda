@@ -297,8 +297,19 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                     ],
                   ),
-                  
                 ],
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.43,
+              left: (screenWidth - screenWidth * 1.9) / 1,
+              child: Container(
+                width: 5,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(1),
+                ),
               ),
             ),
             // Glassy UI Rectangle at bottom of image
