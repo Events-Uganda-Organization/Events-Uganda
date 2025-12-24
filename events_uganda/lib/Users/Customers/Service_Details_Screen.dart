@@ -38,6 +38,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   int _selectedGalleryIndex = 0;
   final FocusNode _searchFocus = FocusNode();
   Timer? _countdownTimer;
+  bool _isFavorite = false;
   Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
   String _userFullName = '';
   String? _profilePicUrl;
@@ -393,25 +394,32 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     (screenWidth - screenWidth * 0.95) / 2 +
                     screenWidth * 0.95 -
                     100, // right edge of image minus circle size
-                child: Container(
-                  width: 45,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 8,
-                        offset: Offset(0, 6),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isFavorite = !_isFavorite;
+                    });
+                  },
+                  child: Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 8,
+                          offset: Offset(0, 6),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Icon(
+                        _isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: _isFavorite ? Colors.red : const Color.fromARGB(255, 182, 113, 34),
+                        size: 31,
                       ),
-                    ],
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.favorite_border,
-                      color: const Color.fromARGB(255, 182, 113, 34),
-                      size: 31,
                     ),
                   ),
                 ),
