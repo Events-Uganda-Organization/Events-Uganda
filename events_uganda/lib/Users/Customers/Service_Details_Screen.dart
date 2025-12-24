@@ -410,7 +410,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   child: Center(
                     child: Icon(
                       Icons.favorite_border,
-                      color: Colors.black,
+                      color: const Color(0XFFF3CA9B),
                       size: 31,
                     ),
                   ),
