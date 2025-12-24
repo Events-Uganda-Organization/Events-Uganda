@@ -301,11 +301,11 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.61,
+              top: screenHeight * 0.60,
               right: (screenWidth - screenWidth * 0.33) / 1,
               child: Container(
                 width: 5,
-                height: 50,
+                height: 48,
                 decoration: BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(5),
