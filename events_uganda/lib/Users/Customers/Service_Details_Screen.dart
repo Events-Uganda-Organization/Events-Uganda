@@ -226,6 +226,35 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       fit: BoxFit.cover,
                     ),
                   ),
+                  // Heart circle below the image on the right
+                  Row(
+                    children: [
+                      Spacer(),
+                      Container(
+                        width: 35,
+                        height: 35,
+                        margin: EdgeInsets.only(top: 12),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 8,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.favorite_border,
+                            color: Colors.black,
+                            size: 22,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: screenHeight * 0.012),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
