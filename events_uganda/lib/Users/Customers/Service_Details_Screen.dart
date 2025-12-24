@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -89,6 +88,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       vsync: this,
       duration: const Duration(milliseconds: 200),
     );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.2,
+    ).animate(_animationController);
     _startCountdown();
     _searchFocus.addListener(() {});
     // Fetch user's display name if available
