@@ -393,7 +393,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               left:
                   (screenWidth - screenWidth * 0.95) / 2 +
                   screenWidth * 0.95 -
-                  100, // right edge of image minus circle size
+                  110, // right edge of image minus circle size
               child: GestureDetector(
                 onTap: () {
                   setState(() {
