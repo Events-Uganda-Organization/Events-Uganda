@@ -108,6 +108,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   @override
   void dispose() {
     _animationController.dispose();
+    _countdownTimer?.cancel();
     _galleryScrollController.dispose();
     super.dispose();
   }
@@ -232,16 +233,30 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   ),
                   SizedBox(height: screenHeight * 0.021),
                   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Provider's Name",
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w900,
-                          fontSize: screenWidth * 0.048,
-                          color: Colors.black,
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Provider's Name",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w900,
+                              fontSize: screenWidth * 0.048,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            "4.8",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold,
+                              fontSize: screenWidth * 0.04,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(width: screenWidth * 0.018),
                       Icon(
