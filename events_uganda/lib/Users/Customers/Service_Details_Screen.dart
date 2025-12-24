@@ -411,7 +411,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     child: Icon(
                       Icons.favorite_border,
                       color: Colors.black,
-                      size: 30,
+                      size: 31,
                     ),
                   ),
                 ),
