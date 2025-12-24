@@ -422,10 +422,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   ),
                   child: Center(
                     child: ScaleTransition(
-                      scale: Tween<double>(
-                        begin: 1.0,
-                        end: 1.2,
-                      ).animate(_animationController),
+                      scale: _scaleAnimation,
                       child: Icon(
                         _isFavorite ? Icons.favorite : Icons.favorite_border,
                         color: _isFavorite
