@@ -268,7 +268,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   fill: 1.0,
                                   size: screenWidth * 0.045,
                                 ),
-                                SizedBox(width: screenWidth * 0.01),
+                                SizedBox(width: screenWidth * 0.005),
                                 Icon(
                                   Icons.chevron_right,
                                   color: Colors.black,
