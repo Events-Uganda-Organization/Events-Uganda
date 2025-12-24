@@ -320,7 +320,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w900,
-                  fontSize: screenWidth * 0.03,
+                  fontSize: screenWidth * 0.035,
                   color: Colors.black,
                 ),
               ),
@@ -352,20 +352,20 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             ),
             Positioned(
               top: screenHeight * 0.61,
-              left: screenWidth * 0.43,
+              left: screenWidth * 0.78,
               child: Text(
                 "5+",
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w900,
-                  fontSize: screenWidth * 0.03,
+                  fontSize: screenWidth * 0.035,
                   color: Colors.black,
                 ),
               ),
             ),
             Positioned(
               top: screenHeight * 0.64,
-              left: screenWidth * 0.30,
+              left: screenWidth * 0.63,
               child: Text(
                 "Years of Experience",
                 style: TextStyle(
