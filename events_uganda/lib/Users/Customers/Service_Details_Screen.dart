@@ -212,7 +212,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             ),
             // Introduction image
             Positioned(
-              top: screenHeight * 0.15,
+              top: screenHeight * 0.13,
               left: (screenWidth - screenWidth * 0.95) / 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
