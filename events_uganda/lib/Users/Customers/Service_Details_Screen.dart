@@ -314,26 +314,26 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             ),
             Positioned(
               top: screenHeight * 0.61,
-              left: screenWidth * 0.41,
+              left: screenWidth * 0.34,
               child: Text(
                 "Kampala",
                 style: TextStyle(
                   fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.bold,
-                  fontSize: screenWidth * 0.04,
+                  fontWeight: FontWeight.w900,
+                  fontSize: screenWidth * 0.03,
                   color: Colors.black,
                 ),
               ),
             ),
             Positioned(
               top: screenHeight * 0.64,
-              left: screenWidth * 0.33 + 10,
+              left: screenWidth * 0.30,
               child: Text(
-                "2.8 km away from you",
+                "2.8 km away",
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w500,
-                  fontSize: screenWidth * 0.032,
+                  fontSize: screenWidth * 0.03,
                   color: Colors.black,
                 ),
               ),
