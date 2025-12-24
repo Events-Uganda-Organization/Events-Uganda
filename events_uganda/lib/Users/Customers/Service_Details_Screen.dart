@@ -392,7 +392,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 left:
                     (screenWidth - screenWidth * 0.95) / 2 +
                     screenWidth * 0.95 -
-                    35, // right edge of image minus circle size
+                    60, // right edge of image minus circle size
                 child: Container(
                   width: 39,
                   height: 39,
