@@ -226,35 +226,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       fit: BoxFit.cover,
                     ),
                   ),
-                  // Heart circle below the image on the right
-                  Row(
-                    children: [
-                      Spacer(),
-                      Container(
-                        width: 35,
-                        height: 35,
-                        margin: EdgeInsets.only(top: 12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 8,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.favorite_border,
-                            color: Colors.black,
-                            size: 22,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   SizedBox(height: screenHeight * 0.012),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -412,6 +383,39 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
+            // Heart circle as a separate Positioned below the image on the right
+              Positioned(
+                top:
+                    screenHeight * 0.13 +
+                    screenWidth * 0.95 * (336 / 350) +
+                    16, // 16px below image
+                left:
+                    (screenWidth - screenWidth * 0.95) / 2 +
+                    screenWidth * 0.95 -
+                    35, // right edge of image minus circle size
+                child: Container(
+                  width: 35,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 8,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.favorite_border,
+                      color: Colors.black,
+                      size: 22,
+                    ),
+                  ),
+                ),
+              ),
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.2,
