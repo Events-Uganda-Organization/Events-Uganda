@@ -274,6 +274,16 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               ),
                             ],
                           ),
+                          SizedBox(height: screenHeight * 0.005),
+                          Text(
+                            "(120 reviews)",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w500,
+                              fontSize: screenWidth * 0.035,
+                              color: Colors.black,
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(width: screenWidth * 0.018),
