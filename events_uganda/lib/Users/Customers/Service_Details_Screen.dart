@@ -433,25 +433,24 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               top: screenHeight * 0.03,
               right: screenWidth * 0.04,
               child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
+                width: 35,
+                height: 35,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 10,
-                      offset: const Offset(0, 7),
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 8,
+                      offset: Offset(0, 4),
                     ),
                   ],
                 ),
                 child: Center(
                   child: Icon(
-                    Icons.notifications_none_rounded,
+                    Icons.favorite_border,
                     color: Colors.black,
-                    size: screenWidth * 0.07,
+                    size: 22,
                   ),
                 ),
               ),
