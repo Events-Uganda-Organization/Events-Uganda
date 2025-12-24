@@ -314,13 +314,13 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             ),
             Positioned(
               top: screenHeight * 0.61,
-              left: screenWidth * 0.33 + 10,
+              left: screenWidth * 0.41,
               child: Text(
                 "Kampala",
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.bold,
-                  fontSize: screenWidth * 0.045,
+                  fontSize: screenWidth * 0.04,
                   color: Colors.black,
                 ),
               ),
