@@ -473,8 +473,14 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.03,
-              right: screenWidth * 0.18,
+              top:
+                  screenHeight * 0.12 +
+                  screenWidth * 0.95 * (336 / 350) +
+                  16, // 16px below image
+              left:
+                  (screenWidth - screenWidth * 0.95) / 2 +
+                  screenWidth * 0.95 -
+                  80,
               child: GestureDetector(
                 onTap: () {
                   // Add share functionality here
