@@ -107,6 +107,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
 
   @override
   void dispose() {
+    _animationController.dispose();
     _galleryScrollController.dispose();
     super.dispose();
   }
@@ -401,6 +402,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   setState(() {
                     _isFavorite = !_isFavorite;
                   });
+                  _animationController.forward().then((_) => _animationController.reverse());
                 },
                 child: Container(
                   width: 45,
@@ -417,12 +419,15 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     ],
                   ),
                   child: Center(
-                    child: Icon(
-                      _isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: _isFavorite
-                          ? Colors.red
-                          : const Color.fromARGB(255, 182, 113, 34),
-                      size: 31,
+                    child: ScaleTransition(
+                      scale: Tween<double>(begin: 1.0, end: 1.2).animate(_animationController),
+                      child: Icon(
+                        _isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: _isFavorite
+                            ? Colors.red
+                            : const Color.fromARGB(255, 182, 113, 34),
+                        size: 31,
+                      ),
                     ),
                   ),
                 ),
