@@ -2,14 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
-import 'package:events_uganda/Users/Customers/Service_Listing_Saloon_Screen.dart';
 
 class ServiceDetailsScreen extends StatefulWidget {
   const ServiceDetailsScreen({super.key});
@@ -43,6 +36,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   String _userFullName = '';
   String? _profilePicUrl;
   late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
 
   Widget _buildCircleItem(
     double screenWidth,
@@ -91,7 +85,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
     _startCountdown();
     _searchFocus.addListener(() {});
     // Fetch user's display name if available
@@ -402,7 +399,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   setState(() {
                     _isFavorite = !_isFavorite;
                   });
-                  _animationController.forward().then((_) => _animationController.reverse());
+                  _animationController.forward().then(
+                    (_) => _animationController.reverse(),
+                  );
                 },
                 child: Container(
                   width: 45,
@@ -420,7 +419,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   ),
                   child: Center(
                     child: ScaleTransition(
-                      scale: Tween<double>(begin: 1.0, end: 1.2).animate(_animationController),
+                      scale: Tween<double>(
+                        begin: 1.0,
+                        end: 1.2,
+                      ).animate(_animationController),
                       child: Icon(
                         _isFavorite ? Icons.favorite : Icons.favorite_border,
                         color: _isFavorite
