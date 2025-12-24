@@ -386,7 +386,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             // Heart circle as a separate Positioned below the image on the right
               Positioned(
                 top:
-                    screenHeight * 0.13 +
+                    screenHeight * 0.12 +
                     screenWidth * 0.95 * (336 / 350) +
                     16, // 16px below image
                 left:
