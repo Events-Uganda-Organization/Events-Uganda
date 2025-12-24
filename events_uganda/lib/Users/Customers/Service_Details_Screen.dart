@@ -350,6 +350,32 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
+            Positioned(
+              top: screenHeight * 0.61,
+              left: screenWidth * 0.43,
+              child: Text(
+                "5+",
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w900,
+                  fontSize: screenWidth * 0.03,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.64,
+              left: screenWidth * 0.30,
+              child: Text(
+                "Years of Experience",
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w500,
+                  fontSize: screenWidth * 0.03,
+                  color: Colors.black,
+                ),
+              ),
+            ),
             // Glassy UI Rectangle at bottom of image
             Positioned(
               top:
