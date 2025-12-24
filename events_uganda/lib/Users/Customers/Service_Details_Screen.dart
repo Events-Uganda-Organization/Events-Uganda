@@ -226,7 +226,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.015),
+                  SizedBox(height: screenHeight * 0.018),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
