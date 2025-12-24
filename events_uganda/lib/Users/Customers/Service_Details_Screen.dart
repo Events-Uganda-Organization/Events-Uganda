@@ -314,7 +314,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             ),
             Positioned(
               top: screenHeight * 0.61,
-              left: screenWidth * 0.33,
+              left: screenWidth * 0.35,
               child: Text(
                 "Kampala",
                 style: TextStyle(
@@ -327,7 +327,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             ),
             Positioned(
               top: screenHeight * 0.64,
-              left: screenWidth * 0.30,
+              left: screenWidth * 0.33,
               child: Text(
                 "2.8 km away",
                 style: TextStyle(
