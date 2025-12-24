@@ -480,7 +480,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               left:
                   (screenWidth - screenWidth * 0.95) / 2 +
                   screenWidth * 0.95 -
-                  80,
+                  40,
               child: GestureDetector(
                 onTap: () {
                   // Add share functionality here
