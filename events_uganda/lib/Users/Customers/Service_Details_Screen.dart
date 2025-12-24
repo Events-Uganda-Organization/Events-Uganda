@@ -247,6 +247,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               color: Colors.black,
                             ),
                           ),
+                          SizedBox(height: screenHeight * 0.021),
                           Text(
                             "4.8",
                             style: TextStyle(
