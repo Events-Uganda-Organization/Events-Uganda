@@ -37,6 +37,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   int _rating = 0;
+  bool _showReviewSection = false;
 
   Widget _buildCircleItem(
     double screenWidth,
