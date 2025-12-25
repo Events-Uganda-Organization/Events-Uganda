@@ -977,16 +977,28 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
-
                       Positioned(
                         top: screenHeight * 1.06 - offset,
                         left: screenWidth * 0.02,
                         child: Text(
                           'The Providers description of the services he/she provides\nto the customers.',
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
+                            fontFamily: 'Abril Fatface',
                             fontWeight: FontWeight.w600,
-                            fontSize: 11,
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 1.1 - offset,
+                        left: screenWidth * 0.02,
+                        child: Text(
+                          "Reviews and Ratings",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w900,
+                            fontSize: screenWidth * 0.048,
                             color: Colors.black,
                           ),
                         ),
