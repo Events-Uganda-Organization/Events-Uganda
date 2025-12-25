@@ -146,8 +146,11 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Stack(
-          children: [
+        child: SingleChildScrollView(
+          child: Container(
+            height: screenHeight * 2,
+            child: Stack(
+              children: [
             Positioned(
               top: MediaQuery.of(context).size.height * 0.0,
               bottom: MediaQuery.of(context).size.height * 0.0,
