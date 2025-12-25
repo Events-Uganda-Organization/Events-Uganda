@@ -902,7 +902,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: screenHeight * 0.88 - offset,
-                        right: (screenWidth - screenWidth * 0.50) / 1,
+                        right: (screenWidth - screenWidth * 0.52) / 1,
                         child: Container(
                           width: 5,
                           height: 90,
@@ -961,6 +961,19 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 ),
                               ),
                             ],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.98 - offset,
+                        left: screenWidth * 0.02,
+                        child: Text(
+                          "About Provider Name",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w900,
+                            fontSize: screenWidth * 0.048,
+                            color: Colors.black,
                           ),
                         ),
                       ),
