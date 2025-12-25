@@ -1029,6 +1029,19 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
+                      Positioned(
+                        top: screenHeight * 1.16 - offset,
+                        left: screenWidth * 0.02,
+                        child: Text(
+                          'Rate these services',
+                          style: TextStyle(
+                            fontFamily: 'Abril Fatface',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
