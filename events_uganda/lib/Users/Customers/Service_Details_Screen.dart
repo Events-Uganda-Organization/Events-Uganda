@@ -955,7 +955,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 'Traditional Food',
                                 style: TextStyle(
                                   fontFamily: 'Abril Fatface',
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w400,
                                   fontSize: 13,
                                   color: Colors.black,
                                 ),
