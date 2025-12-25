@@ -869,7 +869,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               'Corporate Catering',
                               style: TextStyle(
                                 fontFamily: 'Abril Fatface',
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                                 fontSize: 13,
                                 color: Colors.black,
                               ),
@@ -892,7 +892,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               'Outside Catering',
                               style: TextStyle(
                                 fontFamily: 'Abril Fatface',
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                                 fontSize: 13,
                                 color: Colors.black,
                               ),
