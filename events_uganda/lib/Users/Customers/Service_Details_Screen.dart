@@ -991,7 +991,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     ),
                     SizedBox(width: 8),
                     Transform.rotate(
-                      angle: -30 * 3.14159 / 180,
+                      angle: -40 * 3.14159 / 180,
                       child: Icon(
                         Icons.arrow_forward,
                         color: Colors.black,
