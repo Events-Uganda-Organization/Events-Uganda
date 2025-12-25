@@ -392,7 +392,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
 
                       // Available badge
                       Positioned(
-                        top: screenHeight * 0.19 - offset,
+                        top: screenHeight * 0.15 - offset,
                         left: screenWidth * 0.35,
                         child: Container(
                           width: 80,
