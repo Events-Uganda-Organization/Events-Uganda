@@ -1045,14 +1045,27 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: screenHeight * 1.21 - offset,
-                        left: screenWidth * 0.02,
-                        child: Row(
-                          children: List.generate(
-                            5,
-                            (index) => Icon(
-                              Icons.star_border,
-                              color: Colors.amber,
-                              size: screenWidth * 0.16,
+                        left: 0,
+                        right: 0,
+                        child: Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: List.generate(
+                              5,
+                              (index) => GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _rating = index + 1;
+                                  });
+                                },
+                                child: Icon(
+                                  index < _rating
+                                      ? Icons.star
+                                      : Icons.star_border,
+                                  color: Colors.amber,
+                                  size: screenWidth * 0.08,
+                                ),
+                              ),
                             ),
                           ),
                         ),
