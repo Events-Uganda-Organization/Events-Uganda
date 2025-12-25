@@ -799,7 +799,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               left: screenWidth * 0.02,
               child: Row(
                 children: [
-                  Icon(Icons.restaurant, color: Colors.black, size: 20),
+                  Icon(Icons.restaurant_menu, color: Colors.black, size: 20),
                   SizedBox(width: 8),
                   Text(
                     'Catering for weddings',
