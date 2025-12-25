@@ -146,11 +146,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            height: screenHeight * 2,
-            child: Stack(
-              children: [
+        child: Stack(
+          children: [
             Positioned(
               top: MediaQuery.of(context).size.height * 0.0,
               bottom: MediaQuery.of(context).size.height * 0.0,
@@ -216,6 +213,82 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     ),
                   ),
                 ],
+              ),
+            ),
+            
+            Positioned(
+              top: screenHeight * 0.03,
+              right: screenWidth * 0.2,
+              child: Container(
+                width: screenWidth * 0.128,
+                height: screenWidth * 0.128,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 3),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 7),
+                    ),
+                  ],
+                ),
+                child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
+                    ? ClipOval(
+                        child: Image.network(
+                          _profilePicUrl!,
+                          width: screenWidth * 0.128,
+                          height: screenWidth * 0.128,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Center(
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.black,
+                                size: screenWidth * 0.07,
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Center(
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: screenWidth * 0.07,
+                        ),
+                      ),
+              ),
+            ),
+
+            
+            Positioned(
+              top: screenHeight * 0.03,
+              right: screenWidth * 0.04,
+              child: Container(
+                width: screenWidth * 0.128,
+                height: screenWidth * 0.128,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 3),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.15),
+                      blurRadius: 10,
+                      offset: const Offset(0, 7),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.notifications_none_rounded,
+                    color: Colors.black,
+                    size: screenWidth * 0.07,
+                  ),
+                ),
               ),
             ),
             // Introduction image
@@ -564,52 +637,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.03,
-              right: screenWidth * 0.2,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
-                    ? ClipOval(
-                        child: Image.network(
-                          _profilePicUrl!,
-                          width: screenWidth * 0.128,
-                          height: screenWidth * 0.128,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Center(
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.black,
-                                size: screenWidth * 0.07,
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                    : Center(
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.black,
-                          size: screenWidth * 0.07,
-                        ),
-                      ),
-              ),
-            ),
-            Positioned(
               top:
                   screenHeight * 0.12 +
                   screenWidth * 0.95 * (336 / 350) +
@@ -642,33 +669,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       color: Color.fromARGB(255, 182, 113, 34),
                       size: 31,
                     ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.03,
-              right: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 10,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.notifications_none_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
                   ),
                 ),
               ),
@@ -710,7 +710,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.money, color: Colors.black, size: 20),
+                    Icon(Icons.payments, color: Colors.black, size: 20),
                     SizedBox(width: 4),
                     Text(
                       'UGX 800,000',
@@ -867,8 +867,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
           ],
         ),
       ),
-    ),
-  ),
-);
+    );
+  }
 }
-    }
