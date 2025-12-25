@@ -1106,6 +1106,38 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
+                      Positioned(
+                        top: _showReviewSection
+                            ? screenHeight * 1.33 - offset + 130
+                            : screenHeight * 1.32 - offset,
+                        left: screenWidth * 0.022,
+                        child: Text(
+                          'Rating and some reviews are verified and are from\npeople who use the same type of device that you use.',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: _showReviewSection
+                                ? screenWidth * 0.035
+                                : screenWidth * 0.035,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Abril Fatface',
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: _showReviewSection
+                            ? screenHeight * 1.33 - offset + 180
+                            : screenHeight * 1.32 - offset + 50,
+                        left: screenWidth * 0.022,
+                        child: Text(
+                          '4.8',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.15,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Abril Fatface',
+                          ),
+                        ),
+                      ),
                       if (_showReviewSection)
                         Positioned(
                           top: screenHeight * 1.33 - offset,
