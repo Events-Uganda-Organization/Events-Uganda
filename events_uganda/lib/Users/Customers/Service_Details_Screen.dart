@@ -849,9 +849,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             Text(
                               'Catering for weddings',
                               style: TextStyle(
-                                fontFamily: 'Montserrat',
+                                fontFamily: 'Abril Fatface',
                                 fontWeight: FontWeight.w600,
-                                fontSize: 11,
+                                fontSize: 13,
                                 color: Colors.black,
                               ),
                             ),
@@ -868,9 +868,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             Text(
                               'Corporate Catering',
                               style: TextStyle(
-                                fontFamily: 'Montserrat',
+                                fontFamily: 'Abril Fatface',
                                 fontWeight: FontWeight.w600,
-                                fontSize: 11,
+                                fontSize: 13,
                                 color: Colors.black,
                               ),
                             ),
@@ -891,9 +891,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             Text(
                               'Outside Catering',
                               style: TextStyle(
-                                fontFamily: 'Montserrat',
+                                fontFamily: 'Abril Fatface',
                                 fontWeight: FontWeight.w600,
-                                fontSize: 11,
+                                fontSize: 13,
                                 color: Colors.black,
                               ),
                             ),
@@ -928,9 +928,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               Text(
                                 'Buffet Setup',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
+                                  fontFamily: 'Abril Fatface',
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 11,
+                                  fontSize: 13,
                                   color: Colors.black,
                                 ),
                               ),
@@ -954,9 +954,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               Text(
                                 'Traditional Food',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
+                                  fontFamily: 'Abril Fatface',
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 11,
+                                  fontSize: 13,
                                   color: Colors.black,
                                 ),
                               ),
@@ -970,7 +970,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         child: Text(
                           "About Provider Name",
                           style: TextStyle(
-                            fontFamily: 'Abril Fatface',
+                            fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w900,
                             fontSize: screenWidth * 0.048,
                             color: Colors.black,
