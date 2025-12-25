@@ -914,48 +914,54 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: screenHeight * 0.88 - offset,
-                        right: screenWidth * 0.22,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.food_bank_rounded,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              'Buffet Setup',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 10,
+                        left: screenWidth - screenWidth * 0.10 - 150,
+                        child: Container(
+                          width: 150,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.food_bank_rounded,
                                 color: Colors.black,
+                                size: 20,
                               ),
-                            ),
-                          ],
+                              SizedBox(width: 8),
+                              Text(
+                                'Buffet Setup',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 10,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Positioned(
                         top: screenHeight * 0.92 - offset,
-                        right: screenWidth * 0.22,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.soup_kitchen,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              'Traditional Food',
-                              style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 10,
+                        left: screenWidth - screenWidth * 0.22 - 150,
+                        child: Container(
+                          width: 150,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.soup_kitchen,
                                 color: Colors.black,
+                                size: 20,
                               ),
-                            ),
-                          ],
+                              SizedBox(width: 8),
+                              Text(
+                                'Traditional Food',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 10,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
