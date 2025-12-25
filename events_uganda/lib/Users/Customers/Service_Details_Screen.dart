@@ -883,7 +883,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         child: Row(
                           children: [
                             Icon(
-                              Icons.food_bank,
+                              Icons.outdoor_grill,
                               color: Colors.black,
                               size: 20,
                             ),
