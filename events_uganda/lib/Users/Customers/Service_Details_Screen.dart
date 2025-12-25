@@ -1049,9 +1049,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           children: List.generate(
                             5,
                             (index) => Icon(
-                              Icons.star,
+                              Icons.star_border,
                               color: Colors.amber,
-                              size: screenWidth * 0.05,
+                              size: screenWidth * 0.08,
                             ),
                           ),
                         ),
