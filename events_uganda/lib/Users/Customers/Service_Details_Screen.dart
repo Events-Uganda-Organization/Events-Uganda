@@ -851,7 +851,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
-                                fontSize: 10,
+                                fontSize: 11,
                                 color: Colors.black,
                               ),
                             ),
@@ -870,7 +870,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
-                                fontSize: 10,
+                                fontSize: 11,
                                 color: Colors.black,
                               ),
                             ),
@@ -893,7 +893,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               style: TextStyle(
                                 fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
-                                fontSize: 10,
+                                fontSize: 11,
                                 color: Colors.black,
                               ),
                             ),
@@ -902,7 +902,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: screenHeight * 0.88 - offset,
-                        right: (screenWidth - screenWidth * 0.48) / 1,
+                        right: (screenWidth - screenWidth * 0.50) / 1,
                         child: Container(
                           width: 5,
                           height: 90,
@@ -914,7 +914,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: screenHeight * 0.88 - offset,
-                        left: screenWidth - screenWidth * 0.10 - 150,
+                        left: screenWidth - screenWidth * 0.02 - 150,
                         child: Container(
                           width: 150,
                           child: Row(
@@ -930,7 +930,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   color: Colors.black,
                                 ),
                               ),
@@ -940,7 +940,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: screenHeight * 0.92 - offset,
-                        left: screenWidth - screenWidth * 0.22 - 150,
+                        left: screenWidth - screenWidth * 0.02 - 150,
                         child: Container(
                           width: 150,
                           child: Row(
@@ -956,7 +956,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   color: Colors.black,
                                 ),
                               ),
