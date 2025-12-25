@@ -143,6 +143,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     final promoTop =
         screenHeight * 0.19 + screenWidth * 0.12 + screenHeight * 0.02;
     final promoHeight = screenWidth * 0.46;
+    final offset = screenHeight * 0.13;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -290,576 +291,629 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
-            // Introduction image
             Positioned(
-              top: screenHeight * 0.13,
-              left: (screenWidth - screenWidth * 0.95) / 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: Image.asset(
-                      _galleryImages[_selectedGalleryIndex],
-                      width: screenWidth * 0.95,
-                      height: screenWidth * 0.95 * (336 / 350),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.021),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              top: offset,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height: screenHeight * 2,
+                  child: Stack(
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Provider's Name",
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w900,
-                              fontSize: screenWidth * 0.048,
-                              color: Colors.black,
+                      // Introduction image
+                      Positioned(
+                        top: 0,
+                        left: (screenWidth - screenWidth * 0.95) / 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: Image.asset(
+                                _galleryImages[_selectedGalleryIndex],
+                                width: screenWidth * 0.95,
+                                height: screenWidth * 0.95 * (336 / 350),
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: screenHeight * 0.020),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: screenWidth * 0.02,
-                              top: screenHeight * 0.02,
-                            ),
-                            child: Row(
+                            SizedBox(height: screenHeight * 0.021),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "4.8",
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: screenWidth * 0.04,
-                                    color: Colors.black,
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Provider's Name",
+                                      style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: screenWidth * 0.048,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.020),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: screenWidth * 0.02,
+                                        top: screenHeight * 0.02,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "4.8",
+                                            style: TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: screenWidth * 0.04,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          SizedBox(width: screenWidth * 0.01),
+                                          Icon(
+                                            Icons.star,
+                                            color: Colors.black,
+                                            fill: 1.0,
+                                            size: screenWidth * 0.035,
+                                          ),
+                                          SizedBox(width: screenWidth * 0.005),
+                                          Icon(
+                                            Icons.chevron_right,
+                                            color: Colors.black,
+                                            size: screenWidth * 0.06,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.005),
+                                    Text(
+                                      "(120 reviews)",
+                                      style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: screenWidth * 0.03,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(width: screenWidth * 0.01),
+                                SizedBox(width: screenWidth * 0.018),
                                 Icon(
-                                  Icons.star,
-                                  color: Colors.black,
-                                  fill: 1.0,
-                                  size: screenWidth * 0.035,
-                                ),
-                                SizedBox(width: screenWidth * 0.005),
-                                Icon(
-                                  Icons.chevron_right,
-                                  color: Colors.black,
-                                  size: screenWidth * 0.06,
+                                  Icons.verified,
+                                  color: Colors.blue,
+                                  size: screenWidth * 0.055,
                                 ),
                               ],
                             ),
-                          ),
-                          SizedBox(height: screenHeight * 0.005),
-                          Text(
-                            "(120 reviews)",
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w500,
-                              fontSize: screenWidth * 0.03,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: screenWidth * 0.018),
-                      Icon(
-                        Icons.verified,
-                        color: Colors.blue,
-                        size: screenWidth * 0.055,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.63,
-              right: (screenWidth - screenWidth * 0.28) / 1,
-              child: Container(
-                width: 5,
-                height: 45,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.63,
-              left: screenWidth * 0.35,
-              child: Text(
-                "Kampala",
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w900,
-                  fontSize: screenWidth * 0.035,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.66,
-              left: screenWidth * 0.33,
-              child: Text(
-                "2.8 km away",
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w500,
-                  fontSize: screenWidth * 0.03,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.63,
-              right: (screenWidth - screenWidth * 0.60) / 1,
-              child: Container(
-                width: 5,
-                height: 45,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.63,
-              left: screenWidth * 0.78,
-              child: Text(
-                "5+",
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w900,
-                  fontSize: screenWidth * 0.04,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.66,
-              left: screenWidth * 0.63,
-              child: Text(
-                "Years of Experience",
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w500,
-                  fontSize: screenWidth * 0.03,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            // Glassy UI Rectangle at bottom of image
-            Positioned(
-              top:
-                  screenHeight * 0.12 + (screenWidth * 0.95 * (336 / 350)) - 55,
-              left: (screenWidth - 315) / 2,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                  child: Container(
-                    width: 315,
-                    height: 55,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.25),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.5),
-                        width: 1.5,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          spreadRadius: 2,
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 6),
-                        if (_galleryScrollIndex > 0)
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _galleryScrollIndex = (_galleryScrollIndex - 1)
-                                    .clamp(0, _galleryImages.length - 1);
-                              });
-                              _galleryScrollController.animateTo(
-                                (_galleryScrollIndex) * 50.0,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.ease,
-                              );
-                            },
-                            child: Container(
-                              width: 36,
-                              height: 36,
-                              alignment: Alignment.center,
-                              child: Transform.rotate(
-                                angle: 3.1416, // 180° → face left
-                                child: const Icon(
-                                  Icons.play_arrow,
-                                  color: Colors.white,
-                                  size: 28,
-                                ),
-                              ),
-                            ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.63 - offset,
+                        right: (screenWidth - screenWidth * 0.28) / 1,
+                        child: Container(
+                          width: 5,
+                          height: 45,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                        SizedBox(width: 6),
-                        Expanded(
-                          child: ListView.builder(
-                            controller: _galleryScrollController,
-                            scrollDirection: Axis.horizontal,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: _galleryImages.length,
-                            itemBuilder: (context, i) => Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedGalleryIndex = i;
-                                  });
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: _selectedGalleryIndex == i
-                                          ? Border.all(
-                                              color: Colors.white,
-                                              width: 2,
-                                            )
-                                          : null,
-                                      borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.63 - offset,
+                        left: screenWidth * 0.35,
+                        child: Text(
+                          "Kampala",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w900,
+                            fontSize: screenWidth * 0.035,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.66 - offset,
+                        left: screenWidth * 0.33,
+                        child: Text(
+                          "2.8 km away",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
+                            fontSize: screenWidth * 0.03,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.63 - offset,
+                        right: (screenWidth - screenWidth * 0.60) / 1,
+                        child: Container(
+                          width: 5,
+                          height: 45,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.63 - offset,
+                        left: screenWidth * 0.78,
+                        child: Text(
+                          "5+",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w900,
+                            fontSize: screenWidth * 0.04,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.66 - offset,
+                        left: screenWidth * 0.63,
+                        child: Text(
+                          "Years of Experience",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
+                            fontSize: screenWidth * 0.03,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      // Glassy UI Rectangle at bottom of image
+                      Positioned(
+                        top:
+                            screenHeight * 0.12 +
+                            (screenWidth * 0.95 * (336 / 350)) -
+                            55 -
+                            offset,
+                        left: (screenWidth - 315) / 2,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(
+                              sigmaX: 10.0,
+                              sigmaY: 10.0,
+                            ),
+                            child: Container(
+                              width: 315,
+                              height: 55,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.25),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Colors.white.withOpacity(0.5),
+                                  width: 1.5,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    blurRadius: 10,
+                                    spreadRadius: 2,
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  SizedBox(width: 6),
+                                  if (_galleryScrollIndex > 0)
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _galleryScrollIndex =
+                                              (_galleryScrollIndex - 1).clamp(
+                                                0,
+                                                _galleryImages.length - 1,
+                                              );
+                                        });
+                                        _galleryScrollController.animateTo(
+                                          (_galleryScrollIndex) * 50.0,
+                                          duration: const Duration(
+                                            milliseconds: 300,
+                                          ),
+                                          curve: Curves.ease,
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 36,
+                                        height: 36,
+                                        alignment: Alignment.center,
+                                        child: Transform.rotate(
+                                          angle: 3.1416, // 180° → face left
+                                          child: const Icon(
+                                            Icons.play_arrow,
+                                            color: Colors.white,
+                                            size: 28,
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                    child: Image.asset(
-                                      _galleryImages[i],
-                                      width: 42,
-                                      height: 42,
-                                      fit: BoxFit.cover,
+                                  SizedBox(width: 6),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      controller: _galleryScrollController,
+                                      scrollDirection: Axis.horizontal,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemCount: _galleryImages.length,
+                                      itemBuilder: (context, i) => Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 8.0,
+                                        ),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              _selectedGalleryIndex = i;
+                                            });
+                                          },
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border:
+                                                    _selectedGalleryIndex == i
+                                                    ? Border.all(
+                                                        color: Colors.white,
+                                                        width: 2,
+                                                      )
+                                                    : null,
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: Image.asset(
+                                                _galleryImages[i],
+                                                width: 42,
+                                                height: 42,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
+                                  SizedBox(width: 6),
+                                  if (_galleryScrollIndex <
+                                      _galleryImages.length - 5)
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _galleryScrollIndex =
+                                              (_galleryScrollIndex + 1).clamp(
+                                                0,
+                                                (_galleryImages.length - 5)
+                                                    .clamp(
+                                                      0,
+                                                      _galleryImages.length,
+                                                    ),
+                                              );
+                                        });
+                                        _galleryScrollController.animateTo(
+                                          (_galleryScrollIndex) * 50.0,
+                                          duration: const Duration(
+                                            milliseconds: 300,
+                                          ),
+                                          curve: Curves.ease,
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 36,
+                                        height: 36,
+                                        child: const Icon(
+                                          Icons.play_arrow,
+                                          color: Colors.white,
+                                          size: 28,
+                                        ),
+                                      ),
+                                    ),
+                                  SizedBox(width: 6),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Heart circle as a separate Positioned below the image on the right
+                      Positioned(
+                        top:
+                            screenHeight * 0.12 +
+                            screenWidth * 0.95 * (336 / 350) +
+                            16 -
+                            offset, // 16px below image
+                        left:
+                            (screenWidth - screenWidth * 0.95) / 2 +
+                            screenWidth * 0.95 -
+                            110, // right edge of image minus circle size
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _isFavorite = !_isFavorite;
+                            });
+                            _animationController.forward().then(
+                              (_) => _animationController.reverse(),
+                            );
+                          },
+                          child: Container(
+                            width: 45,
+                            height: 45,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 8,
+                                  offset: Offset(0, 6),
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: ScaleTransition(
+                                scale: _scaleAnimation,
+                                child: Icon(
+                                  _isFavorite
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: _isFavorite
+                                      ? Colors.red
+                                      : const Color.fromARGB(255, 182, 113, 34),
+                                  size: 31,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(width: 6),
-                        if (_galleryScrollIndex < _galleryImages.length - 5)
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _galleryScrollIndex = (_galleryScrollIndex + 1)
-                                    .clamp(
-                                      0,
-                                      (_galleryImages.length - 5).clamp(
-                                        0,
-                                        _galleryImages.length,
-                                      ),
-                                    );
-                              });
-                              _galleryScrollController.animateTo(
-                                (_galleryScrollIndex) * 50.0,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.ease,
-                              );
-                            },
-                            child: Container(
-                              width: 36,
-                              height: 36,
-                              child: const Icon(
-                                Icons.play_arrow,
-                                color: Colors.white,
-                                size: 28,
+                      ),
+                      Positioned(
+                        top:
+                            screenHeight * 0.12 +
+                            screenWidth * 0.95 * (336 / 350) +
+                            16 -
+                            offset, // 16px below image
+                        left:
+                            (screenWidth - screenWidth * 0.95) / 2 +
+                            screenWidth * 0.95 -
+                            45,
+                        child: GestureDetector(
+                          onTap: () {
+                            // Add share functionality here
+                          },
+                          child: Container(
+                            width: 45,
+                            height: 45,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 6),
+                                ),
+                              ],
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.share,
+                                color: Color.fromARGB(255, 182, 113, 34),
+                                size: 31,
                               ),
                             ),
                           ),
-                        SizedBox(width: 6),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            // Heart circle as a separate Positioned below the image on the right
-            Positioned(
-              top:
-                  screenHeight * 0.12 +
-                  screenWidth * 0.95 * (336 / 350) +
-                  16, // 16px below image
-              left:
-                  (screenWidth - screenWidth * 0.95) / 2 +
-                  screenWidth * 0.95 -
-                  110, // right edge of image minus circle size
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _isFavorite = !_isFavorite;
-                  });
-                  _animationController.forward().then(
-                    (_) => _animationController.reverse(),
-                  );
-                },
-                child: Container(
-                  width: 45,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 8,
-                        offset: Offset(0, 6),
+                        ),
                       ),
-                    ],
-                  ),
-                  child: Center(
-                    child: ScaleTransition(
-                      scale: _scaleAnimation,
-                      child: Icon(
-                        _isFavorite ? Icons.favorite : Icons.favorite_border,
-                        color: _isFavorite
-                            ? Colors.red
-                            : const Color.fromARGB(255, 182, 113, 34),
-                        size: 31,
+                      Positioned(
+                        top: screenHeight * 0.71 - offset,
+                        left: screenWidth * 0.02,
+                        child: Text(
+                          "Starting Price",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w900,
+                            fontSize: screenWidth * 0.048,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top:
-                  screenHeight * 0.12 +
-                  screenWidth * 0.95 * (336 / 350) +
-                  16, // 16px below image
-              left:
-                  (screenWidth - screenWidth * 0.95) / 2 +
-                  screenWidth * 0.95 -
-                  45,
-              child: GestureDetector(
-                onTap: () {
-                  // Add share functionality here
-                },
-                child: Container(
-                  width: 45,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 8,
-                        offset: const Offset(0, 6),
+                      Positioned(
+                        top: screenHeight * 0.76 - offset,
+                        left: screenWidth * 0.02,
+                        child: Container(
+                          width: 160,
+                          height: 35,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF3CA9B),
+                            borderRadius: BorderRadius.circular(13),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 182, 122, 53),
+                              width: 1,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.payments,
+                                color: Colors.black,
+                                size: 20,
+                              ),
+                              SizedBox(width: 4),
+                              Text(
+                                'UGX 800,000',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ],
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.share,
-                      color: Color.fromARGB(255, 182, 113, 34),
-                      size: 31,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.71,
-              left: screenWidth * 0.02,
-              child: Text(
-                "Starting Price",
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w900,
-                  fontSize: screenWidth * 0.048,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.76,
-              left: screenWidth * 0.02,
-              child: Container(
-                width: 160,
-                height: 35,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF3CA9B),
-                  borderRadius: BorderRadius.circular(13),
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 182, 122, 53),
-                    width: 1,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.payments, color: Colors.black, size: 20),
-                    SizedBox(width: 4),
-                    Text(
-                      'UGX 800,000',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13,
-                        color: Colors.black,
+                      Positioned(
+                        top: screenHeight * 0.71 - offset,
+                        right: screenWidth * 0.16,
+                        child: Text(
+                          "Availability",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w900,
+                            fontSize: screenWidth * 0.048,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.71,
-              right: screenWidth * 0.16,
-              child: Text(
-                "Availability",
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w900,
-                  fontSize: screenWidth * 0.048,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.76,
-              right: screenWidth * 0.02,
-              child: Container(
-                width: 160,
-                height: 35,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF3CA9B),
-                  borderRadius: BorderRadius.circular(13),
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 182, 122, 53),
-                    width: 1,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
+                      Positioned(
+                        top: screenHeight * 0.76 - offset,
+                        right: screenWidth * 0.02,
+                        child: Container(
+                          width: 160,
+                          height: 35,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF3CA9B),
+                            borderRadius: BorderRadius.circular(13),
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 182, 122, 53),
+                              width: 1,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 8,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
 
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.calendar_month_rounded,
-                      color: Colors.black,
-                      size: 20,
-                    ),
-                    SizedBox(width: 4),
-                    Text(
-                      'DD/MM/YYYY',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13,
-                        color: Colors.black,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.calendar_month_rounded,
+                                color: Colors.black,
+                                size: 20,
+                              ),
+                              SizedBox(width: 4),
+                              Text(
+                                'DD/MM/YYYY',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.83,
-              left: screenWidth * 0.02,
-              child: Text(
-                "Services Offered",
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w900,
-                  fontSize: screenWidth * 0.048,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.88,
-              left: screenWidth * 0.02,
-              child: Row(
-                children: [
-                  Icon(Icons.restaurant_menu, color: Colors.black, size: 20),
-                  SizedBox(width: 8),
-                  Text(
-                    'Catering for weddings',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 10,
-                      color: Colors.black,
-                    ),
+                      Positioned(
+                        top: screenHeight * 0.83 - offset,
+                        left: screenWidth * 0.02,
+                        child: Text(
+                          "Services Offered",
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w900,
+                            fontSize: screenWidth * 0.048,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.88 - offset,
+                        left: screenWidth * 0.02,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.restaurant_menu,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Catering for weddings',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 10,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.92 - offset,
+                        left: screenWidth * 0.02,
+                        child: Row(
+                          children: [
+                            Icon(Icons.business, color: Colors.black, size: 20),
+                            SizedBox(width: 8),
+                            Text(
+                              'Corporate Catering',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 10,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.96 - offset,
+                        left: screenWidth * 0.02,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.food_bank,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Outside Catering',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 10,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.88 - offset,
+                        right: (screenWidth - screenWidth * 0.48) / 1,
+                        child: Container(
+                          width: 5,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.92,
-              left: screenWidth * 0.02,
-              child: Row(
-                children: [
-                  Icon(Icons.business, color: Colors.black, size: 20),
-                  SizedBox(width: 8),
-                  Text(
-                    'Corporate Catering',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 10,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.96,
-              left: screenWidth * 0.02,
-              child: Row(
-                children: [
-                  Icon(Icons.food_bank, color: Colors.black, size: 20),
-                  SizedBox(width: 8),
-                  Text(
-                    'Outside Catering',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.88,
-              right: (screenWidth - screenWidth * 0.48) / 1,
-              child: Container(
-                width: 5,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(5),
                 ),
               ),
             ),
