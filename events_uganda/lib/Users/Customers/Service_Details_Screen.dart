@@ -914,7 +914,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: screenHeight * 0.88 - offset,
-                        right: screenWidth * 0.32,
+                        right: screenWidth * 0.22,
                         child: Row(
                           children: [
                             Icon(
@@ -935,8 +935,66 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ],
                         ),
                       ),
+                      Positioned(
+                        top: screenHeight * 0.92 - offset,
+                        right: screenWidth * 0.22,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.soup_kitchen,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Traditional Food',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 10,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 20,
+              left: (screenWidth - 270) / 2,
+              child: Container(
+                width: 270,
+                height: 62,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF3CA9B),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Book Now',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Montserrat',
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Transform.rotate(
+                      angle: -26 * 3.14159 / 180,
+                      child: Icon(
+                        Icons.arrow_forward,
+                        color: Colors.black,
+                        size: 24,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
