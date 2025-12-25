@@ -871,3 +871,4 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   ),
 );
 }
+    }
