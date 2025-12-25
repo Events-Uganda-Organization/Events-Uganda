@@ -1057,13 +1057,19 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   setState(() {
                                     _rating = index + 1;
                                   });
+                                  _animationController.forward().then(
+                                    (_) => _animationController.reverse(),
+                                  );
                                 },
-                                child: Icon(
-                                  index < _rating
-                                      ? Icons.star
-                                      : Icons.star_border,
-                                  color: Colors.amber,
-                                  size: screenWidth * 0.15,
+                                child: ScaleTransition(
+                                  scale: _scaleAnimation,
+                                  child: Icon(
+                                    index < _rating
+                                        ? Icons.star
+                                        : Icons.star_border,
+                                    color: Colors.amber,
+                                    size: screenWidth * 0.15,
+                                  ),
                                 ),
                               ),
                             ),
