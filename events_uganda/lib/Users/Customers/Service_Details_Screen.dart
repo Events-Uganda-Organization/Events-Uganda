@@ -344,7 +344,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           Text(
                                             "4.8",
                                             style: TextStyle(
-                                              fontFamily: 'Montserrat',
+                                              fontFamily: 'Abril Fatface',
                                               fontWeight: FontWeight.bold,
                                               fontSize: screenWidth * 0.04,
                                               color: Colors.black,
@@ -370,7 +370,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     Text(
                                       "(120 reviews)",
                                       style: TextStyle(
-                                        fontFamily: 'Montserrat',
+                                        fontFamily: 'Abril Fatface',
                                         fontWeight: FontWeight.w500,
                                         fontSize: screenWidth * 0.03,
                                         color: Colors.black,
@@ -387,6 +387,31 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               ],
                             ),
                           ],
+                        ),
+                      ),
+
+                      // Available badge
+                      Positioned(
+                        top: screenHeight * 0.19 - offset,
+                        left: screenWidth * 0.35,
+                        child: Container(
+                          width: 80,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Available',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: screenWidth * 0.03,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Abril Fatface',
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                       Positioned(
@@ -407,7 +432,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         child: Text(
                           "Kampala",
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
+                            fontFamily: 'Abril Fatface',
                             fontWeight: FontWeight.w900,
                             fontSize: screenWidth * 0.035,
                             color: Colors.black,
@@ -420,7 +445,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         child: Text(
                           "2.8 km away",
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
+                            fontFamily: 'Abril Fatface',
                             fontWeight: FontWeight.w500,
                             fontSize: screenWidth * 0.03,
                             color: Colors.black,
@@ -445,7 +470,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         child: Text(
                           "5+",
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
+                            fontFamily: 'Abril Fatface',
                             fontWeight: FontWeight.w900,
                             fontSize: screenWidth * 0.04,
                             color: Colors.black,
@@ -458,7 +483,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         child: Text(
                           "Years of Experience",
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
+                            fontFamily: 'Abril Fatface',
                             fontWeight: FontWeight.w500,
                             fontSize: screenWidth * 0.03,
                             color: Colors.black,
@@ -733,7 +758,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             borderRadius: BorderRadius.circular(13),
                             border: Border.all(
                               color: const Color.fromARGB(255, 182, 122, 53),
-                              width: 1,
+                              width: 0.5,
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -755,7 +780,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               Text(
                                 'UGX 800,000',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
+                                  fontFamily: 'Abril Fatface',
                                   fontWeight: FontWeight.w600,
                                   fontSize: 13,
                                   color: Colors.black,
@@ -789,7 +814,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             borderRadius: BorderRadius.circular(13),
                             border: Border.all(
                               color: const Color.fromARGB(255, 182, 122, 53),
-                              width: 1,
+                              width: 0.5,
                             ),
                             boxShadow: [
                               BoxShadow(
@@ -812,7 +837,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               Text(
                                 'DD/MM/YYYY',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
+                                  fontFamily: 'Abril Fatface',
                                   fontWeight: FontWeight.w600,
                                   fontSize: 13,
                                   color: Colors.black,
@@ -850,7 +875,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               'Catering for weddings',
                               style: TextStyle(
                                 fontFamily: 'Abril Fatface',
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w500,
                                 fontSize: 13,
                                 color: Colors.black,
                               ),
