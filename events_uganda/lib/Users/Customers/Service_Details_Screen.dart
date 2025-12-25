@@ -1080,25 +1080,55 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       Positioned(
                         top: screenHeight * 1.29 - offset,
                         left: screenWidth * 0.02,
-                        child: Center(
-                          child: Text(
-                            'Write a review',
-                            style: TextStyle(
-                              color: const Color.fromARGB(255, 228, 172, 1),
-                              fontSize: screenWidth * 0.045,
-                              fontWeight: FontWeight.w900,
-                              fontFamily: 'Abril Fatface',
-                              shadows: [
-                                Shadow(
-                                  color: Colors.amber,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 0),
-                                ),
-                              ],
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _showReviewSection = !_showReviewSection;
+                            });
+                          },
+                          child: Center(
+                            child: Text(
+                              'Write a review',
+                              style: TextStyle(
+                                color: const Color.fromARGB(255, 228, 172, 1),
+                                fontSize: screenWidth * 0.045,
+                                fontWeight: FontWeight.w900,
+                                fontFamily: 'Abril Fatface',
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.amber,
+                                    blurRadius: 10,
+                                    offset: Offset(0, 0),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
+                      if (_showReviewSection)
+                        Positioned(
+                          top: screenHeight * 1.33 - offset,
+                          left: screenWidth * 0.05,
+                          right: screenWidth * 0.05,
+                          child: Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              border: Border.all(color: Colors.black, width: 1),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(10),
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  hintText: 'Write your review here...',
+                                  border: InputBorder.none,
+                                ),
+                                maxLines: 3,
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
