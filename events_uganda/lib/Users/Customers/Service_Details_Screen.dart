@@ -36,6 +36,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   String? _profilePicUrl;
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
+  int _rating = 0;
 
   Widget _buildCircleItem(
     double screenWidth,
