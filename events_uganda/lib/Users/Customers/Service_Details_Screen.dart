@@ -1030,7 +1030,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 1.18 - offset,
+                        top: screenHeight * 1.17 - offset,
                         left: screenWidth * 0.02,
                         child: Text(
                           'Rate these services',
