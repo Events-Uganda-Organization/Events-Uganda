@@ -1114,8 +1114,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           child: Container(
                             height: 100,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(color: Colors.black, width: 1),
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(color: Colors.amber, width: 1),
                             ),
                             child: Padding(
                               padding: EdgeInsets.all(10),
