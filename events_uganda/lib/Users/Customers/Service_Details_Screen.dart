@@ -912,6 +912,29 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
+                      Positioned(
+                        top: screenHeight * 0.88 - offset,
+                        right: screenWidth * 0.32,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.food_bank_rounded,
+                              color: Colors.black,
+                              size: 20,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Buffet Setup',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 10,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
