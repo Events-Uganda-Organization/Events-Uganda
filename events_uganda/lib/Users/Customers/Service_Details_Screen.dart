@@ -1084,7 +1084,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             'Write a review',
                             style: TextStyle(
                               color: Colors.amber,
-                              fontSize: screenWidth * 0.05,
+                              fontSize: screenWidth * 0.045,
                               fontWeight: FontWeight.w900,
                               fontFamily: 'Abril Fatface',
                             ),
