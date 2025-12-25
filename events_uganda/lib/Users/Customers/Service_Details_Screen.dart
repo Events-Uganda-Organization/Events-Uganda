@@ -972,6 +972,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 decoration: BoxDecoration(
                   color: const Color(0xFFF3CA9B),
                   borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 182, 122, 53),
+                    width: 1,
+                  ),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -987,7 +991,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     ),
                     SizedBox(width: 8),
                     Transform.rotate(
-                      angle: -26 * 3.14159 / 180,
+                      angle: -28 * 3.14159 / 180,
                       child: Icon(
                         Icons.arrow_forward,
                         color: Colors.black,
