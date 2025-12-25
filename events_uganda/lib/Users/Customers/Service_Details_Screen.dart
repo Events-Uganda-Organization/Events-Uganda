@@ -249,7 +249,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                           SizedBox(height: screenHeight * 0.020),
                           Padding(
-                            padding: EdgeInsets.only(left: screenWidth * 0.02),
+                            padding: EdgeInsets.only(
+                              left: screenWidth * 0.02,
+                              top: screenHeight * 0.02,
+                            ),
                             child: Row(
                               children: [
                                 Text(
@@ -301,7 +304,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.61,
+              top: screenHeight * 0.63,
               right: (screenWidth - screenWidth * 0.28) / 1,
               child: Container(
                 width: 5,
@@ -313,7 +316,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.61,
+              top: screenHeight * 0.63,
               left: screenWidth * 0.35,
               child: Text(
                 "Kampala",
@@ -326,7 +329,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.64,
+              top: screenHeight * 0.66,
               left: screenWidth * 0.33,
               child: Text(
                 "2.8 km away",
@@ -339,7 +342,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.61,
+              top: screenHeight * 0.63,
               right: (screenWidth - screenWidth * 0.60) / 1,
               child: Container(
                 width: 5,
@@ -351,7 +354,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.61,
+              top: screenHeight * 0.63,
               left: screenWidth * 0.78,
               child: Text(
                 "5+",
@@ -364,7 +367,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.64,
+              top: screenHeight * 0.66,
               left: screenWidth * 0.63,
               child: Text(
                 "Years of Experience",
@@ -668,7 +671,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.69,
+              top: screenHeight * 0.71,
               left: screenWidth * 0.02,
               child: Text(
                 "Starting Price",
@@ -681,10 +684,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.69 + 40,
+              top: screenHeight * 0.76,
               left: screenWidth * 0.02,
               child: Container(
-                width: 178,
+                width: 160,
                 height: 35,
                 decoration: BoxDecoration(
                   color: const Color(0xFFF3CA9B),
@@ -700,6 +703,161 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       offset: const Offset(0, 4),
                     ),
                   ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.money, color: Colors.black, size: 20),
+                    SizedBox(width: 4),
+                    Text(
+                      'UGX 800,000',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.71,
+              right: screenWidth * 0.16,
+              child: Text(
+                "Availability",
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w900,
+                  fontSize: screenWidth * 0.048,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.76,
+              right: screenWidth * 0.02,
+              child: Container(
+                width: 160,
+                height: 35,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF3CA9B),
+                  borderRadius: BorderRadius.circular(13),
+                  border: Border.all(
+                    color: const Color.fromARGB(255, 182, 122, 53),
+                    width: 1,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.calendar_month_rounded,
+                      color: Colors.black,
+                      size: 20,
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      'DD/MM/YYYY',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.83,
+              left: screenWidth * 0.02,
+              child: Text(
+                "Services Offered",
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w900,
+                  fontSize: screenWidth * 0.048,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.88,
+              left: screenWidth * 0.02,
+              child: Row(
+                children: [
+                  Icon(Icons.restaurant, color: Colors.black, size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    'Catering for weddings',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 10,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.92,
+              left: screenWidth * 0.02,
+              child: Row(
+                children: [
+                  Icon(Icons.food_bank, color: Colors.black, size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    'Corporate Catering',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 10,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.96,
+              left: screenWidth * 0.02,
+              child: Row(
+                children: [
+                  Icon(Icons.food_bank, color: Colors.black, size: 20),
+                  SizedBox(width: 8),
+                  Text(
+                    'Outside Catering',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.88,
+              right: (screenWidth - screenWidth * 0.48) / 1,
+              child: Container(
+                width: 5,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(5),
                 ),
               ),
             ),
