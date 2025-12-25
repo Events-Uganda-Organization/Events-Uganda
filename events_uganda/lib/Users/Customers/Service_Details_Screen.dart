@@ -1042,6 +1042,20 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
+                      Positioned(
+                        top: screenHeight * 1.21 - offset,
+                        left: screenWidth * 0.02,
+                        child: Row(
+                          children: List.generate(
+                            5,
+                            (index) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                              size: screenWidth * 0.05,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
