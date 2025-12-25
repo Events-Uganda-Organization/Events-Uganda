@@ -1051,7 +1051,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             (index) => Icon(
                               Icons.star_border,
                               color: Colors.amber,
-                              size: screenWidth * 0.18,
+                              size: screenWidth * 0.16,
                             ),
                           ),
                         ),
