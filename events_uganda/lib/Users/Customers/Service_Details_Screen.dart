@@ -995,7 +995,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       child: Icon(
                         Icons.arrow_forward,
                         color: Colors.black,
-                        size: 24,
+                        size: 25,
                       ),
                     ),
                   ],
