@@ -1077,16 +1077,23 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                         top: screenHeight * 1.29 - offset,
+                        top: screenHeight * 1.29 - offset,
                         left: screenWidth * 0.02,
                         child: Center(
                           child: Text(
                             'Write a review',
                             style: TextStyle(
-                              color: Colors.amber,
+                              color: const Color.fromARGB(255, 228, 172, 1),
                               fontSize: screenWidth * 0.045,
                               fontWeight: FontWeight.w900,
                               fontFamily: 'Abril Fatface',
+                              shadows: [
+                                Shadow(
+                                  color: Colors.amber,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 0),
+                                ),
+                              ],
                             ),
                           ),
                         ),
