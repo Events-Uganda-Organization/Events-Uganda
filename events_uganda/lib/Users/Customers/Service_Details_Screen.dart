@@ -818,7 +818,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               left: screenWidth * 0.02,
               child: Row(
                 children: [
-                  Icon(Icons.food_bank, color: Colors.black, size: 20),
+                  Icon(Icons.business, color: Colors.black, size: 20),
                   SizedBox(width: 8),
                   Text(
                     'Corporate Catering',
