@@ -1077,16 +1077,16 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                         top: screenHeight * 1.28 - offset,
+                         top: screenHeight * 1.29 - offset,
                         left: screenWidth * 0.02,
                         child: Center(
                           child: Text(
                             'Write a review',
                             style: TextStyle(
                               color: Colors.amber,
-                              fontSize: screenWidth * 0.04,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Montserrat',
+                              fontSize: screenWidth * 0.05,
+                              fontWeight: FontWeight.w900,
+                              fontFamily: 'Abril Fatface',
                             ),
                           ),
                         ),
