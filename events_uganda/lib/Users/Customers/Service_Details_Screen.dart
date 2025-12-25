@@ -905,7 +905,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         right: (screenWidth - screenWidth * 0.48) / 1,
                         child: Container(
                           width: 5,
-                          height: 100,
+                          height: 90,
                           decoration: BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(5),
