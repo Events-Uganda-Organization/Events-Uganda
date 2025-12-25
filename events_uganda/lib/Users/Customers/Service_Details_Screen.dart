@@ -215,7 +215,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ],
               ),
             ),
-            
+
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.2,
@@ -263,7 +263,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
 
-            
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.04,
