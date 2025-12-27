@@ -1114,28 +1114,28 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-  top: _showReviewSection
-      ? screenHeight * 1.33 - offset + 180
-      : screenHeight * 1.32 - offset + 50,
-  left: screenWidth * 0.022,
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        '4.8',
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: screenWidth * 0.15,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'Abril Fatface',
-        ),
-      ),
-      SizedBox(height: 8),
+                        top: _showReviewSection
+                            ? screenHeight * 1.33 - offset + 180
+                            : screenHeight * 1.32 - offset + 50,
+                        left: screenWidth * 0.022,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '4.8',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.15,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Abril Fatface',
+                              ),
+                            ),
+                            SizedBox(height: 8),
 
-      _buildStarRating(4.8, starSize: 24),
-    ],
-  ),
-),
+                            _buildStarRating(4.8, starSize: 24),
+                          ],
+                        ),
+                      ),
 
                       if (_showReviewSection)
                         Positioned(
@@ -1286,3 +1286,59 @@ Widget _priceCard(double screenWidth) {
     ),
   );
 }
+
+Widget _buildStarRating(double rating, {double starSize = 20}) {
+  return Row(
+    children: List.generate(5, (index) {
+      double fillAmount;
+
+      if (index + 1 <= rating) {
+        fillAmount = 1; // full star
+      } else if (index < rating) {
+        fillAmount = rating - index; // partial star
+      } else {
+        fillAmount = 0; // empty
+      }
+
+      return Stack(
+        children: [
+          Icon(
+            Icons.star,
+            color: Colors.black,
+            size: starSize,
+          ),
+          ClipRect(
+            clipper: _StarClipper(fillAmount),
+            child: Icon(
+              Icons.star,
+              color: Colors.amber,
+              size: starSize,
+            ),
+          ),
+        ],
+      );
+    }),
+  );
+}
+
+class _StarClipper extends CustomClipper<Rect> {
+  final double fill;
+
+  _StarClipper(this.fill);
+
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromLTRB(
+      0,
+      0,
+      size.width * fill,
+      size.height,
+    );
+  }
+
+  @override
+  bool shouldReclip(_StarClipper oldClipper) {
+    return oldClipper.fill != fill;
+  }
+}
+
