@@ -1522,3 +1522,109 @@ Widget _buildRatingBars(double screenWidth) {
     }),
   );
 }
+
+Widget _buildUserReviewCard(double screenWidth) {
+  return Container(
+    padding: const EdgeInsets.all(14),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(20),
+      border: Border.all(color: Colors.black12),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.05),
+          blurRadius: 10,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // HEADER
+        Row(
+          children: [
+            CircleAvatar(
+              radius: 22,
+              backgroundColor: Colors.grey.shade300,
+              child: const Icon(
+                Icons.person,
+                color: Colors.black,
+                size: 24,
+              ),
+            ),
+
+            const SizedBox(width: 12),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'User Name',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
+
+                const SizedBox(height: 4),
+
+                Row(
+                  children: [
+                    _buildStaticStars(4),
+                    const SizedBox(width: 8),
+                    Text(
+                      _reviewDate,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        color: Colors.black54,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 12),
+
+        // REVIEW TEXT
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: Colors.black),
+          ),
+          child: Text(
+            _userReviewText,
+            style: const TextStyle(fontSize: 13),
+          ),
+        ),
+
+        const SizedBox(height: 14),
+
+        // HELPFUL SECTION
+        const Text(
+          'Was this helpful?',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 12,
+          ),
+        ),
+
+        const SizedBox(height: 8),
+
+        Row(
+          children: [
+            _helpfulButton('Yes', Icons.check),
+            const SizedBox(width: 12),
+            _helpfulButton('No', Icons.close),
+          ],
+        ),
+      ],
+    ),
+  );
+}
+
