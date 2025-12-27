@@ -1130,7 +1130,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 fontFamily: 'Abril Fatface',
                               ),
                             ),
-                            SizedBox(height: 5),
+                            SizedBox(height: 2),
 
                             _buildStarRating(4.8, starSize: 14),
                           ],
