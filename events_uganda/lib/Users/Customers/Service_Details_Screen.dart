@@ -999,7 +999,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         top: screenHeight * 1.06 - offset,
                         left: screenWidth * 0.02,
                         child: Text(
-                          'The Providers description of the services he/she provides\nto the customers.',
+                          'The Providers description of the services he/she\nprovides to the customers.',
                           style: TextStyle(
                             fontFamily: 'Abril Fatface',
                             fontWeight: FontWeight.w500,
