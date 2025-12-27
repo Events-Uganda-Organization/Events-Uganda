@@ -1641,4 +1641,25 @@ Widget _buildStaticStars(int count) {
   );
 }
 
-
+Widget _helpfulButton(String text, IconData icon) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+    decoration: BoxDecoration(
+      color: Colors.amber.withOpacity(0.25),
+      borderRadius: BorderRadius.circular(20),
+    ),
+    child: Row(
+      children: [
+        Icon(icon, size: 14),
+        const SizedBox(width: 4),
+        Text(
+          text,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+    ),
+  );
+}
