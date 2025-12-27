@@ -1115,8 +1115,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 1.33 - offset + 180
-                            : screenHeight * 1.32 - offset + 50,
+                            ? screenHeight * 1.35 - offset + 180
+                            : screenHeight * 1.35 - offset + 50,
                         left: screenWidth * 0.022,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
