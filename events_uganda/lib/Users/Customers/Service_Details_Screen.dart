@@ -1174,6 +1174,17 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ],
                         ),
                       ),
+                      Positioned(
+                        top: _showReviewSection
+                            ? screenHeight * 1.34 -
+                                  offset +
+                                  180 +
+                                  120 // 120 is the height of the rating row
+                            : screenHeight * 1.34 - offset + 50 + 120,
+                        left: screenWidth * 0.022,
+                        right: screenWidth * 0.022,
+                        child: _buildReviewsList(screenWidth),
+                      ),
                       if (_showReviewSection)
                         Positioned(
                           top: screenHeight * 1.33 - offset,
