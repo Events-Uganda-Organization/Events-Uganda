@@ -142,10 +142,14 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final orientation = MediaQuery.of(context).orientation;
     final promoTop =
         screenHeight * 0.19 + screenWidth * 0.12 + screenHeight * 0.02;
     final promoHeight = screenWidth * 0.46;
     final offset = screenHeight * 0.13;
+    final verticalMultiplier = orientation == Orientation.portrait
+        ? 1.0
+        : 1.5; // Increase spacing in landscape
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -300,7 +304,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               bottom: 0,
               child: SingleChildScrollView(
                 child: SizedBox(
-                  height: screenHeight * 2,
+                  height:
+                      screenHeight *
+                      2 *
+                      verticalMultiplier, // Adjust height for landscape
                   child: Stack(
                     children: [
                       // Introduction image
@@ -336,38 +343,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       ),
                                     ),
                                     SizedBox(height: screenHeight * 0.020),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        left: screenWidth * 0.02,
-                                        top: screenHeight * 0.02,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "4.8",
-                                            style: TextStyle(
-                                              fontFamily: 'Abril Fatface',
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: screenWidth * 0.04,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          SizedBox(width: screenWidth * 0.01),
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.black,
-                                            fill: 1.0,
-                                            size: screenWidth * 0.035,
-                                          ),
-                                          SizedBox(width: screenWidth * 0.005),
-                                          Icon(
-                                            Icons.chevron_right,
-                                            color: Colors.black,
-                                            size: screenWidth * 0.06,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+
                                     SizedBox(height: screenHeight * 0.005),
                                     Text(
                                       "(120 reviews)",
@@ -392,31 +368,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
 
-                      // Available badge
-                      Positioned(
-                        top: screenHeight * 0.14 - offset,
-                        left: screenWidth * 0.35,
-                        right: screenWidth * 0.35,
-                        child: Container(
-                          width: 80,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Available',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: screenWidth * 0.03,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Abril Fatface',
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                       Positioned(
                         top: screenHeight * 0.63 - offset,
                         right: (screenWidth - screenWidth * 0.28) / 1,
@@ -469,27 +420,55 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: screenHeight * 0.63 - offset,
-                        left: screenWidth * 0.78,
-                        child: Text(
-                          "5+",
-                          style: TextStyle(
-                            fontFamily: 'Abril Fatface',
-                            fontWeight: FontWeight.w900,
-                            fontSize: screenWidth * 0.04,
-                            color: Colors.black,
-                          ),
+                        left: screenWidth * 0.63,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "5+",
+                              style: TextStyle(
+                                fontFamily: 'Abril Fatface',
+                                fontWeight: FontWeight.w900,
+                                fontSize: screenWidth * 0.04,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: screenHeight * 0.004),
+                            Text(
+                              "Years of Experience",
+                              style: TextStyle(
+                                fontFamily: 'Abril Fatface',
+                                fontWeight: FontWeight.w500,
+                                fontSize: screenWidth * 0.03,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+
+                      // Available badge
                       Positioned(
-                        top: screenHeight * 0.66 - offset,
-                        left: screenWidth * 0.63,
-                        child: Text(
-                          "Years of Experience",
-                          style: TextStyle(
-                            fontFamily: 'Abril Fatface',
-                            fontWeight: FontWeight.w500,
-                            fontSize: screenWidth * 0.03,
-                            color: Colors.black,
+                        top: screenHeight * 0.14 - offset,
+                        left: screenWidth * 0.35,
+                        right: screenWidth * 0.35,
+                        child: Container(
+                          width: 80,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Available',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: screenWidth * 0.03,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Abril Fatface',
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -740,116 +719,49 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       Positioned(
                         top: screenHeight * 0.71 - offset,
                         left: screenWidth * 0.02,
-                        child: Text(
-                          "Starting Price",
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w900,
-                            fontSize: screenWidth * 0.048,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 0.76 - offset,
-                        left: screenWidth * 0.02,
-                        child: Container(
-                          width: 160,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3CA9B),
-                            borderRadius: BorderRadius.circular(13),
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 182, 122, 53),
-                              width: 0.5,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 8,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.payments,
-                                color: Colors.black,
-                                size: 20,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                'UGX 800,000',
-                                style: TextStyle(
-                                  fontFamily: 'Abril Fatface',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 0.71 - offset,
-                        right: screenWidth * 0.16,
-                        child: Text(
-                          "Availability",
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w900,
-                            fontSize: screenWidth * 0.048,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 0.76 - offset,
                         right: screenWidth * 0.02,
-                        child: Container(
-                          width: 160,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3CA9B),
-                            borderRadius: BorderRadius.circular(13),
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 182, 122, 53),
-                              width: 0.5,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 8,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.calendar_month_rounded,
-                                color: Colors.black,
-                                size: 20,
-                              ),
-                              SizedBox(width: 4),
-                              Text(
-                                'DD/MM/YYYY',
-                                style: TextStyle(
-                                  fontFamily: 'Abril Fatface',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13,
-                                  color: Colors.black,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // ===== Starting Price Column =====
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Starting Price",
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: screenWidth * 0.048,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
+                                SizedBox(height: screenHeight * 0.01),
+                                _priceCard(screenWidth),
+                              ],
+                            ),
+
+                            // ===== Availability Column =====
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Availability",
+                                  style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: screenWidth * 0.048,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: screenHeight * 0.01),
+                                _availabilityCard(screenWidth),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
+
                       Positioned(
                         top: screenHeight * 0.83 - offset,
                         left: screenWidth * 0.02,
@@ -1210,4 +1122,80 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       ),
     );
   }
+}
+
+Widget _availabilityCard(double screenWidth) {
+  return Container(
+    width: screenWidth * 0.42, // same width
+    height: 35,
+    decoration: BoxDecoration(
+      color: const Color(0xFFF3CA9B),
+      borderRadius: BorderRadius.circular(13),
+      border: Border.all(
+        color: const Color.fromARGB(255, 182, 122, 53),
+        width: 0.5,
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          blurRadius: 8,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        Icon(Icons.calendar_month_rounded, color: Colors.black, size: 20),
+        SizedBox(width: 4),
+        Text(
+          'DD/MM/YYYY',
+          style: TextStyle(
+            fontFamily: 'Abril Fatface',
+            fontWeight: FontWeight.w600,
+            fontSize: 13,
+            color: Colors.black,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget _priceCard(double screenWidth) {
+  return Container(
+    width: screenWidth * 0.42,
+    height: 35,
+    decoration: BoxDecoration(
+      color: const Color(0xFFF3CA9B),
+      borderRadius: BorderRadius.circular(13),
+      border: Border.all(
+        color: const Color.fromARGB(255, 182, 122, 53),
+        width: 0.5,
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withOpacity(0.2),
+          blurRadius: 8,
+          offset: const Offset(0, 4),
+        ),
+      ],
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: const [
+        Icon(Icons.payments, color: Colors.black, size: 20),
+        SizedBox(width: 4),
+        Text(
+          'UGX 800,000',
+          style: TextStyle(
+            fontFamily: 'Abril Fatface',
+            fontWeight: FontWeight.w600,
+            fontSize: 13,
+            color: Colors.black,
+          ),
+        ),
+      ],
+    ),
+  );
 }
