@@ -760,9 +760,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ],
                         ),
                       ),
-
                       Positioned(
-                        top: screenHeight * 0.71 - offset,
+                        top: screenHeight * 0.73 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
                         child: Row(
