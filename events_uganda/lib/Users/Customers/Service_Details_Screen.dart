@@ -1102,13 +1102,13 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             : screenHeight * 1.32 - offset,
                         left: screenWidth * 0.022,
                         child: Text(
-                          'Rating and some reviews are verified and are from\npeople who use the same type of device that you use.',
+                          'Rating and some reviews are verified and are from\npeople who use the same type of device that\nyou use.',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: _showReviewSection
-                                ? screenWidth * 0.035
-                                : screenWidth * 0.035,
-                            fontWeight: FontWeight.w600,
+                                ? screenWidth * 0.04
+                                : screenWidth * 0.04,
+                            fontWeight: FontWeight.w500,
                             fontFamily: 'Abril Fatface',
                           ),
                         ),
