@@ -16,7 +16,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   int _galleryScrollIndex = 0;
   final TextEditingController _reviewController = TextEditingController();
   bool _hasText = false;
-  final TextEditingController _reviewController = TextEditingController();
 
   bool _showUserReview = false;
   String _userReviewText = '';
