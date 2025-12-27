@@ -1628,3 +1628,17 @@ Widget _buildUserReviewCard(double screenWidth) {
   );
 }
 
+Widget _buildStaticStars(int count) {
+  return Row(
+    children: List.generate(
+      5,
+      (index) => Icon(
+        Icons.star,
+        size: 14,
+        color: index < count ? Colors.amber : Colors.black26,
+      ),
+    ),
+  );
+}
+
+
