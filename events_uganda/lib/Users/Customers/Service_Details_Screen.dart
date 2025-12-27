@@ -836,7 +836,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       color: Colors.black,
                                       size:
                                           screenWidth *
-                                          0.05, // responsive icon size
+                                          0.055, // slightly larger icon
                                     ),
                                     SizedBox(width: screenWidth * 0.02),
                                     Text(
@@ -846,19 +846,19 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                         fontWeight: FontWeight.w500,
                                         fontSize:
                                             screenWidth *
-                                            0.035, // responsive font size
+                                            0.04, // increased font size
                                         color: Colors.black,
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: screenHeight * 0.01),
+                                SizedBox(height: screenHeight * 0.012),
                                 Row(
                                   children: [
                                     Icon(
                                       Icons.business,
                                       color: Colors.black,
-                                      size: screenWidth * 0.05,
+                                      size: screenWidth * 0.055,
                                     ),
                                     SizedBox(width: screenWidth * 0.02),
                                     Text(
@@ -866,19 +866,19 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       style: TextStyle(
                                         fontFamily: 'Abril Fatface',
                                         fontWeight: FontWeight.w500,
-                                        fontSize: screenWidth * 0.035,
+                                        fontSize: screenWidth * 0.04,
                                         color: Colors.black,
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: screenHeight * 0.01),
+                                SizedBox(height: screenHeight * 0.012),
                                 Row(
                                   children: [
                                     Icon(
                                       Icons.outdoor_grill,
                                       color: Colors.black,
-                                      size: screenWidth * 0.05,
+                                      size: screenWidth * 0.055,
                                     ),
                                     SizedBox(width: screenWidth * 0.02),
                                     Text(
@@ -886,7 +886,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       style: TextStyle(
                                         fontFamily: 'Abril Fatface',
                                         fontWeight: FontWeight.w500,
-                                        fontSize: screenWidth * 0.035,
+                                        fontSize: screenWidth * 0.04,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -896,12 +896,12 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             ),
 
                             SizedBox(
-                              width: screenWidth * 0.02,
+                              width: screenWidth * 0.022,
                             ), // space before divider
                             // Vertical Divider
                             Container(
-                              width: screenWidth * 0.012, // responsive width
-                              height: screenHeight * 0.12, // responsive height
+                              width: screenWidth * 0.012,
+                              height: screenHeight * 0.12,
                               decoration: BoxDecoration(
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(
@@ -911,13 +911,11 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             ),
 
                             SizedBox(
-                              width: screenWidth * 0.02,
+                              width: screenWidth * 0.022,
                             ), // space after divider
                             // Right Column
                             Container(
-                              width:
-                                  screenWidth *
-                                  0.35, // responsive container width
+                              width: screenWidth * 0.35,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -926,7 +924,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       Icon(
                                         Icons.food_bank_rounded,
                                         color: Colors.black,
-                                        size: screenWidth * 0.05,
+                                        size: screenWidth * 0.055,
                                       ),
                                       SizedBox(width: screenWidth * 0.02),
                                       Text(
@@ -940,13 +938,13 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       ),
                                     ],
                                   ),
-                                  SizedBox(height: screenHeight * 0.012),
+                                  SizedBox(height: screenHeight * 0.015),
                                   Row(
                                     children: [
                                       Icon(
                                         Icons.soup_kitchen,
                                         color: Colors.black,
-                                        size: screenWidth * 0.05,
+                                        size: screenWidth * 0.055,
                                       ),
                                       SizedBox(width: screenWidth * 0.02),
                                       Text(
@@ -966,6 +964,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ],
                         ),
                       ),
+
                       Positioned(
                         top: screenHeight * 1.02 - offset,
                         left: screenWidth * 0.02,
