@@ -900,57 +900,59 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-  top: screenHeight * 0.88 - offset, // starting top position
-  left: screenWidth - screenWidth * 0.02 - 150,
-  child: Container(
-    width: 150,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start, // align items to the left
-      children: [
-        Row(
-          children: [
-            Icon(
-              Icons.food_bank_rounded,
-              color: Colors.black,
-              size: 20,
-            ),
-            SizedBox(width: 8),
-            Text(
-              'Buffet Setup',
-              style: TextStyle(
-                fontFamily: 'Abril Fatface',
-                fontWeight: FontWeight.w500,
-                fontSize: 13,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 10), // spacing between rows
-        Row(
-          children: [
-            Icon(
-              Icons.soup_kitchen,
-              color: Colors.black,
-              size: 20,
-            ),
-            SizedBox(width: 8),
-            Text(
-              'Traditional Food',
-              style: TextStyle(
-                fontFamily: 'Abril Fatface',
-                fontWeight: FontWeight.w500,
-                fontSize: 13,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  ),
-),
-
+                        top:
+                            screenHeight * 0.88 -
+                            offset, // starting top position
+                        left: screenWidth - screenWidth * 0.02 - 150,
+                        child: Container(
+                          width: 150,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment
+                                .start, // align items to the left
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.food_bank_rounded,
+                                    color: Colors.black,
+                                    size: 20,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Buffet Setup',
+                                    style: TextStyle(
+                                      fontFamily: 'Abril Fatface',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10), // spacing between rows
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.soup_kitchen,
+                                    color: Colors.black,
+                                    size: 20,
+                                  ),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Traditional Food',
+                                    style: TextStyle(
+                                      fontFamily: 'Abril Fatface',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 13,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       Positioned(
                         top: screenHeight * 1.02 - offset,
                         left: screenWidth * 0.02,
