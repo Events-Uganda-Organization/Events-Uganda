@@ -1002,8 +1002,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           'The Providers description of the services he/she provides\nto the customers.',
                           style: TextStyle(
                             fontFamily: 'Abril Fatface',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            fontSize: screenWidth * 0.04,
                             color: Colors.black,
                           ),
                         ),
