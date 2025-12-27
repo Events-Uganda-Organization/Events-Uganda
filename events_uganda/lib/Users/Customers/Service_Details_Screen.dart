@@ -1373,3 +1373,58 @@ class _StarClipper extends CustomClipper<Rect> {
     return oldClipper.fill != fill;
   }
 }
+
+Widget _buildRatingBars(double screenWidth) {
+  final List<double> ratings = [
+    0.9, // 5 stars
+    0.6, // 4 stars
+    0.2, // 3 stars
+    0.1, // 2 stars
+    0.05 // 1 star
+  ];
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: List.generate(5, (index) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            // Rating number (5–1)
+            Text(
+              '${5 - index}',
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+
+            const SizedBox(width: 6),
+
+            // Bar background + fill
+            Stack(
+              children: [
+                Container(
+                  width: screenWidth * 0.32,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                Container(
+                  width: screenWidth * 0.28 * ratings[index],
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }),
+  );
+}
