@@ -1328,7 +1328,7 @@ Widget _buildStarRating(double rating, {double starSize = 20}) {
       Text(
         'Number of reviews',
         style: TextStyle(
-          color: Colors.black54,
+          color: Colors.black,
           fontSize: 12,
           fontWeight: FontWeight.w500,
         ),
