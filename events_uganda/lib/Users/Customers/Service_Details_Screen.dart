@@ -690,8 +690,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
           );
         },
         child: Container(
-          width: 45,
-          height: 45,
+          width: 43,
+          height: 43,
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
