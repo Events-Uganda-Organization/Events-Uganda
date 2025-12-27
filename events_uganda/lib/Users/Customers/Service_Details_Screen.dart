@@ -822,106 +822,160 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       Positioned(
                         top: screenHeight * 0.88 - offset,
                         left: screenWidth * 0.02,
-                        child: Row(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.restaurant_menu,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              'Catering for weddings',
-                              style: TextStyle(
-                                fontFamily: 'Abril Fatface',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 13,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 0.92 - offset,
-                        left: screenWidth * 0.02,
-                        child: Row(
-                          children: [
-                            Icon(Icons.business, color: Colors.black, size: 20),
-                            SizedBox(width: 8),
-                            Text(
-                              'Corporate Catering',
-                              style: TextStyle(
-                                fontFamily: 'Abril Fatface',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 13,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 0.96 - offset,
-                        left: screenWidth * 0.02,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.outdoor_grill,
-                              color: Colors.black,
-                              size: 20,
-                            ),
-                            SizedBox(width: 8),
-                            Text(
-                              'Outside Catering',
-                              style: TextStyle(
-                                fontFamily: 'Abril Fatface',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 13,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 0.88 - offset,
-                        right: (screenWidth - screenWidth * 0.52) / 1,
-                        child: Container(
-                          width: 5,
-                          height: 90,
-                          decoration: BoxDecoration(
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 0.88 - offset,
-                        left: screenWidth - screenWidth * 0.02 - 150,
-                        child: Container(
-                          width: 150,
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.food_bank_rounded,
-                                color: Colors.black,
-                                size: 20,
-                              ),
-                              SizedBox(width: 8),
-                              Text(
-                                'Buffet Setup',
-                                style: TextStyle(
-                                  fontFamily: 'Abril Fatface',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13,
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.restaurant_menu,
                                   color: Colors.black,
+                                  size: 20,
                                 ),
-                              ),
-                            ],
-                          ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Catering for weddings',
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8), // spacing between rows
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.business,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Corporate Catering',
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 8), // spacing between rows
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.outdoor_grill,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Outside Catering',
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
+                      Positioned(
+  top: screenHeight * 0.88 - offset,
+  left: screenWidth * 0.02,
+  child: Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      // Vertical line
+      Container(
+        width: 5,
+        height: 90, // total height of all items
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(5),
+        ),
+      ),
+      SizedBox(width: 16), // space between line and column
+      // Column of rows
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.food_bank_rounded, color: Colors.black, size: 20),
+              SizedBox(width: 8),
+              Text(
+                'Buffet Setup',
+                style: TextStyle(
+                  fontFamily: 'Abril Fatface',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
+          Row(
+            children: [
+              Icon(Icons.restaurant_menu, color: Colors.black, size: 20),
+              SizedBox(width: 8),
+              Text(
+                'Catering for weddings',
+                style: TextStyle(
+                  fontFamily: 'Abril Fatface',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
+          Row(
+            children: [
+              Icon(Icons.business, color: Colors.black, size: 20),
+              SizedBox(width: 8),
+              Text(
+                'Corporate Catering',
+                style: TextStyle(
+                  fontFamily: 'Abril Fatface',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
+          Row(
+            children: [
+              Icon(Icons.outdoor_grill, color: Colors.black, size: 20),
+              SizedBox(width: 8),
+              Text(
+                'Outside Catering',
+                style: TextStyle(
+                  fontFamily: 'Abril Fatface',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 13,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ],
+  ),
+),
+
                       Positioned(
                         top: screenHeight * 0.92 - offset,
                         left: screenWidth - screenWidth * 0.02 - 150,
