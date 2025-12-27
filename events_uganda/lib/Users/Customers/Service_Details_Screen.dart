@@ -342,18 +342,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                         color: Colors.black,
                                       ),
                                     ),
-                                    SizedBox(height: screenHeight * 0.020),
-
-                                    SizedBox(height: screenHeight * 0.005),
-                                    Text(
-                                      "(120 reviews)",
-                                      style: TextStyle(
-                                        fontFamily: 'Abril Fatface',
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: screenWidth * 0.03,
-                                        color: Colors.black,
-                                      ),
-                                    ),
                                   ],
                                 ),
                                 SizedBox(width: screenWidth * 0.018),
@@ -367,7 +355,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ],
                         ),
                       ),
-
                       Positioned(
                         top: screenHeight * 0.63 - offset,
                         right: (screenWidth - screenWidth * 0.28) / 1,
@@ -382,28 +369,80 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: screenHeight * 0.63 - offset,
-                        left: screenWidth * 0.35,
-                        child: Text(
-                          "Kampala",
-                          style: TextStyle(
-                            fontFamily: 'Abril Fatface',
-                            fontWeight: FontWeight.w900,
-                            fontSize: screenWidth * 0.035,
-                            color: Colors.black,
-                          ),
+                        left: screenWidth * 0.03,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min, // keeps it tight
+                              children: [
+                                Text(
+                                  "4.8",
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: screenWidth * 0.035,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(width: screenWidth * 0.008),
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.black,
+                                  size: screenWidth * 0.03,
+                                ),
+                                SizedBox(
+                                  width: screenWidth * 0.006,
+                                ), // small spacing
+                                Icon(
+                                  Icons.chevron_right,
+                                  color: Colors.black,
+                                  size: screenWidth * 0.04,
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: screenHeight * 0.004),
+                            Text(
+                              "(120 Reviews)",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Abril Fatface',
+                                fontWeight: FontWeight.w500,
+                                fontSize: screenWidth * 0.03,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 0.66 - offset,
+                        top: screenHeight * 0.63 - offset,
                         left: screenWidth * 0.33,
-                        child: Text(
-                          "2.8 km away",
-                          style: TextStyle(
-                            fontFamily: 'Abril Fatface',
-                            fontWeight: FontWeight.w500,
-                            fontSize: screenWidth * 0.03,
-                            color: Colors.black,
-                          ),
+                        child: Column(
+                          crossAxisAlignment:
+                              CrossAxisAlignment.center, // 🔥 centers Kampala
+                          children: [
+                            Text(
+                              "Kampala",
+                              style: TextStyle(
+                                fontFamily: 'Abril Fatface',
+                                fontWeight: FontWeight.w900,
+                                fontSize: screenWidth * 0.035,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: screenHeight * 0.004),
+                            Text(
+                              "2.8 km away",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Abril Fatface',
+                                fontWeight: FontWeight.w500,
+                                fontSize: screenWidth * 0.03,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Positioned(
@@ -446,7 +485,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ],
                         ),
                       ),
-
                       // Available badge
                       Positioned(
                         top: screenHeight * 0.14 - offset,
