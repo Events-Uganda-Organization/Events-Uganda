@@ -16,6 +16,11 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   int _galleryScrollIndex = 0;
   final TextEditingController _reviewController = TextEditingController();
   bool _hasText = false;
+  final TextEditingController _reviewController = TextEditingController();
+
+  bool _showUserReview = false;
+  String _userReviewText = '';
+  String _reviewDate = '';
 
   // List of images for the glassy rectangle
   final List<String> _galleryImages = [
