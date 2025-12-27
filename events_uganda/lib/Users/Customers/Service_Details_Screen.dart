@@ -1115,24 +1115,49 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 1.35 - offset + 180
-                            : screenHeight * 1.35 - offset + 50,
+                            ? screenHeight * 1.34 - offset + 180
+                            : screenHeight * 1.34 - offset + 50,
                         left: screenWidth * 0.022,
-                        child: Column(
+                        child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              '4.8',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: screenWidth * 0.15,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Abril Fatface',
+                            // LEFT: Rating column
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '4.8',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenWidth * 0.15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Abril Fatface',
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                _buildStarRating(4.8, starSize: 24),
+                              ],
+                            ),
+
+                            // SMALL SPACE BETWEEN
+                            SizedBox(width: screenWidth * 0.03),
+
+                            // RIGHT: Vertical separator
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: screenHeight * 0.02,
+                              ),
+                              child: Container(
+                                width: screenWidth * 0.012,
+                                height: screenHeight * 0.15,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(
+                                    screenWidth * 0.01,
+                                  ),
+                                ),
                               ),
                             ),
-                            SizedBox(height: 0),
-
-                            _buildStarRating(4.8, starSize: 14),
                           ],
                         ),
                       ),
@@ -1305,25 +1330,17 @@ Widget _buildStarRating(double rating, {double starSize = 20}) {
 
           return Stack(
             children: [
-              Icon(
-                Icons.star,
-                color: Colors.black,
-                size: starSize,
-              ),
+              Icon(Icons.star, color: Colors.black, size: starSize),
               ClipRect(
                 clipper: _StarClipper(fillAmount),
-                child: Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: starSize,
-                ),
+                child: Icon(Icons.star, color: Colors.amber, size: starSize),
               ),
             ],
           );
         }),
       ),
 
-      const SizedBox(height: 6),
+      const SizedBox(height: 2),
 
       Text(
         'Number of reviews',
@@ -1337,7 +1354,6 @@ Widget _buildStarRating(double rating, {double starSize = 20}) {
   );
 }
 
-
 class _StarClipper extends CustomClipper<Rect> {
   final double fill;
 
@@ -1345,12 +1361,7 @@ class _StarClipper extends CustomClipper<Rect> {
 
   @override
   Rect getClip(Size size) {
-    return Rect.fromLTRB(
-      0,
-      0,
-      size.width * fill,
-      size.height,
-    );
+    return Rect.fromLTRB(0, 0, size.width * fill, size.height);
   }
 
   @override
@@ -1358,4 +1369,3 @@ class _StarClipper extends CustomClipper<Rect> {
     return oldClipper.fill != fill;
   }
 }
-
