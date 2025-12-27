@@ -3,8 +3,8 @@ import 'package:events_uganda/Auth/Reset_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'dart:math';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -17,12 +17,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
   final FocusNode _emailFocus = FocusNode();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
   bool _isLoading = false;
-  String? _verificationId;
-  int? _resendToken;
 
   @override
   void dispose() {
@@ -55,82 +50,44 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return phone;
   }
 
-  // Send OTP via Firebase Phone Auth
+  // Send OTP via Netlify backend
   Future<void> _sendPhoneOTP(String phoneNumber) async {
     try {
-      // Force native flow (no web redirect) by ensuring we're on Android/iOS
-      if (kIsWeb) {
-        throw Exception('Phone auth not supported on web');
-      }
-
-      print('Sending OTP to: ${_formatPhoneNumber(phoneNumber)}');
-
-      await _auth.verifyPhoneNumber(
-        phoneNumber: _formatPhoneNumber(phoneNumber),
-        forceResendingToken: _resendToken,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          // Auto-verification (Android only) - instant verification
-          print('Auto-verification completed');
-          // Don't sign in here, just navigate to OTP screen
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          setState(() => _isLoading = false);
-          print('Verification failed: ${e.code} - ${e.message}');
-          print('Full error: $e');
-
-          String errorMessage = 'Failed to send OTP';
-          if (e.code == 'invalid-phone-number') {
-            errorMessage = 'Invalid phone number format';
-          } else if (e.code == 'too-many-requests') {
-            errorMessage = 'Too many requests. Please try again later';
-          } else if (e.code == 'network-request-failed') {
-            errorMessage = 'Network error. Check your connection';
-          } else if (e.code == 'web-context-cancelled') {
-            errorMessage =
-                'Verification cancelled. Please use test numbers configured in Firebase.';
-          } else if (e.code == 'missing-client-identifier') {
-            errorMessage =
-                'Real SMS requires App Check setup. Please use test phone numbers from Firebase Console for now.';
-          } else {
-            errorMessage = e.message ?? 'Failed to send OTP';
-          }
-
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(errorMessage)));
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          print('Code sent successfully. VerificationId: $verificationId');
-          setState(() {
-            _verificationId = verificationId;
-            _resendToken = resendToken;
-            _isLoading = false;
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              backgroundColor: Color(0xFF1BCC94),
-              content: Text(
-                'OTP sent to your phone',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          );
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => OTPCodeScreen(
-                email: _emailController.text.trim(),
-                verificationId: verificationId,
-              ),
-            ),
-          );
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          print('Auto-retrieval timeout. VerificationId: $verificationId');
-          _verificationId = verificationId;
-        },
-        timeout: const Duration(seconds: 60),
+      final formattedPhone = _formatPhoneNumber(phoneNumber);
+      final url = Uri.parse(
+        'https://eventsuganda.netlify.app/.netlify/functions/send-otp',
       );
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'phone': formattedPhone}),
+      );
+      if (response.statusCode == 200) {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Color(0xFF1BCC94),
+            content: Text(
+              'OTP sent to your phone',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OTPCodeScreen(
+              email: _emailController.text.trim(),
+              verificationId: null, // Not used for custom backend
+            ),
+          ),
+        );
+      } else {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to send OTP: ${response.body}')),
+        );
+      }
     } catch (e) {
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(
