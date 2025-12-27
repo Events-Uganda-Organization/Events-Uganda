@@ -1172,7 +1172,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ],
                         ),
                       ),
-
                       if (_showReviewSection)
                         Positioned(
                           top: screenHeight * 1.33 - offset,
@@ -1276,6 +1275,13 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     ),
                                   ),
                                 ),
+                                if (_showUserReview)
+                                  Positioned(
+                                    top: screenHeight * 1.45 - offset,
+                                    left: screenWidth * 0.05,
+                                    right: screenWidth * 0.05,
+                                    child: _buildUserReviewCard(screenWidth),
+                                  ),
                               ],
                             ),
                           ),
