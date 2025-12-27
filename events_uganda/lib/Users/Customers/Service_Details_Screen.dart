@@ -1413,7 +1413,7 @@ Widget _buildRatingBars(double screenWidth) {
                   ),
                 ),
                 Container(
-                  width: screenWidth * 0.28 * ratings[index],
+                  width: screenWidth * 0.44 * ratings[index],
                   height: 8,
                   decoration: BoxDecoration(
                     color: Colors.amber,
