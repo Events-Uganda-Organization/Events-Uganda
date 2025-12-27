@@ -1288,38 +1288,55 @@ Widget _priceCard(double screenWidth) {
 }
 
 Widget _buildStarRating(double rating, {double starSize = 20}) {
-  return Row(
-    children: List.generate(5, (index) {
-      double fillAmount;
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        children: List.generate(5, (index) {
+          double fillAmount;
 
-      if (index + 1 <= rating) {
-        fillAmount = 1; // full star
-      } else if (index < rating) {
-        fillAmount = rating - index; // partial star
-      } else {
-        fillAmount = 0; // empty
-      }
+          if (index + 1 <= rating) {
+            fillAmount = 1; // full star
+          } else if (index < rating) {
+            fillAmount = rating - index; // partial star
+          } else {
+            fillAmount = 0; // empty
+          }
 
-      return Stack(
-        children: [
-          Icon(
-            Icons.star,
-            color: Colors.black,
-            size: starSize,
-          ),
-          ClipRect(
-            clipper: _StarClipper(fillAmount),
-            child: Icon(
-              Icons.star,
-              color: Colors.amber,
-              size: starSize,
-            ),
-          ),
-        ],
-      );
-    }),
+          return Stack(
+            children: [
+              Icon(
+                Icons.star,
+                color: Colors.black,
+                size: starSize,
+              ),
+              ClipRect(
+                clipper: _StarClipper(fillAmount),
+                child: Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                  size: starSize,
+                ),
+              ),
+            ],
+          );
+        }),
+      ),
+
+      const SizedBox(height: 6),
+
+      Text(
+        'Number of reviews',
+        style: TextStyle(
+          color: Colors.black54,
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ],
   );
 }
+
 
 class _StarClipper extends CustomClipper<Rect> {
   final double fill;
