@@ -1246,10 +1246,31 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                 ]
                                               : [],
                                         ),
-                                        child: const Icon(
-                                          Icons.send_rounded,
-                                          color: Colors.black,
-                                          size: 20,
+                                        child: GestureDetector(
+                                          onTap: _hasText
+                                              ? () {
+                                                  final now = DateTime.now();
+                                                  _reviewDate =
+                                                      '${now.day.toString().padLeft(2, '0')}/'
+                                                      '${now.month.toString().padLeft(2, '0')}/'
+                                                      '${now.year}';
+
+                                                  setState(() {
+                                                    _userReviewText =
+                                                        _reviewController.text
+                                                            .trim();
+                                                    _showUserReview = true;
+                                                    _hasText = false;
+                                                  });
+
+                                                  _reviewController.clear();
+                                                }
+                                              : null,
+                                          child: const Icon(
+                                            Icons.send_rounded,
+                                            color: Colors.black,
+                                            size: 20,
+                                          ),
                                         ),
                                       ),
                                     ),
