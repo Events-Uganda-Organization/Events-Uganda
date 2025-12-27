@@ -823,6 +823,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         top: screenHeight * 0.88 - offset,
                         left: screenWidth * 0.02,
                         child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
