@@ -356,131 +356,130 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-  top: screenHeight * 0.63 - offset,
-  left: screenWidth * 0.03,
-  right: screenWidth * 0.03,
-  child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
+                        top: screenHeight * 0.63 - offset,
+                        left: screenWidth * 0.03,
+                        right: screenWidth * 0.03,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // ===== Rating =====
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "4.8",
+                                      style: TextStyle(
+                                        fontFamily: 'Abril Fatface',
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: screenWidth * 0.035,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(width: screenWidth * 0.008),
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.black,
+                                      size: screenWidth * 0.03,
+                                    ),
+                                    SizedBox(width: screenWidth * 0.006),
+                                    Icon(
+                                      Icons.chevron_right,
+                                      color: Colors.black,
+                                      size: screenWidth * 0.04,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: screenHeight * 0.004),
+                                Text(
+                                  "(120 Reviews)",
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: screenWidth * 0.03,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
 
-      // ===== Rating =====
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "4.8",
-                style: TextStyle(
-                  fontFamily: 'Abril Fatface',
-                  fontWeight: FontWeight.w900,
-                  fontSize: screenWidth * 0.035,
-                  color: Colors.black,
-                ),
-              ),
-              SizedBox(width: screenWidth * 0.008),
-              Icon(
-                Icons.star,
-                color: Colors.black,
-                size: screenWidth * 0.03,
-              ),
-              SizedBox(width: screenWidth * 0.006),
-              Icon(
-                Icons.chevron_right,
-                color: Colors.black,
-                size: screenWidth * 0.04,
-              ),
-            ],
-          ),
-          SizedBox(height: screenHeight * 0.004),
-          Text(
-            "(120 Reviews)",
-            style: TextStyle(
-              fontFamily: 'Abril Fatface',
-              fontWeight: FontWeight.w500,
-              fontSize: screenWidth * 0.03,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
+                            // ===== Divider =====
+                            Container(
+                              width: 5,
+                              height: 45,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
 
-      // ===== Divider =====
-      Container(
-        width: 5,
-        height: 45,
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(5),
-        ),
-      ),
+                            // ===== Location =====
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Kampala",
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: screenWidth * 0.035,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: screenHeight * 0.004),
+                                Text(
+                                  "2.8 km away",
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: screenWidth * 0.03,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
 
-      // ===== Location =====
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "Kampala",
-            style: TextStyle(
-              fontFamily: 'Abril Fatface',
-              fontWeight: FontWeight.w900,
-              fontSize: screenWidth * 0.035,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(height: screenHeight * 0.004),
-          Text(
-            "2.8 km away",
-            style: TextStyle(
-              fontFamily: 'Abril Fatface',
-              fontWeight: FontWeight.w500,
-              fontSize: screenWidth * 0.03,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
+                            // ===== Divider =====
+                            Container(
+                              width: 5,
+                              height: 45,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
 
-      // ===== Divider =====
-      Container(
-        width: 5,
-        height: 45,
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(5),
-        ),
-      ),
-
-      // ===== Experience =====
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            "5+",
-            style: TextStyle(
-              fontFamily: 'Abril Fatface',
-              fontWeight: FontWeight.w900,
-              fontSize: screenWidth * 0.04,
-              color: Colors.black,
-            ),
-          ),
-          SizedBox(height: screenHeight * 0.004),
-          Text(
-            "Years of Experience",
-            style: TextStyle(
-              fontFamily: 'Abril Fatface',
-              fontWeight: FontWeight.w500,
-              fontSize: screenWidth * 0.03,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
-    ],
-  ),
-),
+                            // ===== Experience =====
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "5+",
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: screenWidth * 0.04,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(height: screenHeight * 0.004),
+                                Text(
+                                  "Years of Experience",
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: screenWidth * 0.03,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       // Available badge
                       Positioned(
                         top: screenHeight * 0.14 - offset,
