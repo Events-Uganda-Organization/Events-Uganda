@@ -673,7 +673,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top:
-                            screenHeight * 0.12 +
+                            screenHeight * 0.11 +
                             screenWidth * 0.95 * (336 / 350) +
                             16 -
                             offset, // 16px below image
