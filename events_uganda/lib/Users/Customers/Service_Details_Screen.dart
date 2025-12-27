@@ -329,10 +329,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ],
                         ),
                       ),
-                      SizedBox(height: screenHeight * 0.021),
                       Positioned(
                         top:
-                            screenHeight * 0.56 -
+                            screenHeight * 0.66 -
                             offset, // Provider name sits above
                         left: screenWidth * 0.03,
                         right: screenWidth * 0.03,
