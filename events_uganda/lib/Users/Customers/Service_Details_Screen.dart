@@ -14,6 +14,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     with SingleTickerProviderStateMixin {
   final ScrollController _galleryScrollController = ScrollController();
   int _galleryScrollIndex = 0;
+  final TextEditingController _reviewController = TextEditingController();
+  bool _hasText = false;
+
   // List of images for the glassy rectangle
   final List<String> _galleryImages = [
     'assets/images/introductionbride.jpg',
@@ -1380,7 +1383,7 @@ Widget _buildRatingBars(double screenWidth) {
     0.6, // 4 stars
     0.2, // 3 stars
     0.1, // 2 stars
-    0.05 // 1 star
+    0.05, // 1 star
   ];
 
   return Column(
@@ -1393,10 +1396,7 @@ Widget _buildRatingBars(double screenWidth) {
             // Rating number (5–1)
             Text(
               '${5 - index}',
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
             ),
 
             const SizedBox(width: 6),
