@@ -1139,10 +1139,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               ],
                             ),
 
-                            // SMALL SPACE BETWEEN
                             SizedBox(width: screenWidth * 0.03),
 
-                            // RIGHT: Vertical separator
+                            // CENTER: Vertical separator
                             Padding(
                               padding: EdgeInsets.only(
                                 top: screenHeight * 0.02,
@@ -1158,6 +1157,11 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 ),
                               ),
                             ),
+
+                            SizedBox(width: screenWidth * 0.03),
+
+                            // RIGHT: Rating distribution bars
+                            _buildRatingBars(screenWidth),
                           ],
                         ),
                       ),
