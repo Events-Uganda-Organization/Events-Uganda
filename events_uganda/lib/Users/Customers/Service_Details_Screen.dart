@@ -820,122 +820,140 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-  top: screenHeight * 0.88 - offset,
-  left: screenWidth * 0.02,
-  child: Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      // Left Column
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.restaurant_menu, color: Colors.black, size: 20),
-              SizedBox(width: 8),
-              Text(
-                'Catering for weddings',
-                style: TextStyle(
-                  fontFamily: 'Abril Fatface',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 13,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Row(
-            children: [
-              Icon(Icons.business, color: Colors.black, size: 20),
-              SizedBox(width: 8),
-              Text(
-                'Corporate Catering',
-                style: TextStyle(
-                  fontFamily: 'Abril Fatface',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 13,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 8),
-          Row(
-            children: [
-              Icon(Icons.outdoor_grill, color: Colors.black, size: 20),
-              SizedBox(width: 8),
-              Text(
-                'Outside Catering',
-                style: TextStyle(
-                  fontFamily: 'Abril Fatface',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 13,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+                        top: screenHeight * 0.88 - offset,
+                        left: screenWidth * 0.02,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Left Column
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.restaurant_menu,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      'Catering for weddings',
+                                      style: TextStyle(
+                                        fontFamily: 'Abril Fatface',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 13,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.business,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      'Corporate Catering',
+                                      style: TextStyle(
+                                        fontFamily: 'Abril Fatface',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 13,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 8),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.outdoor_grill,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      'Outside Catering',
+                                      style: TextStyle(
+                                        fontFamily: 'Abril Fatface',
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 13,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
 
-      SizedBox(width: 30), // space before divider
+                            SizedBox(width: 10), // space before divider
+                            // Vertical Divider
+                            Container(
+                              width: 5,
+                              height: 90,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
 
-      // Vertical Divider
-      Container(
-        width: 5,
-        height: 90,
-        decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(5),
-        ),
-      ),
-
-      SizedBox(width: 30), // space after divider
-
-      // Right Column
-      Container(
-        width: 150,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.food_bank_rounded, color: Colors.black, size: 20),
-                SizedBox(width: 8),
-                Text(
-                  'Buffet Setup',
-                  style: TextStyle(
-                    fontFamily: 'Abril Fatface',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 13,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            Row(
-              children: [
-                Icon(Icons.soup_kitchen, color: Colors.black, size: 20),
-                SizedBox(width: 8),
-                Text(
-                  'Traditional Food',
-                  style: TextStyle(
-                    fontFamily: 'Abril Fatface',
-                    fontWeight: FontWeight.w500,
-                    fontSize: 13,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    ],
-  ),
-),
+                            SizedBox(width: 10), // space after divider
+                            // Right Column
+                            Container(
+                              width: 150,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.food_bank_rounded,
+                                        color: Colors.black,
+                                        size: 20,
+                                      ),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        'Buffet Setup',
+                                        style: TextStyle(
+                                          fontFamily: 'Abril Fatface',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.soup_kitchen,
+                                        color: Colors.black,
+                                        size: 20,
+                                      ),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        'Traditional Food',
+                                        style: TextStyle(
+                                          fontFamily: 'Abril Fatface',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 13,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
 
                       Positioned(
                         top: screenHeight * 1.02 - offset,
