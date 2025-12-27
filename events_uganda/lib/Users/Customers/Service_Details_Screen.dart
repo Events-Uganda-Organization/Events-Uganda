@@ -851,6 +851,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                               0.04, // increased font size
                                           color: Colors.black,
                                         ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
                                     ],
                                   ),
@@ -871,6 +873,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           fontSize: screenWidth * 0.04,
                                           color: Colors.black,
                                         ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
                                     ],
                                   ),
@@ -891,12 +895,14 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           fontSize: screenWidth * 0.04,
                                           color: Colors.black,
                                         ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
                                     ],
                                   ),
                                 ],
                               ),
-                          
+
                               SizedBox(
                                 width: screenWidth * 0.022,
                               ), // space before divider
@@ -911,7 +917,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   ),
                                 ),
                               ),
-                          
+
                               SizedBox(
                                 width: screenWidth * 0.022,
                               ), // space after divider
@@ -929,13 +935,17 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           size: screenWidth * 0.055,
                                         ),
                                         SizedBox(width: screenWidth * 0.02),
-                                        Text(
-                                          'Buffet Setup',
-                                          style: TextStyle(
-                                            fontFamily: 'Abril Fatface',
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: screenWidth * 0.04,
-                                            color: Colors.black,
+                                        Expanded(
+                                          child: Text(
+                                            'Buffet Setup',
+                                            style: TextStyle(
+                                              fontFamily: 'Abril Fatface',
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: screenWidth * 0.04,
+                                              color: Colors.black,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
                                           ),
                                         ),
                                       ],
@@ -949,13 +959,17 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           size: screenWidth * 0.055,
                                         ),
                                         SizedBox(width: screenWidth * 0.02),
-                                        Text(
-                                          'Traditional Food',
-                                          style: TextStyle(
-                                            fontFamily: 'Abril Fatface',
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: screenWidth * 0.04,
-                                            color: Colors.black,
+                                        Expanded(
+                                          child: Text(
+                                            'Traditional Food',
+                                            style: TextStyle(
+                                              fontFamily: 'Abril Fatface',
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: screenWidth * 0.04,
+                                              color: Colors.black,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
                                           ),
                                         ),
                                       ],
