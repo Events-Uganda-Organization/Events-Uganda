@@ -1132,7 +1132,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                             ),
                             SizedBox(height: 8),
 
-                            _buildStarRating(4.8, starSize: 24),
+                            _buildStarRating(4.8, starSize: 20),
                           ],
                         ),
                       ),
