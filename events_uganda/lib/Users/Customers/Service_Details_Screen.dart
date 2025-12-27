@@ -1124,14 +1124,55 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 1.34 -
-                                  offset +
-                                  180 +
-                                  120 // 120 is the height of the rating row
-                            : screenHeight * 1.34 - offset + 50 + 120,
+                            ? screenHeight * 1.34 - offset + 180
+                            : screenHeight * 1.34 - offset + 50,
                         left: screenWidth * 0.022,
-                        right: screenWidth * 0.022,
-                        child: _buildReviewsList(screenWidth),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // LEFT: Rating column
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '4.8',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenWidth * 0.15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Abril Fatface',
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                _buildStarRating(4.8, starSize: 24),
+                              ],
+                            ),
+
+                            SizedBox(width: screenWidth * 0.03),
+
+                            // CENTER: Vertical separator
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: screenHeight * 0.02,
+                              ),
+                              child: Container(
+                                width: screenWidth * 0.012,
+                                height: screenHeight * 0.16,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(
+                                    screenWidth * 0.01,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(width: screenWidth * 0.03),
+
+                            // RIGHT: Rating distribution bars
+                            _buildRatingBars(screenWidth),
+                          ],
+                        ),
                       ),
                       if (_showReviewSection)
                         Positioned(
