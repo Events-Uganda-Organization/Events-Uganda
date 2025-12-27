@@ -672,87 +672,94 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-  top: screenHeight * 0.12 +
-      screenWidth * 0.95 * (336 / 350) +
-      16 -
-      offset, // 16px below image
-  right: (screenWidth - screenWidth * 0.95) / 2 + 10, // align to image right
-  child: Row(
-    children: [
-      // ===== Favorite (Heart) =====
-      GestureDetector(
-        onTap: () {
-          setState(() {
-            _isFavorite = !_isFavorite;
-          });
-          _animationController.forward().then(
-            (_) => _animationController.reverse(),
-          );
-        },
-        child: Container(
-          width: 43,
-          height: 43,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 8,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          child: Center(
-            child: ScaleTransition(
-              scale: _scaleAnimation,
-              child: Icon(
-                _isFavorite
-                    ? Icons.favorite
-                    : Icons.favorite_border,
-                color: _isFavorite
-                    ? Colors.red
-                    : const Color.fromARGB(255, 182, 113, 34),
-                size: 31,
-              ),
-            ),
-          ),
-        ),
-      ),
+                        top:
+                            screenHeight * 0.12 +
+                            screenWidth * 0.95 * (336 / 350) +
+                            16 -
+                            offset, // 16px below image
+                        right:
+                            (screenWidth - screenWidth * 0.95) / 2 +
+                            10, // align to image right
+                        child: Row(
+                          children: [
+                            // ===== Favorite (Heart) =====
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _isFavorite = !_isFavorite;
+                                });
+                                _animationController.forward().then(
+                                  (_) => _animationController.reverse(),
+                                );
+                              },
+                              child: Container(
+                                width: 43,
+                                height: 43,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 6),
+                                    ),
+                                  ],
+                                ),
+                                child: Center(
+                                  child: ScaleTransition(
+                                    scale: _scaleAnimation,
+                                    child: Icon(
+                                      _isFavorite
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      color: _isFavorite
+                                          ? Colors.red
+                                          : const Color.fromARGB(
+                                              255,
+                                              182,
+                                              113,
+                                              34,
+                                            ),
+                                      size: 31,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
 
-      SizedBox(width: 12), // 👈 space between icons
-
-      // ===== Share =====
-      GestureDetector(
-        onTap: () {
-          // Add share functionality here
-        },
-        child: Container(
-          width: 45,
-          height: 45,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 8,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          child: const Center(
-            child: Icon(
-              Icons.share,
-              color: Color.fromARGB(255, 182, 113, 34),
-              size: 31,
-            ),
-          ),
-        ),
-      ),
-    ],
-  ),
-),
+                            SizedBox(width: 12), // 👈 space between icons
+                            // ===== Share =====
+                            GestureDetector(
+                              onTap: () {
+                                // Add share functionality here
+                              },
+                              child: Container(
+                                width: 45,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 6),
+                                    ),
+                                  ],
+                                ),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.share,
+                                    color: Color.fromARGB(255, 182, 113, 34),
+                                    size: 31,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
 
                       Positioned(
                         top: screenHeight * 0.71 - offset,
