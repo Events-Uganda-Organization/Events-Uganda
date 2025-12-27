@@ -1114,20 +1114,29 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                        top: _showReviewSection
-                            ? screenHeight * 1.33 - offset + 180
-                            : screenHeight * 1.32 - offset + 50,
-                        left: screenWidth * 0.022,
-                        child: Text(
-                          '4.8',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: screenWidth * 0.15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Abril Fatface',
-                          ),
-                        ),
-                      ),
+  top: _showReviewSection
+      ? screenHeight * 1.33 - offset + 180
+      : screenHeight * 1.32 - offset + 50,
+  left: screenWidth * 0.022,
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        '4.8',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: screenWidth * 0.15,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'Abril Fatface',
+        ),
+      ),
+      SizedBox(height: 8),
+
+      _buildStarRating(4.8, starSize: 24),
+    ],
+  ),
+),
+
                       if (_showReviewSection)
                         Positioned(
                           top: screenHeight * 1.33 - offset,
