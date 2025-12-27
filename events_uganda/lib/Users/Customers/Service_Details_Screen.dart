@@ -1180,15 +1180,78 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(color: Colors.amber, width: 1),
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Write your review here...',
-                                  border: InputBorder.none,
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    12,
+                                    12,
+                                    48,
+                                    12,
+                                  ),
+                                  child: TextField(
+                                    controller: _reviewController,
+                                    maxLines: 3,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _hasText = value.trim().isNotEmpty;
+                                      });
+                                    },
+                                    decoration: const InputDecoration(
+                                      hintText: 'Write your review here...',
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
                                 ),
-                                maxLines: 3,
-                              ),
+
+                                // SEND BUTTON
+                                Positioned(
+                                  bottom: 10,
+                                  right: 10,
+                                  child: AnimatedOpacity(
+                                    opacity: _hasText ? 1 : 0.3,
+                                    duration: const Duration(milliseconds: 200),
+                                    child: GestureDetector(
+                                      onTap: _hasText
+                                          ? () {
+                                              final review = _reviewController
+                                                  .text
+                                                  .trim();
+                                              print('Send review: $review');
+
+                                              _reviewController.clear();
+                                              setState(() => _hasText = false);
+                                            }
+                                          : null,
+                                      child: Container(
+                                        width: 42,
+                                        height: 42,
+                                        decoration: BoxDecoration(
+                                          color: _hasText
+                                              ? Colors.amber
+                                              : Colors.grey.shade300,
+                                          shape: BoxShape.circle,
+                                          boxShadow: _hasText
+                                              ? [
+                                                  BoxShadow(
+                                                    color: Colors.amber
+                                                        .withOpacity(0.4),
+                                                    blurRadius: 8,
+                                                    offset: const Offset(0, 4),
+                                                  ),
+                                                ]
+                                              : [],
+                                        ),
+                                        child: const Icon(
+                                          Icons.send_rounded,
+                                          color: Colors.black,
+                                          size: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
