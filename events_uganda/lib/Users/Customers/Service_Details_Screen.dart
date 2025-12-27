@@ -1098,8 +1098,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 1.33 - offset + 130
-                            : screenHeight * 1.32 - offset,
+                            ? screenHeight * 1.34 - offset + 130
+                            : screenHeight * 1.34 - offset,
                         left: screenWidth * 0.022,
                         child: Text(
                           'Rating and some reviews are verified and are from\npeople who use the same type of device that\nyou use.',
@@ -1130,7 +1130,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 fontFamily: 'Abril Fatface',
                               ),
                             ),
-                            SizedBox(height: 2),
+                            SizedBox(height: 0),
 
                             _buildStarRating(4.8, starSize: 14),
                           ],
