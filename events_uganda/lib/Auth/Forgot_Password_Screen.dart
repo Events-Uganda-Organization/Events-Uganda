@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:events_uganda/Auth/Otp_Code_Screen.dart';
 import 'package:events_uganda/Auth/Reset_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:math';
+
+import 'package:http/http.dart' as http;
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -17,7 +21,12 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
   final FocusNode _emailFocus = FocusNode();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   bool _isLoading = false;
+  String? _verificationId;
+  int? _resendToken;
 
   @override
   void dispose() {
@@ -50,7 +59,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return phone;
   }
 
-  // Send OTP via Netlify backend
+  // Send OTP via Netlify backend for phone numbers
   Future<void> _sendPhoneOTP(String phoneNumber) async {
     try {
       final formattedPhone = _formatPhoneNumber(phoneNumber);
@@ -419,7 +428,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               _ResponsiveTextField(
                                 controller: _emailController,
                                 label: 'Email/Phone Number',
-                                hint: 'Enter Your Email/ Phone Number',
+                                hint: 'Enter Your Email Address',
                                 icon: Icons.person,
                                 focusNode: _emailFocus,
                                 nextFocusNode: _emailFocus,
