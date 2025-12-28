@@ -12,8 +12,16 @@ class ServiceDetailsScreen extends StatefulWidget {
 
 class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     with SingleTickerProviderStateMixin {
+  final TextEditingController _reviewController = TextEditingController();
+  bool _hasText = false;
+  List<ReviewModel> _reviews = [];
+  bool _showUserReview = false;
+  String _userReviewText = '';
+  String _reviewDate = '';
   final ScrollController _galleryScrollController = ScrollController();
   int _galleryScrollIndex = 0;
+  final user = FirebaseAuth.instance.currentUser;
+
   // List of images for the glassy rectangle
   final List<String> _galleryImages = [
     'assets/images/introductionbride.jpg',
@@ -112,6 +120,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     _animationController.dispose();
     _countdownTimer?.cancel();
     _galleryScrollController.dispose();
+    _reviewController.dispose();
     super.dispose();
   }
 
@@ -1098,8 +1107,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 1.33 - offset + 130
-                            : screenHeight * 1.32 - offset,
+                            ? screenHeight * 1.34 - offset + 130
+                            : screenHeight * 1.34 - offset,
                         left: screenWidth * 0.022,
                         child: Text(
                           'Rating and some reviews are verified and are from\npeople who use the same type of device that\nyou use.',
@@ -1115,18 +1124,66 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 1.33 - offset + 180
-                            : screenHeight * 1.32 - offset + 50,
+                            ? screenHeight * 1.34 - offset + 180
+                            : screenHeight * 1.34 - offset + 50,
                         left: screenWidth * 0.022,
-                        child: Text(
-                          '4.8',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: screenWidth * 0.15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Abril Fatface',
-                          ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // LEFT: Rating column
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '4.8',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenWidth * 0.15,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Abril Fatface',
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                _buildStarRating(4.8, starSize: 24),
+                              ],
+                            ),
+
+                            SizedBox(width: screenWidth * 0.03),
+
+                            // CENTER: Vertical separator
+                            Padding(
+                              padding: EdgeInsets.only(
+                                top: screenHeight * 0.02,
+                              ),
+                              child: Container(
+                                width: screenWidth * 0.012,
+                                height: screenHeight * 0.16,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(
+                                    screenWidth * 0.01,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(width: screenWidth * 0.03),
+
+                            // RIGHT: Rating distribution bars
+                            _buildRatingBars(screenWidth),
+                          ],
                         ),
+                      ),
+                      Positioned(
+                        top: _showReviewSection
+                            ? screenHeight * 1.34 -
+                                  offset +
+                                  180 +
+                                  120 // 120 is the height of the rating row
+                            : screenHeight * 1.34 - offset + 50 + 120,
+                        left: screenWidth * 0.022,
+                        right: screenWidth * 0.022,
+                        child: _buildReviewsList(screenWidth),
                       ),
                       if (_showReviewSection)
                         Positioned(
@@ -1139,15 +1196,130 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(color: Colors.amber, width: 1),
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Write your review here...',
-                                  border: InputBorder.none,
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    12,
+                                    12,
+                                    48,
+                                    12,
+                                  ),
+                                  child: TextField(
+                                    controller: _reviewController,
+                                    maxLines: 3,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _hasText = value.trim().isNotEmpty;
+                                      });
+                                    },
+                                    decoration: const InputDecoration(
+                                      hintText: 'Write your review here...',
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
                                 ),
-                                maxLines: 3,
-                              ),
+
+                                // SEND BUTTON
+                                Positioned(
+                                  bottom: 10,
+                                  right: 10,
+                                  child: AnimatedOpacity(
+                                    opacity: _hasText ? 1 : 0.3,
+                                    duration: const Duration(milliseconds: 200),
+                                    child: GestureDetector(
+                                      onTap: _hasText
+                                          ? () {
+                                              final now = DateTime.now();
+                                              final date =
+                                                  '${now.day.toString().padLeft(2, '0')}/'
+                                                  '${now.month.toString().padLeft(2, '0')}/'
+                                                  '${now.year}';
+
+                                              final newReview = ReviewModel(
+                                                id: DateTime.now()
+                                                    .millisecondsSinceEpoch
+                                                    .toString(),
+                                                userName:
+                                                    user?.displayName ??
+                                                    'User Name',
+                                                userImageUrl:
+                                                    user?.photoURL ?? '',
+                                                reviewText: _reviewController
+                                                    .text
+                                                    .trim(),
+                                                date: date,
+                                                rating: 4, // or dynamic
+                                              );
+
+                                              setState(() {
+                                                _reviews.insert(
+                                                  0,
+                                                  newReview,
+                                                ); // newest on top
+                                                _hasText = false;
+                                              });
+
+                                              _reviewController.clear();
+                                            }
+                                          : null,
+                                      child: Container(
+                                        width: 42,
+                                        height: 42,
+                                        decoration: BoxDecoration(
+                                          color: _hasText
+                                              ? Colors.amber
+                                              : Colors.grey.shade300,
+                                          shape: BoxShape.circle,
+                                          boxShadow: _hasText
+                                              ? [
+                                                  BoxShadow(
+                                                    color: Colors.amber
+                                                        .withOpacity(0.4),
+                                                    blurRadius: 8,
+                                                    offset: const Offset(0, 4),
+                                                  ),
+                                                ]
+                                              : [],
+                                        ),
+                                        child: GestureDetector(
+                                          onTap: _hasText
+                                              ? () {
+                                                  final now = DateTime.now();
+                                                  _reviewDate =
+                                                      '${now.day.toString().padLeft(2, '0')}/'
+                                                      '${now.month.toString().padLeft(2, '0')}/'
+                                                      '${now.year}';
+
+                                                  setState(() {
+                                                    _userReviewText =
+                                                        _reviewController.text
+                                                            .trim();
+                                                    _showUserReview = true;
+                                                    _hasText = false;
+                                                  });
+
+                                                  _reviewController.clear();
+                                                }
+                                              : null,
+                                          child: const Icon(
+                                            Icons.send_rounded,
+                                            color: Colors.black,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                if (_showUserReview)
+                                  Positioned(
+                                    top: screenHeight * 1.45 - offset,
+                                    left: screenWidth * 0.05,
+                                    right: screenWidth * 0.05,
+                                    child: _buildUserReviewCard(screenWidth),
+                                  ),
+                              ],
                             ),
                           ),
                         ),
@@ -1197,6 +1369,236 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildReviewsList(double screenWidth) {
+    return AnimatedList(
+      shrinkWrap: true,
+      initialItemCount: _reviews.length,
+      itemBuilder: (context, index, animation) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 0.3),
+            end: Offset.zero,
+          ).animate(animation),
+          child: _buildReviewCard(_reviews[index], screenWidth),
+        );
+      },
+    );
+  }
+
+  Widget _buildReviewCard(ReviewModel review, double screenWidth) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.black12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 22,
+                backgroundImage: review.userImageUrl.isNotEmpty
+                    ? NetworkImage(review.userImageUrl)
+                    : null,
+                child: review.userImageUrl.isEmpty
+                    ? const Icon(Icons.person)
+                    : null,
+              ),
+
+              const SizedBox(width: 12),
+
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      review.userName,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Row(
+                      children: [
+                        _buildStaticStars(review.rating),
+                        const SizedBox(width: 8),
+                        Text(
+                          review.date,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              _reviewMenu(review),
+            ],
+          ),
+
+          const SizedBox(height: 12),
+
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: Colors.black),
+            ),
+            child: Text(review.reviewText),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _reviewMenu(ReviewModel review) {
+    return PopupMenuButton<String>(
+      onSelected: (value) {
+        if (value == 'delete') {
+          setState(() {
+            _reviews.removeWhere((r) => r.id == review.id);
+          });
+        }
+        if (value == 'edit') {
+          _reviewController.text = review.reviewText;
+        }
+      },
+      itemBuilder: (context) => [
+        const PopupMenuItem(value: 'edit', child: Text('Edit')),
+        const PopupMenuItem(value: 'delete', child: Text('Delete')),
+      ],
+    );
+  }
+
+  Widget _buildUserReviewCard(double screenWidth) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.black12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // HEADER
+          Row(
+            children: [
+              CircleAvatar(
+                radius: 22,
+                backgroundColor: Colors.grey.shade300,
+                child: const Icon(Icons.person, color: Colors.black, size: 24),
+              ),
+
+              const SizedBox(width: 12),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'User Name',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  ),
+
+                  const SizedBox(height: 4),
+
+                  Row(
+                    children: [
+                      _buildStaticStars(4),
+                      const SizedBox(width: 8),
+                      Text(
+                        _reviewDate,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 12),
+
+          // REVIEW TEXT
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: Colors.black),
+            ),
+            child: Text(_userReviewText, style: const TextStyle(fontSize: 13)),
+          ),
+
+          const SizedBox(height: 14),
+
+          // HELPFUL SECTION
+          const Text(
+            'Was this helpful?',
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+          ),
+
+          const SizedBox(height: 8),
+
+          Row(
+            children: [
+              _helpfulButton('Yes', Icons.check),
+              const SizedBox(width: 12),
+              _helpfulButton('No', Icons.close),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStaticStars(int count) {
+    return Row(
+      children: List.generate(
+        5,
+        (index) => Icon(
+          Icons.star,
+          size: 14,
+          color: index < count ? Colors.amber : Colors.black26,
+        ),
+      ),
+    );
+  }
+
+  Widget _helpfulButton(String text, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.amber.withOpacity(0.25),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 14),
+          const SizedBox(width: 4),
+          Text(
+            text,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+          ),
+        ],
       ),
     );
   }
@@ -1275,5 +1677,133 @@ Widget _priceCard(double screenWidth) {
         ),
       ],
     ),
+  );
+}
+
+Widget _buildStarRating(double rating, {double starSize = 20}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        children: List.generate(5, (index) {
+          double fillAmount;
+
+          if (index + 1 <= rating) {
+            fillAmount = 1; // full star
+          } else if (index < rating) {
+            fillAmount = rating - index; // partial star
+          } else {
+            fillAmount = 0; // empty
+          }
+
+          return Stack(
+            children: [
+              Icon(Icons.star, color: Colors.black, size: starSize),
+              ClipRect(
+                clipper: _StarClipper(fillAmount),
+                child: Icon(Icons.star, color: Colors.amber, size: starSize),
+              ),
+            ],
+          );
+        }),
+      ),
+
+      const SizedBox(height: 2),
+
+      Text(
+        'Number of reviews',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ],
+  );
+}
+
+class _StarClipper extends CustomClipper<Rect> {
+  final double fill;
+
+  _StarClipper(this.fill);
+
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromLTRB(0, 0, size.width * fill, size.height);
+  }
+
+  @override
+  bool shouldReclip(_StarClipper oldClipper) {
+    return oldClipper.fill != fill;
+  }
+}
+
+class ReviewModel {
+  final String id;
+  final String userName;
+  final String userImageUrl;
+  final String reviewText;
+  final String date;
+  final int rating;
+
+  ReviewModel({
+    required this.id,
+    required this.userName,
+    required this.userImageUrl,
+    required this.reviewText,
+    required this.date,
+    required this.rating,
+  });
+}
+
+Widget _buildRatingBars(double screenWidth) {
+  final List<double> ratings = [
+    0.9, // 5 stars
+    0.6, // 4 stars
+    0.2, // 3 stars
+    0.1, // 2 stars
+    0.05, // 1 star
+  ];
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: List.generate(5, (index) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            // Rating number (5–1)
+            Text(
+              '${5 - index}',
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+            ),
+
+            const SizedBox(width: 6),
+
+            // Bar background + fill
+            Stack(
+              children: [
+                Container(
+                  width: screenWidth * 0.44,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                Container(
+                  width: screenWidth * 0.44 * ratings[index],
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }),
   );
 }

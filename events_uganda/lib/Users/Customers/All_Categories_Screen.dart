@@ -9,6 +9,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Saloon_Screen.dart';
+import 'package:events_uganda/Users/Customers/Service_Listing_CarHiring_Screen.dart';
+import 'package:events_uganda/Users/Customers/Service_Listing_Decoration_Screen.dart';
 
 class AllCategoriesScreen extends StatefulWidget {
   const AllCategoriesScreen({super.key});
@@ -784,7 +786,29 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
     return GestureDetector(
       onTap: () {
         // Navigate to different screens based on category
-        if (index == 4) {
+        if (index == 0) {
+          // Decoration
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ServiceListingDecorationScreen(
+                category: title,
+                categoryIndex: index,
+              ),
+            ),
+          );
+        } else if (index == 3) {
+          // Car Hire
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ServiceListingCarHiringScreen(
+                category: title,
+                categoryIndex: index,
+              ),
+            ),
+          );
+        } else if (index == 4) {
           // Saloon & Makeup
           Navigator.push(
             context,
