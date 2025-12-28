@@ -1788,7 +1788,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/deco3.jpg',
+                            'assets/images/gle.png',
                             'Provider\'s Name',
                             '4.4',
                             14,
