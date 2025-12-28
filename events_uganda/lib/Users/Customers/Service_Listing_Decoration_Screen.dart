@@ -1564,7 +1564,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Saloon & Makeup',
+                    'Decoration',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
@@ -1744,7 +1744,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                         runSpacing: screenWidth * 0.04,
                         children: [
                           _buildCategoryCard(
-                            'assets/images/saloon5.jpg',
+                            'assets/images/deco2.jpg',
                             'Provider\'s Name',
                             '4.8',
                             8,
@@ -1753,7 +1753,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloon.jpg',
+                            'assets/images/deco3.jpg',
                             'Provider\'s Name',
                             '4.6',
                             9,
@@ -1762,7 +1762,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloon2.jpg',
+                            'assets/images/deco4.jpg',
                             'Provider\'s Name',
                             '4.9',
                             10,
@@ -1771,7 +1771,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloon3.jpg',
+                            'assets/images/deco5.jpg',
                             'Provider\'s Name',
                             '4.7',
                             11,
@@ -1780,7 +1780,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloon4.jpg',
+                            'assets/images/decoset.png',
                             'Provider\'s Name',
                             '4.5',
                             12,
