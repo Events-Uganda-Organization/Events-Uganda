@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Saloon_Screen.dart';
+import 'package:events_uganda/Users/Customers/Service_Listing_CarHiring_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Decoration_Screen.dart';
 
 class AllCategoriesScreen extends StatefulWidget {
@@ -791,6 +792,17 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
             context,
             MaterialPageRoute(
               builder: (context) => ServiceListingDecorationScreen(
+                category: title,
+                categoryIndex: index,
+              ),
+            ),
+          );
+        } else if (index == 3) {
+          // Car Hire
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ServiceListingCarHiringScreen(
                 category: title,
                 categoryIndex: index,
               ),
