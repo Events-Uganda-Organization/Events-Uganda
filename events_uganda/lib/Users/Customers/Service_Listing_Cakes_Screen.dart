@@ -755,7 +755,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
     double screenWidth,
     double screenHeight,
     double promoHeight, {
-    String imagePath = 'assets/images/nobgcar.png',
+    String imagePath = 'assets/images/nobgcake.png',
     String mainText = 'GET YOUR SPECIAL CAR BOOKING\n',
     String prefixText = 'UP TO ',
     String percentageText = '30%',
@@ -1554,7 +1554,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Cakes',
+                    'Wedding Cakes',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
