@@ -1637,7 +1637,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                         runSpacing: screenWidth * 0.04,
                         children: [
                           _buildCategoryCard(
-                            'assets/images/tent1.jpg',
+                            'assets/images/rangerover.png',
                             'Provider\'s Name',
                             '4.8',
                             0,
@@ -1743,7 +1743,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/deco3.jpg',
+                            'assets/images/rangerover.png',
                             'Provider\'s Name',
                             '4.6',
                             9,
