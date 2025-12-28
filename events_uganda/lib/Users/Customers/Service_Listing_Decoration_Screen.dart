@@ -1780,7 +1780,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/decoset.png',
+                            'assets/images/deco2.png',
                             'Provider\'s Name',
                             '4.5',
                             12,
@@ -1789,7 +1789,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloon5.jpg',
+                            'assets/images/glassdeco.jpg',
                             'Provider\'s Name',
                             '4.9',
                             13,
