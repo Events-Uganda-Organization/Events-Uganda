@@ -1554,7 +1554,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Decoration',
+                    'Car Hiring',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
