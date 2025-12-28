@@ -1045,20 +1045,10 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
               ),
             ),
             Positioned(
-              top: -screenHeight * 0.027,
-              left: -screenWidth * 0.2,
-              child: Image.asset(
-                'assets/images/saloonvect.png',
-                width: screenWidth * 0.5,
-                height: screenWidth * 0.5,
-                fit: BoxFit.contain,
-              ),
-            ),
-            Positioned(
               top: screenHeight * 0.1,
               right: -screenWidth * 0.135,
               child: Image.asset(
-                'assets/images/saloonvect.png',
+                'assets/images/decoset.png',
                 width: screenWidth * 0.5,
                 height: screenWidth * 0.5,
                 fit: BoxFit.contain,
@@ -1647,7 +1637,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                         runSpacing: screenWidth * 0.04,
                         children: [
                           _buildCategoryCard(
-                            'assets/images/saloon4.jpg',
+                            'assets/images/tent1.jpg',
                             'Provider\'s Name',
                             '4.8',
                             0,
@@ -1655,7 +1645,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloonvect.png',
+                            'assets/images/deco2.jpg',
                             'Provider\'s Name',
                             '4.6',
                             1,
@@ -1663,7 +1653,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloon5.jpg',
+                            'assets/images/deco4.jpg',
                             'Provider\'s Name',
                             '4.9',
                             2,
@@ -1671,7 +1661,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloon4.jpg',
+                            'assets/images/deco3.jpg',
                             'Provider\'s Name',
                             '4.7',
                             3,
@@ -1679,7 +1669,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloon2.jpg',
+                            'assets/images/deco2.jpg',
                             'Provider\'s Name',
                             '4.5',
                             4,
@@ -1687,27 +1677,27 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloon3.jpg',
-                            'Provider\'s Name',
-                            '4.9',
-                            5,
-                            'UGX 800K - 2.5M',
-                            screenWidth,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/saloon.jpg',
-                            'Provider\'s Name',
-                            '4.4',
-                            6,
-                            'UGX 400K - 1.8M',
-                            screenWidth,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/saloon3.jpg',
+                            'assets/images/deco5.jpg',
                             'Provider\'s Name',
                             '4.7',
-                            7,
-                            'UGX 350K - 1.5M',
+                            11,
+                            'UGX 300K - 1.2M',
+                            screenWidth,
+                          ),
+                          _buildCategoryCard(
+                            'assets/images/deco4.jpg',
+                            'Provider\'s Name',
+                            '4.9',
+                            10,
+                            'UGX 600K - 3M',
+                            screenWidth,
+                          ),
+                          _buildCategoryCard(
+                            'assets/images/deco3.jpg',
+                            'Provider\'s Name',
+                            '4.6',
+                            9,
+                            'UGX 400K - 1.5M',
                             screenWidth,
                           ),
                         ],
@@ -1780,7 +1770,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/deco2.png',
+                            'assets/images/deco2.jpg',
                             'Provider\'s Name',
                             '4.5',
                             12,
@@ -1798,7 +1788,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloonvect.png',
+                            'assets/images/deco3.jpg',
                             'Provider\'s Name',
                             '4.4',
                             14,
@@ -1807,7 +1797,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/saloon2.jpg',
+                            'assets/images/tent1.jpg',
                             'Provider\'s Name',
                             '4.7',
                             15,
