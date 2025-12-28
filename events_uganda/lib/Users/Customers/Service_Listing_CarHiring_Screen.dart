@@ -1048,7 +1048,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
               top: screenHeight * 0.1,
               right: -screenWidth * 0.135,
               child: Image.asset(
-                'assets/images/decoset.png',
+                'assets/images/nobgcar.png',
                 width: screenWidth * 0.5,
                 height: screenWidth * 0.5,
                 fit: BoxFit.contain,
