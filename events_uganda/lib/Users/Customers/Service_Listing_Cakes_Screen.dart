@@ -1048,7 +1048,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
               top: screenHeight * 0.1,
               right: -screenWidth * 0.135,
               child: Image.asset(
-                'assets/images/nobgcake.png',
+                'assets/images/bgcake1.png',
                 width: screenWidth * 0.5,
                 height: screenWidth * 0.5,
                 fit: BoxFit.contain,
