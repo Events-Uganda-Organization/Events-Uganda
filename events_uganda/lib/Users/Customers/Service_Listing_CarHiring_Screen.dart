@@ -1770,7 +1770,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/deco2.jpg',
+                            'assets/images/cybertruck.png',
                             'Provider\'s Name',
                             '4.5',
                             12,
