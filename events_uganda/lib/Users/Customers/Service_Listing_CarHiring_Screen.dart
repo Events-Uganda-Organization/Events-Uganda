@@ -1669,7 +1669,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/deco2.jpg',
+                            'assets/images/lexus.png',
                             'Provider\'s Name',
                             '4.5',
                             4,
@@ -1761,7 +1761,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/deco5.jpg',
+                            'assets/images/lexus.png',
                             'Provider\'s Name',
                             '4.7',
                             11,
