@@ -1661,7 +1661,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/deco3.jpg',
+                            'assets/images/gle.png',
                             'Provider\'s Name',
                             '4.7',
                             3,
