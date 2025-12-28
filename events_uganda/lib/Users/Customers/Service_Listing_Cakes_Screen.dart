@@ -755,7 +755,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
     double screenWidth,
     double screenHeight,
     double promoHeight, {
-    String imagePath = 'assets/images/nobgcar.png',
+    String imagePath = 'assets/images/nobgcake.png',
     String mainText = 'GET YOUR SPECIAL CAR BOOKING\n',
     String prefixText = 'UP TO ',
     String percentageText = '30%',
@@ -1048,7 +1048,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
               top: screenHeight * 0.1,
               right: -screenWidth * 0.135,
               child: Image.asset(
-                'assets/images/nobgcar.png',
+                'assets/images/bgcake1.png',
                 width: screenWidth * 0.5,
                 height: screenWidth * 0.5,
                 fit: BoxFit.contain,
@@ -1554,7 +1554,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Car Hiring',
+                    'Wedding Cakes',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
@@ -1637,7 +1637,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                         runSpacing: screenWidth * 0.04,
                         children: [
                           _buildCategoryCard(
-                            'assets/images/rangerover.png',
+                            'assets/images/cake1.jpg',
                             'Provider\'s Name',
                             '4.8',
                             0,
@@ -1645,7 +1645,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/lexus2.png',
+                            'assets/images/cake2.jpg',
                             'Provider\'s Name',
                             '4.6',
                             1,
@@ -1653,7 +1653,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/lexus1.png',
+                            'assets/images/cake3.jpg',
                             'Provider\'s Name',
                             '4.9',
                             2,
@@ -1661,7 +1661,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/gle.png',
+                            'assets/images/cake4.jpg',
                             'Provider\'s Name',
                             '4.7',
                             3,
@@ -1669,7 +1669,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/lexus.png',
+                            'assets/images/cake5.png',
                             'Provider\'s Name',
                             '4.5',
                             4,
@@ -1677,7 +1677,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/cybertruck.png',
+                            'assets/images/cake6.png',
                             'Provider\'s Name',
                             '4.7',
                             11,
@@ -1685,7 +1685,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/gle.png',
+                            'assets/images/cake7.png',
                             'Provider\'s Name',
                             '4.9',
                             10,
@@ -1693,7 +1693,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/gle1.png',
+                            'assets/images/cake8.png',
                             'Provider\'s Name',
                             '4.6',
                             9,
@@ -1734,7 +1734,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                         runSpacing: screenWidth * 0.04,
                         children: [
                           _buildCategoryCard(
-                            'assets/images/gle1.png',
+                            'assets/images/cake1.jpg',
                             'Provider\'s Name',
                             '4.8',
                             8,
@@ -1743,7 +1743,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/rangerover.png',
+                            'assets/images/cake2.jpg',
                             'Provider\'s Name',
                             '4.6',
                             9,
@@ -1752,7 +1752,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/gle.png',
+                            'assets/images/cake3.jpg',
                             'Provider\'s Name',
                             '4.9',
                             10,
@@ -1761,7 +1761,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/lexus.png',
+                            'assets/images/cake4.jpg',
                             'Provider\'s Name',
                             '4.7',
                             11,
@@ -1770,7 +1770,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/cybertruck.png',
+                            'assets/images/cake5.png',
                             'Provider\'s Name',
                             '4.5',
                             12,
@@ -1779,7 +1779,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/lexus1.png',
+                            'assets/images/cake6.png',
                             'Provider\'s Name',
                             '4.9',
                             13,
@@ -1788,7 +1788,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/gle.png',
+                            'assets/images/cake7.png',
                             'Provider\'s Name',
                             '4.4',
                             14,
@@ -1797,7 +1797,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/lexus2.png',
+                            'assets/images/cake8.png',
                             'Provider\'s Name',
                             '4.7',
                             15,
