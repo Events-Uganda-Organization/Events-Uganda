@@ -1645,7 +1645,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/lexus2.png',
+                            'assets/images/cake2.jpg',
                             'Provider\'s Name',
                             '4.6',
                             1,
