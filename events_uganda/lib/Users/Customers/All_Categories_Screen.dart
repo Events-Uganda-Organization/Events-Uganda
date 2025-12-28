@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:events_uganda/Users/Customers/Service_Listing_Cakes_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -814,6 +815,17 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
             context,
             MaterialPageRoute(
               builder: (context) => ServiceListingSaloonScreen(
+                category: title,
+                categoryIndex: index,
+              ),
+            ),
+          );
+        } else if (index == 5) {
+          // Wedding Cakes
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ServiceListingCakesScreen(
                 category: title,
                 categoryIndex: index,
               ),

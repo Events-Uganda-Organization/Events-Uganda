@@ -1554,7 +1554,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Car Hiring',
+                    'Cakes',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
