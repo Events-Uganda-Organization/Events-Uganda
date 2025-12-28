@@ -1685,7 +1685,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/deco4.jpg',
+                            'assets/images/gle.png',
                             'Provider\'s Name',
                             '4.9',
                             10,
@@ -1693,7 +1693,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                             screenWidth,
                           ),
                           _buildCategoryCard(
-                            'assets/images/deco3.jpg',
+                            'assets/images/gle1.png',
                             'Provider\'s Name',
                             '4.6',
                             9,
@@ -1734,7 +1734,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                         runSpacing: screenWidth * 0.04,
                         children: [
                           _buildCategoryCard(
-                            'assets/images/deco2.jpg',
+                            'assets/images/gle1.png',
                             'Provider\'s Name',
                             '4.8',
                             8,
@@ -1752,7 +1752,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/deco4.jpg',
+                            'assets/images/gle.png',
                             'Provider\'s Name',
                             '4.9',
                             10,
