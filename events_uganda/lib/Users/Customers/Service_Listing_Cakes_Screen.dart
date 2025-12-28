@@ -1770,7 +1770,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/cybertruck.png',
+                            'assets/images/cake5.png',
                             'Provider\'s Name',
                             '4.5',
                             12,
