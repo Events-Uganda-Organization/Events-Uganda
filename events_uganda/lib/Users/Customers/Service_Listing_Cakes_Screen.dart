@@ -1779,7 +1779,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/lexus1.png',
+                            'assets/images/cake6.png',
                             'Provider\'s Name',
                             '4.9',
                             13,
