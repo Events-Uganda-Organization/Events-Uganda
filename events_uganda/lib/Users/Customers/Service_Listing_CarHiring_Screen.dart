@@ -1797,7 +1797,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/tent1.jpg',
+                            'assets/images/lexus2.png',
                             'Provider\'s Name',
                             '4.7',
                             15,
