@@ -1637,7 +1637,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                         runSpacing: screenWidth * 0.04,
                         children: [
                           _buildCategoryCard(
-                            'assets/images/rangerover.png',
+                            'assets/images/cake1.png',
                             'Provider\'s Name',
                             '4.8',
                             0,
