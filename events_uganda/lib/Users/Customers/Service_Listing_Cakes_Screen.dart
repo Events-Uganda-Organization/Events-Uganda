@@ -1752,7 +1752,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                             showVerified: false,
                           ),
                           _buildCategoryCard(
-                            'assets/images/gle.png',
+                            'assets/images/cake3.jpg',
                             'Provider\'s Name',
                             '4.9',
                             10,
