@@ -1,3 +1,5 @@
+import 'package:events_uganda/Auth/Forgot_Password_Screen.dart';
+import 'package:events_uganda/Auth/Sign_Up_Screen.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
@@ -43,7 +45,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
               color: isSelected ? Colors.white : Colors.white.withOpacity(0.2),
               borderRadius: BorderRadius.circular(25),
               border: Border.all(
-                color: Colors.white.withOpacity(0.6),
+                color: Color(0XFF35B9F2).withOpacity(0.6),
                 width: 2,
               ),
             ),
@@ -54,14 +56,14 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 children: [
                   Icon(
                     icon,
-                    color: isSelected ? Colors.black : Colors.white,
+                    color: isSelected ? Colors.black : Colors.black,
                     size: 16,
                   ),
                   SizedBox(width: 6),
                   Text(
                     label,
                     style: TextStyle(
-                      color: isSelected ? Colors.black : Colors.white,
+                      color: isSelected ? Colors.black : Colors.black,
                       fontFamily: 'Montserrat',
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
@@ -79,6 +81,8 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screen = MediaQuery.of(context).size;
+    final screenWidth = MediaQuery.of(context).size.width;
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -93,254 +97,293 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
               ),
             ),
             Positioned(
-              top: size.height * 0.02,
-              left: (size.width - size.width * 0.35) / 2,
-              child: Container(
-                width: size.width * 0.35,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(2),
-                ),
+              top: screen.height * 0.21,
+              left:
+                  (MediaQuery.of(context).size.width -
+                      MediaQuery.of(context).size.width * 0.15) /
+                  1,
+              child: Image.asset(
+                'assets/vectors/personalinterestvect.png',
+                width: screen.width * 0.10,
+                height: screen.width * 0.10,
+                fit: BoxFit.contain,
               ),
             ),
-
-            // Title text below the bar
             Positioned(
-              top: size.height * 0.05,
-              left: 0,
-              right: 0,
-              child: Text(
-                'Time To Choose',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Montserrat',
-                  fontSize: size.width * 0.08,
-                  fontWeight: FontWeight.w800,
-                ),
+              top: screen.height * 0.18,
+              right:
+                  (MediaQuery.of(context).size.width -
+                      MediaQuery.of(context).size.width * 0.15) /
+                  1,
+              child: Image.asset(
+                'assets/vectors/personalinterestvect.png',
+                width: screen.width * 0.10,
+                height: screen.width * 0.10,
+                fit: BoxFit.contain,
               ),
             ),
-
-            // Subtitle text
+            // Logo ring
             Positioned(
-              top: size.height * 0.15,
-              left: size.width * 0.08,
-              right: size.width * 0.08,
-              child: Text(
-                'Tell us what you are most interested in to help us deliver the best to you',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Abril Fatface',
-                  fontSize: size.width * 0.04,
-                  fontWeight: FontWeight.w400,
-                ),
+              top: screen.height * 0.03,
+              left: (screen.width - screen.width * 0.30) / 2,
+              child: Image.asset(
+                'assets/vectors/logo.png',
+                width: screen.width * 0.30,
+                height: screen.width * 0.30,
+                fit: BoxFit.contain,
               ),
-            ),
-
-            // Select instruction text
+            ), // Back button
             Positioned(
-              top: size.height * 0.24,
-              left: 0,
-              right: 0,
-              child: Text(
-                'SELECT 3 OR MORE',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Montserrat',
-                  fontSize: size.width * 0.045,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ),
-
-            // Glassy rectangles row
-            Positioned(
-              top: size.height * 0.30,
-              left: size.width * 0.04,
-              right: size.width * 0.04,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Decoration card
-                  _buildInterestCard(
-                    'Decoration',
-                    Icons.celebration,
-                    'decoration',
-                    size.width,
-                  ),
-                  SizedBox(width: 12),
-                  // Catering card
-                  _buildInterestCard(
-                    'Catering',
-                    Icons.restaurant,
-                    'catering',
-                    size.width,
-                  ),
-                ],
-              ),
-            ),
-
-            // Second row of rectangles
-            Positioned(
-              top: size.height * 0.39,
-              left: size.width * 0.04,
-              right: size.width * 0.04,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Car Hire card
-                  _buildInterestCard(
-                    'Car Hire',
-                    Icons.directions_car,
-                    'carHire',
-                    size.width,
-                  ),
-                  SizedBox(width: 12),
-                  // Photography card
-                  _buildInterestCard(
-                    'Photography',
-                    Icons.camera_alt,
-                    'photography',
-                    size.width,
-                  ),
-                ],
-              ),
-            ),
-
-            // Third row of rectangles
-            Positioned(
-              top: size.height * 0.48,
-              left: size.width * 0.04,
-              right: size.width * 0.04,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Entertainment card
-                  _buildInterestCard(
-                    'Entertainment',
-                    Icons.music_note,
-                    'entertainment',
-                    size.width,
-                  ),
-                  SizedBox(width: 12),
-                  // Venue card
-                  _buildInterestCard(
-                    'Venue',
-                    Icons.location_on,
-                    'venue',
-                    size.width,
-                  ),
-                ],
-              ),
-            ),
-
-            // Fourth row of rectangles
-            Positioned(
-              top: size.height * 0.57,
-              left: size.width * 0.04,
-              right: size.width * 0.04,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // MC card
-                  _buildInterestCard('MC', Icons.mic, 'mc', size.width),
-                  SizedBox(width: 12),
-                  // Makeup card
-                  _buildInterestCard(
-                    'Makeup',
-                    Icons.face,
-                    'makeup',
-                    size.width,
-                  ),
-                ],
-              ),
-            ),
-
-            // Start button
-            Positioned(
-              top: size.height * 0.70,
-              left: size.width * 0.04,
-              right: size.width * 0.04,
-              child: GestureDetector(
-                onTap: () {
-                  // Add button action here
-                },
-                child: Container(
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.white, width: 2),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Start',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: 'Montserrat',
-                        fontSize: size.width * 0.05,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            // Skip text
-            Positioned(
-              top: size.height * 0.80,
-              left: 0,
-              right: 0,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CustomerHomeScreen(),
-                    ),
-                  );
-                },
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Skip',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Montserrat',
-                          fontSize: size.width * 0.04,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Icon(Icons.chevron_right, color: Colors.white, size: 20),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            Positioned(
-              top: size.height * 0.025,
-              left: size.width * 0.035,
+              top: MediaQuery.of(context).size.height * 0.04,
+              left: MediaQuery.of(context).size.width * 0.04,
               child: GestureDetector(
                 onTap: () => Navigator.of(context).maybePop(),
                 child: Container(
-                  width: size.width * 0.12,
-                  height: size.width * 0.12,
+                  width: MediaQuery.of(context).size.width * 0.13,
+                  height: MediaQuery.of(context).size.width * 0.13,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.85),
-                    borderRadius: BorderRadius.circular(14),
+                    color: const Color(0xFF35B9F2),
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Icon(
-                    Icons.chevron_left,
-                    color: Colors.black,
-                    size: size.width * 0.08,
+                  child: Center(
+                    child: Icon(
+                      Icons.chevron_left,
+                      color: Colors.black,
+                      size: MediaQuery.of(context).size.width * 0.10,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // Title text below the bar
+            Positioned(
+              top: screen.height * 0.16,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  Text(
+                    "Time to choose",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Montserrat',
+                      fontSize: screen.width * 0.08,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Text(
+                    "!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Montserrat',
+                      fontSize: screen.width * 0.08,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top:
+                  MediaQuery.of(context).size.height * 0.10 +
+                  MediaQuery.of(context).size.width * 0.22 +
+                  MediaQuery.of(context).size.height * 0.015 +
+                  MediaQuery.of(context).size.width * 0.13,
+              left: MediaQuery.of(context).size.width * 0.03,
+              right: MediaQuery.of(context).size.width * 0.03,
+              bottom: 0,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screen.width * 0.08,
+                  vertical: screen.height * 0.03,
+                ),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(36),
+                    topRight: Radius.circular(36),
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight:
+                          MediaQuery.of(context).size.height *
+                          1.2, // 120% of screen height
+                    ),
+                    child: Column(
+                      children: [
+                        // Glassy rectangles row
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.03),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _buildInterestCard(
+                                  'Decoration',
+                                  Icons.celebration,
+                                  'decoration',
+                                  size.width,
+                                ),
+                                SizedBox(width: 12),
+                                _buildInterestCard(
+                                  'Catering',
+                                  Icons.restaurant,
+                                  'catering',
+                                  size.width,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.03),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _buildInterestCard(
+                                  'Car Hire',
+                                  Icons.directions_car,
+                                  'carHire',
+                                  size.width,
+                                ),
+                                SizedBox(width: 12),
+                                _buildInterestCard(
+                                  'Photography',
+                                  Icons.camera_alt,
+                                  'photography',
+                                  size.width,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.03),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _buildInterestCard(
+                                  'Entertainment',
+                                  Icons.music_note,
+                                  'entertainment',
+                                  size.width,
+                                ),
+                                SizedBox(width: 12),
+                                _buildInterestCard(
+                                  'Venue',
+                                  Icons.location_on,
+                                  'venue',
+                                  size.width,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.03),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _buildInterestCard(
+                                  'MC',
+                                  Icons.mic,
+                                  'mc',
+                                  size.width,
+                                ),
+                                SizedBox(width: 12),
+                                _buildInterestCard(
+                                  'Makeup',
+                                  Icons.face,
+                                  'makeup',
+                                  size.width,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.05),
+                          child: GestureDetector(
+                            onTap: () {
+                              // Add button action here
+                            },
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.15),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Start',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Montserrat',
+                                    fontSize: size.width * 0.05,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.02),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CustomerHomeScreen(),
+                                ),
+                              );
+                            },
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Skip',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Montserrat',
+                                      fontSize: size.width * 0.04,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  SizedBox(width: 8),
+                                  Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
