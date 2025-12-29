@@ -252,7 +252,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                 const Color(0xFFE0E7FF),
                                 const Color(0xFFD59A00),
                               ],
-
                               stops: [0.0, 0.47],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -273,7 +272,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                               ),
                               SizedBox(width: screenWidth * 0.03),
                               Text(
-                                _countdown > 0 ? '$_countdown' : 'Resend',
+                                'Resend',
                                 style: TextStyle(
                                   fontSize: screenWidth * 0.05,
                                   fontWeight: FontWeight.bold,
