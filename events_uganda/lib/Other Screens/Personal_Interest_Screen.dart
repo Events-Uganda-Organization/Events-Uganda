@@ -42,7 +42,9 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
             width: cardWidth,
             height: 40,
             decoration: BoxDecoration(
-              color: isSelected ? Colors.white : Colors.white.withOpacity(0.2),
+              color: isSelected
+                  ? Color(0xFF35B9F2)
+                  : Colors.white.withOpacity(0.2),
               borderRadius: BorderRadius.circular(25),
               border: Border.all(
                 color: Color(0XFF35B9F2).withOpacity(0.6),
@@ -56,7 +58,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 children: [
                   Icon(
                     icon,
-                    color: isSelected ? Colors.black : Colors.black,
+                    color: isSelected ? Colors.white : Colors.black,
                     size: 16,
                   ),
                   SizedBox(width: 6),
@@ -64,7 +66,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                     child: Text(
                       label,
                       style: TextStyle(
-                        color: isSelected ? Colors.black : Colors.black,
+                        color: isSelected ? Colors.white : Colors.black,
                         fontFamily: 'Montserrat',
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
@@ -331,7 +333,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                 color: Colors.white.withOpacity(0.15),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: Colors.white,
+                                  color: Color(OXFF),
                                   width: 2,
                                 ),
                               ),
