@@ -221,14 +221,14 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                       children: [
                         // Interest cards in two columns per row
                         Padding(
-                          padding: EdgeInsets.only(top: size.height * 0.03),
+                          padding: EdgeInsets.only(top: size.height * 0.0),
                           child: Text(
                             "Tell us what you are most interested in to help us deliver the best to you",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
                               fontFamily: 'Montserrat',
-                              fontSize: size.width * 0.045,
+                              fontSize: size.width * 0.04,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
