@@ -330,7 +330,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                             child: Container(
                               height: 40,
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.15),
+                                color: Color(0XFF35B9F2),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
                                   color: Color(0XFF35B9F2),
