@@ -252,16 +252,12 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                               SizedBox(height: screenHeight * 0.05),
 
                               GestureDetector(
-                                onTap: (_isButtonEnabled && !_isLoading)
-                                    ? _resendOTP
-                                    : null,
                                 child: Container(
                                   width: screenWidth * 0.5,
                                   height: screenHeight * 0.06,
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
-                                      colors: _isButtonEnabled && !_isLoading
-                                          ? [
+                                      colors: [
                                               const Color(0xFFE0E7FF),
                                               const Color(0xFFD59A00),
                                             ]
