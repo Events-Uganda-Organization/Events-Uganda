@@ -379,7 +379,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                   SizedBox(width: 8),
                                   Icon(
                                     Icons.chevron_right,
-                                    color: Colors.white,
+                                    color: Colors.black,
                                     size: 20,
                                   ),
                                 ],
