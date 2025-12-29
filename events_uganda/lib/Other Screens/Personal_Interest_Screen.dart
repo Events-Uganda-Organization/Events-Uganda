@@ -260,41 +260,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: screen.height * 0.028),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Already have an account? ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: screen.width * 0.037,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SignUpScreen(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'Sign Up',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screen.width * 0.040,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: screen.height * 0.015),
                       ],
                     ),
                   ),
