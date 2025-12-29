@@ -341,7 +341,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                 child: Text(
                                   'Continue',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Colors.black,
                                     fontFamily: 'Montserrat',
                                     fontSize: size.width * 0.05,
                                     fontWeight: FontWeight.w800,
