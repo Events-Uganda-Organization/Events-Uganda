@@ -371,7 +371,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                     'Skip',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontFamily: 'Montserrat',
+                                      fontFamily: 'Abril Fatface',
                                       fontSize: size.width * 0.04,
                                       fontWeight: FontWeight.w600,
                                     ),
