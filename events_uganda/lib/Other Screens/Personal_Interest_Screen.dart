@@ -122,7 +122,17 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 fit: BoxFit.contain,
               ),
             ),
-
+            // Logo ring
+            Positioned(
+              top: screen.height * 0.03,
+              left: (screen.width - screen.width * 0.30) / 2,
+              child: Image.asset(
+                'assets/vectors/logo.png',
+                width: screen.width * 0.30,
+                height: screen.width * 0.30,
+                fit: BoxFit.contain,
+              ),
+            ),
             // Title text below the bar
             Positioned(
               top: screen.height * 0.16,
