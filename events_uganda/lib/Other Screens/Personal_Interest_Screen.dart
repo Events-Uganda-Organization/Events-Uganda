@@ -134,7 +134,35 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
             ),
 
             // Title text below the bar
-            
+            Positioned(
+              top: screen.height * 0.16,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  Text(
+                    "Let's get you",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Montserrat',
+                      fontSize: screen.width * 0.08,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Text(
+                    "signed in!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Montserrat',
+                      fontSize: screen.width * 0.08,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
             // Subtitle text
             Positioned(
