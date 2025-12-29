@@ -164,23 +164,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
               ),
             ),
 
-            // Subtitle text
-            Positioned(
-              top: size.height * 0.15,
-              left: size.width * 0.08,
-              right: size.width * 0.08,
-              child: Text(
-                'Tell us what you are most interested in to help us deliver the best to you',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Abril Fatface',
-                  fontSize: size.width * 0.04,
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-            ),
-
             // Select instruction text
             Positioned(
               top: size.height * 0.24,
