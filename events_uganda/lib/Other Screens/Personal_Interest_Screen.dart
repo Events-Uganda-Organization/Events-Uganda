@@ -45,7 +45,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
               color: isSelected ? Colors.white : Colors.white.withOpacity(0.2),
               borderRadius: BorderRadius.circular(25),
               border: Border.all(
-                color: Colors.white.withOpacity(0.6),
+                color: Color(0XFF35B9F2).withOpacity(0.6),
                 width: 2,
               ),
             ),
@@ -56,14 +56,14 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 children: [
                   Icon(
                     icon,
-                    color: isSelected ? Colors.black : Colors.white,
+                    color: isSelected ? Colors.black : Colors.black,
                     size: 16,
                   ),
                   SizedBox(width: 6),
                   Text(
                     label,
                     style: TextStyle(
-                      color: isSelected ? Colors.black : Colors.white,
+                      color: isSelected ? Colors.black : Colors.black,
                       fontFamily: 'Montserrat',
                       fontSize: 10,
                       fontWeight: FontWeight.w700,
