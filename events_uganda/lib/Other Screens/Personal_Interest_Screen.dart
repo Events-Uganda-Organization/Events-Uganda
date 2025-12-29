@@ -134,21 +134,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
             ),
 
             // Title text below the bar
-            Positioned(
-              top: size.height * 0.05,
-              left: 0,
-              right: 0,
-              child: Text(
-                'Time To Choose',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Montserrat',
-                  fontSize: size.width * 0.08,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ),
+            
 
             // Subtitle text
             Positioned(
