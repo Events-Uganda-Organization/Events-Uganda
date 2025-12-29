@@ -132,7 +132,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 height: screen.width * 0.30,
                 fit: BoxFit.contain,
               ),
-            ),// Back button
+            ), // Back button
             Positioned(
               top: MediaQuery.of(context).size.height * 0.04,
               left: MediaQuery.of(context).size.width * 0.04,
@@ -215,14 +215,184 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                     ),
                     child: Column(
                       children: [
-                        Text(
-                          "Tell us what you are most\ninterested in to help us deliver the best to you ",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w800,
-                            color: Colors.black,
-                            fontSize: screen.width * 0.04,
+                        // Glassy rectangles row
+                        Positioned(
+                          top: size.height * 0.30,
+                          left: size.width * 0.04,
+                          right: size.width * 0.04,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Decoration card
+                              _buildInterestCard(
+                                'Decoration',
+                                Icons.celebration,
+                                'decoration',
+                                size.width,
+                              ),
+                              SizedBox(width: 12),
+                              // Catering card
+                              _buildInterestCard(
+                                'Catering',
+                                Icons.restaurant,
+                                'catering',
+                                size.width,
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // Second row of rectangles
+                        Positioned(
+                          top: size.height * 0.39,
+                          left: size.width * 0.04,
+                          right: size.width * 0.04,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Car Hire card
+                              _buildInterestCard(
+                                'Car Hire',
+                                Icons.directions_car,
+                                'carHire',
+                                size.width,
+                              ),
+                              SizedBox(width: 12),
+                              // Photography card
+                              _buildInterestCard(
+                                'Photography',
+                                Icons.camera_alt,
+                                'photography',
+                                size.width,
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // Third row of rectangles
+                        Positioned(
+                          top: size.height * 0.48,
+                          left: size.width * 0.04,
+                          right: size.width * 0.04,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Entertainment card
+                              _buildInterestCard(
+                                'Entertainment',
+                                Icons.music_note,
+                                'entertainment',
+                                size.width,
+                              ),
+                              SizedBox(width: 12),
+                              // Venue card
+                              _buildInterestCard(
+                                'Venue',
+                                Icons.location_on,
+                                'venue',
+                                size.width,
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // Fourth row of rectangles
+                        Positioned(
+                          top: size.height * 0.57,
+                          left: size.width * 0.04,
+                          right: size.width * 0.04,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // MC card
+                              _buildInterestCard(
+                                'MC',
+                                Icons.mic,
+                                'mc',
+                                size.width,
+                              ),
+                              SizedBox(width: 12),
+                              // Makeup card
+                              _buildInterestCard(
+                                'Makeup',
+                                Icons.face,
+                                'makeup',
+                                size.width,
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        // Start button
+                        Positioned(
+                          top: size.height * 0.70,
+                          left: size.width * 0.04,
+                          right: size.width * 0.04,
+                          child: GestureDetector(
+                            onTap: () {
+                              // Add button action here
+                            },
+                            child: Container(
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.15),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Start',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Montserrat',
+                                    fontSize: size.width * 0.05,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        // Skip text
+                        Positioned(
+                          top: size.height * 0.80,
+                          left: 0,
+                          right: 0,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CustomerHomeScreen(),
+                                ),
+                              );
+                            },
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Skip',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Montserrat',
+                                      fontSize: size.width * 0.04,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  SizedBox(width: 8),
+                                  Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                       ],
