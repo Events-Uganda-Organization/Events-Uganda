@@ -142,7 +142,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                   width: MediaQuery.of(context).size.width * 0.13,
                   height: MediaQuery.of(context).size.width * 0.13,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF8C2B0),
+                    color: const Color(0xFF35B9F2),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Center(
