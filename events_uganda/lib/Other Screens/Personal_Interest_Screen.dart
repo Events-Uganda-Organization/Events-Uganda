@@ -164,24 +164,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
               ),
             ),
 
-            // Select instruction text
-            Positioned(
-              top: size.height * 0.24,
-              left: 0,
-              right: 0,
-              child: Text(
-                'SELECT 3 OR MORE',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'Montserrat',
-                  fontSize: size.width * 0.045,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ),
-
-            // Glassy rectangles row
+                        // Glassy rectangles row
             Positioned(
               top: size.height * 0.30,
               left: size.width * 0.04,
