@@ -101,7 +101,20 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                       MediaQuery.of(context).size.width * 0.15) /
                   1,
               child: Image.asset(
-                'assets/vectors/signinvect.png',
+                'assets/vectors/personalinterestvect.png',
+                width: screen.width * 0.10,
+                height: screen.width * 0.10,
+                fit: BoxFit.contain,
+              ),
+            ),
+            Positioned(
+              top: screen.height * 0.21,
+              left:
+                  (MediaQuery.of(context).size.width -
+                      MediaQuery.of(context).size.width * 0.15) /
+                  1,
+              child: Image.asset(
+                'assets/vectors/personalinterestvect.png',
                 width: screen.width * 0.10,
                 height: screen.width * 0.10,
                 fit: BoxFit.contain,
