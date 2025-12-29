@@ -353,7 +353,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                         ),
 
                         Padding(
-                          padding: EdgeInsets.only(top: size.height * 0.02),
+                          padding: EdgeInsets.only(top: size.height * 0.03),
                           child: GestureDetector(
                             onTap: () {
                               Navigator.push(
