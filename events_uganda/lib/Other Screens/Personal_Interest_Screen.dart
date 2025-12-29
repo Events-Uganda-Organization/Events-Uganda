@@ -358,28 +358,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                           ],
                         ),
                         SizedBox(height: screen.height * 0.02),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: signInWithGoogle,
-                              child: _SocialBtn(
-                                bg: socialBg,
-                                asset: 'assets/vectors/google.png',
-                                size: screen.width * 0.16,
-                              ),
-                            ),
-                            SizedBox(width: screen.width * 0.06),
-                            GestureDetector(
-                              onTap: _signInWithApple,
-                              child: _SocialBtn(
-                                bg: socialBg,
-                                asset: 'assets/vectors/apple.png',
-                                size: screen.width * 0.16,
-                              ),
-                            ),
-                          ],
-                        ),
                         SizedBox(height: screen.height * 0.025),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
