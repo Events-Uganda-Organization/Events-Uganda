@@ -205,17 +205,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                             fontSize: screen.width * 0.05,
                           ),
                         ),
-                        SizedBox(height: screen.height * 0.016),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ForgotPasswordScreen(),
-                              ),
-                            );
-                          },
-                        ),
                       ],
                     ),
                   ),
