@@ -204,17 +204,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                             fontSize: screen.width * 0.05,
                           ),
                         ),
-                        SizedBox(height: screen.height * 0.006),
-                        Text(
-                          'Please enter either your email or phone number to continue.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Abril Fatface',
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                            fontSize: screen.width * 0.035,
-                          ),
-                        ),
                         SizedBox(height: screen.height * 0.03),
                         _ResponsiveTextField(
                           controller: _emailController,
