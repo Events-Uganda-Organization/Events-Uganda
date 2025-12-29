@@ -132,6 +132,28 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 height: screen.width * 0.30,
                 fit: BoxFit.contain,
               ),
+            ),// Back button
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.04,
+              left: MediaQuery.of(context).size.width * 0.04,
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).maybePop(),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.13,
+                  height: MediaQuery.of(context).size.width * 0.13,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF8C2B0),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.chevron_left,
+                      color: Colors.black,
+                      size: MediaQuery.of(context).size.width * 0.10,
+                    ),
+                  ),
+                ),
+              ),
             ),
             // Title text below the bar
             Positioned(
