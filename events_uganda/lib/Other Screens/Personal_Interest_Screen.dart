@@ -206,18 +206,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                         ),
                         SizedBox(height: screen.height * 0.03),
                         _ResponsiveTextField(
-                          controller: _emailController,
-                          label: 'Email/Phone Number',
-                          hint: 'Enter Your Email or Phone Number',
-                          icon: Icons.mail,
-                          focusNode: _emailFocus,
-                          nextFocusNode: _passwordFocus,
-                          textInputAction: TextInputAction.next,
-                          iconColor: Colors.black,
-                          fontSize: screenWidth * 0.045,
-                        ),
-                        SizedBox(height: screen.height * 0.03),
-                        _ResponsiveTextField(
                           controller: _passwordController,
                           label: 'Password',
                           hint: 'Enter Your Password',
