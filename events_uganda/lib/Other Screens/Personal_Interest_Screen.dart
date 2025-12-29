@@ -339,7 +339,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Start',
+                                  'Continue',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Montserrat',
