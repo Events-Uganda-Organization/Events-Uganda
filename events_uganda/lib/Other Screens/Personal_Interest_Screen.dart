@@ -292,36 +292,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                 ),
                               ],
                             ),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.transparent,
-                                shadowColor: Colors.transparent,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                              ),
-              
-                              child: SizedBox(
-                                      height: screen.width * 0.05,
-                                      width: screen.width * 0.05,
-                                      child: const CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                              Colors.black,
-                                            ),
-                                      ),
-                                    )
-                                  : Text(
-                                      'Sign In',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: screen.width * 0.045,
-                                        fontWeight: FontWeight.w800,
-                                        fontFamily: 'Montserrat',
-                                      ),
-                                    ),
-                            ),
                           ),
                         ),
                         SizedBox(height: screen.height * 0.028),
