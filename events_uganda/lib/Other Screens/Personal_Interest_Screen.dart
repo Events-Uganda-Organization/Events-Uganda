@@ -79,6 +79,8 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screen = MediaQuery.of(context).size;
+    final screenWidth = MediaQuery.of(context).size.width;
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -90,6 +92,19 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
               child: Image.asset(
                 'assets/backgroundcolors/personalinterestbg.png',
                 fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              top: screen.height * 0.21,
+              left:
+                  (MediaQuery.of(context).size.width -
+                      MediaQuery.of(context).size.width * 0.15) /
+                  1,
+              child: Image.asset(
+                'assets/vectors/signinvect.png',
+                width: screen.width * 0.10,
+                height: screen.width * 0.10,
+                fit: BoxFit.contain,
               ),
             ),
             Positioned(
