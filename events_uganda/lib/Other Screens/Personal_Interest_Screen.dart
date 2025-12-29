@@ -233,33 +233,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: screen.height * 0.028),
-                        // Sign In button
-                        SizedBox(
-                          width: double.infinity,
-                          height: screen.width * 0.12,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(
-                                color: const Color(0xFFCB471B),
-                                width: 1,
-                              ),
-                              gradient: const LinearGradient(
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                                colors: [],
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.25),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 6),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
