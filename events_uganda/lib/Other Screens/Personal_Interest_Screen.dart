@@ -215,104 +215,105 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                     ),
                     child: Column(
                       children: [
-                        // Glassy rectangles row
+                        // Interest cards in two columns per row
                         Padding(
                           padding: EdgeInsets.only(top: size.height * 0.03),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _buildInterestCard(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Decoration',
                                   Icons.celebration,
                                   'decoration',
                                   size.width,
                                 ),
-                                SizedBox(width: 12),
-                                _buildInterestCard(
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Catering',
                                   Icons.restaurant,
                                   'catering',
                                   size.width,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.only(top: size.height * 0.03),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _buildInterestCard(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Car Hire',
                                   Icons.directions_car,
                                   'carHire',
                                   size.width,
                                 ),
-                                SizedBox(width: 12),
-                                _buildInterestCard(
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Photography',
                                   Icons.camera_alt,
                                   'photography',
                                   size.width,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.only(top: size.height * 0.03),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _buildInterestCard(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Entertainment',
                                   Icons.music_note,
                                   'entertainment',
                                   size.width,
                                 ),
-                                SizedBox(width: 12),
-                                _buildInterestCard(
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Venue',
                                   Icons.location_on,
                                   'venue',
                                   size.width,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.only(top: size.height * 0.03),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _buildInterestCard(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: _buildInterestCard(
                                   'MC',
                                   Icons.mic,
                                   'mc',
                                   size.width,
                                 ),
-                                SizedBox(width: 12),
-                                _buildInterestCard(
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Makeup',
                                   Icons.face,
                                   'makeup',
                                   size.width,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
 
