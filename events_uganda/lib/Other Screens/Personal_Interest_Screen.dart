@@ -1,3 +1,4 @@
+import 'package:events_uganda/Auth/Forgot_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_Up_Screen.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/material.dart';
