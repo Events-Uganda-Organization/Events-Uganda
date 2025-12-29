@@ -204,18 +204,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                             fontSize: screen.width * 0.05,
                           ),
                         ),
-                        SizedBox(height: screen.height * 0.03),
-                        _ResponsiveTextField(
-                          controller: _passwordController,
-                          label: 'Password',
-                          hint: 'Enter Your Password',
-                          icon: Icons.lock,
-                          focusNode: _passwordFocus,
-                          nextFocusNode: _contactFocus,
-                          textInputAction: TextInputAction.next,
-                          iconColor: Colors.black,
-                          fontSize: screenWidth * 0.045,
-                        ),
                         SizedBox(height: screen.height * 0.016),
                         GestureDetector(
                           onTap: () {
