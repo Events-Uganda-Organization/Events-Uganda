@@ -1724,7 +1724,6 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                       ),
                     ),
                     SizedBox(height: screenWidth * 0.04),
-                    // Two-column grid of all provider images (without verified badge)
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: screenWidth * 0.04,
