@@ -216,118 +216,108 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                     child: Column(
                       children: [
                         // Glassy rectangles row
-                        Positioned(
-                          top: size.height * 0.30,
-                          left: size.width * 0.04,
-                          right: size.width * 0.04,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Decoration card
-                              _buildInterestCard(
-                                'Decoration',
-                                Icons.celebration,
-                                'decoration',
-                                size.width,
-                              ),
-                              SizedBox(width: 12),
-                              // Catering card
-                              _buildInterestCard(
-                                'Catering',
-                                Icons.restaurant,
-                                'catering',
-                                size.width,
-                              ),
-                            ],
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.03),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _buildInterestCard(
+                                  'Decoration',
+                                  Icons.celebration,
+                                  'decoration',
+                                  size.width,
+                                ),
+                                SizedBox(width: 12),
+                                _buildInterestCard(
+                                  'Catering',
+                                  Icons.restaurant,
+                                  'catering',
+                                  size.width,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
-                        // Second row of rectangles
-                        Positioned(
-                          top: size.height * 0.39,
-                          left: size.width * 0.04,
-                          right: size.width * 0.04,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Car Hire card
-                              _buildInterestCard(
-                                'Car Hire',
-                                Icons.directions_car,
-                                'carHire',
-                                size.width,
-                              ),
-                              SizedBox(width: 12),
-                              // Photography card
-                              _buildInterestCard(
-                                'Photography',
-                                Icons.camera_alt,
-                                'photography',
-                                size.width,
-                              ),
-                            ],
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.03),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _buildInterestCard(
+                                  'Car Hire',
+                                  Icons.directions_car,
+                                  'carHire',
+                                  size.width,
+                                ),
+                                SizedBox(width: 12),
+                                _buildInterestCard(
+                                  'Photography',
+                                  Icons.camera_alt,
+                                  'photography',
+                                  size.width,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
-                        // Third row of rectangles
-                        Positioned(
-                          top: size.height * 0.48,
-                          left: size.width * 0.04,
-                          right: size.width * 0.04,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Entertainment card
-                              _buildInterestCard(
-                                'Entertainment',
-                                Icons.music_note,
-                                'entertainment',
-                                size.width,
-                              ),
-                              SizedBox(width: 12),
-                              // Venue card
-                              _buildInterestCard(
-                                'Venue',
-                                Icons.location_on,
-                                'venue',
-                                size.width,
-                              ),
-                            ],
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.03),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _buildInterestCard(
+                                  'Entertainment',
+                                  Icons.music_note,
+                                  'entertainment',
+                                  size.width,
+                                ),
+                                SizedBox(width: 12),
+                                _buildInterestCard(
+                                  'Venue',
+                                  Icons.location_on,
+                                  'venue',
+                                  size.width,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
-                        // Fourth row of rectangles
-                        Positioned(
-                          top: size.height * 0.57,
-                          left: size.width * 0.04,
-                          right: size.width * 0.04,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // MC card
-                              _buildInterestCard(
-                                'MC',
-                                Icons.mic,
-                                'mc',
-                                size.width,
-                              ),
-                              SizedBox(width: 12),
-                              // Makeup card
-                              _buildInterestCard(
-                                'Makeup',
-                                Icons.face,
-                                'makeup',
-                                size.width,
-                              ),
-                            ],
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.03),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _buildInterestCard(
+                                  'MC',
+                                  Icons.mic,
+                                  'mc',
+                                  size.width,
+                                ),
+                                SizedBox(width: 12),
+                                _buildInterestCard(
+                                  'Makeup',
+                                  Icons.face,
+                                  'makeup',
+                                  size.width,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
-                        // Start button
-                        Positioned(
-                          top: size.height * 0.70,
-                          left: size.width * 0.04,
-                          right: size.width * 0.04,
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.05),
                           child: GestureDetector(
                             onTap: () {
                               // Add button action here
@@ -357,11 +347,8 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                           ),
                         ),
 
-                        // Skip text
-                        Positioned(
-                          top: size.height * 0.80,
-                          left: 0,
-                          right: 0,
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.02),
                           child: GestureDetector(
                             onTap: () {
                               Navigator.push(
