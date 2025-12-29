@@ -42,7 +42,9 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
             width: cardWidth,
             height: 40,
             decoration: BoxDecoration(
-              color: isSelected ? Colors.white : Colors.white.withOpacity(0.2),
+              color: isSelected
+                  ? Color(0xFF35B9F2)
+                  : Colors.white.withOpacity(0.2),
               borderRadius: BorderRadius.circular(25),
               border: Border.all(
                 color: Color(0XFF35B9F2).withOpacity(0.6),
@@ -56,19 +58,21 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 children: [
                   Icon(
                     icon,
-                    color: isSelected ? Colors.black : Colors.black,
+                    color: isSelected ? Colors.white : Colors.black,
                     size: 16,
                   ),
                   SizedBox(width: 6),
-                  Text(
-                    label,
-                    style: TextStyle(
-                      color: isSelected ? Colors.black : Colors.black,
-                      fontFamily: 'Montserrat',
-                      fontSize: 10,
-                      fontWeight: FontWeight.w700,
+                  Flexible(
+                    child: Text(
+                      label,
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : Colors.black,
+                        fontFamily: 'Montserrat',
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),
@@ -215,104 +219,118 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                     ),
                     child: Column(
                       children: [
-                        // Glassy rectangles row
+                        // Interest cards in two columns per row
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.0),
+                          child: Text(
+                            "Tell us what you are most interested in to help us deliver the best to you",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Montserrat',
+                              fontSize: size.width * 0.04,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: EdgeInsets.only(top: size.height * 0.03),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _buildInterestCard(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Decoration',
                                   Icons.celebration,
                                   'decoration',
                                   size.width,
                                 ),
-                                SizedBox(width: 12),
-                                _buildInterestCard(
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Catering',
                                   Icons.restaurant,
                                   'catering',
                                   size.width,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.only(top: size.height * 0.03),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _buildInterestCard(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Car Hire',
                                   Icons.directions_car,
                                   'carHire',
                                   size.width,
                                 ),
-                                SizedBox(width: 12),
-                                _buildInterestCard(
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Photography',
                                   Icons.camera_alt,
                                   'photography',
                                   size.width,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.only(top: size.height * 0.03),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _buildInterestCard(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Entertainment',
                                   Icons.music_note,
                                   'entertainment',
                                   size.width,
                                 ),
-                                SizedBox(width: 12),
-                                _buildInterestCard(
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Venue',
                                   Icons.location_on,
                                   'venue',
                                   size.width,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.only(top: size.height * 0.03),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                _buildInterestCard(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: _buildInterestCard(
                                   'MC',
                                   Icons.mic,
                                   'mc',
                                   size.width,
                                 ),
-                                SizedBox(width: 12),
-                                _buildInterestCard(
+                              ),
+                              SizedBox(width: 16),
+                              Expanded(
+                                child: _buildInterestCard(
                                   'Makeup',
                                   Icons.face,
                                   'makeup',
                                   size.width,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
 
@@ -325,19 +343,19 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                             child: Container(
                               height: 40,
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.15),
+                                color: Color(0XFF35B9F2),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: Colors.white,
+                                  color: Color(0XFF35B9F2),
                                   width: 2,
                                 ),
                               ),
                               child: Center(
                                 child: Text(
-                                  'Start',
+                                  'Continue',
                                   style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Montserrat',
+                                    color: Colors.black,
+                                    fontFamily: 'Abril Fatface',
                                     fontSize: size.width * 0.05,
                                     fontWeight: FontWeight.w800,
                                   ),
@@ -348,7 +366,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                         ),
 
                         Padding(
-                          padding: EdgeInsets.only(top: size.height * 0.02),
+                          padding: EdgeInsets.only(top: size.height * 0.03),
                           child: GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -359,25 +377,38 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                               );
                             },
                             child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Skip',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Montserrat',
-                                      fontSize: size.width * 0.04,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.15),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color: Color(0XFF35B9F2),
+                                    width: 2,
                                   ),
-                                  SizedBox(width: 8),
-                                  Icon(
-                                    Icons.chevron_right,
-                                    color: Colors.white,
-                                    size: 20,
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Skip',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'Abril Fatface',
+                                          fontSize: size.width * 0.05,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                      SizedBox(width: 0),
+                                      Icon(
+                                        Icons.chevron_right,
+                                        color: Colors.black,
+                                        size: 20,
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ),
