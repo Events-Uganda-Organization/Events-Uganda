@@ -300,9 +300,8 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              onPressed: _isLoading ? null : _signInUser,
-                              child: _isLoading
-                                  ? SizedBox(
+              
+                              child: SizedBox(
                                       height: screen.width * 0.05,
                                       width: screen.width * 0.05,
                                       child: const CircularProgressIndicator(
@@ -329,12 +328,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                         // Divider
                         Row(
                           children: [
-                            const Expanded(
-                              child: Divider(
-                                color: Colors.grey,
-                                thickness: 0.8,
-                              ),
-                            ),
+                         
                             Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: screen.width * 0.02,
