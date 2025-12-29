@@ -215,23 +215,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                               ),
                             );
                           },
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                right: screen.width * 0.02,
-                              ),
-                              child: Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screen.width * 0.038,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ),
                         ),
                       ],
                     ),
