@@ -372,8 +372,8 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontFamily: 'Abril Fatface',
-                                      fontSize: size.width * 0.04,
-                                      fontWeight: FontWeight.w600,
+                                      fontSize: size.width * 0.05,
+                                    fontWeight: FontWeight.w800,
                                     ),
                                   ),
                                   SizedBox(width: 0),
