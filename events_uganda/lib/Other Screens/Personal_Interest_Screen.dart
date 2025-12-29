@@ -364,25 +364,36 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                               );
                             },
                             child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Skip',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'Abril Fatface',
-                                      fontSize: size.width * 0.05,
-                                    fontWeight: FontWeight.w800,
+                              child: Container(
+                                height: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.15),
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Color(0XFF35B9F2),
+                                  width: 2,
+                                ),
+                              ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Skip',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'Abril Fatface',
+                                        fontSize: size.width * 0.05,
+                                      fontWeight: FontWeight.w800,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(width: 0),
-                                  Icon(
-                                    Icons.chevron_right,
-                                    color: Colors.black,
-                                    size: 20,
-                                  ),
-                                ],
+                                    SizedBox(width: 0),
+                                    Icon(
+                                      Icons.chevron_right,
+                                      color: Colors.black,
+                                      size: 20,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
