@@ -1,3 +1,4 @@
+import 'package:events_uganda/Auth/Sign_Up_Screen.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
@@ -404,7 +405,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                               child: Text(
                                 'Sign Up',
                                 style: TextStyle(
-                                  color: accent,
+                                  color: Colors.black,
                                   fontSize: screen.width * 0.040,
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w700,
