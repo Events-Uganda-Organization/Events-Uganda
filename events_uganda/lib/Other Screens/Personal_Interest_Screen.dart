@@ -222,7 +222,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w800,
                             color: Colors.black,
-                            fontSize: screen.width * 0.05,
+                            fontSize: screen.width * 0.04,
                           ),
                         ),
                       ],
