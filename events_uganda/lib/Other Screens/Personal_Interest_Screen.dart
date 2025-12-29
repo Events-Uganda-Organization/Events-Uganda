@@ -222,6 +222,19 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                         // Interest cards in two columns per row
                         Padding(
                           padding: EdgeInsets.only(top: size.height * 0.03),
+                          child: Text(
+                            "Tell us what you are most interested in to help us deliver the best to you",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Montserrat',
+                              fontSize: size.width * 0.045,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: size.height * 0.03),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -366,14 +379,14 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                             child: Center(
                               child: Container(
                                 height: 40,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.15),
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: Color(0XFF35B9F2),
-                                  width: 2,
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.15),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color: Color(0XFF35B9F2),
+                                    width: 2,
+                                  ),
                                 ),
-                              ),
                                 child: Center(
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -384,7 +397,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                           color: Colors.black,
                                           fontFamily: 'Abril Fatface',
                                           fontSize: size.width * 0.05,
-                                        fontWeight: FontWeight.w800,
+                                          fontWeight: FontWeight.w800,
                                         ),
                                       ),
                                       SizedBox(width: 0),
