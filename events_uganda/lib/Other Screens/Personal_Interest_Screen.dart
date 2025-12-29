@@ -211,27 +211,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                 ),
               ),
             ),
-            
-            Positioned(
-              top: size.height * 0.025,
-              left: size.width * 0.035,
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).maybePop(),
-                child: Container(
-                  width: size.width * 0.12,
-                  height: size.width * 0.12,
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.85),
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Icon(
-                    Icons.chevron_left,
-                    color: Colors.black,
-                    size: size.width * 0.08,
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
