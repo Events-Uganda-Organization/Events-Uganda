@@ -141,7 +141,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
               child: Column(
                 children: [
                   Text(
-                    "Let's get you",
+                    "Time to choose",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -151,7 +151,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                     ),
                   ),
                   Text(
-                    "signed in!",
+                    "!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
