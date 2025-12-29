@@ -216,7 +216,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                     child: Column(
                       children: [
                         Text(
-                          "Sign In",
+                          "Tell us what you are most interested\nin to help us deliver the best to you ",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
