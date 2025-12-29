@@ -282,11 +282,11 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                               gradient: const LinearGradient(
                                 begin: Alignment.centerLeft,
                                 end: Alignment.centerRight,
-                                colors: [lightGrad, accent],
+                                colors: [],
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: accent.withOpacity(0.25),
+                                  color: Colors.black.withOpacity(0.25),
                                   blurRadius: 10,
                                   offset: const Offset(0, 6),
                                 ),
