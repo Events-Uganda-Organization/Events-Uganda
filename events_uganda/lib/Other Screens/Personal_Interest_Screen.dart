@@ -376,7 +376,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  SizedBox(width: 4),
+                                  SizedBox(width: 0),
                                   Icon(
                                     Icons.chevron_right,
                                     color: Colors.black,
