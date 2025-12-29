@@ -108,8 +108,8 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
               ),
             ),
             Positioned(
-              top: screen.height * 0.21,
-              left:
+              top: screen.height * 0.18,
+              right:
                   (MediaQuery.of(context).size.width -
                       MediaQuery.of(context).size.width * 0.15) /
                   1,
