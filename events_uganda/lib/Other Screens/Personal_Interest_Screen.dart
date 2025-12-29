@@ -333,7 +333,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                 color: Colors.white.withOpacity(0.15),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: Color(OXFF),
+                                  color: Color(0XFF35B9F2),
                                   width: 2,
                                 ),
                               ),
