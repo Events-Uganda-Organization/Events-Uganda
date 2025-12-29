@@ -342,7 +342,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                                   'Continue',
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontFamily: 'Montserrat',
+                                    fontFamily: 'Abril Fatface',
                                     fontSize: size.width * 0.05,
                                     fontWeight: FontWeight.w800,
                                   ),
