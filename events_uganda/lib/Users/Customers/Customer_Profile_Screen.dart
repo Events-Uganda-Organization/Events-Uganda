@@ -75,12 +75,12 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             ),
 
             Positioned(
-              top: screenHeight * 0.03,
+              top: screenHeight * 0.1,
               right: screenWidth * 0.2,
               left: screenWidth * 0.2,
               child: Container(
-                width: screenWidth * 0.2,
-                height: screenWidth * 0.2,
+                width: screenWidth * 0.25,
+                height: screenWidth * 0.25,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
