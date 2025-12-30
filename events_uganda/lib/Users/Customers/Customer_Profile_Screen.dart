@@ -94,7 +94,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
+                  border: Border.all(color: Color(0XFFF19124), width: 2),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.15),
