@@ -69,26 +69,9 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
   }
 
-  String get _greetingText {
-    final hour = DateTime.now().hour;
-    if (hour < 12) return 'Good Morning';
-    if (hour < 17) return 'Good Afternoon';
-    return 'Good Evening';
-  }
+  
+  
 
-  void _onCircleScroll() {
-    if (!mounted) return;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final itemWidth = 70.0;
-    final spacing = screenWidth * 0.03;
-  }
-
-  void _onPromoScroll() {
-    if (!mounted) return;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = screenWidth * 0.82;
-    final spacing = screenWidth * 0.04;
-  }
 
   @override
   void dispose() {
@@ -99,8 +82,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final promoTop = screenHeight * 0.33;
-    final promoHeight = screenWidth * 0.46;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
