@@ -91,11 +91,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     _forYouScrollController.addListener(_onForYouScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
     _startCountdown();
-    _searchFocus.addListener(() {
-      setState(() {
-        _isSearchFocused = _searchFocus.hasFocus;
-      });
-    });
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
   }
