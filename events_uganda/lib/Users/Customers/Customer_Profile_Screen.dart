@@ -108,29 +108,49 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     ),
                   ],
                 ),
-                child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
-                    ? ClipOval(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Icon(
+                      Icons.person,
+                      color: Colors.black,
+                      size: screenWidth * 0.18,
+                    ),
+                    if (_profilePicUrl != null && _profilePicUrl!.isNotEmpty)
+                      ClipOval(
                         child: Image.network(
                           _profilePicUrl!,
+                          width: screenWidth * 0.3,
+                          height: screenWidth * 0.3,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
-                            return Center(
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.black,
-                                size: screenWidth * 0.2,
-                              ),
-                            );
+                            return SizedBox.shrink();
                           },
                         ),
-                      )
-                    : Center(
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.black,
-                          size: screenWidth * 0.07,
+                      ),
+                    // Upload icon square at bottom right
+                    Positioned(
+                      bottom: screenWidth * 0.03,
+                      right: screenWidth * 0.03,
+                      child: Container(
+                        width: screenWidth * 0.08, // ~30 if screenWidth ~375
+                        height: screenWidth * 0.08,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFFFC107),
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.white, width: 1),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.upload,
+                            color: Colors.black,
+                            size: screenWidth * 0.045,
+                          ),
                         ),
                       ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Positioned(
