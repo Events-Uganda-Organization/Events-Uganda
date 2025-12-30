@@ -16,10 +16,6 @@ class CustomerProfileScreen extends StatefulWidget {
 
 class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     with SingleTickerProviderStateMixin {
-  int _currentNavIndex = 0;
-  String _userFullName = '';
-  bool _canForwardReturn =
-      false; // Controls the right-side inactive/active return button
 
   Widget _buildCircleItem(
     double screenWidth,
