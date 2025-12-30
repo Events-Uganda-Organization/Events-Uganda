@@ -20,7 +20,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   @override
   void initState() {
     super.initState();
-    _startCountdown();
     };
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
