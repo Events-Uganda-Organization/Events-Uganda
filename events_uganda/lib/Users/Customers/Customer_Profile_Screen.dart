@@ -303,7 +303,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                         SizedBox(height: screen.height * 0.015),
                         Center(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
                                 width:
@@ -319,7 +319,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                 child: Center(
                                   child: Icon(
                                     Icons.person_outline,
-                                    color: Color(0xFFCAE8FA),
+                                    color: Color(0xFF027AC1),
                                     size:
                                         MediaQuery.of(context).size.width *
                                         (28 / 375),
@@ -333,7 +333,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                               Text(
                                 'My Profile',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
+                                  fontFamily: 'Abril Fatface',
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black,
                                   fontSize:
