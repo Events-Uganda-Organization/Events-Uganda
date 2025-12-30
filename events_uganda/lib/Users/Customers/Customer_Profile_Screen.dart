@@ -302,24 +302,54 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                         ),
                         SizedBox(height: screen.height * 0.015),
                         Center(
-                          child: Container(
-                            width:
-                                MediaQuery.of(context).size.width * (45 / 375),
-                            height:
-                                MediaQuery.of(context).size.width * (45 / 375),
-                            decoration: BoxDecoration(
-                              color: Color(0xFFCAE8FA),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.person_outline,
-                                color: Color(0xFFCAE8FA),
-                                size:
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width:
                                     MediaQuery.of(context).size.width *
-                                    (28 / 375),
+                                    (45 / 375),
+                                height:
+                                    MediaQuery.of(context).size.width *
+                                    (45 / 375),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFCAE8FA),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.person_outline,
+                                    color: Color(0xFFCAE8FA),
+                                    size:
+                                        MediaQuery.of(context).size.width *
+                                        (28 / 375),
+                                  ),
+                                ),
                               ),
-                            ),
+                              SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.025,
+                              ),
+                              Text(
+                                'My Profile',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.045,
+                                ),
+                              ),
+                              SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.015,
+                              ),
+                              Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color: Colors.black,
+                                size: MediaQuery.of(context).size.width * 0.06,
+                              ),
+                            ],
                           ),
                         ),
                       ],
