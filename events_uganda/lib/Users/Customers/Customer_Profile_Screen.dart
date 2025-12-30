@@ -79,8 +79,8 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               right: screenWidth * 0.2,
               left: screenWidth * 0.2,
               child: Container(
-                width: screenWidth * 0.328,
-                height: screenWidth * 0.328,
+                width: screenWidth * 0.2,
+                height: screenWidth * 0.2,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
