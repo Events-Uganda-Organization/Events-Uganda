@@ -238,8 +238,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     String price,
   ) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final isCentered = index == _activeForYouIndex;
-    final relativePosition = index - _activeForYouIndex;
     final angle = relativePosition == -1
         ? -11 *
               3.14159 /
