@@ -1104,12 +1104,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
-                    color: _isSearchFocused
-                        ? const Color(0xFFCC471B)
-                        : Colors.transparent,
-                    width: 2,
-                  ),
+                  
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.1),
