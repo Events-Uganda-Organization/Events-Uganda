@@ -328,7 +328,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                               ),
                               SizedBox(
                                 width:
-                                    MediaQuery.of(context).size.width * 0.025,
+                                    MediaQuery.of(context).size.width * 0.15,
                               ),
                               Text(
                                 'My Profile',
