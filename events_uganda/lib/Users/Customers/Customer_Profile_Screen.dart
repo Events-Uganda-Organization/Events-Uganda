@@ -23,12 +23,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   int _activeForYouIndex = 1;
   final ScrollController _popularNowScrollController = ScrollController();
   int _activePopularNowIndex = 1;
-  final Set<int> _likedPopularNowImages = {};
-  final Set<int> _cartedPopularNowImages = {};
-  final Set<int> _likedImages = {};
-  final Set<int> _cartedImages = {};
-  final Set<int> _likedCategoryImages = {};
-  final Set<int> _cartedCategoryImages = {};
   int _currentNavIndex = 0;
   String _userFullName = '';
   bool _canForwardReturn =
