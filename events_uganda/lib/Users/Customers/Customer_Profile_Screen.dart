@@ -103,19 +103,9 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     final spacing = screenWidth * 0.04;
 
     int index;
-    if (offset <= (imageWidth + spacing) * 0.3) {
-      index = 0;
-    } else if (offset >= maxScroll - (imageWidth + spacing) * 0.3) {
-      index = 3;
-    } else if (offset < (imageWidth + spacing) * 1.2) {
-      index = 1;
-    } else {
-      index = 2;
-    }
+    
 
-    if (index != _activePopularNowIndex) {
-      setState(() => _activePopularNowIndex = index);
-    }
+ 
   }
 
   void _onForYouScroll() {
