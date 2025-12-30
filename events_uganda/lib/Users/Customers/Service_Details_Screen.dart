@@ -340,7 +340,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top:
-                            screenHeight * 0.59 -
+                            screenHeight * 0.60 -
                             offset, // Provider name sits above
                         left: screenWidth * 0.03,
                         right: screenWidth * 0.03,
@@ -365,7 +365,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     ),
                                   ],
                                 ),
-                                SizedBox(width: screenWidth * 0.018),
+                                SizedBox(width: screenWidth * 0.016),
                                 Icon(
                                   Icons.verified,
                                   color: Colors.blue,
