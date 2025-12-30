@@ -1134,7 +1134,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     SizedBox(width: screenWidth * 0.03),
                     Expanded(
                       child: TextField(
-                        focusNode: _searchFocus,
+                        
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.04,
