@@ -453,6 +453,57 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             ],
                           ),
                         ),
+                        SizedBox(height: screen.height * 0.015),
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width:
+                                    MediaQuery.of(context).size.width *
+                                    (45 / 375),
+                                height:
+                                    MediaQuery.of(context).size.width *
+                                    (45 / 375),
+                                decoration: BoxDecoration(
+                                  color: Color(0XFF98EE81),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.attach_money,
+                                    color: Color.fromARGB(255, 35, 142, 5),
+                                    size:
+                                        MediaQuery.of(context).size.width *
+                                        (28 / 375),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.06,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Change Password',
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                        0.045,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color: Colors.black,
+                                size: MediaQuery.of(context).size.width * 0.06,
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
