@@ -238,7 +238,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     child: Column(
                       children: [
                         Text(
-                          "Sign In",
+                          "Account Overview",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontFamily: 'Montserrat',
