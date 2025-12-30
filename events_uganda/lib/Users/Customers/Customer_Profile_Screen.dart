@@ -98,7 +98,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   child: Icon(
                     Icons.person,
                     color: Colors.black,
-                    size: screenWidth * 0.3,
+                    size: screenWidth * 0.2,
                   ),
                 ),
               ),
