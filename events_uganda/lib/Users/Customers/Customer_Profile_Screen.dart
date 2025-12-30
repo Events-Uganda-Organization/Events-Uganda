@@ -603,50 +603,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 ],
               ),
             ),
-            Positioned(
-              top: promoTop,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(height: screenWidth * 0.02),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.04,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                'Featured Providers',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: screenWidth * 0.045,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              SizedBox(width: screenWidth * 0.02),
-                              Icon(
-                                Icons.verified,
-                                color: Colors.blue,
-                                size: screenWidth * 0.045,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                   
-                   
-                  ],
-                ),
-              ),
-            ),
+            
             // Bottom Navigation Bar - Floating
             Positioned(
               bottom: screenHeight * 0.02,
