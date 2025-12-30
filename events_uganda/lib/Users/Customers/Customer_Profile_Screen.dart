@@ -84,7 +84,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 ],
               ),
             ),
-
             Positioned(
               top: screenHeight * 0.1,
               right: screenWidth * 0.2,
@@ -117,7 +116,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                               child: Icon(
                                 Icons.person,
                                 color: Colors.black,
-                                size: screenWidth * 0.07,
+                                size: screenWidth * 0.2,
                               ),
                             );
                           },
