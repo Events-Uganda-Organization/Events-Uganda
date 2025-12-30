@@ -420,7 +420,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                 ),
                                 child: Center(
                                   child: Icon(
-                                    Icons.shopping_bag_outlined,
+                                    Icons.attach_money,
                                     color: Color.fromARGB(255, 226, 75, 25),
                                     size:
                                         MediaQuery.of(context).size.width *
@@ -446,7 +446,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                 ),
                               ),
                               Icon(
-                                Icons.attach_money,
+                                Icons.keyboard_arrow_down_rounded,
                                 color: Colors.black,
                                 size: MediaQuery.of(context).size.width * 0.06,
                               ),
