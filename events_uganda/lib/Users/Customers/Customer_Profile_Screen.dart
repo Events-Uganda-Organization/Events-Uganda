@@ -641,20 +641,8 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                         ],
                       ),
                     ),
-                    SizedBox(height: screenWidth * 0.04),
-                    // Two-column grid of category images
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.04,
-                      ),
-                      child: Wrap(
-                        spacing: screenWidth * 0.04,
-                        runSpacing: screenWidth * 0.04,
-                        children: [
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: screenWidth * 0.1),
+                   
+                   
                   ],
                 ),
               ),
