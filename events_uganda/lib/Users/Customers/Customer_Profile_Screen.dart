@@ -112,8 +112,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     ? ClipOval(
                         child: Image.network(
                           _profilePicUrl!,
-                          width: screenWidth * 0.3,
-                          height: screenWidth * 0.3,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return Center(
