@@ -13,7 +13,7 @@ class CustomerProfileScreen extends StatefulWidget {
 
 class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     with SingleTickerProviderStateMixin {
-  int _currentNavIndex = 0;
+  int _currentNavIndex = 3;
   String _userFullName = '';
 
   
