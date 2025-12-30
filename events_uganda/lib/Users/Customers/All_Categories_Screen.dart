@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Cakes_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
@@ -1480,7 +1481,14 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                       _currentNavIndex = index;
                     });
                     // Add navigation logic here if needed
-                    // if (index == 0) { Navigator.push(...) }
+                    if (index == 3) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CustomerProfileScreen(),
+                        ),
+                      );
+                    }
                   },
                 ),
               ),
