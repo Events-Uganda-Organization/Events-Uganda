@@ -242,7 +242,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w800,
                               color: Colors.black,
-                              fontSize: screen.width * 0.04,
+                              fontSize: screen.width * 0.045,
                             ),
                           ),
                         ),
