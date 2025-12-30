@@ -514,55 +514,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               ),
             ),
             Positioned(
-              top: 10,
-              right: 10,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (_likedCategoryImages.contains(index)) {
-                      _likedCategoryImages.remove(index);
-                    } else {
-                      _likedCategoryImages.add(index);
-                    }
-                  });
-                },
-                child: AnimatedScale(
-                  scale: _likedCategoryImages.contains(index) ? 1.0 : 1.0,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOutBack,
-                  child: TweenAnimationBuilder<double>(
-                    tween: Tween(
-                      begin: 1.0,
-                      end: _likedCategoryImages.contains(index) ? 1.2 : 1.0,
-                    ),
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.elasticOut,
-                    builder: (context, scale, child) {
-                      return Transform.scale(
-                        scale: scale,
-                        child: Container(
-                          width: screenWidth * 0.1,
-                          height: screenWidth * 0.1,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 2),
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.verified,
-                              color: Colors.blue,
-                              size: screenWidth * 0.07,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
               bottom: 0,
               left: 0,
               right: 0,
