@@ -58,7 +58,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.24,
+              top: screenHeight * 0.20,
               left: 0,
               right: 0,
               child: Center(
