@@ -533,13 +533,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                     ),
                                   ],
                                 ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.trending_up,
-                                    color: Colors.black,
-                                    size: screenWidth * 0.05,
-                                  ),
-                                ),
                               ),
                             ),
                           ],
