@@ -16,14 +16,6 @@ class CustomerProfileScreen extends StatefulWidget {
 
 class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     with SingleTickerProviderStateMixin {
-  
-  
-  final ScrollController _circleScrollController = ScrollController();
-  int _activeCircleIndex = 0;
-  final ScrollController _forYouScrollController = ScrollController();
-  int _activeForYouIndex = 1;
-  final ScrollController _popularNowScrollController = ScrollController();
-  int _activePopularNowIndex = 1;
   final Set<int> _likedPopularNowImages = {};
   final Set<int> _cartedPopularNowImages = {};
   final Set<int> _likedImages = {};
