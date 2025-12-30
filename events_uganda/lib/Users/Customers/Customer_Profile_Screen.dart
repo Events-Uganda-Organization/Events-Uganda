@@ -67,7 +67,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 _userFullName,
                 style: TextStyle(
                   fontFamily: 'Abril Fatface',
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w800,
                   fontSize: screenWidth * 0.038,
                   color: Colors.black,
                 ),
