@@ -415,7 +415,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                     MediaQuery.of(context).size.width *
                                     (45 / 375),
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFEA8F71),
+                                  color: Color.fromARGB(255, 247, 160, 131),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Center(
@@ -446,7 +446,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                 ),
                               ),
                               Icon(
-                                Icons.keyboard_arrow_down_rounded,
+                                Icons.attach_money,
                                 color: Colors.black,
                                 size: MediaQuery.of(context).size.width * 0.06,
                               ),
