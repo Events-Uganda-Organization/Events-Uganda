@@ -61,14 +61,13 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             // Greeting and user name to the right of the menu circle
             Positioned(
               top: screenHeight * 0.03 + screenWidth * 0.015,
-              left:
-                  screenWidth * 0.04 + screenWidth * 0.128 + screenWidth * 0.03,
+              left: screenWidth * 0.43,
               child: Text(
                 _userFullName,
                 style: TextStyle(
-                  fontFamily: 'Abril Fatface',
-                  fontWeight: FontWeight.w800,
-                  fontSize: screenWidth * 0.038,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w900,
+                  fontSize: screenWidth * 0.048,
                   color: Colors.black,
                 ),
               ),
