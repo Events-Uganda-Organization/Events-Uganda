@@ -58,7 +58,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.20,
+              top: screenHeight * 0.19,
               left: 0,
               right: 0,
               child: Center(
@@ -74,7 +74,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: screenHeight * 0.01),
+                    SizedBox(height: screenHeight * 0.009),
                     Text(
                       _userEmail,
                       style: TextStyle(
