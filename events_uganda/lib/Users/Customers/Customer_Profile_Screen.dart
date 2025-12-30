@@ -223,10 +223,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     topLeft: Radius.circular(36),
                     topRight: Radius.circular(36),
                   ),
-                  border: Border.all(
-                    color: const Color(0xFFDE7A07),
-                    width: 1,
-                  ),
+                  border: Border.all(color: const Color(0xFFDE7A07), width: 1),
                 ),
                 child: SingleChildScrollView(
                   child: ConstrainedBox(
@@ -237,25 +234,16 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     ),
                     child: Column(
                       children: [
-                        Text(
-                          "Account Overview",
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w800,
-                            color: Colors.black,
-                            fontSize: screen.width * 0.05,
-                          ),
-                        ),
-                        SizedBox(height: screen.height * 0.006),
-                        Text(
-                          'Please enter either your email or phone number to continue.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Abril Fatface',
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                            fontSize: screen.width * 0.035,
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "Account Overview",
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w800,
+                              color: Colors.black,
+                              fontSize: screen.width * 0.05,
+                            ),
                           ),
                         ),
                       ],
