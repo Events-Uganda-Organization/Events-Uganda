@@ -328,13 +328,13 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                               ),
                               SizedBox(
                                 width:
-                                    MediaQuery.of(context).size.width * 0.09,
+                                    MediaQuery.of(context).size.width * 0.06,
                               ),
                               Text(
                                 'My Profile',
                                 style: TextStyle(
                                   fontFamily: 'Abril Fatface',
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                   fontSize:
                                       MediaQuery.of(context).size.width * 0.045,
@@ -342,7 +342,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                               ),
                               SizedBox(
                                 width:
-                                    MediaQuery.of(context).size.width * 0.29,
+                                    MediaQuery.of(context).size.width * 0.32,
                               ),
                               Icon(
                                 Icons.keyboard_arrow_down_rounded,
