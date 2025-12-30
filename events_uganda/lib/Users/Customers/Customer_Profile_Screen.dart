@@ -68,11 +68,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   @override
   void initState() {
     super.initState();
-    _promoScrollController.addListener(_onPromoScroll);
-    _circleScrollController.addListener(_onCircleScroll);
-    _popularNowScrollController.addListener(_onPopularNowScroll);
-    _forYouScrollController.addListener(_onForYouScroll);
-    _popularNowScrollController.addListener(_onPopularNowScroll);
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
   }
