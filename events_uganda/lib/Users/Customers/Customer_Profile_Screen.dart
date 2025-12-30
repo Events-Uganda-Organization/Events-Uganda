@@ -109,13 +109,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   String _fmt(int v) => v.toString().padLeft(2, '0');
 
 
-  Widget _buildPopularNowImage(
-    String imagePath,
-    int index,
-    String rating,
-    String title,
-    String price,
-  ) {
+   {
     final screenWidth = MediaQuery.of(context).size.width;
     
 
