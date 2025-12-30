@@ -15,7 +15,7 @@ class CustomerProfileScreen extends StatefulWidget {
 
 class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     with SingleTickerProviderStateMixin {
-  int _activePopularNowIndex = 1;
+  
   int _currentNavIndex = 0;
   String _userFullName = '';
   bool _canForwardReturn =
@@ -117,37 +117,14 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     String price,
   ) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final isCentered = index == _activePopularNowIndex;
-    final relativePosition = index - _activePopularNowIndex;
-    final angle = relativePosition == -1
-        ? -11 *
-              3.14159 /
-              180 // Left position
-        : (relativePosition == 1
-              ? 11 *
-                    3.14159 /
-                    180 // Right position
-              : 0.0);
+    
 
-    // Adjust these values to move left/right images
-    final offsetX = relativePosition == -1
-        ? -28.0 // Left position
-        : (relativePosition == 1
-              ? 31.0 // Right position
-              : 0.0); // Center or other positions
-
-    final offsetY = relativePosition == -1
-        ? 35.0 // Left position
-        : (relativePosition == 1
-              ? -1.0 // Right position
-              : 0.0);
+    
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
-      transform: Matrix4.identity()
-        ..translate(offsetX, isCentered ? 0.0 : offsetY)
-        ..rotateZ(isCentered ? 0.0 : angle),
+      transform: Matrix4.identity(),
       child: Stack(
         children: [
           Container(
