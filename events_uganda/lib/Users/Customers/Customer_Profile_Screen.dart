@@ -17,10 +17,6 @@ class CustomerProfileScreen extends StatefulWidget {
 class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     with SingleTickerProviderStateMixin {
 
-   {
-   
-  }
-
   @override
   void initState() {
     super.initState();
