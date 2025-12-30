@@ -1132,29 +1132,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                       ),
                     ),
                     SizedBox(width: screenWidth * 0.03),
-                    Expanded(
-                      child: TextField(
-                        
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: screenWidth * 0.04,
-                          fontFamily: 'Montserrat',
-                        ),
-                        decoration: InputDecoration(
-                          hintText: 'Search for services, vendors',
-                          hintStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.5),
-                            fontSize: screenWidth * 0.035,
-                            fontFamily: 'Montserrat',
-                          ),
-                          border: InputBorder.none,
-                          isDense: true, // Add this
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: 0,
-                          ), // Change to vertical: 0
-                        ),
-                      ),
-                    ),
+                    
                   ],
                 ),
               ),
