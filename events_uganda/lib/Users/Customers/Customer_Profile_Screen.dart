@@ -342,7 +342,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                               ),
                               SizedBox(
                                 width:
-                                    MediaQuery.of(context).size.width * 0.015,
+                                    MediaQuery.of(context).size.width * 0.25,
                               ),
                               Icon(
                                 Icons.keyboard_arrow_down_rounded,
