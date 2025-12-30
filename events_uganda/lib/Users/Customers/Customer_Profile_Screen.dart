@@ -5,10 +5,9 @@ import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CustomerProfileScreen extends StatefulWidget {
-  final String? category;
-  final int? categoryIndex;
+  
 
-  const CustomerProfileScreen({super.key, this.category, this.categoryIndex});
+  const CustomerProfileScreen({super.key});
 
   @override
   State<CustomerProfileScreen> createState() => _CustomerProfileScreenState();
