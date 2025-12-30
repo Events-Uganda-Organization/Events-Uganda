@@ -217,11 +217,15 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   horizontal: screen.width * 0.08,
                   vertical: screen.height * 0.03,
                 ),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(36),
                     topRight: Radius.circular(36),
+                  ),
+                  border: Border.all(
+                    color: const Color(0xFFDE7A07),
+                    width: 1,
                   ),
                 ),
                 child: SingleChildScrollView(
