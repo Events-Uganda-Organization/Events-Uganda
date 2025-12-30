@@ -663,6 +663,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 ),
               ),
             ),
+            
             // Bottom Navigation Bar - Floating
             Positioned(
               bottom: screenHeight * 0.02,
