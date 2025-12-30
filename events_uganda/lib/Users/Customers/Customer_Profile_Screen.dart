@@ -351,7 +351,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             ],
                           ),
                         ),
-                        SizedBox(height: screen.height * 0.015),
+                        SizedBox(height: screen.height * 0.03),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -402,7 +402,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             ],
                           ),
                         ),
-                        SizedBox(height: screen.height * 0.015),
+                        SizedBox(height: screen.height * 0.03),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -453,7 +453,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             ],
                           ),
                         ),
-                        SizedBox(height: screen.height * 0.015),
+                        SizedBox(height: screen.height * 0.03),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -504,7 +504,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             ],
                           ),
                         ),
-                        SizedBox(height: screen.height * 0.015),
+                        SizedBox(height: screen.height * 0.03),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -555,7 +555,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             ],
                           ),
                         ),
-                        SizedBox(height: screen.height * 0.015),
+                        SizedBox(height: screen.height * 0.03),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -606,7 +606,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             ],
                           ),
                         ),
-                        SizedBox(height: screen.height * 0.015),
+                        SizedBox(height: screen.height * 0.03),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
