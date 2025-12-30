@@ -186,7 +186,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   @override
   void dispose() {
     _countdownTimer?.cancel();
-    _searchFocus.dispose();
     _circleScrollController.dispose();
     _promoScrollController.dispose();
     _popularNowScrollController.dispose();
