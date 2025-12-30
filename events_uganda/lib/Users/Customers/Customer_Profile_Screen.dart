@@ -484,16 +484,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                 ),
                               ),
                             ),
-                            SizedBox(width: screenWidth * 0.04),
-                            Text(
-                              'Price',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w600,
-                                fontSize: screenWidth * 0.03,
-                              ),
-                            ),
                           ],
                         ),
                       ),
