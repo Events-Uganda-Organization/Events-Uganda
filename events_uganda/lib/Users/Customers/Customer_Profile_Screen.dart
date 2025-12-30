@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ui';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +35,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final screen = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
