@@ -101,8 +101,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     final screenWidth = MediaQuery.of(context).size.width;
     final imageWidth = 184.0;
     final spacing = screenWidth * 0.04;
-    final offset = _popularNowScrollController.offset;
-    final maxScroll = _popularNowScrollController.position.maxScrollExtent;
 
     int index;
     if (offset <= (imageWidth + spacing) * 0.3) {
