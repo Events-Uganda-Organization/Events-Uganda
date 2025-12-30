@@ -572,62 +572,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 ),
               ),
             ),
-            Positioned(
-              bottom: 10,
-              right: 8,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (_cartedCategoryImages.contains(index)) {
-                      _cartedCategoryImages.remove(index);
-                    } else {
-                      _cartedCategoryImages.add(index);
-                    }
-                  });
-                },
-                child: TweenAnimationBuilder<double>(
-                  tween: Tween(
-                    begin: 1.0,
-                    end: _cartedCategoryImages.contains(index) ? 1.2 : 1.0,
-                  ),
-                  duration: const Duration(milliseconds: 220),
-                  curve: Curves.easeOutBack,
-                  builder: (context, scale, child) {
-                    return Transform.scale(
-                      scale: scale,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 2),
-                              borderRadius: BorderRadius.circular(30),
-                              color: Colors.white.withOpacity(0.1),
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.03,
-                              vertical: screenWidth * 0.01,
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Book',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: screenWidth * 0.028,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
           ],
         ),
       ),
