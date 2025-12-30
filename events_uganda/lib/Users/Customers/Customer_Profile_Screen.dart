@@ -25,6 +25,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     final user = FirebaseAuth.instance.currentUser;
     _userFullName = user?.displayName ?? 'User';
     _userEmail = user?.email ?? '';
+    _profilePicUrl = user?.photoURL;
   }
 
   @override
