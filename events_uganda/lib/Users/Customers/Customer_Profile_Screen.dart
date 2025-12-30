@@ -101,10 +101,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
 
   @override
   void dispose() {
-    _circleScrollController.dispose();
-    _promoScrollController.dispose();
-    _popularNowScrollController.dispose();
-    _forYouScrollController.dispose();
     super.dispose();
   }
 
