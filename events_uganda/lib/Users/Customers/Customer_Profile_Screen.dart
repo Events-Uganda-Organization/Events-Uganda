@@ -182,7 +182,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
 
   @override
   void dispose() {
-    _countdownTimer?.cancel();
     _circleScrollController.dispose();
     _promoScrollController.dispose();
     _popularNowScrollController.dispose();
@@ -190,19 +189,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     super.dispose();
   }
 
-  void _startCountdown() {
-    _countdownTimer?.cancel();
-    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (!mounted) return;
-      setState(() {
-        if (_remaining.inSeconds > 0) {
-          _remaining -= const Duration(seconds: 1);
-        } else {
-          _countdownTimer?.cancel();
-        }
-      });
-    });
-  }
+ 
 
   String _fmt(int v) => v.toString().padLeft(2, '0');
 
