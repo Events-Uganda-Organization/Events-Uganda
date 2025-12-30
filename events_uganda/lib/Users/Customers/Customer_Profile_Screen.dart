@@ -16,6 +16,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   int _currentNavIndex = 3;
   String _userFullName = '';
   String _userEmail = '';
+  String? _profilePicUrl;
 
   @override
   void initState() {
@@ -94,7 +95,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 decoration: BoxDecoration(
                   color: Colors.white,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Color(0XFFF19124), width: 2),
+                  border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.15),
@@ -104,13 +105,31 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     ),
                   ],
                 ),
-                child: Center(
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.black,
-                    size: screenWidth * 0.2,
-                  ),
-                ),
+                child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
+                    ? ClipOval(
+                        child: Image.network(
+                          _profilePicUrl!,
+                          width: screenWidth * 0.3,
+                          height: screenWidth * 0.3,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Center(
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.black,
+                                size: screenWidth * 0.07,
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Center(
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: screenWidth * 0.07,
+                        ),
+                      ),
               ),
             ),
             Positioned(
