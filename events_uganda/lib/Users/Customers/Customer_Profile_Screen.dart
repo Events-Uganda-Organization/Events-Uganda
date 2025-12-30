@@ -1,4 +1,8 @@
 import 'dart:ui';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
@@ -18,6 +22,9 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   String _userEmail = '';
   String? _profilePicUrl;
 
+  final ImagePicker _picker = ImagePicker();
+  bool _isUploading = false;
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +33,42 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     _userFullName = user?.displayName ?? 'User';
     _userEmail = user?.email ?? '';
     _profilePicUrl = user?.photoURL;
+  }
+
+  Future<void> _pickAndUploadImage() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile == null) return;
+    setState(() {
+      _isUploading = true;
+    });
+    try {
+      final file = File(pickedFile.path);
+      final storageRef = FirebaseStorage.instance.ref().child(
+        'profile_pics/${user.uid}.jpg',
+      );
+      await storageRef.putFile(file);
+      final downloadUrl = await storageRef.getDownloadURL();
+      // Update Firestore user document (assuming users collection)
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
+        {'photoURL': downloadUrl},
+      );
+      // Update Firebase Auth profile
+      await user.updatePhotoURL(downloadUrl);
+      setState(() {
+        _profilePicUrl = downloadUrl;
+      });
+    } catch (e) {
+      // Optionally show error
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to upload image.')));
+    } finally {
+      setState(() {
+        _isUploading = false;
+      });
+    }
   }
 
   @override
@@ -132,19 +175,30 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     Positioned(
                       bottom: screenWidth * 0.02,
                       right: screenWidth * 0.13,
-                      child: Container(
-                        width: screenWidth * 0.08, // ~30 if screenWidth ~375
-                        height: screenWidth * 0.08,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFFFC107),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.white, width: 1),
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.upload,
-                            color: Colors.black,
-                            size: screenWidth * 0.045,
+                      child: GestureDetector(
+                        onTap: _isUploading ? null : _pickAndUploadImage,
+                        child: Container(
+                          width: screenWidth * 0.08,
+                          height: screenWidth * 0.08,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFFFC107),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.white, width: 1),
+                          ),
+                          child: Center(
+                            child: _isUploading
+                                ? SizedBox(
+                                    width: screenWidth * 0.045,
+                                    height: screenWidth * 0.045,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : Icon(
+                                    Icons.upload,
+                                    color: Colors.black,
+                                    size: screenWidth * 0.045,
+                                  ),
                           ),
                         ),
                       ),
