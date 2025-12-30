@@ -130,7 +130,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                       ),
                     // Upload icon square at bottom right
                     Positioned(
-                      bottom: screenWidth * 0.03,
+                      bottom: screenWidth * 0.04,
                       right: screenWidth * 0.12,
                       child: Container(
                         width: screenWidth * 0.08, // ~30 if screenWidth ~375
