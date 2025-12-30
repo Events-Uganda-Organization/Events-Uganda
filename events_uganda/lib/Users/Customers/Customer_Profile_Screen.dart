@@ -300,6 +300,28 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             ),
                           ),
                         ),
+                        SizedBox(height: screen.height * 0.015),
+                        Center(
+                          child: Container(
+                            width:
+                                MediaQuery.of(context).size.width * (45 / 375),
+                            height:
+                                MediaQuery.of(context).size.width * (45 / 375),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFCAE8FA),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.person_outline,
+                                color: Color(0xFFCAE8FA),
+                                size:
+                                    MediaQuery.of(context).size.width *
+                                    (28 / 375),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
