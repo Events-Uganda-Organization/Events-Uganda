@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -163,8 +164,14 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     setState(() {
                       _currentNavIndex = index;
                     });
-                    // Add navigation logic here if needed
-                    // if (index == 0) { Navigator.push(...) }
+                    if (index == 0) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CustomerHomeScreen(),
+                        ),
+                      );
+                    }
                   },
                 ),
               ),
