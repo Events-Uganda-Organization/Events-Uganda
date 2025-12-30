@@ -555,6 +555,108 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             ],
                           ),
                         ),
+                        SizedBox(height: screen.height * 0.015),
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width:
+                                    MediaQuery.of(context).size.width *
+                                    (45 / 375),
+                                height:
+                                    MediaQuery.of(context).size.width *
+                                    (45 / 375),
+                                decoration: BoxDecoration(
+                                  color: Color(0XFFF3D8C4),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.help_outline_rounded,
+                                    color: Color.fromARGB(255, 215, 96, 5),
+                                    size:
+                                        MediaQuery.of(context).size.width *
+                                        (28 / 375),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.06,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Help & Support',
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                        0.045,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color: Colors.black,
+                                size: MediaQuery.of(context).size.width * 0.06,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: screen.height * 0.015),
+                        Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width:
+                                    MediaQuery.of(context).size.width *
+                                    (45 / 375),
+                                height:
+                                    MediaQuery.of(context).size.width *
+                                    (45 / 375),
+                                decoration: BoxDecoration(
+                                  color: Color(0XFF89E0C4),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.logout_rounded,
+                                    color: Color.fromARGB(255, 0, 148, 101),
+                                    size:
+                                        MediaQuery.of(context).size.width *
+                                        (28 / 375),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.06,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Logout Option',
+                                  style: TextStyle(
+                                    fontFamily: 'Abril Fatface',
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                        0.045,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color: Colors.black,
+                                size: MediaQuery.of(context).size.width * 0.06,
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
