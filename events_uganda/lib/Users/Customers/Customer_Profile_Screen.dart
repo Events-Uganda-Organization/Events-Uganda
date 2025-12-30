@@ -59,30 +59,33 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             ),
             Positioned(
               top: screenHeight * 0.24,
-              left: screenWidth * 0.44,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _userFullName,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w900,
-                      fontSize: screenWidth * 0.048,
-                      color: Colors.black,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      _userFullName,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w900,
+                        fontSize: screenWidth * 0.048,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: screenHeight * 0.01),
-                  Text(
-                    _userEmail,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
-                      fontSize: screenWidth * 0.035,
-                      color: Colors.black,
+                    SizedBox(height: screenHeight * 0.01),
+                    Text(
+                      _userEmail,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w500,
+                        fontSize: screenWidth * 0.035,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Positioned(
