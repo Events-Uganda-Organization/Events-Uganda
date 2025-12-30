@@ -15,52 +15,8 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     with SingleTickerProviderStateMixin {
   int _currentNavIndex = 0;
   String _userFullName = '';
-  bool _canForwardReturn =
-      false; // Controls the right-side inactive/active return button
 
-  Widget _buildCircleItem(
-    double screenWidth,
-    double screenHeight,
-    String imagePath,
-    String label,
-  ) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 70,
-          height: 70,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.white, width: 3),
-            image: DecorationImage(
-              image: AssetImage(imagePath),
-              fit: BoxFit.cover,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.12),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: screenHeight * 0.008),
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w600,
-            fontSize: screenWidth * 0.032,
-            color: Colors.black,
-            height: 1.2,
-          ),
-        ),
-      ],
-    );
-  }
+  
 
   @override
   void initState() {
