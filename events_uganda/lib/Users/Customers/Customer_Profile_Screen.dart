@@ -16,9 +16,7 @@ class CustomerProfileScreen extends StatefulWidget {
 
 class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     with SingleTickerProviderStateMixin {
-  final FocusNode _searchFocus = FocusNode();
-  bool _isSearchFocused = false;
-  Timer? _countdownTimer;
+  
   Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
   final ScrollController _promoScrollController = ScrollController();
   int _activeCardIndex = 0;
