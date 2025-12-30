@@ -5,8 +5,6 @@ import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class CustomerProfileScreen extends StatefulWidget {
-  
-
   const CustomerProfileScreen({super.key});
 
   @override
@@ -15,7 +13,6 @@ class CustomerProfileScreen extends StatefulWidget {
 
 class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     with SingleTickerProviderStateMixin {
-  
   int _currentNavIndex = 0;
   String _userFullName = '';
   bool _canForwardReturn =
@@ -91,13 +88,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     final screenWidth = MediaQuery.of(context).size.width;
     final cardWidth = screenWidth * 0.82;
     final spacing = screenWidth * 0.04;
-
-   
-
   }
-
-  
-
 
   @override
   void dispose() {
@@ -149,64 +140,23 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 fit: BoxFit.contain,
               ),
             ),
-            Positioned(
-              top: screenHeight * 0.03,
-              left: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 10,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Image.asset(
-                    'assets/vectors/menu.png',
-                    width: screenWidth * 0.07,
-                    height: screenWidth * 0.07,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-            ),
+            
             // Greeting and user name to the right of the menu circle
             Positioned(
               top: screenHeight * 0.03 + screenWidth * 0.015,
               left:
                   screenWidth * 0.04 + screenWidth * 0.128 + screenWidth * 0.03,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _greetingText,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w700,
-                      fontSize: screenWidth * 0.045,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(height: screenWidth * 0.005),
-                  Text(
-                    _userFullName,
-                    style: TextStyle(
-                      fontFamily: 'Abril Fatface',
-                      fontWeight: FontWeight.w600,
-                      fontSize: screenWidth * 0.038,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
+              child: Text(
+                _userFullName,
+                style: TextStyle(
+                  fontFamily: 'Abril Fatface',
+                  fontWeight: FontWeight.w600,
+                  fontSize: screenWidth * 0.038,
+                  color: Colors.black,
+                ),
               ),
             ),
+
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.2,
@@ -262,7 +212,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 ),
               ),
             ),
-            
+
             Positioned(
               top: screenHeight * 0.20,
               left: screenWidth * 0.04,
