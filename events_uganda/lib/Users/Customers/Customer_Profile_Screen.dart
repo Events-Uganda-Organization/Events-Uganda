@@ -17,9 +17,7 @@ class CustomerProfileScreen extends StatefulWidget {
 class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     with SingleTickerProviderStateMixin {
   
-  Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
-  final ScrollController _promoScrollController = ScrollController();
-  int _activeCardIndex = 0;
+  
   final ScrollController _circleScrollController = ScrollController();
   int _activeCircleIndex = 0;
   final ScrollController _forYouScrollController = ScrollController();
