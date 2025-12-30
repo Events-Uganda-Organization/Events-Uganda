@@ -57,7 +57,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.26,
+              top: screenHeight * 0.24,
               left: screenWidth * 0.44,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -85,7 +85,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.1,
+              top: screenHeight * 0.05,
               right: screenWidth * 0.2,
               left: screenWidth * 0.2,
               child: Container(
