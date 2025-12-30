@@ -238,34 +238,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                           iconColor: Colors.black,
                           fontSize: screenWidth * 0.045,
                         ),
-                        SizedBox(height: screen.height * 0.016),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ForgotPasswordScreen(),
-                              ),
-                            );
-                          },
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                right: screen.width * 0.02,
-                              ),
-                              child: Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screen.width * 0.038,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   ),
