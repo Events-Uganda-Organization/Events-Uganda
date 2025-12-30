@@ -17,12 +17,7 @@ class CustomerProfileScreen extends StatefulWidget {
 class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     with SingleTickerProviderStateMixin {
 
-  Widget _buildCircleItem(
-    double screenWidth,
-    double screenHeight,
-    String imagePath,
-    String label,
-  ) {
+   {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
