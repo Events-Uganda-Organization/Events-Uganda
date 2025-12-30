@@ -21,10 +21,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   void initState() {
     super.initState();
     _startCountdown();
-    _searchFocus.addListener(() {
-      setState(() {
-        _isSearchFocused = _searchFocus.hasFocus;
-      });
     });
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
