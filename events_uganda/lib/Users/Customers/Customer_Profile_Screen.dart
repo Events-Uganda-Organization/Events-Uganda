@@ -1095,42 +1095,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 ),
               ),
             ),
-            Positioned(
-              top: screenHeight * 0.13,
-              left: screenWidth * 0.04,
-              right: screenWidth * 0.2,
-              child: Container(
-                height: screenWidth * 0.12,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 12,
-                      spreadRadius: 2,
-                      offset: const Offset(2, 7),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: screenWidth * 0.04),
-                      child: Icon(
-                        Icons.search,
-                        color: Colors.black.withOpacity(0.5),
-                        size: screenWidth * 0.06,
-                      ),
-                    ),
-                    SizedBox(width: screenWidth * 0.03),
-                    
-                  ],
-                ),
-              ),
-            ),
+            
             Positioned(
               top: screenHeight * 0.20,
               left: screenWidth * 0.04,
