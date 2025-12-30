@@ -131,22 +131,22 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             ),
 
             Positioned(
-              top: screenHeight * 0.20,
-              left: screenWidth * 0.04,
+              top: MediaQuery.of(context).size.height * 0.04,
+              left: MediaQuery.of(context).size.width * 0.04,
               child: GestureDetector(
                 onTap: () => Navigator.of(context).maybePop(),
                 child: Container(
-                  width: screenWidth * 0.12,
-                  height: screenWidth * 0.12,
+                  width: MediaQuery.of(context).size.width * 0.13,
+                  height: MediaQuery.of(context).size.width * 0.13,
                   decoration: BoxDecoration(
-                    color: const Color(0XFFF3CA9B),
+                    color: const Color(0xFFF8C2B0),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Center(
                     child: Icon(
                       Icons.chevron_left,
                       color: Colors.black,
-                      size: screenWidth * 0.10,
+                      size: MediaQuery.of(context).size.width * 0.10,
                     ),
                   ),
                 ),
