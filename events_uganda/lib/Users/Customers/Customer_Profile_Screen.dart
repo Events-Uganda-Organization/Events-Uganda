@@ -191,12 +191,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
 
   String _fmt(int v) => v.toString().padLeft(2, '0');
 
-  String get countdownText {
-    final hours = _remaining.inHours.remainder(24);
-    final mins = _remaining.inMinutes.remainder(60);
-    final secs = _remaining.inSeconds.remainder(60);
-    return '${_fmt(hours)}:${_fmt(mins)}:${_fmt(secs)}';
-  }
 
   Widget _buildPopularNowImage(
     String imagePath,
