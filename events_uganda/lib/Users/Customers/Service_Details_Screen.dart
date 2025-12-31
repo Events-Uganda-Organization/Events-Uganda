@@ -1143,7 +1143,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
-
                       Positioned(
                         top: screenHeight * 1.08 - offset,
                         left: screenWidth * 0.02,
@@ -1183,10 +1182,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     color: Colors.black,
                                   ),
                                 ),
-                              ),
-                            ),
-
-                            // ===== SPACE BELOW TITLE =====
+                                // ===== SPACE BELOW TITLE =====
                             SizedBox(height: screenHeight * 0.015),
 
                             // ===== PROVIDER DESCRIPTION =====
@@ -1197,6 +1193,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 fontWeight: FontWeight.w500,
                                 fontSize: screenWidth * 0.04,
                                 color: Colors.black,
+                              ),
+                            ),
                               ),
                             ),
                           ],
