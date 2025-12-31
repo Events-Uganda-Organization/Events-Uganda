@@ -400,7 +400,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                 ],
                                               ),
                                               SizedBox(
-                                                  width: screenWidth * 0.016),
+                                                width: screenWidth * 0.016,
+                                              ),
                                               Icon(
                                                 Icons.verified,
                                                 color: Colors.blue,
@@ -420,9 +421,11 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                 });
                                                 _animationController
                                                     .forward()
-                                                    .then((_) =>
-                                                        _animationController
-                                                            .reverse());
+                                                    .then(
+                                                      (_) =>
+                                                          _animationController
+                                                              .reverse(),
+                                                    );
                                               },
                                               child: Container(
                                                 width: 43,
@@ -435,7 +438,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                       color: Colors.black
                                                           .withOpacity(0.2),
                                                       blurRadius: 8,
-                                                      offset: const Offset(0, 6),
+                                                      offset: const Offset(
+                                                        0,
+                                                        6,
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -446,12 +452,15 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                       _isFavorite
                                                           ? Icons.favorite
                                                           : Icons
-                                                              .favorite_border,
+                                                                .favorite_border,
                                                       color: _isFavorite
                                                           ? Colors.red
-                                                          : const Color
-                                                              .fromARGB(255, 182,
-                                                                  113, 34),
+                                                          : const Color.fromARGB(
+                                                              255,
+                                                              182,
+                                                              113,
+                                                              34,
+                                                            ),
                                                       size: 31,
                                                     ),
                                                   ),
@@ -476,7 +485,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                       color: Colors.black
                                                           .withOpacity(0.2),
                                                       blurRadius: 8,
-                                                      offset: const Offset(0, 6),
+                                                      offset: const Offset(
+                                                        0,
+                                                        6,
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -520,22 +532,23 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                   "4.8",
                                                   style: TextStyle(
                                                     fontFamily: 'Abril Fatface',
-                                                    fontWeight:
-                                                        FontWeight.w900,
+                                                    fontWeight: FontWeight.w900,
                                                     fontSize:
                                                         screenWidth * 0.035,
                                                     color: Colors.black,
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                    width: screenWidth * 0.008),
+                                                  width: screenWidth * 0.008,
+                                                ),
                                                 Icon(
                                                   Icons.star,
                                                   color: Colors.black,
                                                   size: screenWidth * 0.03,
                                                 ),
                                                 SizedBox(
-                                                    width: screenWidth * 0.006),
+                                                  width: screenWidth * 0.006,
+                                                ),
                                                 Icon(
                                                   Icons.chevron_right,
                                                   color: Colors.black,
@@ -543,7 +556,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: screenHeight * 0.004),
+                                            SizedBox(
+                                              height: screenHeight * 0.004,
+                                            ),
                                             Text(
                                               "(120 Reviews)",
                                               style: TextStyle(
@@ -562,8 +577,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           height: 45,
                                           decoration: BoxDecoration(
                                             color: Colors.black,
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                            borderRadius: BorderRadius.circular(
+                                              5,
+                                            ),
                                           ),
                                         ),
 
@@ -582,7 +598,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                               ),
                                             ),
                                             SizedBox(
-                                                height: screenHeight * 0.004),
+                                              height: screenHeight * 0.004,
+                                            ),
                                             Text(
                                               "2.8 km away",
                                               style: TextStyle(
@@ -601,12 +618,13 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           height: 45,
                                           decoration: BoxDecoration(
                                             color: Colors.black,
-                                            borderRadius:
-                                                BorderRadius.circular(5),
+                                            borderRadius: BorderRadius.circular(
+                                              5,
+                                            ),
                                           ),
                                         ),
 
-                                        // ===== Experience =====
+                                        
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
@@ -621,7 +639,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                               ),
                                             ),
                                             SizedBox(
-                                                height: screenHeight * 0.004),
+                                              height: screenHeight * 0.004,
+                                            ),
                                             Text(
                                               "Years of Experience",
                                               style: TextStyle(
@@ -737,30 +756,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 ),
 
                                 // ===== Experience =====
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "5+",
-                                      style: TextStyle(
-                                        fontFamily: 'Abril Fatface',
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: screenWidth * 0.04,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    SizedBox(height: screenHeight * 0.004),
-                                    Text(
-                                      "Years of Experience",
-                                      style: TextStyle(
-                                        fontFamily: 'Abril Fatface',
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: screenWidth * 0.03,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                
                               ],
                             ),
                           ],
