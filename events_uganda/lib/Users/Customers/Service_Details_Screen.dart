@@ -370,123 +370,268 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     24 * (screenWidth / 412),
                                   ),
                                 ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Expanded(
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Column(
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Row(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                "Provider's Name",
-                                                style: TextStyle(
-                                                  fontFamily: 'Montserrat',
-                                                  fontWeight: FontWeight.w900,
-                                                  fontSize: screenWidth * 0.048,
-                                                  color: Colors.black,
-                                                ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Provider's Name",
+                                                    style: TextStyle(
+                                                      fontFamily: 'Montserrat',
+                                                      fontWeight:
+                                                          FontWeight.w900,
+                                                      fontSize:
+                                                          screenWidth * 0.048,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                  width: screenWidth * 0.016),
+                                              Icon(
+                                                Icons.verified,
+                                                color: Colors.blue,
+                                                size: screenWidth * 0.055,
                                               ),
                                             ],
                                           ),
-                                          SizedBox(width: screenWidth * 0.016),
-                                          Icon(
-                                            Icons.verified,
-                                            color: Colors.blue,
-                                            size: screenWidth * 0.055,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                        ),
 
-                                    // Heart + Share buttons placed to the right
-                                    Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _isFavorite = !_isFavorite;
-                                            });
-                                            _animationController.forward().then(
-                                              (_) => _animationController
-                                                  .reverse(),
-                                            );
-                                          },
-                                          child: Container(
-                                            width: 43,
-                                            height: 43,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              shape: BoxShape.circle,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.2),
-                                                  blurRadius: 8,
-                                                  offset: const Offset(0, 6),
+                                        // Heart + Share buttons placed to the right
+                                        Row(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _isFavorite = !_isFavorite;
+                                                });
+                                                _animationController
+                                                    .forward()
+                                                    .then((_) =>
+                                                        _animationController
+                                                            .reverse());
+                                              },
+                                              child: Container(
+                                                width: 43,
+                                                height: 43,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.black
+                                                          .withOpacity(0.2),
+                                                      blurRadius: 8,
+                                                      offset: const Offset(0, 6),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
-                                            ),
-                                            child: Center(
-                                              child: ScaleTransition(
-                                                scale: _scaleAnimation,
-                                                child: Icon(
-                                                  _isFavorite
-                                                      ? Icons.favorite
-                                                      : Icons.favorite_border,
-                                                  color: _isFavorite
-                                                      ? Colors.red
-                                                      : const Color.fromARGB(
-                                                          255,
-                                                          182,
-                                                          113,
-                                                          34,
-                                                        ),
-                                                  size: 31,
+                                                child: Center(
+                                                  child: ScaleTransition(
+                                                    scale: _scaleAnimation,
+                                                    child: Icon(
+                                                      _isFavorite
+                                                          ? Icons.favorite
+                                                          : Icons
+                                                              .favorite_border,
+                                                      color: _isFavorite
+                                                          ? Colors.red
+                                                          : const Color
+                                                              .fromARGB(255, 182,
+                                                                  113, 34),
+                                                      size: 31,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
+
+                                            SizedBox(width: 12),
+
+                                            GestureDetector(
+                                              onTap: () {
+                                                // share handler (keep existing placeholder)
+                                              },
+                                              child: Container(
+                                                width: 45,
+                                                height: 45,
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.black
+                                                          .withOpacity(0.2),
+                                                      blurRadius: 8,
+                                                      offset: const Offset(0, 6),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: const Center(
+                                                  child: Icon(
+                                                    Icons.share,
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      182,
+                                                      113,
+                                                      34,
+                                                    ),
+                                                    size: 31,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+
+                                    SizedBox(height: screenHeight * 0.02),
+
+                                    // ===== Ratings / Location / Experience Row =====
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        // ===== Rating =====
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  "4.8",
+                                                  style: TextStyle(
+                                                    fontFamily: 'Abril Fatface',
+                                                    fontWeight:
+                                                        FontWeight.w900,
+                                                    fontSize:
+                                                        screenWidth * 0.035,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                    width: screenWidth * 0.008),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.black,
+                                                  size: screenWidth * 0.03,
+                                                ),
+                                                SizedBox(
+                                                    width: screenWidth * 0.006),
+                                                Icon(
+                                                  Icons.chevron_right,
+                                                  color: Colors.black,
+                                                  size: screenWidth * 0.04,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: screenHeight * 0.004),
+                                            Text(
+                                              "(120 Reviews)",
+                                              style: TextStyle(
+                                                fontFamily: 'Abril Fatface',
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: screenWidth * 0.03,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+
+                                        // ===== Divider =====
+                                        Container(
+                                          width: 5,
+                                          height: 45,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
                                           ),
                                         ),
 
-                                        SizedBox(width: 12),
-
-                                        GestureDetector(
-                                          onTap: () {
-                                            // share handler (keep existing placeholder)
-                                          },
-                                          child: Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              shape: BoxShape.circle,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.black
-                                                      .withOpacity(0.2),
-                                                  blurRadius: 8,
-                                                  offset: const Offset(0, 6),
-                                                ),
-                                              ],
-                                            ),
-                                            child: const Center(
-                                              child: Icon(
-                                                Icons.share,
-                                                color: Color.fromARGB(
-                                                  255,
-                                                  182,
-                                                  113,
-                                                  34,
-                                                ),
-                                                size: 31,
+                                        // ===== Location =====
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Kampala",
+                                              style: TextStyle(
+                                                fontFamily: 'Abril Fatface',
+                                                fontWeight: FontWeight.w900,
+                                                fontSize: screenWidth * 0.035,
+                                                color: Colors.black,
                                               ),
                                             ),
+                                            SizedBox(
+                                                height: screenHeight * 0.004),
+                                            Text(
+                                              "2.8 km away",
+                                              style: TextStyle(
+                                                fontFamily: 'Abril Fatface',
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: screenWidth * 0.03,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+
+                                        // ===== Divider =====
+                                        Container(
+                                          width: 5,
+                                          height: 45,
+                                          decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(5),
                                           ),
+                                        ),
+
+                                        // ===== Experience =====
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "5+",
+                                              style: TextStyle(
+                                                fontFamily: 'Abril Fatface',
+                                                fontWeight: FontWeight.w900,
+                                                fontSize: screenWidth * 0.04,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                                height: screenHeight * 0.004),
+                                            Text(
+                                              "Years of Experience",
+                                              style: TextStyle(
+                                                fontFamily: 'Abril Fatface',
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: screenWidth * 0.03,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
