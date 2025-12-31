@@ -841,311 +841,161 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 0.80 - offset,
-                        left: screenWidth * 0.02,
-                        right: screenWidth * 0.02,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.02,
-                            vertical: screenHeight * 0.006,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3F3F3), // outer fill
-                            borderRadius: BorderRadius.circular(
-                              32 * (screenWidth / 412),
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                             Container(
+  top: screenHeight * 0.80 - offset,
+  left: screenWidth * 0.02,
+  right: screenWidth * 0.02,
+  child: Container(
+    padding: EdgeInsets.symmetric(
+      horizontal: screenWidth * 0.02,
+      vertical: screenHeight * 0.006,
+    ),
+    decoration: BoxDecoration(
+      color: const Color(0xFFF3F3F3),
+      borderRadius: BorderRadius.circular(
+        32 * (screenWidth / 412),
+      ),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        // ===== WHITE CARD 1: PRICE + AVAILABILITY =====
+        Container(
           padding: EdgeInsets.symmetric(
             horizontal: screenWidth * 0.04,
             vertical: screenHeight * 0.008,
           ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(
-                                  24 * (screenWidth / 412),
-                                ),
-                              ),
-                              child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      // ===== Starting Price Column =====
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Starting Price",
-                                            style: TextStyle(
-                                              fontFamily: 'Montserrat',
-                                              fontWeight: FontWeight.w900,
-                                              fontSize: screenWidth * 0.048,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          SizedBox(height: screenHeight * 0.01),
-                                          _priceCard(screenWidth),
-                                        ],
-                                      ),
-                            
-                                      // ===== Availability Column =====
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Availability",
-                                            style: TextStyle(
-                                              fontFamily: 'Montserrat',
-                                              fontWeight: FontWeight.w900,
-                                              fontSize: screenWidth * 0.048,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          SizedBox(height: screenHeight * 0.01),
-                                          _availabilityCard(screenWidth),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                             ),
-                            
-                                  SizedBox(height: screenHeight * 0.01),
-                                  Container(
-                                     padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.04,
-            vertical: screenHeight * 0.012,
-                                     ),
-                                     decoration: BoxDecoration(
+          decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(
               24 * (screenWidth / 412),
             ),
           ),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        // TITLE
-                                        Text(
-                                          "Services Offered",
-                                          style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: screenWidth * 0.048,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                                                
-                                        SizedBox(height: screenHeight * 0.01),
-                                                                
-                                        // SERVICES ROW
-                                        SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              // Left Column
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.restaurant_menu,
-                                                        color: Colors.black,
-                                                        size: screenWidth * 0.055,
-                                                      ),
-                                                      SizedBox(
-                                                        width: screenWidth * 0.02,
-                                                      ),
-                                                      Text(
-                                                        'Catering for weddings',
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Abril Fatface',
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize:
-                                                              screenWidth * 0.04,
-                                                          color: Colors.black,
-                                                        ),
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
-                                                        maxLines: 1,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: screenHeight * 0.012,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.business,
-                                                        color: Colors.black,
-                                                        size: screenWidth * 0.055,
-                                                      ),
-                                                      SizedBox(
-                                                        width: screenWidth * 0.02,
-                                                      ),
-                                                      Text(
-                                                        'Corporate Catering',
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Abril Fatface',
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize:
-                                                              screenWidth * 0.04,
-                                                          color: Colors.black,
-                                                        ),
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
-                                                        maxLines: 1,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: screenHeight * 0.012,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.outdoor_grill,
-                                                        color: Colors.black,
-                                                        size: screenWidth * 0.055,
-                                                      ),
-                                                      SizedBox(
-                                                        width: screenWidth * 0.02,
-                                                      ),
-                                                      Text(
-                                                        'Outside Catering',
-                                                        style: TextStyle(
-                                                          fontFamily:
-                                                              'Abril Fatface',
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          fontSize:
-                                                              screenWidth * 0.04,
-                                                          color: Colors.black,
-                                                        ),
-                                                        overflow:
-                                                            TextOverflow.ellipsis,
-                                                        maxLines: 1,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                                                
-                                              SizedBox(width: screenWidth * 0.022),
-                                                                
-                                              // Divider
-                                              Container(
-                                                width: screenWidth * 0.012,
-                                                height: screenHeight * 0.12,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                        screenWidth * 0.01,
-                                                      ),
-                                                ),
-                                              ),
-                                                                
-                                              SizedBox(width: screenWidth * 0.022),
-                                                                
-                                              // Right Column
-                                              Container(
-                                                width: screenWidth * 0.35,
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.food_bank_rounded,
-                                                          color: Colors.black,
-                                                          size: screenWidth * 0.055,
-                                                        ),
-                                                        SizedBox(
-                                                          width: screenWidth * 0.02,
-                                                        ),
-                                                        Expanded(
-                                                          child: Text(
-                                                            'Buffet Setup',
-                                                            style: TextStyle(
-                                                              fontFamily:
-                                                                  'Abril Fatface',
-                                                              fontWeight:
-                                                                  FontWeight.w500,
-                                                              fontSize:
-                                                                  screenWidth *
-                                                                  0.04,
-                                                              color: Colors.black,
-                                                            ),
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
-                                                            maxLines: 1,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(
-                                                      height: screenHeight * 0.015,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Icon(
-                                                          Icons.soup_kitchen,
-                                                          color: Colors.black,
-                                                          size: screenWidth * 0.055,
-                                                        ),
-                                                        SizedBox(
-                                                          width: screenWidth * 0.02,
-                                                        ),
-                                                        Expanded(
-                                                          child: Text(
-                                                            'Traditional Food',
-                                                            style: TextStyle(
-                                                              fontFamily:
-                                                                  'Abril Fatface',
-                                                              fontWeight:
-                                                                  FontWeight.w500,
-                                                              fontSize:
-                                                                  screenWidth *
-                                                                  0.04,
-                                                              color: Colors.black,
-                                                            ),
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
-                                                            maxLines: 1,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Starting Price
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Starting Price",
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w900,
+                      fontSize: screenWidth * 0.048,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.01),
+                  _priceCard(screenWidth),
+                ],
+              ),
+
+              // Availability
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Availability",
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w900,
+                      fontSize: screenWidth * 0.048,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.01),
+                  _availabilityCard(screenWidth),
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        SizedBox(height: screenHeight * 0.02),
+
+        // ===== WHITE CARD 2: SERVICES OFFERED =====
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.04,
+            vertical: screenHeight * 0.012,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(
+              24 * (screenWidth / 412),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Services Offered",
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w900,
+                  fontSize: screenWidth * 0.048,
+                  color: Colors.black,
+                ),
+              ),
+
+              SizedBox(height: screenHeight * 0.01),
+
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Left column
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _serviceRow(Icons.restaurant_menu, 'Catering for weddings', screenWidth),
+                        SizedBox(height: screenHeight * 0.012),
+                        _serviceRow(Icons.business, 'Corporate Catering', screenWidth),
+                        SizedBox(height: screenHeight * 0.012),
+                        _serviceRow(Icons.outdoor_grill, 'Outside Catering', screenWidth),
+                      ],
+                    ),
+
+                    SizedBox(width: screenWidth * 0.022),
+
+                    Container(
+                      width: screenWidth * 0.012,
+                      height: screenHeight * 0.12,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(
+                          screenWidth * 0.01,
                         ),
                       ),
+                    ),
+
+                    SizedBox(width: screenWidth * 0.022),
+
+                    Container(
+                      width: screenWidth * 0.35,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _serviceRow(Icons.food_bank_rounded, 'Buffet Setup', screenWidth),
+                          SizedBox(height: screenHeight * 0.015),
+                          _serviceRow(Icons.soup_kitchen, 'Traditional Food', screenWidth),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  ),
+),
+
                       Positioned(
                         top: screenHeight * 1.02 - offset,
                         left: screenWidth * 0.02,
