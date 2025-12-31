@@ -657,12 +657,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   ],
                                 ),
                               ),
-                            ),
-
-                            SizedBox(height: screenHeight * 0.02),
-
-                            // ===== Ratings / Location / Experience Row =====
-                            
+                            ),          
                           ],
                         ),
                       ),
