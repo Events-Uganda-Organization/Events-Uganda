@@ -101,7 +101,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.19,
+              top: screenHeight * 0.20,
               left: 0,
               right: 0,
               child: Center(
@@ -302,51 +302,74 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                         ),
                         SizedBox(height: screen.height * 0.015),
                         Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                width:
-                                    MediaQuery.of(context).size.width *
-                                    (45 / 375),
-                                height:
-                                    MediaQuery.of(context).size.width *
-                                    (45 / 375),
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFCAE8FA),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.person_outline,
-                                    color: Color(0xFF027AC1),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width *
+                                        (45 / 375),
+                                    height:
+                                        MediaQuery.of(context).size.width *
+                                        (45 / 375),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFCAE8FA),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.person_outline,
+                                        color: Color(0xFF027AC1),
+                                        size:
+                                            MediaQuery.of(context).size.width *
+                                            (28 / 375),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width *
+                                        0.06,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      'My Profile',
+                                      style: TextStyle(
+                                        fontFamily: 'Abril Fatface',
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                            0.045,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    color: Colors.black,
                                     size:
                                         MediaQuery.of(context).size.width *
-                                        (28 / 375),
+                                        0.06,
                                   ),
+                                ],
+                              ),
+                              SizedBox(height: screen.height * 0.01),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left:
+                                      screen.width * (45 / 375) +
+                                      screen.width * 0.06,
+                                  right: screen.width * 0.07,
                                 ),
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.06,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  'My Profile',
-                                  style: TextStyle(
-                                    fontFamily: 'Abril Fatface',
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                        0.045,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
+                                child: Divider(
+                                  color: Colors.black.withOpacity(0.6),
+                                  thickness: 1,
+                                  height: 1,
                                 ),
-                              ),
-                              Icon(
-                                Icons.keyboard_arrow_down_rounded,
-                                color: Colors.black,
-                                size: MediaQuery.of(context).size.width * 0.06,
                               ),
                             ],
                           ),
