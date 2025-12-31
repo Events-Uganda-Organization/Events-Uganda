@@ -1117,19 +1117,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
 
-                      Positioned(
-                        top: screenHeight * 0.83 - offset,
-                        left: screenWidth * 0.02,
-                        child: Text(
-                          "Services Offered",
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w900,
-                            fontSize: screenWidth * 0.048,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
+                      
                       Positioned(
                         top: screenHeight * 0.88 - offset,
                         left: screenWidth * 0.02,
