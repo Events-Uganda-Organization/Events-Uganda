@@ -1897,7 +1897,7 @@ Widget _availabilityCard(double screenWidth) {
 
 Widget _priceCard(double screenWidth) {
   return Container(
-    width: screenWidth * 0.41,
+    width: screenWidth * 0.40,
     height: 35,
     decoration: BoxDecoration(
       color: const Color(0xFFF3CA9B),
