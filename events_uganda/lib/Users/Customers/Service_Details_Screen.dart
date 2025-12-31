@@ -1368,7 +1368,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   'Rating and some reviews are verified and are from\npeople who use the same type of device that\nyou use.',
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: screenWidth * 0.04,
+                                    fontSize: screenWidth * 0.035,
                                     fontWeight: FontWeight.w500,
                                     fontFamily: 'Abril Fatface',
                                   ),
