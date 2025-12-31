@@ -902,11 +902,17 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     ),
                                     SizedBox(height: screenHeight * 0.01),
                                     _availabilityCard(screenWidth),
-                                    SizedBox(height: screenHeight * 0.01),
-                                    Positioned(
-                                      top: screenHeight * 0.83 - offset,
-                                      left: screenWidth * 0.02,
-                                      child: Text(
+                                  ],
+                                ),
+                                Positioned(
+                                  top: screenHeight * 0.83 - offset,
+                                  left: screenWidth * 0.02,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // TITLE
+                                      Text(
                                         "Services Offered",
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
@@ -915,11 +921,11 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           color: Colors.black,
                                         ),
                                       ),
-                                    ),
-                                    Positioned(
-                                      top: screenHeight * 0.88 - offset,
-                                      left: screenWidth * 0.02,
-                                      child: SingleChildScrollView(
+
+                                      SizedBox(height: screenHeight * 0.05),
+
+                                      // SERVICES ROW
+                                      SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Row(
                                           crossAxisAlignment:
@@ -935,9 +941,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                     Icon(
                                                       Icons.restaurant_menu,
                                                       color: Colors.black,
-                                                      size:
-                                                          screenWidth *
-                                                          0.055, // slightly larger icon
+                                                      size: screenWidth * 0.055,
                                                     ),
                                                     SizedBox(
                                                       width: screenWidth * 0.02,
@@ -950,8 +954,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                         fontWeight:
                                                             FontWeight.w500,
                                                         fontSize:
-                                                            screenWidth *
-                                                            0.04, // increased font size
+                                                            screenWidth * 0.04,
                                                         color: Colors.black,
                                                       ),
                                                       overflow:
@@ -1025,8 +1028,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
 
                                             SizedBox(
                                               width: screenWidth * 0.022,
-                                            ), // space before divider
-                                            // Vertical Divider
+                                            ),
+
+                                            // Divider
                                             Container(
                                               width: screenWidth * 0.012,
                                               height: screenHeight * 0.12,
@@ -1041,7 +1045,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
 
                                             SizedBox(
                                               width: screenWidth * 0.022,
-                                            ), // space after divider
+                                            ),
+
                                             // Right Column
                                             Container(
                                               width: screenWidth * 0.35,
@@ -1123,8 +1128,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           ],
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
