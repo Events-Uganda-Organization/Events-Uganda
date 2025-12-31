@@ -363,7 +363,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                   left:
                                       screen.width * (45 / 375) +
                                       screen.width * 0.06,
-                                  right: screen.width * 0.04,
+                                  right: screen.width * 0.02,
                                 ),
                                 child: Divider(
                                   color: Colors.black.withOpacity(0.6),
