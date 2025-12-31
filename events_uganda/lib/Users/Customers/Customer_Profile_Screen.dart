@@ -489,7 +489,20 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             ],
                           ),
                         ),
-                        
+                        SizedBox(height: screen.height * 0.01),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left:
+                                      screen.width * (45 / 375) +
+                                      screen.width * 0.06,
+                                  right: screen.width * 0.02,
+                                ),
+                                child: Divider(
+                                  color: Colors.black.withOpacity(0.6),
+                                  thickness: 1,
+                                  height: 1,
+                                ),
+                              ),
                         SizedBox(height: screen.height * 0.03),
                         Center(
                           child: Row(
