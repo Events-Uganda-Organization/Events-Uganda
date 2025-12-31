@@ -340,7 +340,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top:
-                            screenHeight * 0.60 -
+                            screenHeight * 0.57 -
                             offset, // Provider name sits above
                         left: screenWidth * 0.03,
                         right: screenWidth * 0.03,
@@ -841,7 +841,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 0.80 - offset,
+                        top: screenHeight * 0.76 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
                         child: Container(
@@ -1144,7 +1144,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 1.15 - offset,
+                        top: screenHeight * 1.11 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
                         child: Column(
@@ -1335,8 +1335,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       // ===== Reviews & Ratings Section in nested cards =====
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 1.32 - offset
-                            : screenHeight * 1.34 - offset,
+                            ? screenHeight * 1.15 - offset
+                            : screenHeight * 1.29 - offset,
                         left: screenWidth * 0.022,
                         right: screenWidth * 0.022,
                         child: Container(
@@ -1897,7 +1897,7 @@ Widget _availabilityCard(double screenWidth) {
 
 Widget _priceCard(double screenWidth) {
   return Container(
-    width: screenWidth * 0.42,
+    width: screenWidth * 0.40,
     height: 35,
     decoration: BoxDecoration(
       color: const Color(0xFFF3CA9B),
