@@ -846,45 +846,69 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         top: screenHeight * 0.73 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // ===== Starting Price Column =====
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Starting Price",
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: screenWidth * 0.048,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                SizedBox(height: screenHeight * 0.01),
-                                _priceCard(screenWidth),
-                              ],
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.02,
+                            vertical: screenHeight * 0.006,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF3F3F3), // outer fill
+                            borderRadius: BorderRadius.circular(
+                              32 * (screenWidth / 412),
                             ),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.04,
+                              vertical: screenHeight * 0.008,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                24 * (screenWidth / 412),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // ===== Starting Price Column =====
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Starting Price",
+                                      style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: screenWidth * 0.048,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.01),
+                                    _priceCard(screenWidth),
+                                  ],
+                                ),
 
-                            // ===== Availability Column =====
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Availability",
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: screenWidth * 0.048,
-                                    color: Colors.black,
-                                  ),
+                                // ===== Availability Column =====
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Availability",
+                                      style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: screenWidth * 0.048,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.01),
+                                    _availabilityCard(screenWidth),
+                                  ],
                                 ),
-                                SizedBox(height: screenHeight * 0.01),
-                                _availabilityCard(screenWidth),
                               ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
 
