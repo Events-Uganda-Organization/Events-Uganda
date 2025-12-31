@@ -928,7 +928,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       ),
                                     ),
 
-                                    SizedBox(height: screenHeight * 0.05),
+                                    SizedBox(height: screenHeight * 0.01),
 
                                     // SERVICES ROW
                                     SingleChildScrollView(
