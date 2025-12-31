@@ -1145,7 +1145,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
 
                       Positioned(
-                        top: screenHeight * 1.02 - offset,
+                        top: screenHeight * 1.06 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
                         child: Column(
@@ -1204,93 +1204,124 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
 
                       Positioned(
-                        top: screenHeight * 1.13 - offset,
-                        left: screenWidth * 0.02,
-                        child: Text(
-                          "Reviews and Ratings",
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w900,
-                            fontSize: screenWidth * 0.048,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 1.17 - offset,
-                        left: screenWidth * 0.02,
-                        child: Text(
-                          'Rate these services',
-                          style: TextStyle(
-                            fontFamily: 'Abril Fatface',
-                            fontWeight: FontWeight.w500,
-                            fontSize: screenWidth * 0.04,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 1.21 - offset,
-                        left: 0,
-                        right: 0,
-                        child: Center(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: List.generate(
-                              5,
-                              (index) => GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _rating = index + 1;
-                                  });
-                                  _animationController.forward().then(
-                                    (_) => _animationController.reverse(),
-                                  );
-                                },
-                                child: ScaleTransition(
-                                  scale: _scaleAnimation,
-                                  child: Icon(
-                                    index < _rating
-                                        ? Icons.star
-                                        : Icons.star_border,
-                                    color: Colors.amber,
-                                    size: screenWidth * 0.15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 1.29 - offset,
-                        left: screenWidth * 0.02,
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _showReviewSection = !_showReviewSection;
-                            });
-                          },
-                          child: Center(
-                            child: Text(
-                              'Write a review',
-                              style: TextStyle(
-                                color: const Color.fromARGB(255, 228, 172, 1),
-                                fontSize: screenWidth * 0.045,
-                                fontWeight: FontWeight.w900,
-                                fontFamily: 'Abril Fatface',
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.amber,
-                                    blurRadius: 10,
-                                    offset: Offset(0, 0),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+  top: screenHeight * 1.13 - offset,
+  left: screenWidth * 0.02,
+  right: screenWidth * 0.02,
+  child: Container(
+    padding: EdgeInsets.symmetric(
+      horizontal: screenWidth * 0.02,
+      vertical: screenHeight * 0.006,
+    ),
+    decoration: BoxDecoration(
+      color: const Color(0xFFF3F3F3),
+      borderRadius: BorderRadius.circular(
+        32 * (screenWidth / 412),
+      ),
+    ),
+    child: Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.04,
+        vertical: screenHeight * 0.02,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(
+          24 * (screenWidth / 412),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // ===== TITLE =====
+          Text(
+            "Reviews and Ratings",
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w900,
+              fontSize: screenWidth * 0.048,
+              color: Colors.black,
+            ),
+          ),
+
+          SizedBox(height: screenHeight * 0.008),
+
+          // ===== SUBTITLE =====
+          Text(
+            'Rate these services',
+            style: TextStyle(
+              fontFamily: 'Abril Fatface',
+              fontWeight: FontWeight.w500,
+              fontSize: screenWidth * 0.04,
+              color: Colors.black,
+            ),
+          ),
+
+          SizedBox(height: screenHeight * 0.02),
+
+          // ===== STARS =====
+          Center(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: List.generate(
+                5,
+                (index) => GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _rating = index + 1;
+                    });
+                    _animationController.forward().then(
+                      (_) => _animationController.reverse(),
+                    );
+                  },
+                  child: ScaleTransition(
+                    scale: _scaleAnimation,
+                    child: Icon(
+                      index < _rating
+                          ? Icons.star
+                          : Icons.star_border,
+                      color: Colors.amber,
+                      size: screenWidth * 0.15,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          SizedBox(height: screenHeight * 0.02),
+
+          // ===== WRITE REVIEW =====
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _showReviewSection = !_showReviewSection;
+                });
+              },
+              child: Text(
+                'Write a review',
+                style: TextStyle(
+                  color: const Color.fromARGB(255, 228, 172, 1),
+                  fontSize: screenWidth * 0.045,
+                  fontWeight: FontWeight.w900,
+                  fontFamily: 'Abril Fatface',
+                  shadows: [
+                    Shadow(
+                      color: Colors.amber,
+                      blurRadius: 10,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  ),
+),
+
                       Positioned(
                         top: _showReviewSection
                             ? screenHeight * 1.34 - offset + 130
