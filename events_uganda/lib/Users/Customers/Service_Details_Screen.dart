@@ -624,7 +624,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           ),
                                         ),
 
-                                        
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
@@ -657,7 +656,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   ],
                                 ),
                               ),
-                            ),          
+                            ),
                           ],
                         ),
                       ),
@@ -841,9 +840,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
-
                       Positioned(
-                        top: screenHeight * 0.73 - offset,
+                        top: screenHeight * 0.75 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
                         child: Container(
