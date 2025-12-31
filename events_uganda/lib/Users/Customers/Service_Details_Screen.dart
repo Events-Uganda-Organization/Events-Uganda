@@ -907,10 +907,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       _availabilityCard(screenWidth),
                                     ],
                                   ),
-                                  Positioned(
-                                    top: screenHeight * 0.83 - offset,
-                                    left: screenWidth * 0.02,
-                                    child: Column(
+                                Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
@@ -1133,7 +1130,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                         ),
                                       ],
                                     ),
-                                  ),
                                 ],
                               ),
                               ],
