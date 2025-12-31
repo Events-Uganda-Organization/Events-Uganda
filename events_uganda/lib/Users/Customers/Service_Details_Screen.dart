@@ -2037,7 +2037,7 @@ Widget _buildRatingBars(double screenWidth) {
             Stack(
               children: [
                 Container(
-                  width: screenWidth * 0.38,
+                  width: screenWidth * 0.36,
                   height: 8,
                   decoration: BoxDecoration(
                     color: Colors.black,
@@ -2045,7 +2045,7 @@ Widget _buildRatingBars(double screenWidth) {
                   ),
                 ),
                 Container(
-                  width: screenWidth * 0.44 * ratings[index],
+                  width: screenWidth * 0.36 * ratings[index],
                   height: 8,
                   decoration: BoxDecoration(
                     color: Colors.amber,
