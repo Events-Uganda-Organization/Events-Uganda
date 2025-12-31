@@ -2044,6 +2044,7 @@ Widget _buildRatingBars(double screenWidth) {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
+                
                 Container(
                   width: screenWidth * 0.33 * ratings[index],
                   height: 8,
