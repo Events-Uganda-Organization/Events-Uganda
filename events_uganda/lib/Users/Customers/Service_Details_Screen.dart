@@ -913,7 +913,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   ],
                                 ),
 
-                                SizedBox(height: screenHeight * 0.04),
+                                SizedBox(height: screenHeight * 0.01),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
