@@ -653,6 +653,60 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                         ),
                                       ],
                                     ),
+                                      SizedBox(height: screenHeight * 0.018),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            width: screenWidth * 0.38, // ~150 on 390px width
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFFFFC107),
+                                              borderRadius: BorderRadius.circular(20),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.call, color: Color(0xFF5A5A00), size: 20),
+                                                SizedBox(width: 8),
+                                                Text(
+                                                  'Call Now',
+                                                  style: TextStyle(
+                                                    color: Color(0xFF5A5A00),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: screenWidth * 0.04,
+                                                    fontFamily: 'Montserrat',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            width: screenWidth * 0.38,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xFFFFC107),
+                                              borderRadius: BorderRadius.circular(20),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.message, color: Color(0xFF5A5A00), size: 20),
+                                                SizedBox(width: 8),
+                                                Text(
+                                                  'Message',
+                                                  style: TextStyle(
+                                                    color: Color(0xFF5A5A00),
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: screenWidth * 0.04,
+                                                    fontFamily: 'Montserrat',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                   ],
                                 ),
                               ),
