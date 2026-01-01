@@ -1825,7 +1825,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       ),
     );
   }
-  
+
 
   Widget _buildStaticStars(int count) {
     return Row(
@@ -1839,6 +1839,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       ),
     );
   }
+  
 
   Widget _helpfulButton(String text, IconData icon) {
     return Container(
