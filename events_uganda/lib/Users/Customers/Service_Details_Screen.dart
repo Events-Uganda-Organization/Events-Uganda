@@ -1625,6 +1625,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       ),
     );
   }
+  
 
   Widget _buildReviewsList(double screenWidth) {
     return AnimatedList(
