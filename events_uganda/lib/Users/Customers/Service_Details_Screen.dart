@@ -1839,7 +1839,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       ),
     );
   }
-  
+
 
   Widget _helpfulButton(String text, IconData icon) {
     return Container(
@@ -1861,6 +1861,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     );
   }
 }
+
 
 Widget _availabilityCard(double screenWidth) {
   return Container(
