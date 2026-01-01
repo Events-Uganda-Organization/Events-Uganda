@@ -1641,6 +1641,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       },
     );
   }
+  
 
   Widget _buildReviewCard(ReviewModel review, double screenWidth) {
     return Container(
