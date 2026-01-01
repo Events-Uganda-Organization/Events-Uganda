@@ -1365,7 +1365,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Rating and some reviews are verified and are\nfrom people who use the same type of device that\nyou use.',
+                                  'Rating and some reviews are verified and are\nfrom people who use the same type of device that you use.',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: screenWidth * 0.038,
