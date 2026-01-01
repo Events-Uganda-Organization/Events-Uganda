@@ -1335,8 +1335,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       // ===== Reviews & Ratings Section in nested cards =====
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 1.15 - offset
-                            : screenHeight * 1.52 - offset,
+                            ? screenHeight * 1.48 - offset
+                            : screenHeight * 1.38 - offset,
                         left: screenWidth * 0.022,
                         right: screenWidth * 0.022,
                         child: Container(
