@@ -315,7 +315,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 child: SizedBox(
                   height:
                       screenHeight *
-                      2 *
+                      2.5 *
                       verticalMultiplier, // Adjust height for landscape
                   child: Stack(
                     children: [
@@ -1327,6 +1327,149 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     ),
                                   ),
                                 ),
+
+                                if (_showReviewSection) ...[
+                                  SizedBox(height: screenHeight * 0.025),
+                                  Container(
+                                    height: 120,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        color: Colors.amber,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                            12,
+                                            12,
+                                            48,
+                                            12,
+                                          ),
+                                          child: TextField(
+                                            controller: _reviewController,
+                                            maxLines: 3,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _hasText = value
+                                                    .trim()
+                                                    .isNotEmpty;
+                                              });
+                                            },
+                                            decoration: const InputDecoration(
+                                              hintText:
+                                                  'Write your review here...',
+                                              border: InputBorder.none,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          bottom: 10,
+                                          right: 10,
+                                          child: AnimatedOpacity(
+                                            opacity: _hasText ? 1 : 0.3,
+                                            duration: const Duration(
+                                              milliseconds: 200,
+                                            ),
+                                            child: GestureDetector(
+                                              onTap: _hasText
+                                                  ? () {
+                                                      final now =
+                                                          DateTime.now();
+                                                      final date =
+                                                          '${now.day.toString().padLeft(2, '0')}/'
+                                                          '${now.month.toString().padLeft(2, '0')}/'
+                                                          '${now.year}';
+                                                      final newReview = ReviewModel(
+                                                        id: DateTime.now()
+                                                            .millisecondsSinceEpoch
+                                                            .toString(),
+                                                        userName:
+                                                            user?.displayName ??
+                                                            'User Name',
+                                                        userImageUrl:
+                                                            user?.photoURL ??
+                                                            '',
+                                                        reviewText:
+                                                            _reviewController
+                                                                .text
+                                                                .trim(),
+                                                        date: date,
+                                                        rating: 4,
+                                                      );
+                                                      setState(() {
+                                                        _reviews.insert(
+                                                          0,
+                                                          newReview,
+                                                        );
+                                                        _hasText = false;
+                                                      });
+                                                      _reviewController.clear();
+                                                    }
+                                                  : null,
+                                              child: Container(
+                                                width: 42,
+                                                height: 42,
+                                                decoration: BoxDecoration(
+                                                  color: _hasText
+                                                      ? Colors.amber
+                                                      : Colors.grey.shade300,
+                                                  shape: BoxShape.circle,
+                                                  boxShadow: _hasText
+                                                      ? [
+                                                          BoxShadow(
+                                                            color: Colors.amber
+                                                                .withOpacity(
+                                                                  0.4,
+                                                                ),
+                                                            blurRadius: 8,
+                                                            offset:
+                                                                const Offset(
+                                                                  0,
+                                                                  4,
+                                                                ),
+                                                          ),
+                                                        ]
+                                                      : [],
+                                                ),
+                                                child: GestureDetector(
+                                                  onTap: _hasText
+                                                      ? () {
+                                                          final now =
+                                                              DateTime.now();
+                                                          _reviewDate =
+                                                              '${now.day.toString().padLeft(2, '0')}/'
+                                                              '${now.month.toString().padLeft(2, '0')}/'
+                                                              '${now.year}';
+                                                          setState(() {
+                                                            _userReviewText =
+                                                                _reviewController
+                                                                    .text
+                                                                    .trim();
+                                                            _showUserReview =
+                                                                true;
+                                                            _hasText = false;
+                                                          });
+                                                          _reviewController
+                                                              .clear();
+                                                        }
+                                                      : null,
+                                                  child: const Icon(
+                                                    Icons.send_rounded,
+                                                    color: Colors.black,
+                                                    size: 20,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ],
                             ),
                           ),
@@ -1334,9 +1477,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       // ===== Reviews & Ratings Section in nested cards =====
                       Positioned(
-                        top: _showReviewSection
-                            ? screenHeight * 1.48 - offset
-                            : screenHeight * 1.52 - offset,
+                        top: screenHeight * 1.52 - offset,
                         left: screenWidth * 0.022,
                         right: screenWidth * 0.022,
                         child: Container(
