@@ -315,7 +315,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 child: SizedBox(
                   height:
                       screenHeight *
-                      2 *
+                      2.5 *
                       verticalMultiplier, // Adjust height for landscape
                   child: Stack(
                     children: [
@@ -340,7 +340,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top:
-                            screenHeight * 0.57 -
+                            screenHeight * 0.56 -
                             offset, // Provider name sits above
                         left: screenWidth * 0.03,
                         right: screenWidth * 0.03,
@@ -841,7 +841,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 0.76 - offset,
+                        top: screenHeight * 0.74 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
                         child: Container(
@@ -1144,7 +1144,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 1.11 - offset,
+                        top: screenHeight * 1.08 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
                         child: Column(
@@ -1208,7 +1208,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 1.34 - offset,
+                        top: screenHeight * 1.25 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
                         child: Container(
@@ -1327,98 +1327,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      // ===== Reviews & Ratings Section in nested cards =====
-                      Positioned(
-                        top: _showReviewSection
-                            ? screenHeight * 1.15 - offset
-                            : screenHeight * 1.29 - offset,
-                        left: screenWidth * 0.022,
-                        right: screenWidth * 0.022,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.02,
-                            vertical: screenHeight * 0.006,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3F3F3),
-                            borderRadius: BorderRadius.circular(
-                              32 * (screenWidth / 412),
-                            ),
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.04,
-                              vertical: screenHeight * 0.018,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                24 * (screenWidth / 412),
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Rating and some reviews are verified and are from\npeople who use the same type of device that\nyou use.',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: screenWidth * 0.038,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Abril Fatface',
-                                  ),
-                                ),
-                                SizedBox(height: screenHeight * 0.025),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // LEFT: Rating column
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '4.8',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: screenWidth * 0.15,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Abril Fatface',
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        _buildStarRating(4.8, starSize: 24),
-                                      ],
-                                    ),
-                                    SizedBox(width: screenWidth * 0.03),
-                                    // CENTER: Vertical separator
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        top: screenHeight * 0.02,
-                                      ),
-                                      child: Container(
-                                        width: screenWidth * 0.012,
-                                        height: screenHeight * 0.16,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius: BorderRadius.circular(
-                                            screenWidth * 0.01,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: screenWidth * 0.03),
-                                    // RIGHT: Rating distribution bars
-                                    _buildRatingBars(screenWidth),
-                                  ],
-                                ),
-                                SizedBox(height: screenHeight * 0.025),
-                                _buildReviewsList(screenWidth),
+
                                 if (_showReviewSection) ...[
                                   SizedBox(height: screenHeight * 0.025),
                                   Container(
@@ -1456,7 +1365,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                             ),
                                           ),
                                         ),
-                                        // SEND BUTTON
                                         Positioned(
                                           bottom: 10,
                                           right: 10,
@@ -1489,13 +1397,13 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                                 .text
                                                                 .trim(),
                                                         date: date,
-                                                        rating: 4, // or dynamic
+                                                        rating: 4,
                                                       );
                                                       setState(() {
                                                         _reviews.insert(
                                                           0,
                                                           newReview,
-                                                        ); // newest on top
+                                                        );
                                                         _hasText = false;
                                                       });
                                                       _reviewController.clear();
@@ -1558,19 +1466,102 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                             ),
                                           ),
                                         ),
-                                        if (_showUserReview)
-                                          Positioned(
-                                            top: 0,
-                                            left: 0,
-                                            right: 0,
-                                            child: _buildUserReviewCard(
-                                              screenWidth,
-                                            ),
-                                          ),
                                       ],
                                     ),
                                   ),
                                 ],
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      // ===== Reviews & Ratings Section in nested cards =====
+                      Positioned(
+                        top: _showReviewSection
+                            ? screenHeight * 1.71 - offset
+                            : screenHeight * 1.53 - offset,
+                        left: screenWidth * 0.022,
+                        right: screenWidth * 0.022,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.02,
+                            vertical: screenHeight * 0.006,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF3F3F3),
+                            borderRadius: BorderRadius.circular(
+                              32 * (screenWidth / 412),
+                            ),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.04,
+                              vertical: screenHeight * 0.018,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                24 * (screenWidth / 412),
+                              ),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Rating and some reviews are verified and are\nfrom people who use the same type of device that you use.',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenWidth * 0.038,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Abril Fatface',
+                                  ),
+                                ),
+                                SizedBox(height: screenHeight * 0.025),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // LEFT: Rating column
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '4.8',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: screenWidth * 0.15,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Abril Fatface',
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        _buildStarRating(4.8, starSize: 24),
+                                      ],
+                                    ),
+                                    SizedBox(width: screenWidth * 0.03),
+                                    // CENTER: Vertical separator
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        top: screenHeight * 0.02,
+                                      ),
+                                      child: Container(
+                                        width: screenWidth * 0.012,
+                                        height: screenHeight * 0.16,
+                                        decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius: BorderRadius.circular(
+                                            screenWidth * 0.01,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: screenWidth * 0.03),
+                                    // RIGHT: Rating distribution bars
+                                    _buildRatingBars(screenWidth),
+                                  ],
+                                ),
+                                SizedBox(height: screenHeight * 0.025),
+                                _buildReviewsList(screenWidth),
                               ],
                             ),
                           ),
@@ -2044,7 +2035,7 @@ Widget _buildRatingBars(double screenWidth) {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                
+
                 Container(
                   width: screenWidth * 0.33 * ratings[index],
                   height: 8,
