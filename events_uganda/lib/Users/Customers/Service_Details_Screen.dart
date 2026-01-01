@@ -1335,8 +1335,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       // ===== Reviews & Ratings Section in nested cards =====
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 1.48 - offset
-                            : screenHeight * 1.38 - offset,
+                            ? screenHeight * 1.53 - offset
+                            : screenHeight * 1.60 - offset,
                         left: screenWidth * 0.022,
                         right: screenWidth * 0.022,
                         child: Container(
@@ -1625,7 +1625,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       ),
     );
   }
-  
+
   Widget _buildReviewsList(double screenWidth) {
     return AnimatedList(
       shrinkWrap: true,
@@ -1641,7 +1641,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       },
     );
   }
-
 
   Widget _buildReviewCard(ReviewModel review, double screenWidth) {
     return Container(
@@ -1713,7 +1712,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     );
   }
 
-
   Widget _reviewMenu(ReviewModel review) {
     return PopupMenuButton<String>(
       onSelected: (value) {
@@ -1732,7 +1730,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       ],
     );
   }
-
 
   Widget _buildUserReviewCard(double screenWidth) {
     return Container(
@@ -1826,7 +1823,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     );
   }
 
-
   Widget _buildStaticStars(int count) {
     return Row(
       children: List.generate(
@@ -1839,7 +1835,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       ),
     );
   }
-
 
   Widget _helpfulButton(String text, IconData icon) {
     return Container(
@@ -1861,7 +1856,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     );
   }
 }
-
 
 Widget _availabilityCard(double screenWidth) {
   return Container(
@@ -1900,7 +1894,6 @@ Widget _availabilityCard(double screenWidth) {
     ),
   );
 }
-
 
 Widget _priceCard(double screenWidth) {
   return Container(
@@ -2051,7 +2044,7 @@ Widget _buildRatingBars(double screenWidth) {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                
+
                 Container(
                   width: screenWidth * 0.33 * ratings[index],
                   height: 8,
