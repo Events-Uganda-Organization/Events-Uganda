@@ -1732,7 +1732,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       ],
     );
   }
-  
+
 
   Widget _buildUserReviewCard(double screenWidth) {
     return Container(
@@ -1825,6 +1825,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       ),
     );
   }
+  
 
   Widget _buildStaticStars(int count) {
     return Row(
