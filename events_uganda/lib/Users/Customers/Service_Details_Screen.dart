@@ -1901,6 +1901,7 @@ Widget _availabilityCard(double screenWidth) {
   );
 }
 
+
 Widget _priceCard(double screenWidth) {
   return Container(
     width: screenWidth * 0.40,
