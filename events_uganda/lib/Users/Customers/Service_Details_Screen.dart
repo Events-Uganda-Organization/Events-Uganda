@@ -1641,7 +1641,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       },
     );
   }
-  
+
 
   Widget _buildReviewCard(ReviewModel review, double screenWidth) {
     return Container(
@@ -1712,6 +1712,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       ),
     );
   }
+  
 
   Widget _reviewMenu(ReviewModel review) {
     return PopupMenuButton<String>(
