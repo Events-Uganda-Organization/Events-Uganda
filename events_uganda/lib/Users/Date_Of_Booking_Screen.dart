@@ -102,13 +102,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   void dispose() {
     super.dispose();
   }
-
-
- 
-
-  
-
-  
   
   @override
   Widget build(BuildContext context) {
