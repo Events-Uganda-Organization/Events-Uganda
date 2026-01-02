@@ -83,8 +83,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   @override
   void initState() {
     super.initState();
-    _promoScrollController.addListener(_onPromoScroll);
-    _circleScrollController.addListener(_onCircleScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
     _forYouScrollController.addListener(_onForYouScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
@@ -101,38 +99,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     return 'Good Evening';
   }
 
-  void _onCircleScroll() {
-    if (!mounted) return;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final itemWidth = 70.0;
-    final spacing = screenWidth * 0.03;
-    final offset = _circleScrollController.offset;
-
-    final index = ((offset + itemWidth / 2) / (itemWidth + spacing))
-        .clamp(0, 4)
-        .toInt();
-
-    if (index != _activeCircleIndex) {
-      setState(() => _activeCircleIndex = index);
-    }
-  }
-
-  void _onPromoScroll() {
-    if (!mounted) return;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = screenWidth * 0.82;
-    final spacing = screenWidth * 0.04;
-    final offset = _promoScrollController.offset;
-
-    final index = ((offset + cardWidth / 2) / (cardWidth + spacing))
-        .clamp(0, 2)
-        .toInt();
-
-    if (index != _activeCardIndex) {
-      setState(() => _activeCardIndex = index);
-    }
-  }
-
+  
   void _onPopularNowScroll() {
     if (!mounted) return;
     final screenWidth = MediaQuery.of(context).size.width;
