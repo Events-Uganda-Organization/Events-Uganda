@@ -15,7 +15,6 @@ class DateOfBookingScreen extends StatefulWidget {
 
 class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     with SingleTickerProviderStateMixin {
-  final FocusNode _searchFocus = FocusNode();
   int _currentNavIndex = 0;
   String _userFullName = '';
   bool _canForwardReturn =
@@ -25,8 +24,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   @override
   void initState() {
     super.initState();
-    _searchFocus.addListener(() {
-    });
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
   }
