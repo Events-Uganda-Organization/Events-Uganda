@@ -1471,27 +1471,76 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                                 .text
                                                                 .trim(),
                                                         date: date,
-                                                        rating: _rating > 0 ? _rating : 5,
+                                                        rating: _rating > 0
+                                                            ? _rating
+                                                            : 5,
                                                       );
-                                                      
+
                                                       // Save to Firestore
                                                       try {
-                                                        await FirebaseFirestore.instance
-                                                            .collection('reviews')
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                              'reviews',
+                                                            )
                                                             .doc(newReview.id)
                                                             .set({
-                                                          'userId': user?.uid ?? '',
-                                                          'userName': newReview.userName,
-                                                          'userImageUrl': newReview.userImageUrl,
-                                                          'reviewText': newReview.reviewText,
-                                                          'rating': newReview.rating,
-                                                          'date': date,
-                                                          'timestamp': FieldValue.serverTimestamp(),
-                                                        });
+                                                              'userId':
+                                                                  user?.uid ??
+                                                                  '',
+                                                              'userName':
+                                                                  newReview
+                                                                      .userName,
+                                                              'userImageUrl':
+                                                                  newReview
+                                                                      .userImageUrl,
+                                                              'reviewText':
+                                                                  newReview
+                                                                      .reviewText,
+                                                              'rating':
+                                                                  newReview
+                                                                      .rating,
+                                                              'date': date,
+                                                              'timestamp':
+                                                                  FieldValue.serverTimestamp(),
+                                                            });
+                                                        print(
+                                                          'Review saved successfully to Firestore!',
+                                                        );
+                                                        ScaffoldMessenger.of(
+                                                          context,
+                                                        ).showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'Review submitted successfully!',
+                                                            ),
+                                                            backgroundColor:
+                                                                Colors.green,
+                                                            duration: Duration(
+                                                              seconds: 2,
+                                                            ),
+                                                          ),
+                                                        );
                                                       } catch (e) {
-                                                        print('Error saving review: $e');
+                                                        print(
+                                                          'Error saving review: $e',
+                                                        );
+                                                        ScaffoldMessenger.of(
+                                                          context,
+                                                        ).showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'Failed to submit review: $e',
+                                                            ),
+                                                            backgroundColor:
+                                                                Colors.red,
+                                                            duration: Duration(
+                                                              seconds: 3,
+                                                            ),
+                                                          ),
+                                                        );
                                                       }
-                                                      
+
                                                       setState(() {
                                                         _reviews.insert(
                                                           0,
