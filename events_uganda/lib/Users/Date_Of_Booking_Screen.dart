@@ -100,12 +100,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   
   @override
   void dispose() {
-    _countdownTimer?.cancel();
-    _searchFocus.dispose();
-    _circleScrollController.dispose();
-    _promoScrollController.dispose();
-    _popularNowScrollController.dispose();
-    _forYouScrollController.dispose();
     super.dispose();
   }
 
