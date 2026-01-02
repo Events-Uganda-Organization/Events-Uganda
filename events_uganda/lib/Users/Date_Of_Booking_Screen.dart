@@ -83,9 +83,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   @override
   void initState() {
     super.initState();
-    _popularNowScrollController.addListener(_onPopularNowScroll);
-    _forYouScrollController.addListener(_onForYouScroll);
-    _popularNowScrollController.addListener(_onPopularNowScroll);
     _searchFocus.addListener(() {
     });
     // Fetch user's display name if available
@@ -100,55 +97,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   }
 
   
-  void _onPopularNowScroll() {
-    if (!mounted) return;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final imageWidth = 184.0;
-    final spacing = screenWidth * 0.04;
-    final offset = _popularNowScrollController.offset;
-    final maxScroll = _popularNowScrollController.position.maxScrollExtent;
-
-    int index;
-    if (offset <= (imageWidth + spacing) * 0.3) {
-      index = 0;
-    } else if (offset >= maxScroll - (imageWidth + spacing) * 0.3) {
-      index = 3;
-    } else if (offset < (imageWidth + spacing) * 1.2) {
-      index = 1;
-    } else {
-      index = 2;
-    }
-
-    if (index != _activePopularNowIndex) {
-      setState(() => _activePopularNowIndex = index);
-    }
-  }
-
-  void _onForYouScroll() {
-    if (!mounted) return;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final imageWidth = 184.0;
-    final spacing = screenWidth * 0.04;
-    final offset = _forYouScrollController.offset;
-    final maxScroll = _forYouScrollController.position.maxScrollExtent;
-
-    // Better calculation for determining centered image
-    int index;
-    if (offset <= (imageWidth + spacing) * 0.3) {
-      index = 0; // Left image
-    } else if (offset >= maxScroll - (imageWidth + spacing) * 0.3) {
-      index = 3; // Right image
-    } else if (offset < (imageWidth + spacing) * 1.2) {
-      index = 1;
-    } else {
-      index = 2;
-    }
-
-    if (index != _activeForYouIndex) {
-      setState(() => _activeForYouIndex = index);
-    }
-  }
-
+  
   @override
   void dispose() {
     _countdownTimer?.cancel();
