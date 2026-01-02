@@ -17,7 +17,6 @@ class DateOfBookingScreen extends StatefulWidget {
 class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     with SingleTickerProviderStateMixin {
   final FocusNode _searchFocus = FocusNode();
-  bool _isSearchFocused = false;
   Timer? _countdownTimer;
   Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
   final ScrollController _promoScrollController = ScrollController();
