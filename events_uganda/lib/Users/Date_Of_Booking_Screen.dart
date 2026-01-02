@@ -6,7 +6,6 @@ import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class DateOfBookingScreen extends StatefulWidget {
-  final String? category;
   final int? categoryIndex;
 
   const DateOfBookingScreen({super.key, this.category, this.categoryIndex});
