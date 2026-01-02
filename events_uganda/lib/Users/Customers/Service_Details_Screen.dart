@@ -1450,6 +1450,13 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                             child: GestureDetector(
                                               onTap: _hasText
                                                   ? () async {
+                                                      print(
+                                                        'Send button tapped!',
+                                                      );
+                                                      print(
+                                                        'Review text: ${_reviewController.text}',
+                                                      );
+                                                      print('Rating: $_rating');
                                                       final now =
                                                           DateTime.now();
                                                       final date =
@@ -1478,6 +1485,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
 
                                                       // Save to Firestore
                                                       try {
+                                                        print(
+                                                          'Attempting to save review to Firestore...',
+                                                        );
                                                         await FirebaseFirestore
                                                             .instance
                                                             .collection(
@@ -1507,38 +1517,44 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                         print(
                                                           'Review saved successfully to Firestore!',
                                                         );
-                                                        ScaffoldMessenger.of(
-                                                          context,
-                                                        ).showSnackBar(
-                                                          SnackBar(
-                                                            content: Text(
-                                                              'Review submitted successfully!',
+                                                        if (mounted) {
+                                                          ScaffoldMessenger.of(
+                                                            context,
+                                                          ).showSnackBar(
+                                                            SnackBar(
+                                                              content: Text(
+                                                                'Review submitted successfully!',
+                                                              ),
+                                                              backgroundColor:
+                                                                  Colors.green,
+                                                              duration:
+                                                                  Duration(
+                                                                    seconds: 2,
+                                                                  ),
                                                             ),
-                                                            backgroundColor:
-                                                                Colors.green,
-                                                            duration: Duration(
-                                                              seconds: 2,
-                                                            ),
-                                                          ),
-                                                        );
+                                                          );
+                                                        }
                                                       } catch (e) {
                                                         print(
                                                           'Error saving review: $e',
                                                         );
-                                                        ScaffoldMessenger.of(
-                                                          context,
-                                                        ).showSnackBar(
-                                                          SnackBar(
-                                                            content: Text(
-                                                              'Failed to submit review: $e',
+                                                        if (mounted) {
+                                                          ScaffoldMessenger.of(
+                                                            context,
+                                                          ).showSnackBar(
+                                                            SnackBar(
+                                                              content: Text(
+                                                                'Failed to submit review: $e',
+                                                              ),
+                                                              backgroundColor:
+                                                                  Colors.red,
+                                                              duration:
+                                                                  Duration(
+                                                                    seconds: 3,
+                                                                  ),
                                                             ),
-                                                            backgroundColor:
-                                                                Colors.red,
-                                                            duration: Duration(
-                                                              seconds: 3,
-                                                            ),
-                                                          ),
-                                                        );
+                                                          );
+                                                        }
                                                       }
 
                                                       setState(() {
