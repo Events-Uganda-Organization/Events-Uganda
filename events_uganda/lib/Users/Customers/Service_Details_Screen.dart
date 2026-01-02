@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ServiceDetailsScreen extends StatefulWidget {
   const ServiceDetailsScreen({super.key});
@@ -1448,7 +1449,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                             ),
                                             child: GestureDetector(
                                               onTap: _hasText
-                                                  ? () {
+                                                  ? () async {
                                                       final now =
                                                           DateTime.now();
                                                       final date =
@@ -1470,8 +1471,27 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                                 .text
                                                                 .trim(),
                                                         date: date,
-                                                        rating: 4,
+                                                        rating: _rating > 0 ? _rating : 5,
                                                       );
+                                                      
+                                                      // Save to Firestore
+                                                      try {
+                                                        await FirebaseFirestore.instance
+                                                            .collection('reviews')
+                                                            .doc(newReview.id)
+                                                            .set({
+                                                          'userId': user?.uid ?? '',
+                                                          'userName': newReview.userName,
+                                                          'userImageUrl': newReview.userImageUrl,
+                                                          'reviewText': newReview.reviewText,
+                                                          'rating': newReview.rating,
+                                                          'date': date,
+                                                          'timestamp': FieldValue.serverTimestamp(),
+                                                        });
+                                                      } catch (e) {
+                                                        print('Error saving review: $e');
+                                                      }
+                                                      
                                                       setState(() {
                                                         _reviews.insert(
                                                           0,
@@ -1551,8 +1571,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       // ===== Reviews & Ratings Section in nested cards =====
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 1.85 - offset
-                            : screenHeight * 1.64 - offset,
+                            ? screenHeight * 2.3 - offset
+                            : screenHeight * 2.05 - offset,
                         left: screenWidth * 0.022,
                         right: screenWidth * 0.022,
                         child: Container(
@@ -1663,7 +1683,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DateOfBookingScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => DateOfBookingScreen(),
+                      ),
                     );
                   },
                   child: Row(
@@ -1700,8 +1722,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
 
   Widget _buildReviewsList(double screenWidth) {
     // Show only 2 latest reviews if not showing all
-    final reviewsToShow = _showAllReviews ? _reviews : _reviews.take(2).toList();
-    
+    final reviewsToShow = _showAllReviews
+        ? _reviews
+        : _reviews.take(2).toList();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1714,7 +1738,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             return _buildReviewCard(reviewsToShow[index], screenWidth);
           },
         ),
-        
+
         // Show "See more" button if there are more than 2 reviews and not showing all
         if (_reviews.length > 2 && !_showAllReviews)
           Padding(
@@ -1745,7 +1769,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
           ),
-        
+
         // Show "Show less" button if showing all reviews
         if (_reviews.length > 2 && _showAllReviews)
           Padding(
