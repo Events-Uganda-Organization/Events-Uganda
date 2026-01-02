@@ -1551,7 +1551,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       Positioned(
                         top: _showReviewSection
                             ? screenHeight * 1.71 - offset
-                            : screenHeight * 1.63 - offset,
+                            : screenHeight * 1.64 - offset,
                         left: screenWidth * 0.022,
                         right: screenWidth * 0.022,
                         child: Container(
