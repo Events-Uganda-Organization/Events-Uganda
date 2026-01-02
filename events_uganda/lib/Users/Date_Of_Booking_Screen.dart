@@ -16,21 +16,6 @@ class DateOfBookingScreen extends StatefulWidget {
 class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     with SingleTickerProviderStateMixin {
   final FocusNode _searchFocus = FocusNode();
-  Timer? _countdownTimer;
-  final ScrollController _promoScrollController = ScrollController();
-  int _activeCardIndex = 0;
-  final ScrollController _circleScrollController = ScrollController();
-  int _activeCircleIndex = 0;
-  final ScrollController _forYouScrollController = ScrollController();
-  int _activeForYouIndex = 1;
-  final ScrollController _popularNowScrollController = ScrollController();
-  int _activePopularNowIndex = 1;
-  final Set<int> _likedPopularNowImages = {};
-  final Set<int> _cartedPopularNowImages = {};
-  final Set<int> _likedImages = {};
-  final Set<int> _cartedImages = {};
-  final Set<int> _likedCategoryImages = {};
-  final Set<int> _cartedCategoryImages = {};
   int _currentNavIndex = 0;
   String _userFullName = '';
   bool _canForwardReturn =
