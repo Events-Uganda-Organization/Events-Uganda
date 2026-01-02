@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class DateOfBookingScreen extends StatefulWidget {
   final int? categoryIndex;
 
-  const DateOfBookingScreen({super.key});
+  const DateOfBookingScreen({super.key , this.categoryIndex});
   @override
   State<DateOfBookingScreen> createState() => _DateOfBookingScreenState();
 }
@@ -17,7 +17,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     with SingleTickerProviderStateMixin {
   final FocusNode _searchFocus = FocusNode();
   Timer? _countdownTimer;
-  Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
   final ScrollController _promoScrollController = ScrollController();
   int _activeCardIndex = 0;
   final ScrollController _circleScrollController = ScrollController();
@@ -195,28 +194,11 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     super.dispose();
   }
 
-  void _startCountdown() {
-    _countdownTimer?.cancel();
-    _countdownTimer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (!mounted) return;
-      setState(() {
-        if (_remaining.inSeconds > 0) {
-          _remaining -= const Duration(seconds: 1);
-        } else {
-          _countdownTimer?.cancel();
-        }
-      });
-    });
-  }
+  
 
   String _fmt(int v) => v.toString().padLeft(2, '0');
 
-  String get countdownText {
-    final hours = _remaining.inHours.remainder(24);
-    final mins = _remaining.inMinutes.remainder(60);
-    final secs = _remaining.inSeconds.remainder(60);
-    return '${_fmt(hours)}:${_fmt(mins)}:${_fmt(secs)}';
-  }
+ 
 
   Widget _buildPopularNowImage(
     String imagePath,
