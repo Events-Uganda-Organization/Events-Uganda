@@ -47,6 +47,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   late Animation<double> _scaleAnimation;
   int _rating = 0;
   bool _showReviewSection = false;
+  bool _showAllReviews = false;
 
   Widget _buildCircleItem(
     double screenWidth,
@@ -1698,18 +1699,84 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   }
 
   Widget _buildReviewsList(double screenWidth) {
-    return AnimatedList(
-      shrinkWrap: true,
-      initialItemCount: _reviews.length,
-      itemBuilder: (context, index, animation) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(0, 0.3),
-            end: Offset.zero,
-          ).animate(animation),
-          child: _buildReviewCard(_reviews[index], screenWidth),
-        );
-      },
+    // Show only 2 latest reviews if not showing all
+    final reviewsToShow = _showAllReviews ? _reviews : _reviews.take(2).toList();
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Display reviews
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: reviewsToShow.length,
+          itemBuilder: (context, index) {
+            return _buildReviewCard(reviewsToShow[index], screenWidth);
+          },
+        ),
+        
+        // Show "See more" button if there are more than 2 reviews and not showing all
+        if (_reviews.length > 2 && !_showAllReviews)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _showAllReviews = true;
+                  });
+                },
+                child: Text(
+                  'See more',
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 228, 172, 1),
+                    fontSize: screenWidth * 0.045,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Abril Fatface',
+                    shadows: [
+                      Shadow(
+                        color: Colors.amber,
+                        blurRadius: 10,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        
+        // Show "Show less" button if showing all reviews
+        if (_reviews.length > 2 && _showAllReviews)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _showAllReviews = false;
+                  });
+                },
+                child: Text(
+                  'Show less',
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 228, 172, 1),
+                    fontSize: screenWidth * 0.045,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Abril Fatface',
+                    shadows: [
+                      Shadow(
+                        color: Colors.amber,
+                        blurRadius: 10,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 
