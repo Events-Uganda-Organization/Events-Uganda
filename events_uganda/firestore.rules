@@ -33,6 +33,19 @@ service cloud.firestore {
       allow delete: if request.auth != null && request.auth.uid == userId;
     }
     
+    // Reviews collection - allow authenticated users to create and manage reviews
+    match /reviews/{reviewId} {
+      // Allow anyone to read reviews
+      allow read: if true;
+      
+      // Allow authenticated users to create reviews
+      allow create: if request.auth != null;
+      
+      // Allow users to update or delete their own reviews
+      allow update, delete: if request.auth != null && 
+                               request.auth.uid == resource.data.userId;
+    }
+    
     // Default rule - deny all other access
     match /{document=**} {
       allow read, write: if false;
