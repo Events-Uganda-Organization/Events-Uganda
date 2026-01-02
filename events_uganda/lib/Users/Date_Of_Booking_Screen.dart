@@ -88,7 +88,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     _popularNowScrollController.addListener(_onPopularNowScroll);
     _forYouScrollController.addListener(_onForYouScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
-    _startCountdown();
     _searchFocus.addListener(() {
     });
     // Fetch user's display name if available
