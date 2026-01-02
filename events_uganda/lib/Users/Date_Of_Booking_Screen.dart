@@ -92,9 +92,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     _popularNowScrollController.addListener(_onPopularNowScroll);
     _startCountdown();
     _searchFocus.addListener(() {
-      setState(() {
-        _isSearchFocused = _searchFocus.hasFocus;
-      });
     });
     // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
