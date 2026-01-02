@@ -5,17 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ServiceListingScreen extends StatefulWidget {
+class DateOfBookingScreen extends StatefulWidget {
   final String? category;
   final int? categoryIndex;
 
-  const ServiceListingScreen({super.key, this.category, this.categoryIndex});
-
+  const DateOfBookingScreen({super.key, this.category, this.categoryIndex});
   @override
-  State<ServiceListingScreen> createState() => _ServiceListingScreenState();
+  State<DateOfBookingScreen> createState() => _DateOfBookingScreenState();
 }
 
-class _ServiceListingScreenState extends State<ServiceListingScreen>
+class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     with SingleTickerProviderStateMixin {
   final FocusNode _searchFocus = FocusNode();
   bool _isSearchFocused = false;
