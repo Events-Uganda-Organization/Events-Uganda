@@ -1611,8 +1611,14 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     setState(() {
                       _currentNavIndex = index;
                     });
-                    // Add navigation logic here if needed
-                    // if (index == 0) { Navigator.push(...) }
+                    if (index == 3) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CustomerProfileScreen(),
+                        ),
+                      );
+                    }
                   },
                 ),
               ),
