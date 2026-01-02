@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -1657,28 +1658,36 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     width: 1,
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Book Now',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DateOfBookingScreen()),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Book Now',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    Transform.rotate(
-                      angle: -40 * 3.14159 / 180,
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.black,
-                        size: 25,
+                      SizedBox(width: 8),
+                      Transform.rotate(
+                        angle: -40 * 3.14159 / 180,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.black,
+                          size: 25,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
