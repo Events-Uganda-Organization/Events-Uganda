@@ -1551,8 +1551,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       // ===== Reviews & Ratings Section in nested cards =====
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 2.15 - offset
-                            : screenHeight * 1.94 - offset,
+                            ? screenHeight * 1.85 - offset
+                            : screenHeight * 1.64 - offset,
                         left: screenWidth * 0.022,
                         right: screenWidth * 0.022,
                         child: Container(
@@ -1663,9 +1663,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => DateOfBookingScreen(),
-                      ),
+                      MaterialPageRoute(builder: (context) => DateOfBookingScreen()),
                     );
                   },
                   child: Row(
@@ -1702,10 +1700,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
 
   Widget _buildReviewsList(double screenWidth) {
     // Show only 2 latest reviews if not showing all
-    final reviewsToShow = _showAllReviews
-        ? _reviews
-        : _reviews.take(2).toList();
-
+    final reviewsToShow = _showAllReviews ? _reviews : _reviews.take(2).toList();
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -1718,7 +1714,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             return _buildReviewCard(reviewsToShow[index], screenWidth);
           },
         ),
-
+        
         // Show "See more" button if there are more than 2 reviews and not showing all
         if (_reviews.length > 2 && !_showAllReviews)
           Padding(
@@ -1749,7 +1745,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
           ),
-
+        
         // Show "Show less" button if showing all reviews
         if (_reviews.length > 2 && _showAllReviews)
           Padding(
