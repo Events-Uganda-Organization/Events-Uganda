@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class DateOfBookingScreen extends StatefulWidget {
   final int? categoryIndex;
 
-  const DateOfBookingScreen({super.key, this.category, this.categoryIndex});
+  const DateOfBookingScreen({super.key});
   @override
   State<DateOfBookingScreen> createState() => _DateOfBookingScreenState();
 }
