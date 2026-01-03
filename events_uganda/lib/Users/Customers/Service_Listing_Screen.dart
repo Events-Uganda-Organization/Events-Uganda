@@ -272,7 +272,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 height: 218, 
                 fit: BoxFit.cover,
               ),   
-            ),
+            ), 
           ),  
           Positioned(  
             top: 10, 
