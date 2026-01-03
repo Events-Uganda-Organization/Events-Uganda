@@ -283,7 +283,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               decoration: BoxDecoration(  
                 color: Colors.transparent,
                 border: Border.all(color: Colors.white, width: 2),   
-                borderRadius: BorderRadius.circular(15),  
+                borderRadius: BorderRadius.circular(15),    
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
