@@ -1833,8 +1833,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               ),
             ),
           ),
-
-        // Show "Show less" button if showing all reviews
         if (_reviews.length > 2 && _showAllReviews)
           Padding(
             padding: const EdgeInsets.only(top: 16),
