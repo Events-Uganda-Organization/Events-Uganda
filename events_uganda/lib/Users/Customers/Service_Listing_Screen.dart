@@ -273,7 +273,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 fit: BoxFit.cover,
               ),
             ),
-          ),
+          ), 
           Positioned(
             top: 10,
             left: 10,
