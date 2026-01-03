@@ -1726,7 +1726,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
-                      
+
                     ],
                   ),
                 ),
@@ -1781,6 +1781,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
+            
           ],
         ),
       ),
