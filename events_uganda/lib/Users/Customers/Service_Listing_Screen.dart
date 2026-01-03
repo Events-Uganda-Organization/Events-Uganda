@@ -172,7 +172,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     final offset = _forYouScrollController.offset;
     final maxScroll = _forYouScrollController.position.maxScrollExtent;
 
-    // Better calculation for determining centered image
     int index;
     if (offset <= (imageWidth + spacing) * 0.3) {
       index = 0; // Left image
