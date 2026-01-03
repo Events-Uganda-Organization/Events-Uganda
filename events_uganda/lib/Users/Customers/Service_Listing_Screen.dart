@@ -274,7 +274,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               ), 
             ),
           ),  
-          Positioned(
+          Positioned(  
             top: 10, 
             left: 10, 
             child: Container(  
