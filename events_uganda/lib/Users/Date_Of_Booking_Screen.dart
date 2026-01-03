@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ui';
 import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   int _currentNavIndex = 0;
   String _userFullName = '';
   bool _canForwardReturn =
-      false; // Controls the right-side inactive/active return button
+      false; 
 
   
   @override
@@ -46,8 +45,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final promoTop = screenHeight * 0.33;
-    final promoHeight = screenWidth * 0.46;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(

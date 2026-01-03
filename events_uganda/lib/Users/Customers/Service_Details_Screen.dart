@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
+import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ServiceDetailsScreen extends StatefulWidget {
   const ServiceDetailsScreen({super.key});
@@ -46,6 +48,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   late Animation<double> _scaleAnimation;
   int _rating = 0;
   bool _showReviewSection = false;
+  bool _showAllReviews = false;
 
   Widget _buildCircleItem(
     double screenWidth,
@@ -340,7 +343,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       ),
                       Positioned(
                         top:
-                            screenHeight * 0.56 -
+                            screenHeight * 0.59 -
                             offset, // Provider name sits above
                         left: screenWidth * 0.03,
                         right: screenWidth * 0.03,
@@ -912,7 +915,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 0.74 - offset,
+                        top: screenHeight * 0.85 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
                         child: Container(
@@ -1215,7 +1218,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 1.08 - offset,
+                        top: screenHeight * 1.19 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
                         child: Column(
@@ -1279,7 +1282,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 1.25 - offset,
+                        top: screenHeight * 1.36 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
                         child: Container(
@@ -1446,7 +1449,14 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                             ),
                                             child: GestureDetector(
                                               onTap: _hasText
-                                                  ? () {
+                                                  ? () async {
+                                                      print(
+                                                        'Send button tapped!',
+                                                      );
+                                                      print(
+                                                        'Review text: ${_reviewController.text}',
+                                                      );
+                                                      print('Rating: $_rating');
                                                       final now =
                                                           DateTime.now();
                                                       final date =
@@ -1468,8 +1478,85 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                                 .text
                                                                 .trim(),
                                                         date: date,
-                                                        rating: 4,
+                                                        rating: _rating > 0
+                                                            ? _rating
+                                                            : 5,
                                                       );
+
+                                                      // Save to Firestore
+                                                      try {
+                                                        print(
+                                                          'Attempting to save review to Firestore...',
+                                                        );
+                                                        await FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                              'reviews',
+                                                            )
+                                                            .doc(newReview.id)
+                                                            .set({
+                                                              'userId':
+                                                                  user?.uid ??
+                                                                  '',
+                                                              'userName':
+                                                                  newReview
+                                                                      .userName,
+                                                              'userImageUrl':
+                                                                  newReview
+                                                                      .userImageUrl,
+                                                              'reviewText':
+                                                                  newReview
+                                                                      .reviewText,
+                                                              'rating':
+                                                                  newReview
+                                                                      .rating,
+                                                              'date': date,
+                                                              'timestamp':
+                                                                  FieldValue.serverTimestamp(),
+                                                            });
+                                                        print(
+                                                          'Review saved successfully to Firestore!',
+                                                        );
+                                                        if (mounted) {
+                                                          ScaffoldMessenger.of(
+                                                            context,
+                                                          ).showSnackBar(
+                                                            SnackBar(
+                                                              content: Text(
+                                                                'Review submitted successfully!',
+                                                              ),
+                                                              backgroundColor:
+                                                                  Colors.green,
+                                                              duration:
+                                                                  Duration(
+                                                                    seconds: 2,
+                                                                  ),
+                                                            ),
+                                                          );
+                                                        }
+                                                      } catch (e) {
+                                                        print(
+                                                          'Error saving review: $e',
+                                                        );
+                                                        if (mounted) {
+                                                          ScaffoldMessenger.of(
+                                                            context,
+                                                          ).showSnackBar(
+                                                            SnackBar(
+                                                              content: Text(
+                                                                'Failed to submit review: $e',
+                                                              ),
+                                                              backgroundColor:
+                                                                  Colors.red,
+                                                              duration:
+                                                                  Duration(
+                                                                    seconds: 3,
+                                                                  ),
+                                                            ),
+                                                          );
+                                                        }
+                                                      }
+
                                                       setState(() {
                                                         _reviews.insert(
                                                           0,
@@ -1546,11 +1633,12 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
+
                       // ===== Reviews & Ratings Section in nested cards =====
                       Positioned(
                         top: _showReviewSection
-                            ? screenHeight * 1.71 - offset
-                            : screenHeight * 1.53 - offset,
+                            ? screenHeight * 2.3 - offset
+                            : screenHeight * 2.05 - offset,
                         left: screenWidth * 0.022,
                         right: screenWidth * 0.022,
                         child: Container(
@@ -1638,6 +1726,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ),
@@ -1657,31 +1746,42 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     width: 1,
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Book Now',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DateOfBookingScreen(),
                       ),
-                    ),
-                    SizedBox(width: 8),
-                    Transform.rotate(
-                      angle: -40 * 3.14159 / 180,
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.black,
-                        size: 25,
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Book Now',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 8),
+                      Transform.rotate(
+                        angle: -40 * 3.14159 / 180,
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.black,
+                          size: 25,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
+
           ],
         ),
       ),
@@ -1689,18 +1789,80 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   }
 
   Widget _buildReviewsList(double screenWidth) {
-    return AnimatedList(
-      shrinkWrap: true,
-      initialItemCount: _reviews.length,
-      itemBuilder: (context, index, animation) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(0, 0.3),
-            end: Offset.zero,
-          ).animate(animation),
-          child: _buildReviewCard(_reviews[index], screenWidth),
-        );
-      },
+    final reviewsToShow = _showAllReviews
+        ? _reviews
+        : _reviews.take(2).toList();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: reviewsToShow.length,
+          itemBuilder: (context, index) {
+            return _buildReviewCard(reviewsToShow[index], screenWidth);
+          },
+        ),
+        if (_reviews.length > 2 && !_showAllReviews)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _showAllReviews = true;
+                  });
+                },
+                child: Text(
+                  'See more',
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 228, 172, 1),
+                    fontSize: screenWidth * 0.045,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Abril Fatface',
+                    shadows: [
+                      Shadow(
+                        color: Colors.amber,
+                        blurRadius: 10,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        if (_reviews.length > 2 && _showAllReviews)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _showAllReviews = false;
+                  });
+                },
+                child: Text(
+                  'Show less',
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 228, 172, 1),
+                    fontSize: screenWidth * 0.045,
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Abril Fatface',
+                    shadows: [
+                      Shadow(
+                        color: Colors.amber,
+                        blurRadius: 10,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 

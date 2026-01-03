@@ -38,7 +38,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
   int _currentNavIndex = 0;
   String _userFullName = '';
   bool _canForwardReturn =
-      false; // Controls the right-side inactive/active return button
+      false; 
 
   Widget _buildCircleItem(
     double screenWidth,
@@ -98,7 +98,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
         _isSearchFocused = _searchFocus.hasFocus;
       });
     });
-    // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
   }
 
@@ -173,7 +172,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     final offset = _forYouScrollController.offset;
     final maxScroll = _forYouScrollController.position.maxScrollExtent;
 
-    // Better calculation for determining centered image
     int index;
     if (offset <= (imageWidth + spacing) * 0.3) {
       index = 0; // Left image
@@ -244,7 +242,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     180 // Right position
               : 0.0);
 
-    // Adjust these values to move left/right images
     final offsetX = relativePosition == -1
         ? -28.0 // Left position
         : (relativePosition == 1
@@ -272,30 +269,30 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               child: Image.asset(
                 imagePath,
                 width: 184,
-                height: 218,
+                height: 218, 
                 fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 10,
-            left: 10,
-            child: Container(
-              width: 50,
-              height: 25,
-              decoration: BoxDecoration(
+              ),   
+            ),  
+          ),  
+          Positioned(  
+            top: 10, 
+            left: 10,   
+            child: Container(  
+              width: 50,  
+              height: 25,  
+              decoration: BoxDecoration(  
                 color: Colors.transparent,
-                border: Border.all(color: Colors.white, width: 2),
-                borderRadius: BorderRadius.circular(15),
-              ),
+                border: Border.all(color: Colors.white, width: 2),   
+                borderRadius: BorderRadius.circular(15),    
+              ), 
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.star,
+                  Icon( 
+                    Icons.star, 
                     color: Colors.yellow,
                     size: screenWidth * 0.05,
-                  ),
+                  ), 
                   SizedBox(width: screenWidth * 0.01),
                   Text(
                     rating,
