@@ -269,7 +269,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               child: Image.asset(
                 imagePath,
                 width: 184,
-                height: 218,
+                height: 218, 
                 fit: BoxFit.cover,
               ), 
             ),
