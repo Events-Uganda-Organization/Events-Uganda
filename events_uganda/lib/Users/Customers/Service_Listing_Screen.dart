@@ -98,7 +98,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
         _isSearchFocused = _searchFocus.hasFocus;
       });
     });
-    // Fetch user's display name if available
     _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
   }
 
