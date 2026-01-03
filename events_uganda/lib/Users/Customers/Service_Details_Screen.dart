@@ -1804,8 +1804,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             return _buildReviewCard(reviewsToShow[index], screenWidth);
           },
         ),
-
-        // Show "See more" button if there are more than 2 reviews and not showing all
         if (_reviews.length > 2 && !_showAllReviews)
           Padding(
             padding: const EdgeInsets.only(top: 16),
