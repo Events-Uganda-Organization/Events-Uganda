@@ -277,7 +277,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
           Positioned(
             top: 10, 
             left: 10, 
-            child: Container( 
+            child: Container(  
               width: 50,
               height: 25,
               decoration: BoxDecoration(
