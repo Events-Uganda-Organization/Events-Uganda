@@ -1633,7 +1633,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
-                      
+
                       // ===== Reviews & Ratings Section in nested cards =====
                       Positioned(
                         top: _showReviewSection
@@ -1726,6 +1726,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
+                      
                     ],
                   ),
                 ),
