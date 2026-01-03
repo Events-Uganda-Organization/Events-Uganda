@@ -242,7 +242,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     180 // Right position
               : 0.0);
 
-    // Adjust these values to move left/right images
     final offsetX = relativePosition == -1
         ? -28.0 // Left position
         : (relativePosition == 1
