@@ -38,7 +38,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
   int _currentNavIndex = 0;
   String _userFullName = '';
   bool _canForwardReturn =
-      false; // Controls the right-side inactive/active return button
+      false; 
 
   Widget _buildCircleItem(
     double screenWidth,
