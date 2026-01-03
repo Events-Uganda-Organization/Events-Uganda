@@ -17,7 +17,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   int _currentNavIndex = 0;
   String _userFullName = '';
   bool _canForwardReturn =
-      false; // Controls the right-side inactive/active return button
+      false; 
 
   
   @override
