@@ -1796,7 +1796,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Display reviews
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
