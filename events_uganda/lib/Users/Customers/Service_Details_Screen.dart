@@ -1781,7 +1781,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
-            
+
           ],
         ),
       ),
@@ -1789,7 +1789,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   }
 
   Widget _buildReviewsList(double screenWidth) {
-    // Show only 2 latest reviews if not showing all
     final reviewsToShow = _showAllReviews
         ? _reviews
         : _reviews.take(2).toList();
