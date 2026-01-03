@@ -45,8 +45,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final promoTop = screenHeight * 0.33;
-    final promoHeight = screenWidth * 0.46;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
