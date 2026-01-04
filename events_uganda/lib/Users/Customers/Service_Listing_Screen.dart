@@ -294,7 +294,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     size: screenWidth * 0.05,      
                   ),    
                   SizedBox(width: screenWidth * 0.01),     
-                  Text(
+                  Text( 
                     rating,
                     style: TextStyle(
                       color: Colors.black,
