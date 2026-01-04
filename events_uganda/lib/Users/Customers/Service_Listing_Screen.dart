@@ -299,7 +299,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: screenWidth * 0.028,  
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w700, 
                       fontFamily: 'Montserrat', 
                     ),
                   ),
