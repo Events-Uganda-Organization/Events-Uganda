@@ -303,7 +303,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       fontFamily: 'Montserrat', 
                     ),
                   ),
-                ],
+                ], 
               ),
             ),
           ),
