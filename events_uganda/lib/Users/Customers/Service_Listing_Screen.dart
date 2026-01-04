@@ -289,7 +289,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [ 
                   Icon(           
-                    Icons.star,  
+                    Icons.star,   
                     color: Colors.yellow,  
                     size: screenWidth * 0.05,    
                   ),    
