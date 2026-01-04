@@ -287,25 +287,25 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               ), 
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon( 
-                    Icons.star, 
-                    color: Colors.yellow,
-                    size: screenWidth * 0.05,
-                  ), 
-                  SizedBox(width: screenWidth * 0.01),
-                  Text(
+                children: [ 
+                  Icon(            
+                    Icons.star,   
+                    color: Colors.yellow,  
+                    size: screenWidth * 0.05,      
+                  ),    
+                  SizedBox(width: screenWidth * 0.01),     
+                  Text( 
                     rating,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: screenWidth * 0.028,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'Montserrat',
+                      fontSize: screenWidth * 0.028,  
+                      fontWeight: FontWeight.w700, 
+                      fontFamily: 'Montserrat', 
                     ),
                   ),
-                ],
-              ),
-            ),
+                ], 
+              ), 
+            ), 
           ),
           Positioned(
             top: 10,
