@@ -28,11 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-<<<<<<< HEAD
       home: SplashScreen(),
-=======
-      home: AuthScreen(),
->>>>>>> 8da61d4 (Working on adding the ios app)
     );
   }
 }
