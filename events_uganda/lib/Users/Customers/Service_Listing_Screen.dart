@@ -313,7 +313,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
             child: GestureDetector(      
               onTap: () {    
                 setState(() { 
-                  if (_likedPopularNowImages.contains(index)) {
+                  if (_likedPopularNowImages.contains(index)) { 
                     _likedPopularNowImages.remove(index);
                   } else {
                     _likedPopularNowImages.add(index);
