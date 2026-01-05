@@ -302,7 +302,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       fontWeight: FontWeight.w700, 
                       fontFamily: 'Montserrat', 
                     ),  
-                  ),
+                  ),  
                 ], 
               ),  
             ), 
