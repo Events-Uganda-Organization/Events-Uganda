@@ -301,18 +301,18 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       fontSize: screenWidth * 0.028,  
                       fontWeight: FontWeight.w700, 
                       fontFamily: 'Montserrat', 
-                    ),
-                  ),
+                    ),  
+                  ),  
                 ], 
-              ), 
+              ),  
             ), 
-          ),
-          Positioned(
+          ),  
+          Positioned( 
             top: 10,
-            right: 10,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
+            right: 10, 
+            child: GestureDetector(   
+              onTap: () {   
+                setState(() { 
                   if (_likedPopularNowImages.contains(index)) {
                     _likedPopularNowImages.remove(index);
                   } else {
