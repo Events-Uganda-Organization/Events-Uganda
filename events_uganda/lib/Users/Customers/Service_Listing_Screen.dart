@@ -301,7 +301,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       fontSize: screenWidth * 0.028,  
                       fontWeight: FontWeight.w700, 
                       fontFamily: 'Montserrat', 
-                    ),
+                    ),  
                   ),
                 ], 
               ), 
