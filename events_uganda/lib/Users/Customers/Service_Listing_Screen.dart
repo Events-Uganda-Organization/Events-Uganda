@@ -309,27 +309,27 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
           ),  
           Positioned( 
             top: 10,  
-            right: 10,    
-            child: GestureDetector(        
+            right: 10,     
+            child: GestureDetector(         
               onTap: () {       
-                setState(() {  
+                setState(() {    
                   if (_likedPopularNowImages.contains(index)) { 
                     _likedPopularNowImages.remove(index);
-                  } else {
+                  } else { 
                     _likedPopularNowImages.add(index);
                   }
-                });
+                });  
               },
-              child: AnimatedScale(
+              child: AnimatedScale( 
                 scale: _likedPopularNowImages.contains(index) ? 1.0 : 1.0,
-                duration: const Duration(milliseconds: 200),
-                curve: Curves.easeOutBack,
+                duration: const Duration(milliseconds: 200), 
+                curve: Curves.easeOutBack, 
                 child: TweenAnimationBuilder<double>(
-                  tween: Tween(
+                  tween: Tween( 
                     begin: 1.0,
-                    end: _likedPopularNowImages.contains(index) ? 1.2 : 1.0,
+                    end: _likedPopularNowImages.contains(index) ? 1.2 : 1.0,  
                   ),
-                  duration: const Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),  
                   curve: Curves.elasticOut,
                   builder: (context, scale, child) {
                     return Transform.scale(
