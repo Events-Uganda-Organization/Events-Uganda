@@ -371,7 +371,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               },
               child: TweenAnimationBuilder<double>(
                 tween: Tween(
-                  begin: 1.0,
+                  begin: 1.0, 
                   end: _cartedPopularNowImages.contains(index) ? 1.2 : 1.0,
                 ),
                 duration: const Duration(milliseconds: 220),
