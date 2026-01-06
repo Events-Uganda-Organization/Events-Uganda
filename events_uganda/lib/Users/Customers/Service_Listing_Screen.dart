@@ -318,7 +318,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   } else { 
                     _likedPopularNowImages.add(index);
                   }
-                }); 
+                });  
               },
               child: AnimatedScale(
                 scale: _likedPopularNowImages.contains(index) ? 1.0 : 1.0,
