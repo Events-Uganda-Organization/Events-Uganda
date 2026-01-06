@@ -323,7 +323,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
               child: AnimatedScale( 
                 scale: _likedPopularNowImages.contains(index) ? 1.0 : 1.0,
                 duration: const Duration(milliseconds: 200), 
-                curve: Curves.easeOutBack,
+                curve: Curves.easeOutBack, 
                 child: TweenAnimationBuilder<double>(
                   tween: Tween(
                     begin: 1.0,
