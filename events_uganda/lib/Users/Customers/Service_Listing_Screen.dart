@@ -365,7 +365,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   if (_cartedPopularNowImages.contains(index)) {  
                     _cartedPopularNowImages.remove(index);
                   } else {
-                    _cartedPopularNowImages.add(index);
+                    _cartedPopularNowImages.add(index); 
                   }
                 });
               },
