@@ -332,30 +332,30 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   duration: const Duration(milliseconds: 300),  
                   curve: Curves.elasticOut,
                   builder: (context, scale, child) {
-                    return Transform.scale(
+                    return Transform.scale( 
                       scale: scale,
                       child: Container(
-                        width: screenWidth * 0.1,
+                        width: screenWidth * 0.1, 
                         height: screenWidth * 0.1,
-                        decoration: BoxDecoration(
+                        decoration: BoxDecoration(   
                           color: Colors.white,
-                          shape: BoxShape.circle,
+                          shape: BoxShape.circle,  
                           border: Border.all(color: Colors.white, width: 2),
                         ),
                         child: Center(
-                          child: Icon(
+                          child: Icon(  
                             Icons.verified,
                             color: Colors.blue,
-                            size: screenWidth * 0.07,
-                          ),
+                            size: screenWidth * 0.07, 
+                          ), 
                         ),
                       ),
                     );
                   },
-                ),
+                ), 
               ),
             ),
-          ),
+          ), 
           Positioned(
             bottom: 10,
             right: 10,
