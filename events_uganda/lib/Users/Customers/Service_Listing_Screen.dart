@@ -335,7 +335,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     return Transform.scale( 
                       scale: scale,
                       child: Container(
-                        width: screenWidth * 0.1,
+                        width: screenWidth * 0.1, 
                         height: screenWidth * 0.1,
                         decoration: BoxDecoration(
                           color: Colors.white,
