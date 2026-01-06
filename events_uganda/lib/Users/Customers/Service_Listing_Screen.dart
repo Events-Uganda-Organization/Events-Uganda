@@ -375,7 +375,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   end: _cartedPopularNowImages.contains(index) ? 1.2 : 1.0,
                 ),
                 duration: const Duration(milliseconds: 220),
-                curve: Curves.easeOutBack,
+                curve: Curves.easeOutBack, 
                 builder: (context, scale, child) {
                   return Transform.scale(
                     scale: scale,
