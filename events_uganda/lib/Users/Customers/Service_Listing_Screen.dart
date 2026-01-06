@@ -359,7 +359,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
           Positioned(
             bottom: 10,
             right: 10,
-            child: GestureDetector(
+            child: GestureDetector(  
               onTap: () {
                 setState(() {
                   if (_cartedPopularNowImages.contains(index)) {
