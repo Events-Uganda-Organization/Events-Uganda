@@ -352,7 +352,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       ),
                     );
                   },
-                ),
+                ), 
               ),
             ),
           ),
