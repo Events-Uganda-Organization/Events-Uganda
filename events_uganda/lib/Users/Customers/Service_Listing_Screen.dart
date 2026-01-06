@@ -378,7 +378,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 curve: Curves.easeOutBack, 
                 builder: (context, scale, child) {
                   return Transform.scale(
-                    scale: scale,
+                    scale: scale, 
                     child: Container(
                       width: screenWidth * 0.1,
                       height: screenWidth * 0.1,
