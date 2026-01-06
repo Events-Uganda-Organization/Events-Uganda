@@ -354,7 +354,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   },
                 ), 
               ),
-            ),
+            ), 
           ), 
           Positioned(
             bottom: 10,
