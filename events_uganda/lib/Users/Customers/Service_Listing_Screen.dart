@@ -347,7 +347,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                             Icons.verified,
                             color: Colors.blue,
                             size: screenWidth * 0.07, 
-                          ),
+                          ), 
                         ),
                       ),
                     );
