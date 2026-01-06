@@ -332,7 +332,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   duration: const Duration(milliseconds: 300),  
                   curve: Curves.elasticOut,
                   builder: (context, scale, child) {
-                    return Transform.scale(
+                    return Transform.scale( 
                       scale: scale,
                       child: Container(
                         width: screenWidth * 0.1,
