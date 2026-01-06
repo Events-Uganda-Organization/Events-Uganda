@@ -367,7 +367,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   } else {
                     _cartedPopularNowImages.add(index); 
                   }
-                });
+                }); 
               },
               child: TweenAnimationBuilder<double>(
                 tween: Tween(
