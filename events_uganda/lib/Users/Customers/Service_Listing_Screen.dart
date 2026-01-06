@@ -325,7 +325,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 duration: const Duration(milliseconds: 200), 
                 curve: Curves.easeOutBack, 
                 child: TweenAnimationBuilder<double>(
-                  tween: Tween(
+                  tween: Tween( 
                     begin: 1.0,
                     end: _likedPopularNowImages.contains(index) ? 1.2 : 1.0,
                   ),
