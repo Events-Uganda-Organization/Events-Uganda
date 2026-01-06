@@ -354,40 +354,40 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   },
                 ), 
               ),
-            ),
+            ), 
           ), 
           Positioned(
             bottom: 10,
             right: 10,
-            child: GestureDetector(
-              onTap: () {
+            child: GestureDetector(  
+              onTap: () { 
                 setState(() {
-                  if (_cartedPopularNowImages.contains(index)) {
+                  if (_cartedPopularNowImages.contains(index)) {  
                     _cartedPopularNowImages.remove(index);
                   } else {
-                    _cartedPopularNowImages.add(index);
+                    _cartedPopularNowImages.add(index); 
                   }
-                });
+                }); 
               },
               child: TweenAnimationBuilder<double>(
                 tween: Tween(
-                  begin: 1.0,
+                  begin: 1.0, 
                   end: _cartedPopularNowImages.contains(index) ? 1.2 : 1.0,
                 ),
                 duration: const Duration(milliseconds: 220),
-                curve: Curves.easeOutBack,
+                curve: Curves.easeOutBack, 
                 builder: (context, scale, child) {
                   return Transform.scale(
-                    scale: scale,
+                    scale: scale, 
                     child: Container(
                       width: screenWidth * 0.1,
-                      height: screenWidth * 0.1,
+                      height: screenWidth * 0.1, 
                       decoration: BoxDecoration(
-                        color: Colors.transparent,
+                        color: Colors.transparent, 
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: _cartedPopularNowImages.contains(index)
-                              ? Colors.yellow
+                          color: _cartedPopularNowImages.contains(index)  
+                              ? Colors.yellow 
                               : Colors.white,
                           width: 2,
                         ),
