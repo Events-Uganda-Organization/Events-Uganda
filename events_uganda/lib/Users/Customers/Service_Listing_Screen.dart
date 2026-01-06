@@ -343,7 +343,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           border: Border.all(color: Colors.white, width: 2),
                         ),
                         child: Center(
-                          child: Icon(
+                          child: Icon( 
                             Icons.verified,
                             color: Colors.blue,
                             size: screenWidth * 0.07,
