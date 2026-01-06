@@ -315,7 +315,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                 setState(() {    
                   if (_likedPopularNowImages.contains(index)) { 
                     _likedPopularNowImages.remove(index);
-                  } else {
+                  } else { 
                     _likedPopularNowImages.add(index);
                   }
                 });
