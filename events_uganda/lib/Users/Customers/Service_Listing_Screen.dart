@@ -329,7 +329,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     begin: 1.0,
                     end: _likedPopularNowImages.contains(index) ? 1.2 : 1.0,  
                   ),
-                  duration: const Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),  
                   curve: Curves.elasticOut,
                   builder: (context, scale, child) {
                     return Transform.scale(
