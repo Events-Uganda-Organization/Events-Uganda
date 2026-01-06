@@ -383,7 +383,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       width: screenWidth * 0.1,
                       height: screenWidth * 0.1, 
                       decoration: BoxDecoration(
-                        color: Colors.transparent,
+                        color: Colors.transparent, 
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: _cartedPopularNowImages.contains(index)
