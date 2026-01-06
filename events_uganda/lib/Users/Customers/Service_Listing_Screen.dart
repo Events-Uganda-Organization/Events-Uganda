@@ -387,7 +387,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         shape: BoxShape.circle,
                         border: Border.all(
                           color: _cartedPopularNowImages.contains(index)  
-                              ? Colors.yellow
+                              ? Colors.yellow 
                               : Colors.white,
                           width: 2,
                         ),
