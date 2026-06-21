@@ -663,10 +663,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     double screenWidth,
     double screenHeight,
     double promoHeight, {
-    String imagePath = 'assets/images/nobgcar.png',
     String mainText = 'GET YOUR SPECIAL CAR BOOKING\n',
-    String prefixText = 'UP TO ',
-    String percentageText = '30%',
   }) {
     final cardWidth = screenWidth * 0.82;
     return SizedBox(
