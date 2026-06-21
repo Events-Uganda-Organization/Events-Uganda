@@ -1,0 +1,11 @@
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\config\WebConfig.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\controller\OtpController.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\request\SendOtpRequest.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\request\VerifyOtpRequest.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\ApiResponse.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\exception\GlobalExceptionHandler.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\exception\OtpException.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\OtpApplication.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\service\EmailService.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\service\OtpService.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\service\SmsService.java
