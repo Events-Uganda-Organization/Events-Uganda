@@ -1,17 +1,9 @@
-import 'dart:convert';
-import 'dart:math';
-
-import 'package:events_uganda/Other%20Screens/Role_Selection_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
+import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:crypto/crypto.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -57,130 +49,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     await prefs.setString('signupPhone', _phoneController.text.trim());
   }
 
-  Future<void> _signUpWithApple() async {
-    setState(() => _isLoading = true);
-    try {
-      final rawNonce = _generateNonce();
-      final nonce = _sha256ofString(rawNonce);
-
-      final credential = await SignInWithApple.getAppleIDCredential(
-        scopes: [
-          AppleIDAuthorizationScopes.email,
-          AppleIDAuthorizationScopes.fullName,
-        ],
-        nonce: nonce,
-      );
-
-      final oauthCredential = OAuthProvider("apple.com").credential(
-        idToken: credential.identityToken,
-        accessToken: credential.authorizationCode,
-        rawNonce: rawNonce,
-      );
-
-      final userCredential = await FirebaseAuth.instance.signInWithCredential(
-        oauthCredential,
-      );
-      final user = userCredential.user;
-
-      if (user == null) {
-        _showCustomSnackBar(
-          context,
-          'An error occurred. Please try again later.',
-        );
-        return;
-      }
-      final Map<String, dynamic> userData = {
-        'email': user.email ?? 'hidden@privaterelay.appleid.com',
-        'profilePicUrl': user.photoURL,
-        'authProvider': 'apple',
-        'isAdmin': (user.email ?? '').toLowerCase() == 'adminuser@gmail.com',
-        'fcmToken': await FirebaseMessaging.instance.getToken(),
-        'lastActiveTimestamp': Timestamp.now(),
-      };
-
-      if (credential.givenName != null || credential.familyName != null) {
-        final name =
-            "${credential.givenName ?? ''} ${credential.familyName ?? ''}"
-                .trim();
-        if (name.isNotEmpty) {
-          userData['fullName'] = name;
-        }
-      }
-
-      final userDocRef = FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid);
-      final docSnapshot = await userDocRef.get();
-
-      if (!docSnapshot.exists) {
-        userData['createdAt'] = FieldValue.serverTimestamp();
-        if (!userData.containsKey('fullName')) {
-          userData['fullName'] = "Apple User";
-        }
-      }
-
-      await userDocRef.set(userData, SetOptions(merge: true));
-
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
-
-      _showCustomSnackBar(context, 'Signed up with Apple!', isSuccess: true);
-      await Future.delayed(const Duration(seconds: 2));
-      if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const CustomerHomeScreen()),
-        );
-      }
-    } on FirebaseAuthException {
-      _showCustomSnackBar(
-        context,
-        'Authentication failed. Please try again later.',
-      );
-    } on SignInWithAppleAuthorizationException catch (e) {
-      switch (e.code) {
-        case AuthorizationErrorCode.canceled:
-          break;
-        case AuthorizationErrorCode.failed:
-        case AuthorizationErrorCode.invalidResponse:
-        case AuthorizationErrorCode.notHandled:
-        case AuthorizationErrorCode.notInteractive:
-        case AuthorizationErrorCode.unknown:
-        case AuthorizationErrorCode.credentialExport:
-        case AuthorizationErrorCode.credentialImport:
-        case AuthorizationErrorCode.matchedExcludedCredential:
-          _showCustomSnackBar(
-            context,
-            'Apple Sign-In error. Please try again.',
-          );
-          break;
-      }
-    } catch (e) {
-      _showCustomSnackBar(
-        context,
-        'An error occurred. Please try again later.',
-      );
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
-    }
-  }
-
-  String _generateNonce([int length = 32]) {
-    final charset =
-        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
-    final random = Random.secure();
-    return List.generate(
-      length,
-      (_) => charset[random.nextInt(charset.length)],
-    ).join();
-  }
-
-  String _sha256ofString(String input) {
-    final bytes = utf8.encode(input);
-    final digest = sha256.convert(bytes);
-    return digest.toString();
-  }
-
   void _showCustomSnackBar(
     BuildContext context,
     String message, {
@@ -195,7 +63,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> _signUpUser() async {
-    // Validate inputs
     if (_fullNameController.text.trim().isEmpty) {
       _showCustomSnackBar(context, 'Please enter your full name');
       return;
@@ -224,89 +91,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // Create user in Firebase Auth
-      final userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-          );
-
-      final user = userCredential.user;
-      if (user == null) {
-        _showCustomSnackBar(context, 'Failed to create user account');
-        return;
-      }
-
-      // Update user display name
-      await user.updateDisplayName(_fullNameController.text.trim());
-
-      // Get FCM token (optional, won't fail if unavailable)
-      String? fcmToken;
-      try {
-        fcmToken = await FirebaseMessaging.instance.getToken();
-      } catch (e) {
-        debugPrint('Failed to get FCM token: $e');
-      }
-
-      // Save user data to Firestore
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-        'fullName': _fullNameController.text.trim(),
-        'email': _emailController.text.trim(),
-        'password': _passwordController.text.trim(),
-        'phone': _phoneController.text.trim(),
-        'authProvider': 'email',
-        'createdAt': FieldValue.serverTimestamp(),
-        'fcmToken': fcmToken,
-        'lastActiveTimestamp': Timestamp.now(),
-        'isAdmin': false,
-      });
-
-      // Save login state
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isLoggedIn', true);
-
-      // Save signup data for next time
-      await _saveSignUpData();
-
-      _showCustomSnackBar(
-        context,
-        'Account created successfully!',
-        isSuccess: true,
+      await AuthService.register(
+        fullName: _fullNameController.text.trim(),
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+        phone: _phoneController.text.trim(),
       );
 
+      await _saveSignUpData();
+
+      _showCustomSnackBar(context, 'Account created successfully!', isSuccess: true);
       await Future.delayed(const Duration(seconds: 2));
 
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => RoleSelectionScreen()),
+          MaterialPageRoute(builder: (context) => const CustomerHomeScreen()),
         );
       }
-    } on FirebaseAuthException catch (e) {
-      String errorMessage = 'An error occurred. Please try again.';
-
-      debugPrint('FirebaseAuthException code: ${e.code}');
-      debugPrint('FirebaseAuthException message: ${e.message}');
-
-      if (e.code == 'weak-password') {
-        errorMessage = 'The password provided is too weak.';
-      } else if (e.code == 'email-already-in-use') {
-        errorMessage = 'An account already exists for this email.';
-      } else if (e.code == 'invalid-email') {
-        errorMessage = 'The email address is not valid.';
-      } else if (e.code == 'operation-not-allowed') {
-        errorMessage =
-            'Email/password accounts are not enabled. Please contact support.';
-      } else {
-        errorMessage = e.message ?? 'An error occurred. Please try again.';
-      }
-
-      _showCustomSnackBar(context, errorMessage);
     } catch (e) {
-      _showCustomSnackBar(
-        context,
-        'An error occurred. Please try again later.',
-      );
+      _showCustomSnackBar(context, e.toString().replaceFirst('Exception: ', ''));
       debugPrint('Sign up error: $e');
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -316,21 +120,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> signInWithGoogle() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn();
-
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-
       if (googleUser == null) return;
 
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      if (googleAuth.idToken == null) {
+        _showCustomSnackBar(context, 'Failed to get Google ID token');
+        return;
+      }
 
-      final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-        accessToken: googleAuth.accessToken,
-      );
+      await AuthService.googleAuth(idToken: googleAuth.idToken!);
 
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      _showCustomSnackBar(context, 'Signed up with Google!', isSuccess: true);
+      await Future.delayed(const Duration(seconds: 1));
+
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const CustomerHomeScreen()),
+        );
+      }
     } catch (e) {
+      _showCustomSnackBar(context, e.toString().replaceFirst('Exception: ', ''));
       debugPrint('Google Sign-In error: $e');
     }
   }

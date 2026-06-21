@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:events_uganda/Auth/Reset_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
-import 'package:events_uganda/Auth/otp_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -52,51 +51,18 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
   }
 
   Future<void> _verifyOTP(String otp) async {
-    try {
-      setState(() => _isLoading = true);
+    final input = widget.email;
 
-      final input = widget.email;
-      String? email;
-      String? phone;
-
-      if (input.contains('@')) {
-        email = input;
-      } else {
-        phone = input;
-      }
-
-      final result = await OtpApiService.verifyOtp(
-        email: email,
-        phone: phone,
-        otp: otp,
+    if (mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ResetPasswordScreen(
+            email: input,
+            otp: otp,
+          ),
+        ),
       );
-
-      setState(() => _isLoading = false);
-
-      if (result['success'] == true) {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Verified successfully!')),
-          );
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => ResetPasswordScreen()),
-          );
-        }
-      } else {
-        throw result['message'] ?? 'Invalid OTP';
-      }
-    } catch (e) {
-      setState(() => _isLoading = false);
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
-        for (var controller in _controllers) {
-          controller.clear();
-        }
-        _focusNodes[0].requestFocus();
-      }
     }
   }
 

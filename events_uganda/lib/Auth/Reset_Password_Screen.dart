@@ -1,12 +1,16 @@
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
+import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
 
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  final String email;
+  final String otp;
+
+  const ResetPasswordScreen({
+    super.key,
+    required this.email,
+    required this.otp,
+  });
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -18,8 +22,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       TextEditingController();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _confirmPasswordFocus = FocusNode();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   bool _isLoading = false;
 
   @override
@@ -31,19 +33,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     super.dispose();
   }
 
-  // Hash password using SHA-256
-  String _hashPassword(String password) {
-    final bytes = utf8.encode(password);
-    final digest = sha256.convert(bytes);
-    return digest.toString();
-  }
-
-  // Update password in Firestore
   Future<void> _changePassword() async {
     final newPassword = _passwordController.text.trim();
     final confirmPassword = _confirmPasswordController.text.trim();
 
-    // Validation
     if (newPassword.isEmpty || confirmPassword.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill in all fields')),
@@ -74,22 +67,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final user = _auth.currentUser;
-      if (user == null) {
-        throw 'User not authenticated';
-      }
-
-      // Hash the new password
-      final hashedPassword = _hashPassword(newPassword);
-
-      // Update password in Firestore users collection
-      await _firestore.collection('users').doc(user.uid).update({
-        'password': hashedPassword,
-        'updatedAt': FieldValue.serverTimestamp(),
-      });
-
-      // Also update Firebase Auth password
-      await user.updatePassword(newPassword);
+      await AuthService.resetPassword(
+        email: widget.email,
+        otp: widget.otp,
+        newPassword: newPassword,
+      );
 
       setState(() => _isLoading = false);
 
@@ -104,7 +86,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           ),
         );
 
-        // Navigate to sign in screen
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => SignInScreen()),
@@ -116,7 +97,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.red,
-          content: Text('Error changing password: $e'),
+          content: Text('Error: ${e.toString().replaceFirst("Exception: ", "")}'),
         ),
       );
     }
