@@ -1,55 +1,67 @@
 param(
-    [string]$Message = ""
+    [string]$Message = "",
+    [switch]$Watch = $false,
+    [int]$Interval = 60
 )
 
 $ErrorActionPreference = "Stop"
+$RepoPath = Split-Path -Parent $MyInvocation.MyCommand.Path
+Set-Location -LiteralPath $RepoPath
 
-# Check for changes
-$status = git status --porcelain
-if (-not $status) {
-    Write-Host "No changes to commit." -ForegroundColor Yellow
-    exit 0
-}
-
-# Generate commit message if not provided
-if (-not $Message) {
-    $files = git diff --name-only
-    if (-not $files) {
-        $files = git diff --cached --name-only
-    }
-    if (-not $files) {
-        $files = git status --porcelain | ForEach-Object { $_ -replace '^.. ' }
-    }
-
-    $changed = @()
-    $added = @()
-    $deleted = @()
-    $modified = @()
-
-    git status --porcelain | ForEach-Object {
-        $statusCode = $_[0]
-        $path = $_ -replace '^.. '
-        if ($statusCode -eq 'M') { $modified += $path }
-        elseif ($statusCode -eq 'A') { $added += $path }
-        elseif ($statusCode -eq 'D') { $deleted += $path }
-        elseif ($statusCode -eq '?') { $added += $path }
-    }
-
+function Get-CommitMessage {
     $parts = @()
+    $statusLines = git status --porcelain
+
+    $added = @()
+    $modified = @()
+    $deleted = @()
+
+    foreach ($line in $statusLines) {
+        $code = $line.Substring(0, 2).Trim()
+        $path = $line.Substring(2).Trim()
+        if ($code -eq 'A' -or $code -eq '?') { $added += $path }
+        elseif ($code -eq 'M') { $modified += $path }
+        elseif ($code -eq 'D') { $deleted += $path }
+        else { $modified += $path }
+    }
+
     if ($added.Count -gt 0) { $parts += "Add $($added -join ', ')" }
     if ($modified.Count -gt 0) { $parts += "Update $($modified -join ', ')" }
     if ($deleted.Count -gt 0) { $parts += "Remove $($deleted -join ', ')" }
 
-    $Message = $parts -join '; '
-    if ($Message.Length -gt 100) {
-        $Message = $Message.Substring(0, 97) + "..."
-    }
+    $msg = $parts -join '; '
+    if ($msg.Length -gt 100) { $msg = $msg.Substring(0, 97) + "..." }
+
+    return $msg
 }
 
-# Stage all changes, commit, and push
-git add -A
-git commit -m "$Message"
-git push
+function Do-CommitAndPush {
+    $status = git status --porcelain
+    if (-not $status) { return $false }
 
-Write-Host "Done: committed and pushed with message:" -ForegroundColor Green
-Write-Host "$Message" -ForegroundColor Cyan
+    if (-not $Message) {
+        $commitMsg = Get-CommitMessage
+    } else {
+        $commitMsg = $Message
+    }
+
+    git add -A
+    git commit -m "$commitMsg"
+    git push
+
+    Write-Host "[$(Get-Date -Format 'HH:mm:ss')] Committed and pushed: $commitMsg" -ForegroundColor Green
+    return $true
+}
+
+if ($Watch) {
+    Write-Host "Watching for changes every $Interval seconds... (Ctrl+C to stop)" -ForegroundColor Cyan
+    while ($true) {
+        Do-CommitAndPush | Out-Null
+        Start-Sleep -Seconds $Interval
+    }
+} else {
+    Do-CommitAndPush
+    if (-not (git status --porcelain)) {
+        Write-Host "No changes to commit." -ForegroundColor Yellow
+    }
+}

@@ -1,15 +1,7 @@
-import 'dart:convert';
-
 import 'package:events_uganda/Auth/Otp_Code_Screen.dart';
-import 'package:events_uganda/Auth/Reset_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
+import 'package:events_uganda/Auth/otp_api_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:math';
-
-import 'package:http/http.dart' as http;
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -21,12 +13,8 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
   final FocusNode _emailFocus = FocusNode();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   bool _isLoading = false;
-  String? _verificationId;
-  int? _resendToken;
 
   @override
   void dispose() {
@@ -35,15 +23,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
-  // Generate 4-digit OTP
-  String _generateOTP() {
-    final random = Random();
-    return (1000 + random.nextInt(9000)).toString();
-  }
-
   // Check if input is phone number or email
   bool _isPhoneNumber(String input) {
-    // Check if it's a Ugandan phone number (starts with 0 or +256)
     final phoneRegex = RegExp(r'^(\+256|0)[37]\d{8}$');
     return phoneRegex.hasMatch(input.replaceAll(' ', ''));
   }
@@ -59,102 +40,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return phone;
   }
 
-  // Send OTP via Netlify backend for phone numbers
-  Future<void> _sendPhoneOTP(String phoneNumber) async {
-    try {
-      final formattedPhone = _formatPhoneNumber(phoneNumber);
-      final url = Uri.parse(
-        'https://eventsuganda.netlify.app/.netlify/functions/send-otp',
-      );
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({'phone': formattedPhone}),
-      );
-      if (response.statusCode == 200) {
-        setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Color(0xFF1BCC94),
-            content: Text(
-              'OTP sent to your phone',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        );
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => OTPCodeScreen(
-              email: _emailController.text.trim(),
-              verificationId: null, // Not used for custom backend
-            ),
-          ),
-        );
-      } else {
-        setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to send OTP: ${response.body}')),
-        );
-      }
-    } catch (e) {
-      setState(() => _isLoading = false);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error: $e')));
-    }
-  }
-
-  Future<void> _sendEmailOTP(String email) async {
-    try {
-      final otp = _generateOTP();
-      final expiryTime = DateTime.now().add(const Duration(minutes: 10));
-      await _firestore.collection('otp_codes').doc(email).set({
-        'otp': otp,
-        'email': email,
-        'expiryTime': expiryTime,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-      await _firestore.collection('mail').add({
-        'to': email,
-        'message': {
-          'subject': 'Your OTP Code - Events Uganda',
-          'html':
-              '''
-            <div style="font-family: Arial, sans-serif; padding: 20px;">
-              <h2>Password Reset OTP</h2>
-              <p>Your OTP code is:</p>
-              <h1 style="color: #D59A00; letter-spacing: 5px;">$otp</h1>
-              <p>This code will expire in 10 minutes.</p>
-              <p>If you didn't request this, please ignore this email.</p>
-              <br>
-              <p>Best regards,<br/>Events Uganda Team</p>
-            </div>
-          ''',
-        },
-      });
-
-      setState(() => _isLoading = false);
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              OTPCodeScreen(email: email, verificationId: null),
-        ),
-      );
-
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('OTP sent to your email')));
-    } catch (e) {
-      setState(() => _isLoading = false);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error sending OTP: $e')));
-    }
-  }
-
   Future<void> _sendOTP() async {
     final input = _emailController.text.trim();
 
@@ -167,16 +52,55 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
     setState(() => _isLoading = true);
 
-    if (_isPhoneNumber(input)) {
-      await _sendPhoneOTP(input);
-    } else if (input.contains('@')) {
-      await _sendEmailOTP(input);
-    } else {
+    try {
+      String? email;
+      String? phone;
+
+      if (_isPhoneNumber(input)) {
+        phone = _formatPhoneNumber(input);
+      } else if (input.contains('@')) {
+        email = input;
+      } else {
+        setState(() => _isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please enter a valid email or phone number'),
+          ),
+        );
+        return;
+      }
+
+      final result = await OtpApiService.sendOtp(email: email, phone: phone);
+
+      setState(() => _isLoading = false);
+
+      if (result['success'] == true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: const Color(0xFF1BCC94),
+            content: Text(
+              result['message'] ?? 'OTP sent successfully',
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OTPCodeScreen(
+              email: _emailController.text.trim(),
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(result['message'] ?? 'Failed to send OTP')),
+        );
+      }
+    } catch (e) {
       setState(() => _isLoading = false);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter a valid email or phone number'),
-        ),
+        SnackBar(content: Text('Error: $e')),
       );
     }
   }
