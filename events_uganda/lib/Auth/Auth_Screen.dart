@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
+import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -15,42 +15,33 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen>
     with SingleTickerProviderStateMixin {
   Future<void> signInWithGoogle() async {
-  try {
-    // If you use a prefix, keep it; otherwise plain usage is fine.
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-    if (googleUser == null) return; // user cancelled selection
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      if (googleUser == null) return;
 
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      if (googleAuth.idToken == null) {
+        if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to get Google ID token')));
+        return;
+      }
 
-    final credential = GoogleAuthProvider.credential(
-      idToken: googleAuth.idToken,
-      accessToken: googleAuth.accessToken,
-    );
+      final result = await AuthService.googleAuth(idToken: googleAuth.idToken!);
 
-    final userCred = await FirebaseAuth.instance.signInWithCredential(credential);
-
-    if (userCred.user != null && mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const CustomerHomeScreen()),
-      );
-    }
-  } on FirebaseAuthException catch (e) {
-    debugPrint('Firebase auth error: ${e.code} ${e.message}');
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Sign-in failed: ${e.message ?? e.code}')),
-      );
-    }
-  } catch (e) {
-    debugPrint('Google sign-in error: $e');
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Something went wrong. Try again.')),
-      );
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const CustomerHomeScreen()),
+        );
+      }
+    } catch (e) {
+      debugPrint('Google sign-in error: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Sign-in failed: ${e.toString().replaceFirst('Exception: ', '')}')),
+        );
+      }
     }
   }
-}
 
   @override
   Widget build(BuildContext context) {
