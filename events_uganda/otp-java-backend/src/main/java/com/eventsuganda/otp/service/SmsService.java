@@ -1,5 +1,8 @@
 package com.eventsuganda.otp.service;
 
+import com.eventsuganda.otp.exception.OtpException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +14,14 @@ import java.net.http.HttpResponse;
 @Service
 public class SmsService {
 
-    private final HttpClient client = HttpClient.newHttpClient();
+    private static final Logger log = LoggerFactory.getLogger(SmsService.class);
 
-    @Value("${sms.api.url:https://eventsuganda.netlify.app/.netlify/functions/send-otp}")
+    private final HttpClient httpClient = HttpClient.newHttpClient();
+
+    @Value("${sms.api.url}")
     private String smsApiUrl;
 
-    public void sendOtpSms(String phone, String otp) {
+    public void sendOtp(String phone, String otp) {
         try {
             String json = "{\"phone\":\"%s\",\"otp\":\"%s\"}".formatted(phone, otp);
 
@@ -26,13 +31,18 @@ public class SmsService {
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() != 200) {
-                throw new RuntimeException("SMS API returned status: " + response.statusCode());
+                throw new OtpException("SMS API returned status: " + response.statusCode());
             }
+
+            log.info("OTP SMS sent to {}", phone);
+        } catch (OtpException e) {
+            throw e;
         } catch (Exception e) {
-            throw new RuntimeException("Failed to send SMS: " + e.getMessage());
+            log.error("Failed to send SMS to {}", phone, e);
+            throw new OtpException("Failed to send SMS: " + e.getMessage());
         }
     }
 }
