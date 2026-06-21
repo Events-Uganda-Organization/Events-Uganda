@@ -2,6 +2,7 @@ import 'package:events_uganda/Auth/Forgot_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_Up_Screen.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -103,12 +104,11 @@ class _SignInScreenState extends State<SignInScreen> {
       if (googleUser == null) return;
 
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      if (googleAuth.idToken == null) {
-        _showCustomSnackBar(context, 'Failed to get Google ID token');
-        return;
-      }
 
-      await AuthService.googleAuth(idToken: googleAuth.idToken!);
+      await AuthService.googleAuth(
+        idToken: kIsWeb ? null : googleAuth.idToken,
+        accessToken: kIsWeb ? googleAuth.accessToken : null,
+      );
 
       _showCustomSnackBar(context, 'Sign in successful!');
       await Future.delayed(const Duration(seconds: 1));
