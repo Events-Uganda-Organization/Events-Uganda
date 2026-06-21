@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -75,12 +76,17 @@ class AuthService {
   }
 
   static Future<Map<String, dynamic>> googleAuth({
-    required String idToken,
+    String? idToken,
+    String? accessToken,
   }) async {
+    final Map<String, String> body = {};
+    if (idToken != null) body['idToken'] = idToken;
+    if (accessToken != null) body['accessToken'] = accessToken;
+
     final response = await http.post(
       Uri.parse('$_baseUrl/google'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'idToken': idToken}),
+      body: jsonEncode(body),
     );
 
     return _handleResponse(response);

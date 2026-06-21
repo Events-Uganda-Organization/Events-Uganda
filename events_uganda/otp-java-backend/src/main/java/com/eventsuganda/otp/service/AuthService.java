@@ -45,22 +45,44 @@ public class AuthService {
         return new AuthResponse(token, user);
     }
 
-    public AuthResponse googleAuth(String idToken) {
+    public AuthResponse googleAuth(String idToken, String accessToken) {
         try {
-            HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://oauth2.googleapis.com/tokeninfo?id_token=" + idToken))
-                .GET()
-                .build();
+            Map<String, Object> payload;
 
-            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            if (accessToken != null && !accessToken.isBlank()) {
+                HttpRequest tokenRequest = HttpRequest.newBuilder()
+                    .uri(URI.create("https://www.googleapis.com/oauth2/v3/userinfo"))
+                    .header("Authorization", "Bearer " + accessToken)
+                    .GET()
+                    .build();
 
-            if (response.statusCode() != 200) {
-                throw new OtpException("Invalid Google token");
+                HttpResponse<String> tokenResponse = httpClient.send(tokenRequest, HttpResponse.BodyHandlers.ofString());
+
+                if (tokenResponse.statusCode() != 200) {
+                    throw new OtpException("Invalid Google access token");
+                }
+
+                @SuppressWarnings("unchecked")
+                Map<String, Object> p = new com.fasterxml.jackson.databind.ObjectMapper()
+                    .readValue(tokenResponse.body(), Map.class);
+                payload = p;
+            } else {
+                HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://oauth2.googleapis.com/tokeninfo?id_token=" + idToken))
+                    .GET()
+                    .build();
+
+                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() != 200) {
+                    throw new OtpException("Invalid Google ID token");
+                }
+
+                @SuppressWarnings("unchecked")
+                Map<String, Object> p = new com.fasterxml.jackson.databind.ObjectMapper()
+                    .readValue(response.body(), Map.class);
+                payload = p;
             }
-
-            @SuppressWarnings("unchecked")
-            Map<String, Object> payload = new com.fasterxml.jackson.databind.ObjectMapper()
-                .readValue(response.body(), Map.class);
 
             String email = (String) payload.get("email");
             String name = (String) payload.get("name");
