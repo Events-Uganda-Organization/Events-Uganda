@@ -1,5 +1,8 @@
 package com.eventsuganda.otp.service;
 
+import com.eventsuganda.otp.exception.OtpException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -9,41 +12,40 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class OtpService {
 
+    private static final Logger log = LoggerFactory.getLogger(OtpService.class);
+
     private final Map<String, OtpEntry> otpStore = new ConcurrentHashMap<>();
     private final SecureRandom random = new SecureRandom();
 
-    private static final long OTP_VALIDITY_MINUTES = 10;
+    private static final long OTP_VALIDITY_MS = 10 * 60 * 1000;
+    private static final int OTP_LENGTH = 4;
 
-    public String generateOtp(String key) {
-        int code = 1000 + random.nextInt(9000);
+    public String generateAndStore(String key) {
+        int code = (int) Math.pow(10, OTP_LENGTH - 1) + random.nextInt((int) Math.pow(10, OTP_LENGTH) - (int) Math.pow(10, OTP_LENGTH - 1));
         String otp = String.valueOf(code);
         otpStore.put(key, new OtpEntry(otp, System.currentTimeMillis()));
+        log.debug("OTP stored for key: {}", key);
         return otp;
     }
 
-    public boolean verifyOtp(String key, String otp) {
+    public void verify(String key, String otp) {
         OtpEntry entry = otpStore.get(key);
-        if (entry == null) return false;
-
-        long elapsed = System.currentTimeMillis() - entry.createdAt;
-        if (elapsed > OTP_VALIDITY_MINUTES * 60 * 1000) {
-            otpStore.remove(key);
-            return false;
+        if (entry == null) {
+            throw new OtpException("No OTP found for this identifier");
         }
 
-        if (!entry.otp.equals(otp)) return false;
+        if (System.currentTimeMillis() - entry.createdAt > OTP_VALIDITY_MS) {
+            otpStore.remove(key);
+            throw new OtpException("OTP has expired");
+        }
+
+        if (!entry.otp.equals(otp)) {
+            throw new OtpException("Invalid OTP");
+        }
 
         otpStore.remove(key);
-        return true;
+        log.debug("OTP verified for key: {}", key);
     }
 
-    private static class OtpEntry {
-        final String otp;
-        final long createdAt;
-
-        OtpEntry(String otp, long createdAt) {
-            this.otp = otp;
-            this.createdAt = createdAt;
-        }
-    }
+    private record OtpEntry(String otp, long createdAt) {}
 }

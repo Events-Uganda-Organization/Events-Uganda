@@ -1,11 +1,12 @@
 package com.eventsuganda.otp.controller;
 
-import com.eventsuganda.otp.model.ApiResponse;
-import com.eventsuganda.otp.model.SendOtpRequest;
-import com.eventsuganda.otp.model.VerifyOtpRequest;
+import com.eventsuganda.otp.dto.request.SendOtpRequest;
+import com.eventsuganda.otp.dto.request.VerifyOtpRequest;
+import com.eventsuganda.otp.dto.response.ApiResponse;
 import com.eventsuganda.otp.service.EmailService;
 import com.eventsuganda.otp.service.OtpService;
 import com.eventsuganda.otp.service.SmsService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,48 +25,25 @@ public class OtpController {
     }
 
     @PostMapping("/send")
-    public ResponseEntity<ApiResponse> sendOtp(@RequestBody SendOtpRequest request) {
-        try {
-            if (request.getEmail() != null && !request.getEmail().isBlank()) {
-                String otp = otpService.generateOtp("email:" + request.getEmail());
-                emailService.sendOtpEmail(request.getEmail(), otp);
-                return ResponseEntity.ok(new ApiResponse(true, "OTP sent to your email"));
-            } else if (request.getPhone() != null && !request.getPhone().isBlank()) {
-                String otp = otpService.generateOtp("phone:" + request.getPhone());
-                smsService.sendOtpSms(request.getPhone(), otp);
-                return ResponseEntity.ok(new ApiResponse(true, "OTP sent to your phone"));
-            } else {
-                return ResponseEntity.badRequest()
-                    .body(new ApiResponse(false, "Email or phone number is required"));
-            }
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                .body(new ApiResponse(false, "Failed to send OTP: " + e.getMessage()));
+    public ResponseEntity<ApiResponse> sendOtp(@Valid @RequestBody SendOtpRequest request) {
+        if (request.getEmail() != null && !request.getEmail().isBlank()) {
+            String otp = otpService.generateAndStore("email:" + request.getEmail());
+            emailService.sendOtp(request.getEmail(), otp);
+            return ResponseEntity.ok(ApiResponse.ok("OTP sent to your email"));
         }
+
+        String otp = otpService.generateAndStore("phone:" + request.getPhone());
+        smsService.sendOtp(request.getPhone(), otp);
+        return ResponseEntity.ok(ApiResponse.ok("OTP sent to your phone"));
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<ApiResponse> verifyOtp(@RequestBody VerifyOtpRequest request) {
-        if (request.getOtp() == null || request.getOtp().isBlank()) {
-            return ResponseEntity.badRequest()
-                .body(new ApiResponse(false, "OTP is required"));
-        }
-
-        boolean valid;
+    public ResponseEntity<ApiResponse> verifyOtp(@Valid @RequestBody VerifyOtpRequest request) {
         if (request.getEmail() != null && !request.getEmail().isBlank()) {
-            valid = otpService.verifyOtp("email:" + request.getEmail(), request.getOtp());
-        } else if (request.getPhone() != null && !request.getPhone().isBlank()) {
-            valid = otpService.verifyOtp("phone:" + request.getPhone(), request.getOtp());
+            otpService.verify("email:" + request.getEmail(), request.getOtp());
         } else {
-            return ResponseEntity.badRequest()
-                .body(new ApiResponse(false, "Email or phone number is required"));
+            otpService.verify("phone:" + request.getPhone(), request.getOtp());
         }
-
-        if (valid) {
-            return ResponseEntity.ok(new ApiResponse(true, "OTP verified successfully"));
-        } else {
-            return ResponseEntity.badRequest()
-                .body(new ApiResponse(false, "Invalid or expired OTP"));
-        }
+        return ResponseEntity.ok(ApiResponse.ok("OTP verified successfully"));
     }
 }
