@@ -35,7 +35,12 @@ public class AuthService {
     }
 
     public AuthResponse login(String email, String password) {
-        User user = userService.getByEmail(email);
+        User user;
+        try {
+            user = userService.getByEmail(email);
+        } catch (OtpException e) {
+            user = userService.getByPhone(email);
+        }
 
         if (!encoder.matches(password, user.getPassword())) {
             throw new OtpException("Invalid email or password");

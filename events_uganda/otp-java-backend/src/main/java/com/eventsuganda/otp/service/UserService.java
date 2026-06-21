@@ -50,4 +50,13 @@ public class UserService {
     public boolean emailExists(String email) {
         return usersByEmail.containsKey(email);
     }
+
+    public User getByPhone(String phone) {
+        for (User user : usersByEmail.values()) {
+            if (phone.equals(user.getPhone())) {
+                return user;
+            }
+        }
+        throw new OtpException("User not found with phone: " + phone);
+    }
 }
