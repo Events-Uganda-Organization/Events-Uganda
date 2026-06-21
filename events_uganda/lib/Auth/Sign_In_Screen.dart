@@ -463,7 +463,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                             SizedBox(width: screen.width * 0.06),
                             GestureDetector(
-                              onTap: _signInWithApple,
+                              onTap: () => _showCustomSnackBar(context, 'Apple sign-in coming soon'),
                               child: _SocialBtn(
                                 bg: socialBg,
                                 asset: 'assets/vectors/apple.png',

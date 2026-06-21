@@ -485,7 +485,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 width: MediaQuery.of(context).size.width * 0.06,
                               ),
                               GestureDetector(
-                                onTap: _signUpWithApple,
+                                onTap: () => _showCustomSnackBar(context, 'Apple sign-in coming soon'),
                                 child: Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.15,
