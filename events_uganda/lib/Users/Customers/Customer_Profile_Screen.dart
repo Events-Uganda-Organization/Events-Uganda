@@ -1,12 +1,10 @@
-import 'dart:ui';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:ui';
+import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CustomerProfileScreen extends StatefulWidget {
   const CustomerProfileScreen({super.key});
@@ -23,52 +21,30 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   String? _profilePicUrl;
 
   final ImagePicker _picker = ImagePicker();
-  bool _isUploading = false;
 
   @override
   void initState() {
     super.initState();
-    // Fetch user's display name if available
-    final user = FirebaseAuth.instance.currentUser;
-    _userFullName = user?.displayName ?? 'User';
-    _userEmail = user?.email ?? '';
-    _profilePicUrl = user?.photoURL;
+    _loadUser();
   }
 
-  Future<void> _pickAndUploadImage() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) return;
+  Future<void> _loadUser() async {
+    final user = await AuthService.getUser();
+    if (user != null) {
+      setState(() {
+        _userFullName = user['fullName'] as String? ?? 'User';
+        _userEmail = user['email'] as String? ?? '';
+        _profilePicUrl = user['photoUrl'] as String?;
+      });
+    }
+  }
+
+  Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile == null) return;
     setState(() {
-      _isUploading = true;
+      _profilePicUrl = pickedFile.path;
     });
-    try {
-      final file = File(pickedFile.path);
-      final storageRef = FirebaseStorage.instance.ref().child(
-        'profile_pics/${user.uid}.jpg',
-      );
-      await storageRef.putFile(file);
-      final downloadUrl = await storageRef.getDownloadURL();
-      // Update Firestore user document (assuming users collection)
-      await FirebaseFirestore.instance.collection('users').doc(user.uid).update(
-        {'photoURL': downloadUrl},
-      );
-      // Update Firebase Auth profile
-      await user.updatePhotoURL(downloadUrl);
-      setState(() {
-        _profilePicUrl = downloadUrl;
-      });
-    } catch (e) {
-      // Optionally show error
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Failed to upload image.')));
-    } finally {
-      setState(() {
-        _isUploading = false;
-      });
-    }
   }
 
   @override
@@ -176,7 +152,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                       bottom: screenWidth * 0.02,
                       right: screenWidth * 0.13,
                       child: GestureDetector(
-                        onTap: _isUploading ? null : _pickAndUploadImage,
+                        onTap: _pickImage,
                         child: Container(
                           width: screenWidth * 0.08,
                           height: screenWidth * 0.08,
