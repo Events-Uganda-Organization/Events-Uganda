@@ -18,7 +18,7 @@ class _AuthScreenState extends State<AuthScreen>
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(
         clientId: '830864962380-butme4ss3fiam7ko130lfe50i8jn3mqo.apps.googleusercontent.com',
-        scopes: ['email'],
+        scopes: ['email', 'openid'],
       );
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) return;
