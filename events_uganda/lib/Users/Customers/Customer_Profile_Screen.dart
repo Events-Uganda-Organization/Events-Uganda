@@ -47,6 +47,14 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     });
   }
 
+  Widget _defaultProfileIcon(double screenWidth) {
+    return Icon(
+      Icons.person,
+      color: Colors.black,
+      size: screenWidth * 0.18,
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -130,23 +138,30 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    Icon(
-                      Icons.person,
-                      color: Colors.black,
-                      size: screenWidth * 0.18,
-                    ),
                     if (_profilePicUrl != null && _profilePicUrl!.isNotEmpty)
                       ClipOval(
-                        child: Image.network(
-                          _profilePicUrl!,
-                          width: screenWidth * 0.3,
-                          height: screenWidth * 0.3,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return SizedBox.shrink();
-                          },
-                        ),
-                      ),
+                        child: _profilePicUrl!.startsWith('http')
+                            ? Image.network(
+                                _profilePicUrl!,
+                                width: screenWidth * 0.3,
+                                height: screenWidth * 0.3,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return _defaultProfileIcon(screenWidth);
+                                },
+                              )
+                            : Image.file(
+                                File(_profilePicUrl!),
+                                width: screenWidth * 0.3,
+                                height: screenWidth * 0.3,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return _defaultProfileIcon(screenWidth);
+                                },
+                              ),
+                      )
+                    else
+                      _defaultProfileIcon(screenWidth),
                     // Upload icon square at bottom right
                     Positioned(
                       bottom: screenWidth * 0.02,
@@ -162,15 +177,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             border: Border.all(color: Colors.white, width: 1),
                           ),
                           child: Center(
-                            child: _isUploading
-                                ? SizedBox(
-                                    width: screenWidth * 0.045,
-                                    height: screenWidth * 0.045,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : Icon(
+                            child: Icon(
                                     Icons.upload,
                                     color: Colors.black,
                                     size: screenWidth * 0.045,
