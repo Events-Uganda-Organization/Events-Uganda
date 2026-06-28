@@ -3,9 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -107,85 +105,34 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
         _isSearchFocused = _searchFocus.hasFocus;
       });
     });
-    // Fetch user's display name if available
-    _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
     _loadUserProfile();
   }
 
   Future<void> _loadUserProfile() async {
     try {
-      // First try to get from Firebase Auth
-      final currentUser = FirebaseAuth.instance.currentUser;
-      if (currentUser != null && currentUser.photoURL != null) {
+      final user = await AuthService.getUser();
+      if (user != null) {
         setState(() {
-          _profilePicUrl = currentUser.photoURL;
+          _userFullName = user['fullName'] as String? ?? 'User';
+          _profilePicUrl = user['photoUrl'] as String?;
         });
-        return;
-      }
-
-      // If not available, get from Firestore using saved userId
-      final prefs = await SharedPreferences.getInstance();
-      final userId = prefs.getString('userId');
-
-      if (userId != null) {
-        final userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userId)
-            .get();
-
-        if (userDoc.exists) {
-          final data = userDoc.data();
-          if (data != null && data['profilePicUrl'] != null) {
-            setState(() {
-              _profilePicUrl = data['profilePicUrl'] as String?;
-            });
-          }
-        }
+      } else {
+        setState(() => _userFullName = 'User');
       }
     } catch (e) {
       debugPrint('Error loading user profile: $e');
+      setState(() => _userFullName = 'User');
     }
   }
 
   Future<void> _uploadProfileImage() async {
     try {
-      // Pick image from gallery
       final ImagePicker picker = ImagePicker();
       final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
       if (image == null) return;
-
-      // Get current user ID
-      final prefs = await SharedPreferences.getInstance();
-      final userId = prefs.getString('userId');
-
-      if (userId == null) {
-        debugPrint('User ID not found');
-        return;
-      }
-
-      // Upload image to Firebase Storage
-      final storageRef = FirebaseStorage.instance
-          .ref()
-          .child('profile_pictures')
-          .child('$userId.jpg');
-
-      await storageRef.putFile(File(image.path));
-
-      // Get download URL
-      final downloadURL = await storageRef.getDownloadURL();
-
-      // Save URL to Firestore
-      await FirebaseFirestore.instance.collection('users').doc(userId).update({
-        'profilePicUrl': downloadURL,
-      });
-
-      // Update local state
       setState(() {
-        _profilePicUrl = downloadURL;
+        _profilePicUrl = image.path;
       });
-
-      debugPrint('Profile picture uploaded successfully: $downloadURL');
     } catch (e) {
       debugPrint('Error uploading profile image: $e');
     }
@@ -1140,21 +1087,37 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
                 ),
                 child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
                     ? ClipOval(
-                        child: Image.network(
-                          _profilePicUrl!,
-                          width: screenWidth * 0.128,
-                          height: screenWidth * 0.128,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Center(
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.black,
-                                size: screenWidth * 0.07,
+                        child: _profilePicUrl!.startsWith('http')
+                            ? Image.network(
+                                _profilePicUrl!,
+                                width: screenWidth * 0.128,
+                                height: screenWidth * 0.128,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Center(
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.black,
+                                      size: screenWidth * 0.07,
+                                    ),
+                                  );
+                                },
+                              )
+                            : Image.file(
+                                File(_profilePicUrl!),
+                                width: screenWidth * 0.128,
+                                height: screenWidth * 0.128,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Center(
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.black,
+                                      size: screenWidth * 0.07,
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
                       )
                     : Center(
                         child: Icon(

@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:events_uganda/Auth/auth_service.dart';
 
 class DateOfBookingScreen extends StatefulWidget {
   final int? categoryIndex;
@@ -24,7 +24,13 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   void initState() {
     super.initState();
     // Fetch user's display name if available
-    _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
+    AuthService.getUser().then((userData) {
+      if (mounted) {
+        setState(() {
+          _userFullName = userData?['fullName'] as String? ?? 'User';
+        });
+      }
+    });
   }
 
   String get _greetingText {

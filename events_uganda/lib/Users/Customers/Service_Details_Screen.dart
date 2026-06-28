@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:events_uganda/Auth/auth_service.dart';
 
 class ServiceDetailsScreen extends StatefulWidget {
   const ServiceDetailsScreen({super.key});
@@ -16,13 +15,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     with SingleTickerProviderStateMixin {
   final TextEditingController _reviewController = TextEditingController();
   bool _hasText = false;
-  List<ReviewModel> _reviews = [];
-  bool _showUserReview = false;
-  String _userReviewText = '';
-  String _reviewDate = '';
+  final List<ReviewModel> _reviews = [];
   final ScrollController _galleryScrollController = ScrollController();
   int _galleryScrollIndex = 0;
-  final user = FirebaseAuth.instance.currentUser;
 
   // List of images for the glassy rectangle
   final List<String> _galleryImages = [
@@ -50,49 +45,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   bool _showReviewSection = false;
   bool _showAllReviews = false;
 
-  Widget _buildCircleItem(
-    double screenWidth,
-    double screenHeight,
-    String imagePath,
-    String label,
-  ) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 70,
-          height: 70,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.white, width: 3),
-            image: DecorationImage(
-              image: AssetImage(imagePath),
-              fit: BoxFit.cover,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.12),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: screenHeight * 0.008),
-        Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.w600,
-            fontSize: screenWidth * 0.032,
-            color: Colors.black,
-            height: 1.2,
-          ),
-        ),
-      ],
-    );
-  }
+
 
   @override
   void initState() {
@@ -108,7 +61,13 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     _startCountdown();
     _searchFocus.addListener(() {});
     // Fetch user's display name if available
-    _userFullName = FirebaseAuth.instance.currentUser?.displayName ?? 'User';
+    AuthService.getUser().then((userData) {
+      if (mounted) {
+        setState(() {
+          _userFullName = userData?['fullName'] as String? ?? 'User';
+        });
+      }
+    });
   }
 
   String get _greetingText {
@@ -155,9 +114,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final orientation = MediaQuery.of(context).orientation;
-    final promoTop =
-        screenHeight * 0.19 + screenWidth * 0.12 + screenHeight * 0.02;
-    final promoHeight = screenWidth * 0.46;
+
     final offset = screenHeight * 0.13;
     final verticalMultiplier = orientation == Orientation.portrait
         ? 1.0
@@ -247,7 +204,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       spreadRadius: 2,
                       offset: const Offset(0, 7),
@@ -294,7 +251,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 7),
                     ),
@@ -439,7 +396,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                   boxShadow: [
                                                     BoxShadow(
                                                       color: Colors.black
-                                                          .withOpacity(0.2),
+                                                          .withValues(alpha: 0.2),
                                                       blurRadius: 8,
                                                       offset: const Offset(
                                                         0,
@@ -486,7 +443,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                   boxShadow: [
                                                     BoxShadow(
                                                       color: Colors.black
-                                                          .withOpacity(0.2),
+                                                          .withValues(alpha: 0.2),
                                                       blurRadius: 8,
                                                       offset: const Offset(
                                                         0,
@@ -778,15 +735,15 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               width: 315,
                               height: 55,
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.25),
+                                color: Colors.white.withValues(alpha: 0.25),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: Colors.white.withOpacity(0.5),
+                                  color: Colors.white.withValues(alpha: 0.5),
                                   width: 1.5,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
+                                    color: Colors.black.withValues(alpha: 0.1),
                                     blurRadius: 10,
                                     spreadRadius: 2,
                                   ),
@@ -897,7 +854,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           curve: Curves.ease,
                                         );
                                       },
-                                      child: Container(
+                                      child: SizedBox(
                                         width: 36,
                                         height: 36,
                                         child: const Icon(
@@ -1135,7 +1092,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
 
                                           SizedBox(width: screenWidth * 0.022),
 
-                                          Container(
+                                          SizedBox(
                                             width: screenWidth * 0.35,
                                             child: Column(
                                               crossAxisAlignment:
@@ -1450,29 +1407,23 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                             child: GestureDetector(
                                               onTap: _hasText
                                                   ? () async {
-                                                      print(
-                                                        'Send button tapped!',
-                                                      );
-                                                      print(
-                                                        'Review text: ${_reviewController.text}',
-                                                      );
-                                                      print('Rating: $_rating');
                                                       final now =
                                                           DateTime.now();
                                                       final date =
                                                           '${now.day.toString().padLeft(2, '0')}/'
                                                           '${now.month.toString().padLeft(2, '0')}/'
                                                           '${now.year}';
+                                                      final userData =
+                                                          await AuthService.getUser();
                                                       final newReview = ReviewModel(
                                                         id: DateTime.now()
                                                             .millisecondsSinceEpoch
                                                             .toString(),
                                                         userName:
-                                                            user?.displayName ??
+                                                            userData?['fullName']
+                                                                as String? ??
                                                             'User Name',
-                                                        userImageUrl:
-                                                            user?.photoURL ??
-                                                            '',
+                                                        userImageUrl: '',
                                                         reviewText:
                                                             _reviewController
                                                                 .text
@@ -1482,80 +1433,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                             ? _rating
                                                             : 5,
                                                       );
-
-                                                      // Save to Firestore
-                                                      try {
-                                                        print(
-                                                          'Attempting to save review to Firestore...',
-                                                        );
-                                                        await FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                              'reviews',
-                                                            )
-                                                            .doc(newReview.id)
-                                                            .set({
-                                                              'userId':
-                                                                  user?.uid ??
-                                                                  '',
-                                                              'userName':
-                                                                  newReview
-                                                                      .userName,
-                                                              'userImageUrl':
-                                                                  newReview
-                                                                      .userImageUrl,
-                                                              'reviewText':
-                                                                  newReview
-                                                                      .reviewText,
-                                                              'rating':
-                                                                  newReview
-                                                                      .rating,
-                                                              'date': date,
-                                                              'timestamp':
-                                                                  FieldValue.serverTimestamp(),
-                                                            });
-                                                        print(
-                                                          'Review saved successfully to Firestore!',
-                                                        );
-                                                        if (mounted) {
-                                                          ScaffoldMessenger.of(
-                                                            context,
-                                                          ).showSnackBar(
-                                                            SnackBar(
-                                                              content: Text(
-                                                                'Review submitted successfully!',
-                                                              ),
-                                                              backgroundColor:
-                                                                  Colors.green,
-                                                              duration:
-                                                                  Duration(
-                                                                    seconds: 2,
-                                                                  ),
-                                                            ),
-                                                          );
-                                                        }
-                                                      } catch (e) {
-                                                        print(
-                                                          'Error saving review: $e',
-                                                        );
-                                                        if (mounted) {
-                                                          ScaffoldMessenger.of(
-                                                            context,
-                                                          ).showSnackBar(
-                                                            SnackBar(
-                                                              content: Text(
-                                                                'Failed to submit review: $e',
-                                                              ),
-                                                              backgroundColor:
-                                                                  Colors.red,
-                                                              duration:
-                                                                  Duration(
-                                                                    seconds: 3,
-                                                                  ),
-                                                            ),
-                                                          );
-                                                        }
-                                                      }
 
                                                       setState(() {
                                                         _reviews.insert(
@@ -1579,8 +1456,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                       ? [
                                                           BoxShadow(
                                                             color: Colors.amber
-                                                                .withOpacity(
-                                                                  0.4,
+                                                                .withValues(
+                                                                  alpha: 0.4,
                                                                 ),
                                                             blurRadius: 8,
                                                             offset:
@@ -1592,33 +1469,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                                         ]
                                                       : [],
                                                 ),
-                                                child: GestureDetector(
-                                                  onTap: _hasText
-                                                      ? () {
-                                                          final now =
-                                                              DateTime.now();
-                                                          _reviewDate =
-                                                              '${now.day.toString().padLeft(2, '0')}/'
-                                                              '${now.month.toString().padLeft(2, '0')}/'
-                                                              '${now.year}';
-                                                          setState(() {
-                                                            _userReviewText =
-                                                                _reviewController
-                                                                    .text
-                                                                    .trim();
-                                                            _showUserReview =
-                                                                true;
-                                                            _hasText = false;
-                                                          });
-                                                          _reviewController
-                                                              .clear();
-                                                        }
-                                                      : null,
-                                                  child: const Icon(
-                                                    Icons.send_rounded,
-                                                    color: Colors.black,
-                                                    size: 20,
-                                                  ),
+                                                child: const Icon(
+                                                  Icons.send_rounded,
+                                                  color: Colors.black,
+                                                  size: 20,
                                                 ),
                                               ),
                                             ),
@@ -1726,7 +1580,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
@@ -1781,7 +1634,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
-
           ],
         ),
       ),
@@ -1955,97 +1807,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     );
   }
 
-  Widget _buildUserReviewCard(double screenWidth) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.black12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // HEADER
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 22,
-                backgroundColor: Colors.grey.shade300,
-                child: const Icon(Icons.person, color: Colors.black, size: 24),
-              ),
 
-              const SizedBox(width: 12),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'User Name',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                  ),
-
-                  const SizedBox(height: 4),
-
-                  Row(
-                    children: [
-                      _buildStaticStars(4),
-                      const SizedBox(width: 8),
-                      Text(
-                        _reviewDate,
-                        style: const TextStyle(
-                          fontSize: 11,
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 12),
-
-          // REVIEW TEXT
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: Colors.black),
-            ),
-            child: Text(_userReviewText, style: const TextStyle(fontSize: 13)),
-          ),
-
-          const SizedBox(height: 14),
-
-          // HELPFUL SECTION
-          const Text(
-            'Was this helpful?',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-          ),
-
-          const SizedBox(height: 8),
-
-          Row(
-            children: [
-              _helpfulButton('Yes', Icons.check),
-              const SizedBox(width: 12),
-              _helpfulButton('No', Icons.close),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildStaticStars(int count) {
     return Row(
@@ -2060,25 +1822,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     );
   }
 
-  Widget _helpfulButton(String text, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-      decoration: BoxDecoration(
-        color: Colors.amber.withOpacity(0.25),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 14),
-          const SizedBox(width: 4),
-          Text(
-            text,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-          ),
-        ],
-      ),
-    );
-  }
+
 }
 
 Widget _availabilityCard(double screenWidth) {
@@ -2094,7 +1838,7 @@ Widget _availabilityCard(double screenWidth) {
       ),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.2),
+          color: Colors.black.withValues(alpha: 0.2),
           blurRadius: 8,
           offset: const Offset(0, 4),
         ),
@@ -2132,7 +1876,7 @@ Widget _priceCard(double screenWidth) {
       ),
       boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.2),
+          color: Colors.black.withValues(alpha: 0.2),
           blurRadius: 8,
           offset: const Offset(0, 4),
         ),

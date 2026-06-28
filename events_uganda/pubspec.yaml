@@ -38,6 +38,8 @@ dependencies:
   shared_preferences:
   # cloud firestore
   cloud_firestore:
+  # video player
+  video_player:
   # firebase storage
   firebase_storage:
   # image picker
@@ -62,6 +64,7 @@ flutter:
     - assets/images/
     - assets/vectors/
     - assets/backgroundcolors/
+    - assets/videos/
 
   fonts:
     - family: Poppins
