@@ -40,6 +40,7 @@ dependencies:
   cloud_firestore:
   # video player
   video_player:
+  video_player_windows:
   # firebase storage
   firebase_storage:
   # image picker
