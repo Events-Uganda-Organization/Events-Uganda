@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 import 'package:events_uganda/Intro/Onboarding_Screen1.dart';
-import 'package:events_uganda/Other%20Screens/splash_video.dart';
+import 'package:events_uganda/Other Screens/splash_video.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
