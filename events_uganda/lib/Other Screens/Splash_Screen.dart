@@ -14,6 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Timer? _navTimer;
   static bool _registered = false;
+  web.HTMLVideoElement? _videoElement;
 
   @override
   void initState() {
@@ -29,22 +30,25 @@ class _SplashScreenState extends State<SplashScreen> {
     ui_web.platformViewRegistry.registerViewFactory(
       'splash-video',
       (int viewId) {
-        final video = web.document.createElement('video') as web.HTMLVideoElement;
-        video.src = 'assets/videos/Bride_and_groom_merge_light_202606290000.mp4';
-        video.muted = true;
-        video.loop = true;
-        video.autoplay = true;
-        video.playsInline = true;
-        video.style
+        _videoElement =
+            web.document.createElement('video') as web.HTMLVideoElement;
+        _videoElement!.src =
+            'assets/videos/Bride_and_groom_merge_light_202606290000.mp4';
+        _videoElement!.muted = true;
+        _videoElement!.loop = true;
+        _videoElement!.autoplay = true;
+        _videoElement!.playsInline = true;
+        _videoElement!.style
           ..width = '100%'
           ..height = '100%'
           ..objectFit = 'cover';
-        return video;
+        return _videoElement!;
       },
     );
   }
 
   void _navigate() {
+    _videoElement?.pause();
     if (mounted) {
       Navigator.pushReplacement(
         context,
@@ -55,6 +59,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void dispose() {
+    _videoElement?.pause();
+    _videoElement?.removeAttribute('src');
     _navTimer?.cancel();
     super.dispose();
   }
