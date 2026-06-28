@@ -47,6 +47,8 @@ dependencies:
   firebase_app_check: ^0.4.1+3
   # http requests
   http:
+  # video player
+  video_player:
   web: ^1.1.1
 
 dev_dependencies:
