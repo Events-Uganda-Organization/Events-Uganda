@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:math' as math;
-import 'dart:ui_web' as ui_web;
 import 'package:events_uganda/Intro/Onboarding_Screen1.dart';
+import 'package:events_uganda/Other%20Screens/splash_video.dart';
 import 'package:flutter/material.dart';
-import 'package:web/web.dart' as web;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,53 +13,22 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   Timer? _navTimer;
-  static bool _registered = false;
-  web.HTMLVideoElement? _videoElement;
   late AnimationController _animController;
   late Animation<double> _fadeIn;
 
   @override
   void initState() {
     super.initState();
-    if (!_registered) {
-      _registered = true;
-      _registerVideoPlayer();
-    }
-
     _animController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1200),
     );
     _fadeIn = CurvedAnimation(parent: _animController, curve: Curves.easeOutCubic);
     _animController.forward();
-
     _navTimer = Timer(const Duration(seconds: 10), _navigate);
   }
 
-  void _registerVideoPlayer() {
-    ui_web.platformViewRegistry.registerViewFactory(
-      'splash-video',
-      (int viewId) {
-        _videoElement =
-            web.document.createElement('video') as web.HTMLVideoElement;
-        _videoElement!.src =
-            'assets/videos/Bride_and_groom_merge_light_202606290000.mp4';
-        _videoElement!.muted = true;
-        _videoElement!.loop = true;
-        _videoElement!.autoplay = true;
-        _videoElement!.playsInline = true;
-        _videoElement!.playbackRate = 1.3;
-        _videoElement!.style
-          ..width = '100%'
-          ..height = '100%'
-          ..objectFit = 'cover';
-        return _videoElement!;
-      },
-    );
-  }
-
   void _navigate() {
-    _videoElement?.pause();
     if (mounted) {
       Navigator.pushReplacement(
         context,
@@ -71,8 +39,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    _videoElement?.pause();
-    _videoElement?.removeAttribute('src');
     _navTimer?.cancel();
     _animController.dispose();
     super.dispose();
@@ -88,9 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: SizedBox.expand(
         child: Stack(
           children: [
-            SizedBox.expand(
-              child: HtmlElementView(viewType: 'splash-video'),
-            ),
+            const SizedBox.expand(child: SplashVideoPlayer()),
             SizedBox.expand(
               child: Container(color: Colors.black.withValues(alpha: 0.25)),
             ),
