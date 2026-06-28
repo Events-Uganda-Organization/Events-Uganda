@@ -21,4 +21,5 @@ com\eventsuganda\otp\dto\request\LoginRequest.class
 com\eventsuganda\otp\service\AuthService.class
 com\eventsuganda\otp\dto\request\SendOtpRequest.class
 com\eventsuganda\otp\model\User.class
+com\eventsuganda\otp\repository\UserRepository.class
 com\eventsuganda\otp\service\SmsService.class
