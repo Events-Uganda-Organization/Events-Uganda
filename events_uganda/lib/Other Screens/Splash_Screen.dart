@@ -53,17 +53,23 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   late VideoPlayerController _videoController;
   bool _videoInitialized = false;
+  Timer? _navTimer;
 
   @override
   void initState() {
     super.initState();
     _initVideo();
-    Timer(const Duration(seconds: 6), () {
+    _navTimer = Timer(const Duration(seconds: 10), _navigate);
+  }
+
+  void _navigate() {
+    _videoController.pause();
+    if (mounted) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const OnboardingScreen1()),
       );
-    });
+    }
   }
 
   Future<void> _initVideo() async {
@@ -77,12 +83,13 @@ class _SplashScreenState extends State<SplashScreen> {
       await _videoController.play();
       if (mounted) setState(() => _videoInitialized = true);
     } catch (e) {
-      if (mounted) setState(() => _videoInitialized = false);
+      if (mounted) setState(() => _videoInitialized = true);
     }
   }
 
   @override
   void dispose() {
+    _navTimer?.cancel();
     _videoController.dispose();
     super.dispose();
   }
@@ -97,19 +104,19 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         children: [
           // Background video
-          if (_videoInitialized)
-            SizedBox.expand(
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: SizedBox(
-                  width: _videoController.value.size.width,
-                  height: _videoController.value.size.height,
-                  child: VideoPlayer(_videoController),
-                ),
-              ),
-            )
-          else
-            const SizedBox.expand(child: ColoredBox(color: Colors.black)),
+          Positioned.fill(
+            child: _videoInitialized
+                ? FittedBox(
+                    fit: BoxFit.cover,
+                    clipBehavior: Clip.hardEdge,
+                    child: SizedBox(
+                      width: _videoController.value.size.width,
+                      height: _videoController.value.size.height,
+                      child: VideoPlayer(_videoController),
+                    ),
+                  )
+                : ColoredBox(color: Colors.black),
+          ),
 
           // Ring images (bottom-right)
           Positioned(
