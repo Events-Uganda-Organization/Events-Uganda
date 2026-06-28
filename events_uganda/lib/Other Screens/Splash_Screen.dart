@@ -55,26 +55,33 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   late VideoPlayerController _videoController;
+  bool _videoInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    _videoController = VideoPlayerController.asset(
-      'assets/videos/Bride_and_groom_merge_light_202606290000.mp4',
-    )
-      ..setLooping(true)
-      ..setVolume(0)
-      ..initialize().then((_) {
-        setState(() {});
-        _videoController.play();
-      });
-
-    Timer(const Duration(seconds: 5), () {
+    _initVideo();
+    Timer(const Duration(seconds: 6), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const OnboardingScreen1()),
       );
     });
+  }
+
+  Future<void> _initVideo() async {
+    _videoController = VideoPlayerController.asset(
+      'assets/videos/Bride_and_groom_merge_light_202606290000.mp4',
+    );
+    try {
+      await _videoController.initialize();
+      await _videoController.setLooping(true);
+      await _videoController.setVolume(0);
+      await _videoController.play();
+      if (mounted) setState(() => _videoInitialized = true);
+    } catch (e) {
+      if (mounted) setState(() => _videoInitialized = false);
+    }
   }
 
   @override
@@ -93,7 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         children: [
           // Background video
-          if (_videoController.value.isInitialized)
+          if (_videoInitialized)
             SizedBox.expand(
               child: FittedBox(
                 fit: BoxFit.cover,
@@ -107,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen> {
           else
             const SizedBox.expand(child: ColoredBox(color: Colors.black)),
 
-          // Ring images (bottom-right decorative container)
+          // Ring images (bottom-right)
           Positioned(
             right: screenWidth * 0.55,
             bottom: screenHeight * 0.0,
@@ -116,14 +123,6 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Container(
-                    width: 420,
-                    height: 420,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF31373A),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
                   Positioned(
                     left: screenWidth * 0.30,
                     top: screenHeight * 0.0,
