@@ -15,31 +15,28 @@ class DiagonalLogoText extends StatelessWidget {
     return Stack(
       children: [
         Positioned(
-          left: screenWidth * 0.01,
-          top: screenHeight * 0.44,
-          child: Transform.rotate(
-            angle: 0.95,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/vectors/logo.png',
-                  width: screenWidth * 0.18,
-                  height: screenWidth * 0.18,
-                  fit: BoxFit.contain,
+          left: screenWidth * 0.05,
+          bottom: screenHeight * 0.12,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/vectors/logo.png',
+                width: screenWidth * 0.12,
+                height: screenWidth * 0.12,
+                fit: BoxFit.contain,
+              ),
+              SizedBox(width: screenWidth * 0.03),
+              Text(
+                'Events Uganda',
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: screenWidth * 0.07,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
-                SizedBox(width: screenWidth * 0.04),
-                Text(
-                  'Events Uganda',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: screenWidth * 0.11,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ],
