@@ -100,14 +100,14 @@ class _SplashScreenState extends State<SplashScreen>
           ),
 
           // Rings at bottom center (fade-in + slide-up)
-          AnimatedBuilder(
-            animation: _fadeIn,
-            builder: (context, child) {
-              return Positioned(
-                left: 0,
-                right: 0,
-                bottom: screenHeight * 0.14,
-                child: Opacity(
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: screenHeight * 0.14,
+            child: AnimatedBuilder(
+              animation: _fadeIn,
+              builder: (context, child) {
+                return Opacity(
                   opacity: _fadeIn.value,
                   child: Transform.translate(
                     offset: Offset(0, 30 * (1 - _fadeIn.value)),
@@ -161,20 +161,20 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
 
           // Logo + Events Uganda text at bottom center (fade-in + slide-up)
-          AnimatedBuilder(
-            animation: _fadeIn,
-            builder: (context, child) {
-              return Positioned(
-                left: 0,
-                right: 0,
-                bottom: screenHeight * 0.04,
-                child: Opacity(
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: screenHeight * 0.04,
+            child: AnimatedBuilder(
+              animation: _fadeIn,
+              builder: (context, child) {
+                return Opacity(
                   opacity: _fadeIn.value,
                   child: Transform.translate(
                     offset: Offset(0, 20 * (1 - _fadeIn.value)),
@@ -203,9 +203,9 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ],
       ),
