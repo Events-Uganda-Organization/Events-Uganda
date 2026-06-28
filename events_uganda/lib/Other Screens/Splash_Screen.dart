@@ -83,7 +83,7 @@ class _SplashScreenState extends State<SplashScreen> {
       await _videoController.play();
       if (mounted) setState(() => _videoInitialized = true);
     } catch (e) {
-      if (mounted) setState(() => _videoInitialized = true);
+      debugPrint('Video init failed: $e');
     }
   }
 
