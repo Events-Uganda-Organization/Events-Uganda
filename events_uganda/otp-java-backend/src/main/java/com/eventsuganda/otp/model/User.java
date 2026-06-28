@@ -1,13 +1,34 @@
 package com.eventsuganda.otp.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class User {
+
+    @Id
     private String id;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private String fullName;
+
     private String phone;
+
     private String photoUrl;
+
+    @Column(nullable = false)
     private String authProvider;
+
+    @Column(nullable = false)
     private long createdAt;
 
     public User() {}
