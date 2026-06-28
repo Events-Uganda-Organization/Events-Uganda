@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math' as math;
 import 'dart:ui_web' as ui_web;
 import 'package:events_uganda/Intro/Onboarding_Screen1.dart';
 import 'package:flutter/material.dart';
@@ -12,11 +13,15 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   Timer? _navTimer;
+  static bool _registered = false;
 
   @override
   void initState() {
     super.initState();
-    _registerVideoPlayer();
+    if (!_registered) {
+      _registered = true;
+      _registerVideoPlayer();
+    }
     _navTimer = Timer(const Duration(seconds: 10), _navigate);
   }
 
@@ -64,7 +69,11 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         children: [
           // Background video
-          Positioned.fill(child: HtmlElementView(viewType: 'splash-video')),
+          Positioned.fill(
+            child: ClipRect(
+              child: HtmlElementView(viewType: 'splash-video'),
+            ),
+          ),
 
           // Rings at bottom center
           Positioned(
