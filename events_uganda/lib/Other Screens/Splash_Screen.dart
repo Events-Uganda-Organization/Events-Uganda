@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:ui_web' as ui_web;
 import 'package:events_uganda/Intro/Onboarding_Screen1.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
-import 'package:video_player/video_player.dart';
+import 'package:web/web.dart' as web;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,19 +11,35 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  late VideoPlayerController _videoController;
-  bool _videoInitialized = false;
   Timer? _navTimer;
 
   @override
   void initState() {
     super.initState();
-    _initVideo();
+    _registerVideoPlayer();
     _navTimer = Timer(const Duration(seconds: 10), _navigate);
   }
 
+  void _registerVideoPlayer() {
+    ui_web.platformViewRegistry.registerViewFactory(
+      'splash-video',
+      (int viewId) {
+        final video = web.document.createElement('video') as web.HTMLVideoElement;
+        video.src = 'assets/videos/Bride_and_groom_merge_light_202606290000.mp4';
+        video.muted = true;
+        video.loop = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        video.style
+          ..width = '100%'
+          ..height = '100%'
+          ..objectFit = 'cover';
+        return video;
+      },
+    );
+  }
+
   void _navigate() {
-    _videoController.pause();
     if (mounted) {
       Navigator.pushReplacement(
         context,
@@ -32,26 +48,9 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  Future<void> _initVideo() async {
-    _videoController = VideoPlayerController.asset(
-      'assets/videos/Bride_and_groom_merge_light_202606290000.mp4',
-    );
-    try {
-      await _videoController.initialize();
-      await _videoController.setLooping(true);
-      await _videoController.setVolume(0);
-      await _videoController.play();
-      if (mounted) setState(() => _videoInitialized = true);
-    } catch (e) {
-      debugPrint('Video init failed: $e');
-      if (mounted) setState(() => _videoInitialized = false);
-    }
-  }
-
   @override
   void dispose() {
     _navTimer?.cancel();
-    _videoController.dispose();
     super.dispose();
   }
 
@@ -65,19 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         children: [
           // Background video
-          Positioned.fill(
-            child: _videoInitialized
-                ? FittedBox(
-                    fit: BoxFit.cover,
-                    clipBehavior: Clip.hardEdge,
-                    child: SizedBox(
-                      width: _videoController.value.size.width,
-                      height: _videoController.value.size.height,
-                      child: VideoPlayer(_videoController),
-                    ),
-                  )
-                : ColoredBox(color: Colors.black),
-          ),
+          Positioned.fill(child: HtmlElementView(viewType: 'splash-video')),
 
           // Rings at bottom center
           Positioned(
