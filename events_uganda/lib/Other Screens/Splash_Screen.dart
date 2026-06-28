@@ -4,46 +4,6 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:video_player/video_player.dart';
 
-class DiagonalLogoText extends StatelessWidget {
-  const DiagonalLogoText({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
-
-    return Stack(
-      children: [
-        Positioned(
-          left: screenWidth * 0.05,
-          bottom: screenHeight * 0.12,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/vectors/logo.png',
-                width: screenWidth * 0.12,
-                height: screenWidth * 0.12,
-                fit: BoxFit.contain,
-              ),
-              SizedBox(width: screenWidth * 0.03),
-              Text(
-                'Events Uganda',
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: screenWidth * 0.07,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
   @override
@@ -84,6 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (mounted) setState(() => _videoInitialized = true);
     } catch (e) {
       debugPrint('Video init failed: $e');
+      if (mounted) setState(() => _videoInitialized = false);
     }
   }
 
@@ -118,61 +79,92 @@ class _SplashScreenState extends State<SplashScreen> {
                 : ColoredBox(color: Colors.black),
           ),
 
-          // Ring images (bottom-right)
+          // Rings at bottom center
           Positioned(
-            right: screenWidth * 0.55,
-            bottom: screenHeight * 0.0,
-            child: Transform.rotate(
-              angle: 55 * (math.pi / 180),
-              child: Stack(
-                alignment: Alignment.center,
+            left: 0,
+            right: 0,
+            bottom: screenHeight * 0.14,
+            child: Center(
+              child: Transform.rotate(
+                angle: 55 * (math.pi / 180),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Positioned(
+                      left: screenWidth * 0.30,
+                      top: screenHeight * 0.0,
+                      child: Transform.rotate(
+                        angle: math.pi / 0.1,
+                        child: Image.asset(
+                          'assets/vectors/diamondrings.png',
+                          width: screenWidth * 0.32,
+                          height: screenHeight * 0.16,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: screenWidth * 0.52,
+                      top: screenHeight * 0.02,
+                      child: Transform.rotate(
+                        angle: math.pi / 0.7,
+                        child: Image.asset(
+                          'assets/vectors/diamondrings1.png',
+                          width: screenWidth * 0.36,
+                          height: screenHeight * 0.19,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: screenWidth * 0.79,
+                      top: screenHeight * 0.1,
+                      child: Transform.rotate(
+                        angle: math.pi / 0.6,
+                        child: Image.asset(
+                          'assets/vectors/goldenring.png',
+                          width: screenWidth * 0.55,
+                          height: screenHeight * 0.25,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // Logo + Events Uganda text at bottom center
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: screenHeight * 0.04,
+            child: Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Positioned(
-                    left: screenWidth * 0.30,
-                    top: screenHeight * 0.0,
-                    child: Transform.rotate(
-                      angle: math.pi / 0.1,
-                      child: Image.asset(
-                        'assets/vectors/diamondrings.png',
-                        width: screenWidth * 0.32,
-                        height: screenHeight * 0.16,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+                  Image.asset(
+                    'assets/vectors/logo.png',
+                    width: screenWidth * 0.12,
+                    height: screenWidth * 0.12,
+                    fit: BoxFit.contain,
                   ),
-                  Positioned(
-                    left: screenWidth * 0.52,
-                    top: screenHeight * 0.02,
-                    child: Transform.rotate(
-                      angle: math.pi / 0.7,
-                      child: Image.asset(
-                        'assets/vectors/diamondrings1.png',
-                        width: screenWidth * 0.36,
-                        height: screenHeight * 0.19,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    left: screenWidth * 0.79,
-                    top: screenHeight * 0.1,
-                    child: Transform.rotate(
-                      angle: math.pi / 0.6,
-                      child: Image.asset(
-                        'assets/vectors/goldenring.png',
-                        width: screenWidth * 0.55,
-                        height: screenHeight * 0.25,
-                        fit: BoxFit.contain,
-                      ),
+                  SizedBox(width: screenWidth * 0.03),
+                  Text(
+                    'Events Uganda',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: screenWidth * 0.07,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ],
               ),
             ),
           ),
-
-          // Logo and text
-          DiagonalLogoText(),
         ],
       ),
     );
