@@ -509,7 +509,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // ===== WHITE CARD 1: PRICE + AVAILABILITY =====
+                              // ===== WHITE CARD 1: PRICE + AVAILABILITY (empty) =====
                               Container(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: screenWidth * 0.04,
@@ -520,49 +520,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   borderRadius: BorderRadius.circular(
                                     24 * (screenWidth / 412),
                                   ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // Starting Price
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Starting Price",
-                                          style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: screenWidth * 0.048,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(height: screenHeight * 0.01),
-                                        _priceCard(screenWidth),
-                                      ],
-                                    ),
-
-                                    // Availability
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Availability",
-                                          style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: screenWidth * 0.048,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        SizedBox(height: screenHeight * 0.01),
-                                        _availabilityCard(screenWidth),
-                                      ],
-                                    ),
-                                  ],
                                 ),
                               ),
 
