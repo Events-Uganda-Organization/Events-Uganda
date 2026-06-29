@@ -206,7 +206,11 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
 
       dayWidgets.add(
         GestureDetector(
-          onTap: unavailable || isPast ? null : () {},
+          onTap: unavailable || isPast ? null : () {
+            setState(() {
+              _selectedDate = date;
+            });
+          },
           child: Container(
             width: (screenWidth * 0.92 - screenWidth * 0.08) / 7,
             height: (screenWidth * 0.92 - screenWidth * 0.08) / 7,
@@ -652,13 +656,18 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                         size: screenWidth * 0.04,
                       ),
                       SizedBox(width: screenWidth * 0.025),
-                      Text(
-                        _formatTimeRange(),
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: screenWidth * 0.032,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w500,
+                      Flexible(
+                        child: Text(
+                          _selectedDate != null
+                              ? '${_monthNames[_selectedDate!.month - 1]} ${_selectedDate!.day}, ${_selectedDate!.year}'
+                              : 'Select a date from the calendar',
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.032,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
