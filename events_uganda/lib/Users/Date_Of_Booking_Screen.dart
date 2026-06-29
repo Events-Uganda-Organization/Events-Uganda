@@ -636,11 +636,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                       ),
                       SizedBox(width: screenWidth * 0.025),
                       Text(
-                        _fromTime != null && _toTime != null
-                            ? '${_fromTime!.format(context)} - ${_toTime!.format(context)}'
-                            : _fromTime != null
-                                ? 'From: ${_fromTime!.format(context)}'
-                                : 'Select your time range',
+                        _formatTimeRange(),
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.032,
