@@ -306,18 +306,20 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               top: screenHeight * 0.30,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
-              bottom: screenHeight * 0.1,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.08),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
+              child: SizedBox(
+                height: screenHeight * 0.038,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
