@@ -581,6 +581,47 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               ),
             ),
             Positioned(
+              top: screenHeight * 0.77,
+              left: screenWidth * 0.04,
+              right: screenWidth * 0.04,
+              child: SizedBox(
+                height: screenHeight * 0.05,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.access_time_rounded,
+                        color: Colors.black,
+                        size: screenWidth * 0.04,
+                      ),
+                      SizedBox(width: screenWidth * 0.025),
+                      Text(
+                        'Selected Time Range Will Appear Here',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: screenWidth * 0.032,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
               bottom: screenHeight * 0.02,
               left: 0,
               right: 0,
