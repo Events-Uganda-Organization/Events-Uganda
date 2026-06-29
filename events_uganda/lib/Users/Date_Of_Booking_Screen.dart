@@ -71,7 +71,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
 
   Widget _buildTimeColumn(double screenWidth, String label, TimeOfDay? selectedTime, {required VoidCallback onTap}) {
     final displayTime = selectedTime != null
-        ? '${selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')} ${selectedTime.period == DayPeriod.am ? 'AM' : 'PM'}'
+        ? _formatTimeOfDay(selectedTime)
         : label == 'From' ? '09:00 AM' : '10:00 AM';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,6 +122,22 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
         ),
       ],
     );
+  }
+
+  String _formatTimeOfDay(TimeOfDay t) {
+    final hour = t.hourOfPeriod.toString().padLeft(2, '0');
+    final minute = t.minute.toString().padLeft(2, '0');
+    final period = t.period == DayPeriod.am ? 'AM' : 'PM';
+    return '$hour:$minute $period';
+  }
+
+  String _formatTimeRange() {
+    if (_fromTime != null && _toTime != null) {
+      return '${_formatTimeOfDay(_fromTime!)} - ${_formatTimeOfDay(_toTime!)}';
+    } else if (_fromTime != null) {
+      return 'From: ${_formatTimeOfDay(_fromTime!)}';
+    }
+    return 'Select your time range';
   }
 
   Future<void> _pickTime(bool isFrom) async {
