@@ -343,11 +343,15 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Stack(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height * 1.45,
+            child: Stack(
           children: [
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.0,
-              bottom: MediaQuery.of(context).size.height * 0.0,
+              top: 0,
+              bottom: 0,
               right:
                   (MediaQuery.of(context).size.width +
                       MediaQuery.of(context).size.width * 1) /
