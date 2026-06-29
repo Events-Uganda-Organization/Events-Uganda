@@ -283,12 +283,12 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                 alignment: Alignment.center,
                 children: [
                   Positioned(
-                    left: 0,
-                    right: 0,
+                    left: screenWidth * 0.08,
+                    right: screenWidth * 0.08,
                     top: screenWidth * 0.015,
-                    child: Container(
-                      height: 2,
-                      color: Colors.grey.shade300,
+                    child: CustomPaint(
+                      size: Size(double.infinity, 2),
+                      painter: _DottedLinePainter(),
                     ),
                   ),
                   Row(
@@ -330,4 +330,28 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
       ),
     );
   }
+}
+
+class _DottedLinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.grey.shade300
+      ..strokeWidth = 2
+      ..strokeCap = StrokeCap.round;
+    const dashWidth = 4.0;
+    const dashSpace = 3.0;
+    double startX = 0;
+    while (startX < size.width) {
+      canvas.drawLine(
+        Offset(startX, 0),
+        Offset((startX + dashWidth).clamp(0, size.width), 0),
+        paint,
+      );
+      startX += dashWidth + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
