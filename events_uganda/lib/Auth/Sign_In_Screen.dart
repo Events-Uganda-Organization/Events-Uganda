@@ -333,6 +333,9 @@ class _SignInScreenState extends State<SignInScreen> {
                           textInputAction: TextInputAction.next,
                           iconColor: Colors.black,
                           fontSize: screenWidth * 0.045,
+                          isPassword: true,
+                          obscureText: _obscurePassword,
+                          onToggleObscure: () => setState(() => _obscurePassword = !_obscurePassword),
                         ),
                         SizedBox(height: screen.height * 0.016),
                         GestureDetector(
@@ -668,6 +671,9 @@ class _ResponsiveTextField extends StatelessWidget {
   final TextInputAction textInputAction;
   final Color? iconColor;
   final double? fontSize;
+  final bool isPassword;
+  final bool obscureText;
+  final VoidCallback? onToggleObscure;
 
   const _ResponsiveTextField({
     required this.controller,
@@ -679,6 +685,9 @@ class _ResponsiveTextField extends StatelessWidget {
     required this.textInputAction,
     required this.iconColor,
     required this.fontSize,
+    this.isPassword = false,
+    this.obscureText = false,
+    this.onToggleObscure,
   });
 
   @override
@@ -691,6 +700,7 @@ class _ResponsiveTextField extends StatelessWidget {
         controller: controller,
         focusNode: focusNode,
         textInputAction: textInputAction,
+        obscureText: isPassword ? obscureText : false,
         style: TextStyle(
           fontSize: fontSize ?? screenWidth * 0.045,
           color: Colors.black,
@@ -702,6 +712,15 @@ class _ResponsiveTextField extends StatelessWidget {
             icon,
             color: iconColor ?? const Color.fromARGB(255, 0, 0, 0),
           ),
+          suffixIcon: isPassword
+              ? IconButton(
+                  icon: Icon(
+                    obscureText ? Icons.visibility_off : Icons.visibility,
+                    color: const Color(0xFFCB471B),
+                  ),
+                  onPressed: onToggleObscure,
+                )
+              : null,
           contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
