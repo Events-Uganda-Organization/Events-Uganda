@@ -1246,6 +1246,17 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                             screenHeight,
                             'assets/images/deco5.jpg',
                             'Decoration',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ServiceListingDecorationScreen(
+                                    category: 'Decoration',
+                                    categoryIndex: 0,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                           SizedBox(width: screenWidth * 0.03),
                           _buildCircleItem(
