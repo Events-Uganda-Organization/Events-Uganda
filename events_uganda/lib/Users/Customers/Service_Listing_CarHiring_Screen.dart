@@ -6,6 +6,7 @@ import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 
 class ServiceListingCarHiringScreen extends StatefulWidget {
   final String? category;
@@ -913,6 +914,12 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                       _cartedCategoryImages.add(index);
                     }
                   });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DateOfBookingScreen(),
+                    ),
+                  );
                 },
                 child: TweenAnimationBuilder<double>(
                   tween: Tween(
