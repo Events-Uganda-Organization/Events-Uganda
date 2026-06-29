@@ -19,6 +19,8 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   bool _canForwardReturn = false;
   late DateTime _currentMonth;
   Set<DateTime> _unavailableDates = {};
+  TimeOfDay? _fromTime;
+  TimeOfDay? _toTime;
 
   final List<String> _monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
