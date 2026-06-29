@@ -30,7 +30,15 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   @override
   void initState() {
     super.initState();
-    // Fetch user's display name if available
+    _currentMonth = DateTime(DateTime.now().year, DateTime.now().month);
+    final today = DateTime.now();
+    _unavailableDates = {
+      DateTime(today.year, today.month, today.day + 2),
+      DateTime(today.year, today.month, today.day + 5),
+      DateTime(today.year, today.month, today.day + 7),
+      DateTime(today.year, today.month, today.day + 10),
+      DateTime(today.year, today.month, today.day + 12),
+    };
     AuthService.getUser().then((userData) {
       if (mounted) {
         setState(() {
@@ -47,8 +55,207 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     return 'Good Evening';
   }
 
-  
-  
+  void _prevMonth() {
+    setState(() {
+      _currentMonth = DateTime(_currentMonth.year, _currentMonth.month - 1);
+    });
+  }
+
+  void _nextMonth() {
+    setState(() {
+      _currentMonth = DateTime(_currentMonth.year, _currentMonth.month + 1);
+    });
+  }
+
+  bool _isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  bool _isUnavailable(DateTime day) {
+    return _unavailableDates.any((d) => _isSameDay(d, day));
+  }
+
+  bool _isToday(DateTime day) {
+    return _isSameDay(day, DateTime.now());
+  }
+
+  Widget _buildCalendar(double screenWidth, double screenHeight) {
+    final firstDay = DateTime(_currentMonth.year, _currentMonth.month, 1);
+    final lastDay = DateTime(_currentMonth.year, _currentMonth.month + 1, 0);
+    final startWeekday = firstDay.weekday % 7;
+    final daysInMonth = lastDay.day;
+    final today = DateTime.now();
+
+    final now = DateTime.now();
+    List<Widget> dayWidgets = [];
+
+    for (int i = 0; i < startWeekday; i++) {
+      dayWidgets.add(const SizedBox(width: 1, height: 1));
+    }
+
+    for (int day = 1; day <= daysInMonth; day++) {
+      final date = DateTime(_currentMonth.year, _currentMonth.month, day);
+      final isPast = date.isBefore(DateTime(now.year, now.month, now.day));
+      final unavailable = _isUnavailable(date);
+      final todayDate = _isToday(date);
+
+      dayWidgets.add(
+        GestureDetector(
+          onTap: unavailable || isPast ? null : () {},
+          child: Container(
+            width: (screenWidth * 0.92 - screenWidth * 0.08) / 7,
+            height: (screenWidth * 0.92 - screenWidth * 0.08) / 7,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: todayDate
+                  ? Colors.green
+                  : unavailable
+                      ? Colors.red.shade50
+                      : null,
+              border: todayDate
+                  ? Border.all(color: Colors.green.shade700, width: 2)
+                  : unavailable
+                      ? Border.all(color: Colors.red.shade200, width: 1)
+                      : null,
+            ),
+            child: Text(
+              '$day',
+              style: TextStyle(
+                fontWeight: todayDate || unavailable ? FontWeight.bold : FontWeight.w400,
+                color: todayDate
+                    ? Colors.white
+                    : unavailable
+                        ? Colors.red
+                        : isPast
+                            ? Colors.grey.shade300
+                            : Colors.black87,
+                fontSize: screenWidth * 0.032,
+                fontFamily: 'Montserrat',
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                onTap: _prevMonth,
+                child: Container(
+                  padding: EdgeInsets.all(screenWidth * 0.015),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey.shade100,
+                  ),
+                  child: Icon(Icons.chevron_left, color: Colors.black87, size: screenWidth * 0.045),
+                ),
+              ),
+              Text(
+                '${_monthNames[_currentMonth.month - 1]} ${_currentMonth.year}',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: screenWidth * 0.04,
+                  fontFamily: 'Montserrat',
+                  color: Colors.black87,
+                ),
+              ),
+              GestureDetector(
+                onTap: _nextMonth,
+                child: Container(
+                  padding: EdgeInsets.all(screenWidth * 0.015),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey.shade100,
+                  ),
+                  child: Icon(Icons.chevron_right, color: Colors.black87, size: screenWidth * 0.045),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: screenHeight * 0.015),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: _dayHeaders.map((day) {
+              return SizedBox(
+                width: (screenWidth * 0.92 - screenWidth * 0.08) / 7,
+                child: Text(
+                  day,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: screenWidth * 0.028,
+                    fontFamily: 'Montserrat',
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+        SizedBox(height: screenHeight * 0.008),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+          child: Wrap(
+            spacing: 0,
+            runSpacing: screenHeight * 0.004,
+            children: dayWidgets,
+          ),
+        ),
+        SizedBox(height: screenHeight * 0.01),
+        _buildLegend(screenWidth),
+      ],
+    );
+  }
+
+  Widget _buildLegend(double screenWidth) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _legendItem(screenWidth, Colors.green, 'Today'),
+          SizedBox(width: screenWidth * 0.04),
+          _legendItem(screenWidth, Colors.red, 'Unavailable'),
+        ],
+      ),
+    );
+  }
+
+  Widget _legendItem(double screenWidth, Color color, String label) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: screenWidth * 0.025,
+          height: screenWidth * 0.025,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: color,
+          ),
+        ),
+        SizedBox(width: screenWidth * 0.01),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: screenWidth * 0.028,
+            fontFamily: 'Montserrat',
+            color: Colors.grey.shade600,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -357,6 +564,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               child: SizedBox(
                 height: screenHeight * 0.4,
                 child: Container(
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
@@ -368,6 +576,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                       ),
                     ],
                   ),
+                  child: _buildCalendar(screenWidth, screenHeight),
                 ),
               ),
             ),
