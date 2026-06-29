@@ -477,7 +477,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.15,
+              top: screenHeight * 0.11,
               left: screenWidth * 0.04,
               child: GestureDetector(
                 onTap: () => Navigator.of(context).maybePop(),
@@ -500,7 +500,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
             ),
             // Forward/inactive return button (mirrors back button)
             Positioned(
-              top: screenHeight * 0.15,
+              top: screenHeight * 0.11,
               left: screenWidth * 0.27,
               right: screenWidth * 0.04,
               child: Row(
@@ -542,7 +542,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.23,
+              top: screenHeight * 0.19,
               left: screenWidth * 0.08,
               right: screenWidth * 0.08,
               child: Stack(
