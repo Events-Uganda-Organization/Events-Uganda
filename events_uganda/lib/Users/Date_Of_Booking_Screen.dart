@@ -69,7 +69,10 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     });
   }
 
-  Widget _buildTimeColumn(double screenWidth, String label, String time) {
+  Widget _buildTimeColumn(double screenWidth, String label, TimeOfDay? selectedTime, {required VoidCallback onTap}) {
+    final displayTime = selectedTime != null
+        ? '${selectedTime.hourOfPeriod.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')} ${selectedTime.period == DayPeriod.am ? 'AM' : 'PM'}'
+        : label == 'From' ? '09:00 AM' : '10:00 AM';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -83,39 +86,73 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
           ),
         ),
         SizedBox(height: screenWidth * 0.015),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.03,
-            vertical: screenWidth * 0.025,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade50,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: Colors.grey.shade200),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                time,
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: screenWidth * 0.035,
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w600,
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.03,
+              vertical: screenWidth * 0.025,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade50,
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.grey.shade200),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  displayTime,
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: screenWidth * 0.035,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              Icon(
-                Icons.access_time_rounded,
-                color: const Color(0xFFCB471B),
-                size: screenWidth * 0.04,
-              ),
-            ],
+                Icon(
+                  Icons.access_time_rounded,
+                  color: const Color(0xFFCB471B),
+                  size: screenWidth * 0.04,
+                ),
+              ],
+            ),
           ),
         ),
       ],
     );
+  }
+
+  Future<void> _pickTime(bool isFrom) async {
+    final initial = isFrom ? (_fromTime ?? const TimeOfDay(hour: 9, minute: 0)) : (_toTime ?? const TimeOfDay(hour: 10, minute: 0));
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: initial,
+      helpText: isFrom ? 'Select From Time' : 'Select To Time',
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Color(0xFFCB471B),
+            ),
+          ),
+          child: MediaQuery(
+            data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
+            child: child!,
+          ),
+        );
+      },
+    );
+    if (picked != null) {
+      setState(() {
+        if (isFrom) {
+          _fromTime = picked;
+        } else {
+          _toTime = picked;
+        }
+      });
+    }
   }
 
   bool _isSameDay(DateTime a, DateTime b) {
@@ -599,7 +636,11 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                       ),
                       SizedBox(width: screenWidth * 0.025),
                       Text(
-                        'Selected Date Range Will Appear Here',
+                        _fromTime != null && _toTime != null
+                            ? '${_fromTime!.format(context)} - ${_toTime!.format(context)}'
+                            : _fromTime != null
+                                ? 'From: ${_fromTime!.format(context)}'
+                                : 'Select your time range',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.032,
@@ -713,7 +754,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                       Row(
                         children: [
                           Expanded(
-                            child: _buildTimeColumn(screenWidth, 'From', '09:00 AM'),
+                            child: _buildTimeColumn(screenWidth, 'From', _fromTime, onTap: () => _pickTime(true)),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
@@ -728,7 +769,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                             ),
                           ),
                           Expanded(
-                            child: _buildTimeColumn(screenWidth, 'To', '10:00 AM'),
+                            child: _buildTimeColumn(screenWidth, 'To', _toTime, onTap: () => _pickTime(false)),
                           ),
                         ],
                       ),
