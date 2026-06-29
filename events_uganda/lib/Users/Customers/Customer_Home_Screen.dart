@@ -5,6 +5,9 @@ import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/All_Categories_Screen.dart';
 import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Decoration_Screen.dart';
+import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
+import 'package:events_uganda/Users/Customers/Service_Listing_CarHiring_Screen.dart';
+import 'package:events_uganda/Users/Customers/Service_Listing_Cakes_Screen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -1264,6 +1267,17 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                             screenHeight,
                             'assets/images/catering.jpg',
                             'Catering',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ServiceListingCateringScreen(
+                                    category: 'Catering',
+                                    categoryIndex: 1,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                           SizedBox(width: screenWidth * 0.03),
                           _buildCircleItem(
@@ -1278,6 +1292,17 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                             screenHeight,
                             'assets/images/carhire1.jpg',
                             'Car Hire',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ServiceListingCarHiringScreen(
+                                    category: 'Car Hire',
+                                    categoryIndex: 3,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                           SizedBox(width: screenWidth * 0.03),
                           _buildCircleItem(
@@ -1285,6 +1310,17 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                             screenHeight,
                             'assets/images/cake2.jpg',
                             'Cakes',
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ServiceListingCakesScreen(
+                                    category: 'Cakes',
+                                    categoryIndex: 5,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),
