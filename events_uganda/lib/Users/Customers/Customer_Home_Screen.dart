@@ -8,6 +8,7 @@ import 'package:events_uganda/Users/Customers/Service_Listing_Decoration_Screen.
 import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_CarHiring_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Cakes_Screen.dart';
+import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -492,35 +493,37 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     int index,
     String rating,
     String title,
-    String price,
-  ) {
+    String price, {
+    VoidCallback? onTap,
+  }) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isCentered = index == _activeForYouIndex;
     final relativePosition = index - _activeForYouIndex;
     final angle = relativePosition == -1
         ? -11 *
               3.14159 /
-              180 // Left position
+              180
         : (relativePosition == 1
               ? 11 *
                     3.14159 /
-                    180 // Right position
+                    180
               : 0.0);
 
-    // Adjust these values to move left/right images
     final offsetX = relativePosition == -1
-        ? -28.0 // Left position
+        ? -28.0
         : (relativePosition == 1
-              ? 31.0 // Right position
-              : 0.0); // Center or other positions
+              ? 31.0
+              : 0.0);
 
     final offsetY = relativePosition == -1
-        ? 35.0 // Left position
+        ? 35.0
         : (relativePosition == 1
-              ? -1.0 // Right position
+              ? -1.0
               : 0.0);
 
-    return AnimatedContainer(
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
       transform: Matrix4.identity()
