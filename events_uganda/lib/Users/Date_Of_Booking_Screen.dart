@@ -275,7 +275,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.28,
+              top: screenHeight * 0.23,
               left: screenWidth * 0.08,
               right: screenWidth * 0.08,
               child: Stack(
