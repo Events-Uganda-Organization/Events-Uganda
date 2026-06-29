@@ -725,13 +725,16 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                         size: screenWidth * 0.04,
                       ),
                       SizedBox(width: screenWidth * 0.025),
-                      Text(
-                        'Selected Time Range Will Appear Here',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: screenWidth * 0.032,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w500,
+                      Flexible(
+                        child: Text(
+                          _formatTimeRange(),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.032,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ],
