@@ -801,60 +801,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // ===== ABOUT PROVIDER TITLE CARD =====
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: screenWidth * 0.02,
-                                vertical: screenHeight * 0.006,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFF3F3F3),
-                                borderRadius: BorderRadius.circular(
-                                  32 * (screenWidth / 412),
-                                ),
-                              ),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth * 0.04,
-                                  vertical: screenHeight * 0.008,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(
-                                    24 * (screenWidth / 412),
-                                  ),
-                                ),
-                                child: Column(
-                                  // Wrap multiple widgets in a Column
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Title
-                                    Text(
-                                      "About Provider Name",
-                                      style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: screenWidth * 0.048,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-
-                                    SizedBox(height: screenHeight * 0.015),
-
-                                    // Description
-                                    Text(
-                                      'The Providers description of the services he/she\nprovides to the customers.',
-                                      style: TextStyle(
-                                        fontFamily: 'Abril Fatface',
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: screenWidth * 0.04,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // About provider card removed
                           ],
                         ),
                       ),
