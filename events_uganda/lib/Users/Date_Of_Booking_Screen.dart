@@ -16,9 +16,16 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     with SingleTickerProviderStateMixin {
   int _currentNavIndex = 0;
   String _userFullName = '';
-  bool _canForwardReturn =
-      false; 
+  bool _canForwardReturn = false;
+  late DateTime _currentMonth;
+  Set<DateTime> _unavailableDates = {};
 
+  final List<String> _monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ];
+
+  final List<String> _dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   
   @override
   void initState() {
