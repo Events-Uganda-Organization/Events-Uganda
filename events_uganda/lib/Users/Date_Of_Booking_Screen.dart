@@ -679,7 +679,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               child: SizedBox(
-                height: screenHeight * 0.14,
+                height: screenHeight * 0.20,
                 child: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: screenWidth * 0.04,
@@ -707,7 +707,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SizedBox(height: screenHeight * 0.015),
+                      SizedBox(height: screenHeight * 0.012),
                       Row(
                         children: [
                           Expanded(
@@ -729,6 +729,42 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                             child: _buildTimeColumn(screenWidth, 'To', '10:00 AM'),
                           ),
                         ],
+                      ),
+                      SizedBox(height: screenHeight * 0.015),
+                      SizedBox(
+                        width: double.infinity,
+                        height: screenHeight * 0.045,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xFFE0E7FF),
+                                Color(0xFFCD7C20),
+                              ],
+                              stops: [0.0, 0.47],
+                            ),
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: Text(
+                              'Continue',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w700,
+                                fontSize: screenWidth * 0.035,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
