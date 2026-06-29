@@ -184,34 +184,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.122,
-              right: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
-                      blurRadius: 10,
-                      offset: const Offset(2, 7),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.tune_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: screenHeight * 0.20,
+              top: screenHeight * 0.15,
               left: screenWidth * 0.04,
               child: GestureDetector(
                 onTap: () => Navigator.of(context).maybePop(),
@@ -234,7 +207,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
             ),
             // Forward/inactive return button (mirrors back button)
             Positioned(
-              top: screenHeight * 0.20,
+              top: screenHeight * 0.15,
               left: screenWidth * 0.27,
               right: screenWidth * 0.04,
               child: Row(
