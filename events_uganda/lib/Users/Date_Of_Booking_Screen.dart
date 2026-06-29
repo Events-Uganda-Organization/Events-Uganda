@@ -307,8 +307,9 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               child: SizedBox(
-                height: screenHeight * 0.038,
+                height: screenHeight * 0.05,
                 child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
@@ -317,6 +318,25 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                         color: Colors.black.withOpacity(0.08),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.calendar_today,
+                        color: Colors.black,
+                        size: screenWidth * 0.04,
+                      ),
+                      SizedBox(width: screenWidth * 0.025),
+                      Text(
+                        'Selected Date Range Will Appear Here',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: screenWidth * 0.032,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
