@@ -3,6 +3,7 @@ import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/Users/Booking_Details_Screen.dart';
 
 class DateOfBookingScreen extends StatefulWidget {
   final int? categoryIndex;
@@ -814,7 +815,14 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                             ),
                           ),
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const BookingDetailsScreen(),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.transparent,
                               shadowColor: Colors.transparent,
