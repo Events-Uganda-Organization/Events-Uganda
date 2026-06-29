@@ -761,6 +761,8 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
           ],
         ),
       ),
+        ),
+      ),
     );
   }
 }
