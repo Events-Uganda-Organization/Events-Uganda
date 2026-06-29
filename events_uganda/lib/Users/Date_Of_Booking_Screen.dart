@@ -47,6 +47,32 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     super.dispose();
   }
 
+  Widget _buildStepCircle(double screenWidth, double screenHeight, String label, bool isActive) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: screenWidth * 0.035,
+          height: screenWidth * 0.035,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isActive ? const Color(0xFFCB471B) : Colors.grey.shade300,
+          ),
+        ),
+        SizedBox(height: screenHeight * 0.006),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: screenWidth * 0.028,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w500,
+            color: isActive ? const Color(0xFFCB471B) : Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -244,6 +270,34 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                         ),
                       ),
                     ),
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.28,
+              left: screenWidth * 0.08,
+              right: screenWidth * 0.08,
+              child: Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: screenWidth * 0.015,
+                    child: Container(
+                      height: 2,
+                      color: Colors.grey.shade300,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildStepCircle(screenWidth, screenHeight, 'Choose Date', true),
+                      _buildStepCircle(screenWidth, screenHeight, 'Booking Details', false),
+                      _buildStepCircle(screenWidth, screenHeight, 'Payment Details', false),
+                    ],
                   ),
                 ],
               ),
