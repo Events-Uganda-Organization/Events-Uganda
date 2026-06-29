@@ -344,6 +344,27 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               ),
             ),
             Positioned(
+              top: screenHeight * 0.36,
+              left: screenWidth * 0.04,
+              right: screenWidth * 0.04,
+              child: SizedBox(
+                height: screenHeight * 0.4,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
               bottom: screenHeight * 0.02,
               left: 0,
               right: 0,
