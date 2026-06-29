@@ -914,6 +914,12 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
                       _cartedCategoryImages.add(index);
                     }
                   });
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DateOfBookingScreen(),
+                    ),
+                  );
                 },
                 child: TweenAnimationBuilder<double>(
                   tween: Tween(
