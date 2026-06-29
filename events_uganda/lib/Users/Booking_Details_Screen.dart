@@ -805,38 +805,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                           ],
                         ),
                       ),
-                      Positioned(
-                        top: screenHeight * 1.36 - offset,
-                        left: screenWidth * 0.02,
-                        right: screenWidth * 0.02,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.02,
-                            vertical: screenHeight * 0.006,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3F3F3),
-                            borderRadius: BorderRadius.circular(
-                              32 * (screenWidth / 412),
-                            ),
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.04,
-                              vertical: screenHeight * 0.02,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                24 * (screenWidth / 412),
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // ===== TITLE =====
-                                Text(
-                                  "Reviews and Ratings",
+                      // Reviews and Ratings card removed
                                   style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w900,
