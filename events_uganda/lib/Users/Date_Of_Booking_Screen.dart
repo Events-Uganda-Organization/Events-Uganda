@@ -67,6 +67,55 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     });
   }
 
+  Widget _buildTimeColumn(double screenWidth, String label, String time) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w600,
+            fontSize: screenWidth * 0.03,
+          ),
+        ),
+        SizedBox(height: screenWidth * 0.015),
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.03,
+            vertical: screenWidth * 0.025,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade50,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.grey.shade200),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                time,
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: screenWidth * 0.035,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Icon(
+                Icons.access_time_rounded,
+                color: const Color(0xFFCB471B),
+                size: screenWidth * 0.04,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   bool _isSameDay(DateTime a, DateTime b) {
     return a.year == b.year && a.month == b.month && a.day == b.day;
   }
@@ -626,8 +675,12 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               child: SizedBox(
-                height: screenHeight * 0.12,
+                height: screenHeight * 0.14,
                 child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.04,
+                    vertical: screenHeight * 0.015,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
@@ -636,6 +689,42 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                         color: Colors.black.withOpacity(0.08),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Choose Your Time',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: screenWidth * 0.038,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * 0.015),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildTimeColumn(screenWidth, 'From', '09:00 AM'),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                            child: Text(
+                              'To',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.032,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: _buildTimeColumn(screenWidth, 'To', '10:00 AM'),
+                          ),
+                        ],
                       ),
                     ],
                   ),
