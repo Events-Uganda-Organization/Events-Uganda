@@ -1403,6 +1403,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               '4.8',
                               'Cake Design',
                               '1,500,000 UGX',
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ServiceDetailsScreen(),
+                                ),
+                              ),
                             ),
                             SizedBox(width: screenWidth * 0.04),
                             _buildForYouImage(
@@ -1411,6 +1417,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               '4.5',
                               'Tent Decoration',
                               '2,000,000 UGX',
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ServiceDetailsScreen(),
+                                ),
+                              ),
                             ),
                             SizedBox(width: screenWidth * 0.04),
                             _buildForYouImage(
@@ -1419,6 +1431,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               '4.9',
                               'Photography',
                               '3,100,000 UGX',
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ServiceDetailsScreen(),
+                                ),
+                              ),
                             ),
                             SizedBox(width: screenWidth * 0.04),
                             _buildForYouImage(
@@ -1427,6 +1445,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               '4.7',
                               'Decoration',
                               '6,000,000 UGX',
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ServiceDetailsScreen(),
+                                ),
+                              ),
                             ),
                           ],
                         ),
