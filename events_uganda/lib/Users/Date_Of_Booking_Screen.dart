@@ -241,7 +241,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Catering & Food',
+                    'Choose Date',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
