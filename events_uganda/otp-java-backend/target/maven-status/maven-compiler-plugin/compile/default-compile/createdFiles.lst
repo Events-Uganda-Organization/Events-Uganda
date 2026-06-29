@@ -2,6 +2,7 @@ com\eventsuganda\otp\dto\response\AuthResponse.class
 com\eventsuganda\otp\service\UserService.class
 com\eventsuganda\otp\service\EmailService.class
 com\eventsuganda\otp\exception\GlobalExceptionHandler.class
+com\eventsuganda\otp\model\Otp.class
 com\eventsuganda\otp\controller\OtpController.class
 com\eventsuganda\otp\exception\OtpException.class
 com\eventsuganda\otp\config\WebConfig.class
@@ -9,7 +10,7 @@ com\eventsuganda\otp\dto\request\GoogleAuthRequest.class
 com\eventsuganda\otp\config\WebConfig$1.class
 com\eventsuganda\otp\dto\response\ApiResponse.class
 com\eventsuganda\otp\service\JwtService.class
-com\eventsuganda\otp\service\OtpService$OtpEntry.class
+com\eventsuganda\otp\repository\OtpRepository.class
 com\eventsuganda\otp\dto\request\ResetPasswordRequest.class
 com\eventsuganda\otp\dto\response\AuthResponse$UserProfile.class
 com\eventsuganda\otp\OtpApplication.class

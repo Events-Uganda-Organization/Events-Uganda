@@ -11,8 +11,10 @@ C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eve
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\AuthResponse.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\exception\GlobalExceptionHandler.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\exception\OtpException.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\model\Otp.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\model\User.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\OtpApplication.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\repository\OtpRepository.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\repository\UserRepository.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\service\AuthService.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\service\EmailService.java
