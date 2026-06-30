@@ -480,7 +480,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     width: double.infinity,
                                     decoration: BoxDecoration(
                                       color: Colors.grey[100],
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: BorderRadius.circular(
+                                        (screenHeight * 0.065) / 2,
+                                      ),
                                       border: Border.all(
                                         color: Colors.grey[300]!,
                                         width: 1.2,
@@ -492,35 +494,48 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         Icon(
                                           Icons.business,
                                           color: Colors.black,
-                                          size: screenWidth * 0.05,
+                                          size: screenWidth * 0.06,
                                         ),
                                         SizedBox(width: screenWidth * 0.025),
                                         Container(
                                           width: 1.2,
-                                          height: screenHeight * 0.035,
+                                          height:
+                                              (screenHeight * 0.065) * 0.55,
                                           color: Colors.grey[400],
                                         ),
                                         SizedBox(width: screenWidth * 0.03),
                                         Expanded(
                                           child: TextFormField(
+                                            cursorColor:
+                                                const Color(0xFFCB471B),
                                             decoration: InputDecoration(
-                                              hintText: 'Enter Your Venue Type',
+                                              hintText:
+                                                  'Enter Your Venue Type',
                                               hintStyle: TextStyle(
                                                 fontFamily: 'Montserrat',
-                                                fontSize: screenWidth * 0.035,
+                                                fontSize:
+                                                    screenWidth * 0.035,
                                                 color: Colors.grey[500],
+                                                fontWeight: FontWeight.w600,
                                               ),
                                               border: InputBorder.none,
                                               isCollapsed: true,
-                                              contentPadding: EdgeInsets.only(
-                                                top: screenHeight * 0.018,
-                                                bottom: screenHeight * 0.018,
+                                              contentPadding:
+                                                  EdgeInsets.only(
+                                                top: (screenHeight *
+                                                        0.065) *
+                                                    0.20,
+                                                bottom: (screenHeight *
+                                                        0.065) *
+                                                    0.20,
                                               ),
                                             ),
                                             style: TextStyle(
                                               fontFamily: 'Montserrat',
-                                              fontSize: screenWidth * 0.035,
+                                              fontSize:
+                                                  screenWidth * 0.035,
                                               color: Colors.black87,
+                                              fontWeight: FontWeight.w600,
                                             ),
                                           ),
                                         ),
