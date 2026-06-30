@@ -314,6 +314,56 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                 child: Column(
                   children: [
                     Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Booking Details',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: screenWidth * 0.045,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Opacity(
+                            opacity: _canForwardReturn ? 1.0 : 0.35,
+                            child: GestureDetector(
+                              onTap: _canForwardReturn
+                                  ? () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => DateOfBookingScreen(),
+                                        ),
+                                      ).then((_) {
+                                        if (mounted) setState(() {});
+                                      });
+                                    }
+                                  : null,
+                              child: Container(
+                                width: screenWidth * 0.12,
+                                height: screenWidth * 0.12,
+                                decoration: BoxDecoration(
+                                  color: const Color(0XFFF3CA9B),
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.chevron_right,
+                                    color: Colors.black,
+                                    size: screenWidth * 0.10,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.02),
+                    Padding(
                       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
                       child: Stack(
                         clipBehavior: Clip.none,
