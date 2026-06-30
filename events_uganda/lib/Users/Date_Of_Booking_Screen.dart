@@ -871,7 +871,13 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                                 MaterialPageRoute(
                                   builder: (context) => const BookingDetailsScreen(),
                                 ),
-                              );
+                              ).then((_) {
+                                if (mounted) {
+                                  setState(() {
+                                    _canForwardReturn = true;
+                                  });
+                                }
+                              });
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.transparent,
