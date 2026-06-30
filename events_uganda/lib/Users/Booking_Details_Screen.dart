@@ -505,7 +505,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         fontFamily: 'Montserrat',
                                         fontSize: screenWidth * 0.035,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black54,
+                                        color: const Color(0xFFCB471B),
                                       ),
                                     ),
                                   ),
