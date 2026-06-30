@@ -607,7 +607,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               ),
                             ),
                           ),
-                          Positioned(
+                        ),
+                      ),
+                      Positioned(
                         top: screenHeight * 0.85 - offset,
                         left: screenWidth * 0.02,
                         right: screenWidth * 0.02,
