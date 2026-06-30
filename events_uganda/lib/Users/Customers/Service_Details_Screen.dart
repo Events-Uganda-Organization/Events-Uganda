@@ -139,27 +139,65 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 fit: BoxFit.contain,
               ),
             ),
-            // Back button
+            // Back and forward buttons
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.035,
-              left: MediaQuery.of(context).size.width * 0.04,
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).maybePop(),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.13,
-                  height: MediaQuery.of(context).size.width * 0.13,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF3CA9B),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.chevron_left,
-                      color: Colors.black,
-                      size: MediaQuery.of(context).size.width * 0.10,
+              top: screenHeight * 0.035,
+              left: screenWidth * 0.04,
+              right: screenWidth * 0.04,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).maybePop(),
+                    child: Container(
+                      width: screenWidth * 0.128,
+                      height: screenWidth * 0.128,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF3CA9B),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.chevron_left,
+                          color: Colors.black,
+                          size: screenWidth * 0.10,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Opacity(
+                    opacity: _canForwardReturn ? 1.0 : 0.35,
+                    child: GestureDetector(
+                      onTap: _canForwardReturn
+                          ? () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DateOfBookingScreen(),
+                                ),
+                              ).then((_) {
+                                if (mounted) setState(() {});
+                              });
+                            }
+                          : null,
+                      child: Container(
+                        width: screenWidth * 0.128,
+                        height: screenWidth * 0.128,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF3CA9B),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.chevron_right,
+                            color: Colors.black,
+                            size: screenWidth * 0.10,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             // Greeting and user name to the right of the menu circle
@@ -1607,7 +1645,13 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       MaterialPageRoute(
                         builder: (context) => DateOfBookingScreen(),
                       ),
-                    );
+                    ).then((_) {
+                      if (mounted) {
+                        setState(() {
+                          _canForwardReturn = true;
+                        });
+                      }
+                    });
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
