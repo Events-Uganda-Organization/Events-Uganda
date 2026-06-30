@@ -145,7 +145,7 @@ class _SplashScreenState extends State<SplashScreen>
                             Image.asset(
                               'assets/vectors/logo.png',
                               width: screenWidth * 0.12,
-                              height: screenWidth * 0.42,
+                              height: screenWidth * 0.12,
                               fit: BoxFit.contain,
                             ),
                             SizedBox(width: screenWidth * 0.03),
