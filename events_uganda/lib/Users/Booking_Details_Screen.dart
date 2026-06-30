@@ -999,6 +999,32 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     );
   }
 
+  Widget _buildStepCircle(double screenWidth, double screenHeight, String label, bool isActive) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: screenWidth * 0.035,
+          height: screenWidth * 0.035,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isActive ? const Color(0xFFCB471B) : Colors.grey.shade300,
+          ),
+        ),
+        SizedBox(height: screenHeight * 0.006),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: screenWidth * 0.028,
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w500,
+            color: isActive ? const Color(0xFFCB471B) : Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
+
 
 }
 
