@@ -46,8 +46,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   bool _showAllReviews = false;
   bool _canForwardReturn = false;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -314,7 +312,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.04,
+                      ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -335,7 +335,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => DateOfBookingScreen(),
+                                          builder: (context) =>
+                                              DateOfBookingScreen(),
                                         ),
                                       ).then((_) {
                                         if (mounted) setState(() {});
@@ -364,7 +365,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                     ),
                     SizedBox(height: screenHeight * 0.02),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.08,
+                      ),
                       child: Stack(
                         clipBehavior: Clip.none,
                         alignment: Alignment.center,
@@ -381,9 +384,24 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              _buildStepCircle(screenWidth, screenHeight, 'Choose Date', true),
-                              _buildStepCircle(screenWidth, screenHeight, 'Booking Details', true),
-                              _buildStepCircle(screenWidth, screenHeight, 'Payment Details', false),
+                              _buildStepCircle(
+                                screenWidth,
+                                screenHeight,
+                                'Choose Date',
+                                true,
+                              ),
+                              _buildStepCircle(
+                                screenWidth,
+                                screenHeight,
+                                'Booking Details',
+                                true,
+                              ),
+                              _buildStepCircle(
+                                screenWidth,
+                                screenHeight,
+                                'Payment Details',
+                                false,
+                              ),
                             ],
                           ),
                         ],
@@ -397,241 +415,299 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                           verticalMultiplier, // Adjust height for landscape
                       child: Stack(
                         children: [
-                      // Introduction image
-                      Positioned(
-                        top: 0,
-                        left: (screenWidth - screenWidth * 0.95) / 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child: Image.asset(
-                                _galleryImages[_selectedGalleryIndex],
-                                width: screenWidth * 0.95,
-                                height: screenWidth * 0.95 * (336 / 350),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        top:
-                            screenHeight * 0.59 -
-                            offset, // Provider name sits above
-                        left: screenWidth * 0.03,
-                        right: screenWidth * 0.03,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Provider name card removed
-                          ],
-                        ),
-                      ),
-                      // Available badge
-                      Positioned(
-                        top: screenHeight * 0.14 - offset,
-                        left: screenWidth * 0.35,
-                        right: screenWidth * 0.35,
-                        child: Container(
-                          width: 80,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Available',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: screenWidth * 0.03,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Abril Fatface',
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Glassy UI Rectangle at bottom of image
-                      Positioned(
-                        top:
-                            screenHeight * 0.12 +
-                            (screenWidth * 0.95 * (336 / 350)) -
-                            55 -
-                            offset,
-                        left: (screenWidth - 315) / 2,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 10.0,
-                              sigmaY: 10.0,
-                            ),
-                            child: Container(
-                              width: 315,
-                              height: 55,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.25),
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.5),
-                                  width: 1.5,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.1),
-                                    blurRadius: 10,
-                                    spreadRadius: 2,
+                          // Introduction image
+                          Positioned(
+                            top: 0,
+                            left: (screenWidth - screenWidth * 0.95) / 2,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(30),
+                                  child: Image.asset(
+                                    _galleryImages[_selectedGalleryIndex],
+                                    width: screenWidth * 0.95,
+                                    height: screenWidth * 0.95 * (336 / 350),
+                                    fit: BoxFit.cover,
                                   ),
-                                ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            top:
+                                screenHeight * 0.59 -
+                                offset, // Provider name sits above
+                            left: screenWidth * 0.03,
+                            right: screenWidth * 0.03,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Provider name card removed
+                              ],
+                            ),
+                          ),
+                          // Available badge
+                          Positioned(
+                            top: screenHeight * 0.14 - offset,
+                            left: screenWidth * 0.35,
+                            right: screenWidth * 0.35,
+                            child: Container(
+                              width: 80,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(15),
                               ),
-                              child: Row(
-                                children: [
-                                  SizedBox(width: 6),
-                                  if (_galleryScrollIndex > 0)
-                                    GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _galleryScrollIndex =
-                                              (_galleryScrollIndex - 1).clamp(
-                                                0,
-                                                _galleryImages.length - 1,
-                                              );
-                                        });
-                                        _galleryScrollController.animateTo(
-                                          (_galleryScrollIndex) * 50.0,
-                                          duration: const Duration(
-                                            milliseconds: 300,
-                                          ),
-                                          curve: Curves.ease,
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 36,
-                                        height: 36,
-                                        alignment: Alignment.center,
-                                        child: Transform.rotate(
-                                          angle: 3.1416, // 180° → face left
-                                          child: const Icon(
-                                            Icons.play_arrow,
-                                            color: Colors.white,
-                                            size: 28,
-                                          ),
-                                        ),
+                              child: Center(
+                                child: Text(
+                                  'Available',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: screenWidth * 0.03,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Abril Fatface',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Glassy UI Rectangle at bottom of image
+                          Positioned(
+                            top:
+                                screenHeight * 0.12 +
+                                (screenWidth * 0.95 * (336 / 350)) -
+                                55 -
+                                offset,
+                            left: (screenWidth - 315) / 2,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                  sigmaX: 10.0,
+                                  sigmaY: 10.0,
+                                ),
+                                child: Container(
+                                  width: 315,
+                                  height: 55,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withValues(alpha: 0.25),
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Colors.white.withValues(
+                                        alpha: 0.5,
                                       ),
+                                      width: 1.5,
                                     ),
-                                  SizedBox(width: 6),
-                                  Expanded(
-                                    child: ListView.builder(
-                                      controller: _galleryScrollController,
-                                      scrollDirection: Axis.horizontal,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount: _galleryImages.length,
-                                      itemBuilder: (context, i) => Padding(
-                                        padding: const EdgeInsets.only(
-                                          right: 8.0,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withValues(
+                                          alpha: 0.1,
                                         ),
-                                        child: GestureDetector(
+                                        blurRadius: 10,
+                                        spreadRadius: 2,
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(width: 6),
+                                      if (_galleryScrollIndex > 0)
+                                        GestureDetector(
                                           onTap: () {
                                             setState(() {
-                                              _selectedGalleryIndex = i;
+                                              _galleryScrollIndex =
+                                                  (_galleryScrollIndex - 1)
+                                                      .clamp(
+                                                        0,
+                                                        _galleryImages.length -
+                                                            1,
+                                                      );
                                             });
-                                          },
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                border:
-                                                    _selectedGalleryIndex == i
-                                                    ? Border.all(
-                                                        color: Colors.white,
-                                                        width: 2,
-                                                      )
-                                                    : null,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                                            _galleryScrollController.animateTo(
+                                              (_galleryScrollIndex) * 50.0,
+                                              duration: const Duration(
+                                                milliseconds: 300,
                                               ),
-                                              child: Image.asset(
-                                                _galleryImages[i],
-                                                width: 42,
-                                                height: 42,
-                                                fit: BoxFit.cover,
+                                              curve: Curves.ease,
+                                            );
+                                          },
+                                          child: Container(
+                                            width: 36,
+                                            height: 36,
+                                            alignment: Alignment.center,
+                                            child: Transform.rotate(
+                                              angle: 3.1416, // 180° → face left
+                                              child: const Icon(
+                                                Icons.play_arrow,
+                                                color: Colors.white,
+                                                size: 28,
                                               ),
                                             ),
                                           ),
                                         ),
+                                      SizedBox(width: 6),
+                                      Expanded(
+                                        child: ListView.builder(
+                                          controller: _galleryScrollController,
+                                          scrollDirection: Axis.horizontal,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount: _galleryImages.length,
+                                          itemBuilder: (context, i) => Padding(
+                                            padding: const EdgeInsets.only(
+                                              right: 8.0,
+                                            ),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                setState(() {
+                                                  _selectedGalleryIndex = i;
+                                                });
+                                              },
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    border:
+                                                        _selectedGalleryIndex ==
+                                                            i
+                                                        ? Border.all(
+                                                            color: Colors.white,
+                                                            width: 2,
+                                                          )
+                                                        : null,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          10,
+                                                        ),
+                                                  ),
+                                                  child: Image.asset(
+                                                    _galleryImages[i],
+                                                    width: 42,
+                                                    height: 42,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 6),
+                                      if (_galleryScrollIndex <
+                                          _galleryImages.length - 5)
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              _galleryScrollIndex =
+                                                  (_galleryScrollIndex + 1)
+                                                      .clamp(
+                                                        0,
+                                                        (_galleryImages.length -
+                                                                5)
+                                                            .clamp(
+                                                              0,
+                                                              _galleryImages
+                                                                  .length,
+                                                            ),
+                                                      );
+                                            });
+                                            _galleryScrollController.animateTo(
+                                              (_galleryScrollIndex) * 50.0,
+                                              duration: const Duration(
+                                                milliseconds: 300,
+                                              ),
+                                              curve: Curves.ease,
+                                            );
+                                          },
+                                          child: SizedBox(
+                                            width: 36,
+                                            height: 36,
+                                            child: const Icon(
+                                              Icons.play_arrow,
+                                              color: Colors.white,
+                                              size: 28,
+                                            ),
+                                          ),
+                                        ),
+                                      SizedBox(width: 6),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: screenHeight * 0.85 - offset,
+                            left: screenWidth * 0.02,
+                            right: screenWidth * 0.02,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.02,
+                                vertical: screenHeight * 0.006,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF3F3F3),
+                                borderRadius: BorderRadius.circular(
+                                  32 * (screenWidth / 412),
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // ===== WHITE CARD: SERVICES OFFERED (empty) =====
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth * 0.04,
+                                      vertical: screenHeight * 0.012,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(
+                                        24 * (screenWidth / 412),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(width: 6),
-                                  if (_galleryScrollIndex <
-                                      _galleryImages.length - 5)
-                                    GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _galleryScrollIndex =
-                                              (_galleryScrollIndex + 1).clamp(
-                                                0,
-                                                (_galleryImages.length - 5)
-                                                    .clamp(
-                                                      0,
-                                                      _galleryImages.length,
-                                                    ),
-                                              );
-                                        });
-                                        _galleryScrollController.animateTo(
-                                          (_galleryScrollIndex) * 50.0,
-                                          duration: const Duration(
-                                            milliseconds: 300,
-                                          ),
-                                          curve: Curves.ease,
-                                        );
-                                      },
-                                      child: SizedBox(
-                                        width: 36,
-                                        height: 36,
-                                        child: const Icon(
-                                          Icons.play_arrow,
-                                          color: Colors.white,
-                                          size: 28,
-                                        ),
-                                      ),
-                                    ),
-                                  SizedBox(width: 6),
                                 ],
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 0.85 - offset,
-                        left: screenWidth * 0.02,
-                        right: screenWidth * 0.02,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.02,
-                            vertical: screenHeight * 0.006,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3F3F3),
-                            borderRadius: BorderRadius.circular(
-                              32 * (screenWidth / 412),
+                          Positioned(
+                            top: screenHeight * 1.19 - offset,
+                            left: screenWidth * 0.02,
+                            right: screenWidth * 0.02,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // About provider card removed
+                              ],
                             ),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // ===== WHITE CARD: SERVICES OFFERED (empty) =====
-                              Container(
+                          // Reviews and Ratings card removed
+
+                          // ===== Reviews & Ratings Section in nested cards =====
+                          Positioned(
+                            top: _showReviewSection
+                                ? screenHeight * 1.85 - offset
+                                : screenHeight * 1.65 - offset,
+                            left: screenWidth * 0.022,
+                            right: screenWidth * 0.022,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.02,
+                                vertical: screenHeight * 0.006,
+                              ),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFF3F3F3),
+                                borderRadius: BorderRadius.circular(
+                                  32 * (screenWidth / 412),
+                                ),
+                              ),
+                              child: Container(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: screenWidth * 0.04,
-                                  vertical: screenHeight * 0.012,
+                                  vertical: screenHeight * 0.018,
                                 ),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
@@ -639,119 +715,74 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     24 * (screenWidth / 412),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 1.19 - offset,
-                        left: screenWidth * 0.02,
-                        right: screenWidth * 0.02,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // About provider card removed
-                          ],
-                        ),
-                      ),
-                      // Reviews and Ratings card removed
-
-                      // ===== Reviews & Ratings Section in nested cards =====
-                      Positioned(
-                        top: _showReviewSection
-                            ? screenHeight * 1.85 - offset
-                            : screenHeight * 1.65 - offset,
-                        left: screenWidth * 0.022,
-                        right: screenWidth * 0.022,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.02,
-                            vertical: screenHeight * 0.006,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3F3F3),
-                            borderRadius: BorderRadius.circular(
-                              32 * (screenWidth / 412),
-                            ),
-                          ),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.04,
-                              vertical: screenHeight * 0.018,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                24 * (screenWidth / 412),
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Rating and some reviews are verified and are\nfrom people who use the same type of device that you use.',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: screenWidth * 0.038,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Abril Fatface',
-                                  ),
-                                ),
-                                SizedBox(height: screenHeight * 0.025),
-                                Row(
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    // LEFT: Rating column
-                                    Column(
+                                    Text(
+                                      'Rating and some reviews are verified and are\nfrom people who use the same type of device that you use.',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: screenWidth * 0.038,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Abril Fatface',
+                                      ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.025),
+                                    Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          '4.8',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: screenWidth * 0.15,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Abril Fatface',
+                                        // LEFT: Rating column
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '4.8',
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: screenWidth * 0.15,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Abril Fatface',
+                                              ),
+                                            ),
+                                            const SizedBox(height: 8),
+                                            _buildStarRating(4.8, starSize: 24),
+                                          ],
+                                        ),
+                                        SizedBox(width: screenWidth * 0.03),
+                                        // CENTER: Vertical separator
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                            top: screenHeight * 0.02,
+                                          ),
+                                          child: Container(
+                                            width: screenWidth * 0.012,
+                                            height: screenHeight * 0.16,
+                                            decoration: BoxDecoration(
+                                              color: Colors.black,
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                    screenWidth * 0.01,
+                                                  ),
+                                            ),
                                           ),
                                         ),
-                                        const SizedBox(height: 8),
-                                        _buildStarRating(4.8, starSize: 24),
+                                        SizedBox(width: screenWidth * 0.03),
+                                        // RIGHT: Rating distribution bars
+                                        _buildRatingBars(screenWidth),
                                       ],
                                     ),
-                                    SizedBox(width: screenWidth * 0.03),
-                                    // CENTER: Vertical separator
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        top: screenHeight * 0.02,
-                                      ),
-                                      child: Container(
-                                        width: screenWidth * 0.012,
-                                        height: screenHeight * 0.16,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius: BorderRadius.circular(
-                                            screenWidth * 0.01,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: screenWidth * 0.03),
-                                    // RIGHT: Rating distribution bars
-                                    _buildRatingBars(screenWidth),
+                                    SizedBox(height: screenHeight * 0.025),
+                                    _buildReviewsList(screenWidth),
                                   ],
                                 ),
-                                SizedBox(height: screenHeight * 0.025),
-                                _buildReviewsList(screenWidth),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
+                    ),
                   ],
                 ),
               ),
@@ -984,8 +1015,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     );
   }
 
-
-
   Widget _buildStaticStars(int count) {
     return Row(
       children: List.generate(
@@ -999,7 +1028,12 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     );
   }
 
-  Widget _buildStepCircle(double screenWidth, double screenHeight, String label, bool isActive) {
+  Widget _buildStepCircle(
+    double screenWidth,
+    double screenHeight,
+    String label,
+    bool isActive,
+  ) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -1024,8 +1058,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
       ],
     );
   }
-
-
 }
 
 Widget _availabilityCard(double screenWidth) {
