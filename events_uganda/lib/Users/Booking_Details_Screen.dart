@@ -444,6 +444,13 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.08),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
                               ),
                               padding: EdgeInsets.symmetric(
                                 horizontal: screenWidth * 0.05,
