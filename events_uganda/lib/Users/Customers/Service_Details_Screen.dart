@@ -44,6 +44,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   int _rating = 0;
   bool _showReviewSection = false;
   bool _showAllReviews = false;
+  bool _canForwardReturn = false;
 
 
 
