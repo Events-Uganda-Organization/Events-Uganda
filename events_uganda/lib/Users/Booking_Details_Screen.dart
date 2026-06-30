@@ -913,8 +913,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     _buildReviewsList(screenWidth),
                                   ],
                                 ),
-                              ),
-                            ),
                           ),
                         ],
                       ),
