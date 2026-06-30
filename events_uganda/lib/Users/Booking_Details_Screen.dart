@@ -528,7 +528,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     ),
                                   ),
                                   SizedBox(height: screenWidth * 0.025),
-                                  
                                   Padding(
                                     padding: EdgeInsets.only(
                                       left: screenWidth * 0.06,
