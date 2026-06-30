@@ -517,7 +517,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       ),
                                       contentPadding: EdgeInsets.symmetric(
                                         horizontal: 16,
-                                        vertical: 12,
+                                        vertical: 8,
                                       ),
                                     ),
                                     style: TextStyle(
