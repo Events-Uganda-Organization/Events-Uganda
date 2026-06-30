@@ -851,31 +851,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                 : screenHeight * 1.65 - offset,
                             left: screenWidth * 0.022,
                             right: screenWidth * 0.022,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: screenWidth * 0.02,
-                                vertical: screenHeight * 0.006,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFF3F3F3),
-                                borderRadius: BorderRadius.circular(
-                                  32 * (screenWidth / 412),
-                                ),
-                              ),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth * 0.04,
-                                  vertical: screenHeight * 0.018,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(
-                                    24 * (screenWidth / 412),
-                                  ),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
                                     Text(
                                       'Rating and some reviews are verified and are\nfrom people who use the same type of device that you use.',
                                       style: TextStyle(
