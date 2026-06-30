@@ -611,8 +611,8 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                 alignment: Alignment.center,
                 children: [
                   Positioned(
-                    left: screenWidth * 0.06,
-                    right: screenWidth * 0.06,
+                    left: screenWidth * 0.09,
+                    right: screenWidth * 0.09,
                     top: screenWidth * 0.015,
                     child: CustomPaint(
                       size: Size(double.infinity, 2),
