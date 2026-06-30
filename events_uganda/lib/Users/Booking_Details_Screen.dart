@@ -528,33 +528,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     ),
                                   ),
                                   SizedBox(height: screenWidth * 0.025),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: screenWidth * 0.06,
-                                      top: screenWidth * 0.01,
-                                    ),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        ScaffoldMessenger.of(
-                                          context,
-                                        ).showSnackBar(
-                                          const SnackBar(
-                                            content: Text('Opening map...'),
-                                          ),
-                                        );
-                                      },
-                                      child: Text(
-                                        'Plot 24, Kampala Road, Kampala',
-                                        style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
-                                          fontWeight: FontWeight.w500,
-                                          color: const Color(0xFFCB471B),
-                                          decoration: TextDecoration.underline,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
