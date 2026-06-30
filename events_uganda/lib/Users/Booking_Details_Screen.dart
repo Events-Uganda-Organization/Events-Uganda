@@ -475,32 +475,57 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     thickness: 1,
                                   ),
                                   SizedBox(height: screenWidth * 0.025),
-                                  TextField(
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 4,
+                                  Container(
+                                    height: screenHeight * 0.065,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[100],
+                                      borderRadius: BorderRadius.circular(30),
+                                      border: Border.all(
+                                        color: Colors.grey[300]!,
+                                        width: 1.2,
                                       ),
-                                      prefixIcon: Icon(
-                                        Icons.business,
-                                        color: Colors.black,
-                                        size: screenWidth * 0.04,
-                                      ),
-                                      hintText: 'Enter Your Venue Type',
-                                      hintStyle: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: screenWidth * 0.035,
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(width: screenWidth * 0.04),
+                                        Icon(
+                                          Icons.business,
+                                          color: Colors.black,
+                                          size: screenWidth * 0.05,
+                                        ),
+                                        SizedBox(width: screenWidth * 0.025),
+                                        Container(
+                                          width: 1.2,
+                                          height: screenHeight * 0.035,
+                                          color: Colors.grey[400],
+                                        ),
+                                        SizedBox(width: screenWidth * 0.03),
+                                        Expanded(
+                                          child: TextFormField(
+                                            decoration: InputDecoration(
+                                              hintText: 'Enter Your Venue Type',
+                                              hintStyle: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: screenWidth * 0.035,
+                                                color: Colors.grey[500],
+                                              ),
+                                              border: InputBorder.none,
+                                              isCollapsed: true,
+                                              contentPadding: EdgeInsets.only(
+                                                top: screenHeight * 0.018,
+                                                bottom: screenHeight * 0.018,
+                                              ),
+                                            ),
+                                            style: TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              fontSize: screenWidth * 0.035,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: screenWidth * 0.02),
+                                      ],
                                     ),
                                   ),
                                   Padding(
