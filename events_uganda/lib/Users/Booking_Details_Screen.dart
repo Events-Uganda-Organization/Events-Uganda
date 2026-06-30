@@ -480,7 +480,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       isDense: true,
                                       contentPadding: EdgeInsets.symmetric(
                                         horizontal: 12,
-                                        vertical: 8,
+                                        vertical: 4,
                                       ),
                                       prefixIcon: Icon(
                                         Icons.business,
