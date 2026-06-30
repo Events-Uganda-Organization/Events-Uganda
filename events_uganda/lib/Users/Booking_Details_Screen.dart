@@ -472,14 +472,15 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               ),
                             ),
                           ),
-                          // Glassy UI Rectangle at bottom of image
+                          // Glassy UI Rectangle on the right side of image
                           Positioned(
                             top:
                                 screenHeight * 0.12 +
-                                (screenWidth * 0.95 * (336 / 350)) -
-                                55 -
+                                screenHeight * 0.02 -
                                 offset,
-                            left: (screenWidth - 315) / 2,
+                            right:
+                                (screenWidth - screenWidth * 0.95) / 2 +
+                                screenWidth * 0.015,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: BackdropFilter(
@@ -488,8 +489,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   sigmaY: 10.0,
                                 ),
                                 child: Container(
-                                  width: 315,
-                                  height: 55,
+                                  width: 55,
+                                  height:
+                                      screenWidth * 0.95 * (336 / 350) * 0.78,
                                   decoration: BoxDecoration(
                                     color: Colors.white.withValues(alpha: 0.25),
                                     borderRadius: BorderRadius.circular(20),
@@ -509,9 +511,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       ),
                                     ],
                                   ),
-                                  child: Row(
+                                  child: Column(
                                     children: [
-                                      SizedBox(width: 6),
+                                      SizedBox(height: 6),
                                       if (_galleryScrollIndex > 0)
                                         GestureDetector(
                                           onTap: () {
@@ -537,7 +539,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                             height: 36,
                                             alignment: Alignment.center,
                                             child: Transform.rotate(
-                                              angle: 3.1416, // 180° → face left
+                                              angle: -1.5708, // 90° CCW → up
                                               child: const Icon(
                                                 Icons.play_arrow,
                                                 color: Colors.white,
@@ -546,17 +548,17 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                             ),
                                           ),
                                         ),
-                                      SizedBox(width: 6),
+                                      SizedBox(height: 6),
                                       Expanded(
                                         child: ListView.builder(
                                           controller: _galleryScrollController,
-                                          scrollDirection: Axis.horizontal,
+                                          scrollDirection: Axis.vertical,
                                           physics:
                                               const NeverScrollableScrollPhysics(),
                                           itemCount: _galleryImages.length,
                                           itemBuilder: (context, i) => Padding(
                                             padding: const EdgeInsets.only(
-                                              right: 8.0,
+                                              bottom: 8.0,
                                             ),
                                             child: GestureDetector(
                                               onTap: () {
@@ -594,9 +596,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: 6),
+                                      SizedBox(height: 6),
                                       if (_galleryScrollIndex <
-                                          _galleryImages.length - 5)
+                                          _galleryImages.length - 6)
                                         GestureDetector(
                                           onTap: () {
                                             setState(() {
@@ -605,7 +607,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                       .clamp(
                                                         0,
                                                         (_galleryImages.length -
-                                                                5)
+                                                                6)
                                                             .clamp(
                                                               0,
                                                               _galleryImages
@@ -624,14 +626,17 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                           child: SizedBox(
                                             width: 36,
                                             height: 36,
-                                            child: const Icon(
-                                              Icons.play_arrow,
-                                              color: Colors.white,
-                                              size: 28,
+                                            child: Transform.rotate(
+                                              angle: 1.5708, // 90° CW → down
+                                              child: const Icon(
+                                                Icons.play_arrow,
+                                                color: Colors.white,
+                                                size: 28,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      SizedBox(width: 6),
+                                      SizedBox(height: 6),
                                     ],
                                   ),
                                 ),
