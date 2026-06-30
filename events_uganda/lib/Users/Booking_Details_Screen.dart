@@ -477,6 +477,11 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   SizedBox(height: screenWidth * 0.025),
                                   TextField(
                                     decoration: InputDecoration(
+                                      isDense: true,
+                                      contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 8,
+                                      ),
                                       prefixIcon: Icon(
                                         Icons.business,
                                         color: Colors.black,
