@@ -436,7 +436,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                           ),
                           // White card below image
                           Positioned(
-                            top: screenWidth * 0.95 * (336 / 350) - 30,
+                            top: screenWidth * 0.95 * (336 / 350) + 8,
                             left: (screenWidth - screenWidth * 0.95) / 2,
                             child: Container(
                               width: screenWidth * 0.95,
