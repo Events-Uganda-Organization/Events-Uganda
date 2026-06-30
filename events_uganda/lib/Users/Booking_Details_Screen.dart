@@ -528,25 +528,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     ),
                                   ),
                                   SizedBox(height: screenWidth * 0.025),
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Icons.location_on,
-                                        size: screenWidth * 0.04,
-                                        color: const Color(0xFFCB471B),
-                                      ),
-                                      SizedBox(width: screenWidth * 0.02),
-                                      Text(
-                                        "Provider's Location:",
-                                        style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black87,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  
                                   Padding(
                                     padding: EdgeInsets.only(
                                       left: screenWidth * 0.06,
