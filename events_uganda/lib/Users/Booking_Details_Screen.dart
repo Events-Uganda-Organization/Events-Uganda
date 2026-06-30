@@ -561,8 +561,11 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                             ),
                           ),
                           Positioned(
-                            top: screenWidth * 0.95 * (336 / 350) + 8 +
-                                screenWidth * 0.95 * (336 / 350) * 0.7 + 12,
+                            top:
+                                screenWidth * 0.95 * (336 / 350) +
+                                8 +
+                                screenWidth * 0.95 * (336 / 350) * 0.7 +
+                                12,
                             left: (screenWidth - screenWidth * 0.95) / 2,
                             child: Container(
                               width: screenWidth * 0.95,
