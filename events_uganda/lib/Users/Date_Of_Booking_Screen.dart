@@ -617,7 +617,16 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                   ),
                   GestureDetector(
                     onTap: _canForwardReturn
-                        ? () => Navigator.of(context).maybePop()
+                        ? () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const BookingDetailsScreen(),
+                              ),
+                            ).then((_) {
+                              if (mounted) setState(() {});
+                            });
+                          }
                         : null,
                     child: Opacity(
                       opacity: _canForwardReturn ? 1.0 : 0.35,
