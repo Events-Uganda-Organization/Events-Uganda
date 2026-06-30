@@ -7,6 +7,7 @@ import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
+import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 
 class ServiceListingCakesScreen extends StatefulWidget {
   final String? category;
@@ -726,7 +727,12 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
     final cardHeight = cardWidth * 1.185;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+        );
+      },
       child: Container(
         width: cardWidth,
         height: cardHeight,

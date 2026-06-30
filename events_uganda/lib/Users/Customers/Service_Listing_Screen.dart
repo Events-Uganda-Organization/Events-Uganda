@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
+import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 
 class ServiceListingScreen extends StatefulWidget {
   final String? category;
@@ -692,7 +693,12 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
     final cardHeight = cardWidth * 1.185;
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+        );
+      },
       child: Container(
         width: cardWidth,
         height: cardHeight,
