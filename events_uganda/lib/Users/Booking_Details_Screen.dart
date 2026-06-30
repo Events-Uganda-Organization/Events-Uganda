@@ -475,24 +475,28 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     thickness: 1,
                                   ),
                                   SizedBox(height: screenWidth * 0.025),
-                                  Row(
-                                    children: [
-                                      Icon(
+                                  TextField(
+                                    decoration: InputDecoration(
+                                      prefixIcon: Icon(
                                         Icons.business,
+                                        color: Colors.black,
                                         size: screenWidth * 0.04,
-                                        color: Colors.grey[600],
                                       ),
-                                      SizedBox(width: screenWidth * 0.02),
-                                      Text(
-                                        "Provider's Name:",
-                                        style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black87,
-                                        ),
+                                      hintText: 'Enter Your Venue Type',
+                                      hintStyle: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: screenWidth * 0.035,
                                       ),
-                                    ],
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                    ),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
