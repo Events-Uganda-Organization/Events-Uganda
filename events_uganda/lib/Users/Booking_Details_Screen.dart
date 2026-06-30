@@ -440,10 +440,102 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                             left: (screenWidth - screenWidth * 0.95) / 2,
                             child: Container(
                               width: screenWidth * 0.95,
-                              height: screenWidth * 0.95 * (336 / 350) * 0.35,
+                              height: screenWidth * 0.95 * (336 / 350) * 0.45,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.05,
+                                vertical: screenWidth * 0.04,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Provider Details',
+                                    style: TextStyle(
+                                      fontFamily: 'Abril Fatface',
+                                      fontSize: screenWidth * 0.045,
+                                      fontWeight: FontWeight.bold,
+                                      color: const Color(0xFFCB471B),
+                                    ),
+                                  ),
+                                  SizedBox(height: screenWidth * 0.04),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Provider's Name: ",
+                                            style: TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              fontSize: screenWidth * 0.035,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              'Grace Events & Catering',
+                                              style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: screenWidth * 0.035,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.black54,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: screenWidth * 0.025),
+                                      GestureDetector(
+                                        onTap: () {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Opening map...',
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Provider's Location: ",
+                                              style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: screenWidth * 0.035,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                'Plot 24, Kampala Road, Kampala',
+                                                style: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: screenWidth * 0.035,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: const Color(0xFFCB471B),
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ),
