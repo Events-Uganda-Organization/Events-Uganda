@@ -440,7 +440,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                             left: (screenWidth - screenWidth * 0.95) / 2,
                             child: Container(
                               width: screenWidth * 0.95,
-                              height: screenWidth * 0.95 * (336 / 350) * 0.45,
+                              height: screenWidth * 0.95 * (336 / 350) * 0.7,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
@@ -485,13 +485,15 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                           color: Colors.black87,
                                         ),
                                       ),
-                                      Text(
-                                        'Grace Events & Catering',
-                                        style: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.black54,
+                                      Expanded(
+                                        child: Text(
+                                          'Grace Events & Catering',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontSize: screenWidth * 0.035,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black54,
+                                          ),
                                         ),
                                       ),
                                     ],
