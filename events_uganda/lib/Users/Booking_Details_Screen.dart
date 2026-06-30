@@ -434,6 +434,19 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               ],
                             ),
                           ),
+                          // White card below image
+                          Positioned(
+                            top: screenWidth * 0.95 * (336 / 350) - 30,
+                            left: (screenWidth - screenWidth * 0.95) / 2,
+                            child: Container(
+                              width: screenWidth * 0.95,
+                              height: screenWidth * 0.95 * (336 / 350) * 0.35,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                          ),
                           Positioned(
                             top:
                                 screenHeight * 0.59 -
