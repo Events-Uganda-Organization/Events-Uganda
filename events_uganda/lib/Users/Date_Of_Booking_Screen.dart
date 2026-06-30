@@ -206,11 +206,59 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
       final unavailable = _isUnavailable(date);
       final todayDate = _isToday(date);
 
+      final isRangeStart = _startDate != null && _isSameDay(date, _startDate!);
+      final isRangeEnd = _endDate != null && _isSameDay(date, _endDate!);
+      final inRange = _startDate != null && _endDate != null &&
+          date.isAfter(_startDate!) && date.isBefore(_endDate!);
+      final isRangeEdge = isRangeStart || isRangeEnd;
+
+      final brandColor = const Color(0xFFCB471B);
+
+      Color? bgColor;
+      Color? borderColor;
+      Color textColor;
+      FontWeight fontWeight;
+
+      if (unavailable) {
+        bgColor = Colors.red.shade50;
+        borderColor = Colors.red.shade200;
+        textColor = Colors.red;
+        fontWeight = FontWeight.bold;
+      } else if (isRangeEdge) {
+        bgColor = brandColor;
+        textColor = Colors.white;
+        fontWeight = FontWeight.bold;
+      } else if (inRange) {
+        bgColor = brandColor.withOpacity(0.12);
+        textColor = brandColor;
+        fontWeight = FontWeight.w600;
+      } else if (todayDate) {
+        bgColor = Colors.green;
+        borderColor = Colors.green.shade700;
+        textColor = Colors.white;
+        fontWeight = FontWeight.bold;
+      } else if (isPast) {
+        bgColor = null;
+        textColor = Colors.grey.shade300;
+        fontWeight = FontWeight.w400;
+      } else {
+        bgColor = null;
+        textColor = Colors.black87;
+        fontWeight = FontWeight.w400;
+      }
+
       dayWidgets.add(
         GestureDetector(
           onTap: unavailable || isPast ? null : () {
             setState(() {
-              _selectedDate = date;
+              if (_startDate == null || (_startDate != null && _endDate != null)) {
+                _startDate = date;
+                _endDate = null;
+              } else if (date.isBefore(_startDate!)) {
+                _startDate = date;
+              } else {
+                _endDate = date;
+              }
             });
           },
           child: Container(
@@ -219,28 +267,16 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: todayDate
-                  ? Colors.green
-                  : unavailable
-                      ? Colors.red.shade50
-                      : null,
-              border: todayDate
-                  ? Border.all(color: Colors.green.shade700, width: 2)
-                  : unavailable
-                      ? Border.all(color: Colors.red.shade200, width: 1)
-                      : null,
+              color: bgColor,
+              border: borderColor != null
+                  ? Border.all(color: borderColor, width: 2)
+                  : null,
             ),
             child: Text(
               '$day',
               style: TextStyle(
-                fontWeight: todayDate || unavailable ? FontWeight.bold : FontWeight.w400,
-                color: todayDate
-                    ? Colors.white
-                    : unavailable
-                        ? Colors.red
-                        : isPast
-                            ? Colors.grey.shade300
-                            : Colors.black87,
+                fontWeight: fontWeight,
+                color: textColor,
                 fontSize: screenWidth * 0.032,
                 fontFamily: 'Montserrat',
               ),
@@ -337,6 +373,8 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
           _legendItem(screenWidth, Colors.green, 'Today'),
           SizedBox(width: screenWidth * 0.04),
           _legendItem(screenWidth, Colors.red, 'Unavailable'),
+          SizedBox(width: screenWidth * 0.04),
+          _legendItem(screenWidth, const Color(0xFFCB471B), 'Range'),
         ],
       ),
     );
@@ -660,9 +698,11 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                       SizedBox(width: screenWidth * 0.025),
                       Flexible(
                         child: Text(
-                          _selectedDate != null
-                              ? '${_monthNames[_selectedDate!.month - 1]} ${_selectedDate!.day}, ${_selectedDate!.year}'
-                              : 'Select a date from the calendar',
+                          _startDate != null && _endDate != null
+                              ? '${_monthNames[_startDate!.month - 1]} ${_startDate!.day} - ${_monthNames[_endDate!.month - 1]} ${_endDate!.day}, ${_endDate!.year}'
+                              : _startDate != null
+                                  ? '${_monthNames[_startDate!.month - 1]} ${_startDate!.day}, ${_startDate!.year}'
+                                  : 'Select a date from the calendar',
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.black,
