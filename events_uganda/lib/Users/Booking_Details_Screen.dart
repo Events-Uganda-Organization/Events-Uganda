@@ -527,21 +527,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      left: screenWidth * 0.06,
-                                      top: screenWidth * 0.01,
-                                    ),
-                                    child: Text(
-                                      'Grace Events & Catering',
-                                      style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: screenWidth * 0.035,
-                                        fontWeight: FontWeight.w500,
-                                        color: const Color(0xFFCB471B),
-                                      ),
-                                    ),
-                                  ),
                                   SizedBox(height: screenWidth * 0.025),
                                   Row(
                                     children: [
