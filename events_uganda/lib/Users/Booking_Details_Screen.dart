@@ -477,7 +477,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       ),
                                       SizedBox(width: screenWidth * 0.02),
                                       Text(
-                                        "Provider's Name: ",
+                                        "Provider's Name:",
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
                                           fontSize: screenWidth * 0.035,
@@ -485,18 +485,22 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                           color: Colors.black87,
                                         ),
                                       ),
-                                      Expanded(
-                                        child: Text(
-                                          'Grace Events & Catering',
-                                          style: TextStyle(
-                                            fontFamily: 'Montserrat',
-                                            fontSize: screenWidth * 0.035,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ),
                                     ],
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: screenWidth * 0.06,
+                                      top: screenWidth * 0.01,
+                                    ),
+                                    child: Text(
+                                      'Grace Events & Catering',
+                                      style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: screenWidth * 0.035,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
                                   ),
                                   SizedBox(height: screenWidth * 0.025),
                                   Row(
