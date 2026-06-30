@@ -22,7 +22,8 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
   Set<DateTime> _unavailableDates = {};
   TimeOfDay? _fromTime;
   TimeOfDay? _toTime;
-  DateTime? _selectedDate;
+  DateTime? _startDate;
+  DateTime? _endDate;
 
   final List<String> _monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
