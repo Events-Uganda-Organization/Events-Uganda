@@ -21,11 +21,11 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     _animController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 4000),
+      duration: const Duration(milliseconds: 5000),
     );
     _fadeIn = CurvedAnimation(parent: _animController, curve: Curves.easeOutCubic);
     _animController.forward();
-    _navTimer = Timer(const Duration(seconds: 15), _navigate);
+    _navTimer = Timer(const Duration(seconds: 20), _navigate);
   }
 
   void _navigate() {
