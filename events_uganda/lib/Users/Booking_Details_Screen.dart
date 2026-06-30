@@ -560,6 +560,34 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               ),
                             ),
                           ),
+                          // Second white card below
+                          Positioned(
+                            top:
+                                screenWidth * 0.95 * (336 / 350) +
+                                8 +
+                                screenWidth * 0.95 * (336 / 350) * 0.7 +
+                                10,
+                            left: (screenWidth - screenWidth * 0.95) / 2,
+                            child: Container(
+                              width: screenWidth * 0.95,
+                              height: screenWidth * 0.95 * (336 / 350) * 0.4,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.08),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth * 0.05,
+                                vertical: screenWidth * 0.04,
+                              ),
+                            ),
+                          ),
                           Positioned(
                             top:
                                 screenHeight * 0.59 -
