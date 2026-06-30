@@ -44,6 +44,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   int _rating = 0;
   bool _showReviewSection = false;
   bool _showAllReviews = false;
+  bool _canForwardReturn = false;
 
 
 
@@ -695,7 +696,13 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                       MaterialPageRoute(
                         builder: (context) => DateOfBookingScreen(),
                       ),
-                    );
+                    ).then((_) {
+                      if (mounted) {
+                        setState(() {
+                          _canForwardReturn = true;
+                        });
+                      }
+                    });
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
