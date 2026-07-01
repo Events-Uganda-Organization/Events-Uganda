@@ -843,8 +843,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       ),
                                     ],
                                   ),
-                              child: SingleChildScrollView(
-                                child: Column(
+                              child: Column(
                                     children: [
                                       SizedBox(height: 6),
                                       if (_galleryScrollIndex > 0)
