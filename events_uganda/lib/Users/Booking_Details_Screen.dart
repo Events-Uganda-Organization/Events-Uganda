@@ -486,7 +486,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                             boxShadow: isFocused
                                                 ? [
                                                     BoxShadow(
-                                                      color: const Color(0xFFCB471B).withValues(alpha: 0.4),
+                                                      color: const Color(0xFF8715C9).withValues(alpha: 0.4),
                                                       blurRadius: 12,
                                                       spreadRadius: 1,
                                                     ),
@@ -494,7 +494,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                 : [],
                                           ),
                                           child: TextFormField(
-                                            cursorColor: const Color(0xFFCB471B),
+                                            cursorColor: const Color(0xFF8715C9),
                                             decoration: InputDecoration(
                                               prefixIcon: Icon(
                                                 Icons.business,
@@ -508,6 +508,13 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                 color: Colors.grey[500],
                                                 fontWeight: FontWeight.w600,
                                               ),
+                                              hintText: 'Enter Your Venue Type',
+                                              hintStyle: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: screenWidth * 0.035,
+                                                color: Colors.grey[400],
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                               floatingLabelBehavior:
                                                   FloatingLabelBehavior.auto,
                                               filled: true,
@@ -515,23 +522,25 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                               border: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(30),
-                                                borderSide: BorderSide(
-                                                  color: Colors.grey[300]!,
+                                                borderSide: const BorderSide(
+                                                  color: Color(0xFF8715C9),
+                                                  width: 1,
                                                 ),
                                               ),
                                               enabledBorder: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(30),
-                                                borderSide: BorderSide(
-                                                  color: Colors.grey[300]!,
+                                                borderSide: const BorderSide(
+                                                  color: Color(0xFF8715C9),
+                                                  width: 1,
                                                 ),
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(30),
                                                 borderSide: const BorderSide(
-                                                  color: Color(0xFFCB471B),
-                                                  width: 1.8,
+                                                  color: Color(0xFF8715C9),
+                                                  width: 2,
                                                 ),
                                               ),
                                               contentPadding: EdgeInsets.symmetric(
@@ -542,7 +551,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                             style: TextStyle(
                                               fontFamily: 'Montserrat',
                                               fontSize: screenWidth * 0.035,
-                                              color: Colors.black87,
+                                              color: Colors.black,
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
