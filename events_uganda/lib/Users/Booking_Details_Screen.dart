@@ -538,7 +538,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                             left: (screenWidth - screenWidth * 0.95) / 2,
                             child: Container(
                               width: screenWidth * 0.95,
-                              height: screenWidth * 0.95 * (336 / 350) * 0.7,
+                              height: screenWidth * 0.95 * (336 / 350) * 0.7 + screenWidth * 0.58,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
@@ -779,6 +779,73 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       ),
                                     ),
                                     SizedBox(height: screenWidth * 0.025),
+                                    Container(
+                                      height: screenWidth * 0.55,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[100],
+                                        borderRadius: BorderRadius.circular(30),
+                                        border: Border.all(
+                                          color: const Color(0xFFCB471B),
+                                          width: 1,
+                                        ),
+                                      ),
+                                      clipBehavior: Clip.antiAlias,
+                                      child: Stack(
+                                        children: [
+                                          FlutterMap(
+                                            options: MapOptions(
+                                              initialCenter: _pinPosition,
+                                              initialZoom: 15,
+                                              onMapEvent: (event) {
+                                                if (event is MapEventMoveEnd) {
+                                                  setState(() {
+                                                    _pinPosition = event
+                                                        .camera
+                                                        .center;
+                                                  });
+                                                }
+                                              },
+                                            ),
+                                            mapController: _mapController,
+                                            children: [
+                                              TileLayer(
+                                                urlTemplate:
+                                                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                                userAgentPackageName:
+                                                    'com.events_uganda.app',
+                                              ),
+                                            ],
+                                          ),
+                                          Center(
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Icon(
+                                                  Icons.location_on,
+                                                  color:
+                                                      const Color(0xFFCB471B),
+                                                  size: screenWidth * 0.1,
+                                                ),
+                                                Container(
+                                                  width: 14,
+                                                  height: 14,
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(
+                                                      0xFFCB471B,
+                                                    ),
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                      color: Colors.white,
+                                                      width: 2.5,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -789,6 +856,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                 screenWidth * 0.95 * (336 / 350) +
                                 8 +
                                 screenWidth * 0.95 * (336 / 350) * 0.7 +
+                                screenWidth * 0.58 +
                                 12,
                             left: (screenWidth - screenWidth * 0.95) / 2,
                             child: Container(
