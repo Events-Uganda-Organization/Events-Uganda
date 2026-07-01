@@ -770,7 +770,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: screenWidth * 0.03,
-                                        color: Colors.grey[500],
+                                        color: Colors.black,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
