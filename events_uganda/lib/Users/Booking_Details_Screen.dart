@@ -14,10 +14,27 @@ class BookingDetailsScreen extends StatefulWidget {
 class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     with SingleTickerProviderStateMixin {
   final TextEditingController _reviewController = TextEditingController();
+  final TextEditingController _venueTypeController = TextEditingController();
+  final FocusNode _venueTypeFocus = FocusNode();
   final bool _hasText = false;
   final List<ReviewModel> _reviews = [];
   final ScrollController _galleryScrollController = ScrollController();
   int _galleryScrollIndex = 0;
+
+  final List<String> _venueTypes = [
+    'Hotel',
+    'Banquet Hall',
+    'Garden',
+    'Beach',
+    'Church',
+    'Conference Center',
+    'Rooftop',
+    'Restaurant',
+    'Stadium',
+    'Museum',
+    'Backyard',
+    'Other',
+  ];
 
   // List of images for the glassy rectangle
   final List<String> _galleryImages = [
