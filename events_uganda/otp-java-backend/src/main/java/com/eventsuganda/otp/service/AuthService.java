@@ -120,7 +120,9 @@ public class AuthService {
 
     public void resetPassword(String email, String otp, String newPassword) {
         otpService.verify("email:" + email, otp);
+        User user = userService.getByEmail(email);
         String hashed = encoder.encode(newPassword);
         userService.updatePassword(email, hashed);
+        emailService.sendPasswordResetConfirmation(user.getEmail(), user.getFullName());
     }
 }
