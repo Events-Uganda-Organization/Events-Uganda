@@ -1098,14 +1098,14 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: screenHeight * 1.19 - offset,
-                        left: screenWidth * 0.02,
-                        right: screenWidth * 0.02,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // ===== ABOUT PROVIDER TITLE CARD =====
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // ===== ABOUT PROVIDER TITLE CARD =====
                             Container(
                               padding: EdgeInsets.symmetric(
                                 horizontal: screenWidth * 0.02,
