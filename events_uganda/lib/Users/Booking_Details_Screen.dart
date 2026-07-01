@@ -1096,11 +1096,12 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            Positioned(
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                          Positioned(
               bottom: 20,
               left: (screenWidth - 270) / 2,
               child: Container(
