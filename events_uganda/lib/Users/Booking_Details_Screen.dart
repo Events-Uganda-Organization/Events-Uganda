@@ -16,6 +16,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   final TextEditingController _reviewController = TextEditingController();
   final TextEditingController _venueTypeController = TextEditingController();
   final FocusNode _venueTypeFocus = FocusNode();
+  final GlobalKey _venueTypeKey = GlobalKey();
   final bool _hasText = false;
   final List<ReviewModel> _reviews = [];
   final ScrollController _galleryScrollController = ScrollController();
@@ -94,34 +95,50 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   }
 
   void _showVenueTypeDropdown(BuildContext context) {
-    showModalBottomSheet(
+    final RenderBox? renderBox = _venueTypeKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox == null) return;
+
+    final size = renderBox.size;
+    final offset = renderBox.localToGlobal(Offset.zero);
+
+    showMenu<String>(
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      position: RelativeRect.fromLTRB(
+        offset.dx,
+        offset.dy + size.height + 4,
+        offset.dx + size.width,
+        offset.dy + size.height + 300,
       ),
-      builder: (context) {
-        return SafeArea(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: _venueTypes.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(
-                  _venueTypes[index],
-                  style: const TextStyle(fontFamily: 'Montserrat'),
-                ),
-                onTap: () {
-                  setState(() {
-                    _venueTypeController.text = _venueTypes[index];
-                  });
-                  Navigator.pop(context);
-                },
-              );
-            },
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      constraints: BoxConstraints(
+        maxHeight: 220,
+        minWidth: size.width,
+      ),
+      items: _venueTypes.map((type) {
+        return PopupMenuItem<String>(
+          value: type,
+          height: 40,
+          child: Text(
+            type,
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: MediaQuery.of(context).size.width * 0.035,
+              color: Colors.black87,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         );
-      },
-    );
+      }).toList(),
+    ).then((value) {
+      if (value != null) {
+        setState(() {
+          _venueTypeController.text = value;
+        });
+      }
+    });
   }
 
   @override
