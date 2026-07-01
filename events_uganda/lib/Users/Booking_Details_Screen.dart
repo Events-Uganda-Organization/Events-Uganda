@@ -93,12 +93,45 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     return 'Good Evening';
   }
 
+  void _showVenueTypeDropdown(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: _venueTypes.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(
+                  _venueTypes[index],
+                  style: const TextStyle(fontFamily: 'Montserrat'),
+                ),
+                onTap: () {
+                  setState(() {
+                    _venueTypeController.text = _venueTypes[index];
+                  });
+                  Navigator.pop(context);
+                },
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
   @override
   void dispose() {
     _animationController.dispose();
     _countdownTimer?.cancel();
     _galleryScrollController.dispose();
     _reviewController.dispose();
+    _venueTypeController.dispose();
+    _venueTypeFocus.dispose();
     super.dispose();
   }
 
