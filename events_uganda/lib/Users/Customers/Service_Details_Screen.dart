@@ -1407,24 +1407,19 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 ],
                               ],
                             ),
-                          ),
                         ),
                       ),
-
-                      // ===== Reviews & Ratings Section in nested cards =====
-                      Positioned(
-                        top: _showReviewSection
-                            ? screenHeight * 1.85 - offset
-                            : screenHeight * 1.65 - offset,
-                        left: screenWidth * 0.022,
-                        right: screenWidth * 0.022,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.02,
-                            vertical: screenHeight * 0.006,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3F3F3),
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.02,
+                          vertical: screenHeight * 0.006,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF3F3F3),
                             borderRadius: BorderRadius.circular(
                               32 * (screenWidth / 412),
                             ),
@@ -1503,8 +1498,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
+                  ],
                 ),
               ),
             ),
