@@ -501,7 +501,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                     SizedBox(
                       height:
                           screenHeight *
-                          2.5 *
+                          2.8 *
                           verticalMultiplier, // Adjust height for landscape
                       child: Stack(
                         children: [
