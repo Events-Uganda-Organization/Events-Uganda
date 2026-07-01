@@ -544,11 +544,11 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   ),
                                   SizedBox(height: screenWidth * 0.025),
                                   Focus(
+                                    key: _venueTypeKey,
                                     child: Builder(
                                       builder: (context) {
                                         final isFocused = Focus.of(context).hasFocus;
                                         return AnimatedContainer(
-                                          key: _venueTypeKey,
                                           duration: const Duration(milliseconds: 200),
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(30),
