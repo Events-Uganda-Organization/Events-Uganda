@@ -1091,7 +1091,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 ),
                               ),
                             ],
-                          ),
                         ),
                       ),
                     ),
@@ -1102,7 +1101,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // ===== ABOUT PROVIDER TITLE CARD =====
-                            Container(
+                          Container(
                               padding: EdgeInsets.symmetric(
                                 horizontal: screenWidth * 0.02,
                                 vertical: screenHeight * 0.006,
