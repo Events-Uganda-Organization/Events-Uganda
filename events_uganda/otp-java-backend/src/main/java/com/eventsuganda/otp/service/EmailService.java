@@ -59,6 +59,35 @@ public class EmailService {
         }
     }
 
+    public void sendPasswordResetConfirmation(String to, String fullName) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail);
+            helper.setTo(to);
+            helper.setSubject("Password Reset Successful - Events Uganda");
+
+            String html = """
+                <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto;">
+                  <h2 style="color: #D59A00;">Password Reset Successful</h2>
+                  <p>Hi %s,</p>
+                  <p>Your password has been successfully reset.</p>
+                  <p>If you did not request this change, please contact our support team immediately.</p>
+                  <br>
+                  <p>Best regards,<br/><strong>Events Uganda Team</strong></p>
+                </div>
+                """.formatted(fullName != null ? fullName : "there");
+
+            helper.setText(html, true);
+            mailSender.send(message);
+
+            log.info("Password reset confirmation email sent to {}", to);
+        } catch (Exception e) {
+            log.error("Failed to send password reset confirmation email to {}", to, e);
+        }
+    }
+
     public void sendOtp(String to, String otp) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
