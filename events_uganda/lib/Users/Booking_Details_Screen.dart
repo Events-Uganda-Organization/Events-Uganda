@@ -741,6 +741,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               ),
                             ),
                           ),
+                          ),
                           Positioned(
                             top:
                                 screenWidth * 0.95 * (336 / 350) +
