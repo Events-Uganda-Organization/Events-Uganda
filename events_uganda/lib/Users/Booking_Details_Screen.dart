@@ -548,6 +548,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       builder: (context) {
                                         final isFocused = Focus.of(context).hasFocus;
                                         return AnimatedContainer(
+                                          key: _venueTypeKey,
                                           duration: const Duration(milliseconds: 200),
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(30),
