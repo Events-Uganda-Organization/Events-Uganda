@@ -1322,7 +1322,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               left: (screenWidth - 270) / 2,
               child: Container(
                 width: 270,
-                height: 62,
+                height: 45,
                 decoration: BoxDecoration(
                   color: const Color(0xFFF3CA9B),
                   borderRadius: BorderRadius.circular(30),
