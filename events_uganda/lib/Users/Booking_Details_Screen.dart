@@ -547,7 +547,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                           child: TextFormField(
                                             controller: _venueTypeController,
                                             focusNode: _venueTypeFocus,
-                                            cursorColor: const Color(0xFF8715C9),
+                                            cursorColor: const Color(0xFFCB471B),
                                             decoration: InputDecoration(
                                               prefixIcon: Icon(
                                                 Icons.business,
