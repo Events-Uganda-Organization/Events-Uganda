@@ -23,6 +23,42 @@ public class EmailService {
         this.mailSender = mailSender;
     }
 
+    public void sendWelcomeEmail(String to, String fullName) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail);
+            helper.setTo(to);
+            helper.setSubject("Welcome to Events Uganda!");
+
+            String html = """
+                <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto;">
+                  <h2 style="color: #D59A00;">Welcome to Events Uganda!</h2>
+                  <p>Hi %s,</p>
+                  <p>Thank you for signing up with <strong>Events Uganda</strong>. We're thrilled to have you on board!</p>
+                  <p>With Events Uganda, you can discover and book amazing events near you, from concerts and conferences to cultural festivals and more.</p>
+                  <p>Here's what you can do next:</p>
+                  <ul>
+                    <li>Browse upcoming events</li>
+                    <li>Save your favorite events</li>
+                    <li>Share events with friends</li>
+                  </ul>
+                  <p>If you ever need help, feel free to reach out to our support team.</p>
+                  <br>
+                  <p>Best regards,<br/><strong>Events Uganda Team</strong></p>
+                </div>
+                """.formatted(fullName != null ? fullName : "there");
+
+            helper.setText(html, true);
+            mailSender.send(message);
+
+            log.info("Welcome email sent to {}", to);
+        } catch (Exception e) {
+            log.error("Failed to send welcome email to {}", to, e);
+        }
+    }
+
     public void sendOtp(String to, String otp) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
