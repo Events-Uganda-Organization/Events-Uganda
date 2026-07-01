@@ -303,7 +303,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                     decoration: BoxDecoration(
                                       color: const Color(
                                         0xFF825E34,
-                                      ).withOpacity(0.3),
+                                      ).withValues(alpha: 0.3),
                                       shape: BoxShape.rectangle,
                                       borderRadius: BorderRadius.circular(5),
                                     ),
@@ -325,7 +325,7 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                     decoration: BoxDecoration(
                                       color: const Color(
                                         0xFF825E34,
-                                      ).withOpacity(0.3),
+                                      ).withValues(alpha: 0.3),
                                       shape: BoxShape.rectangle,
                                       borderRadius: BorderRadius.circular(5),
                                     ),

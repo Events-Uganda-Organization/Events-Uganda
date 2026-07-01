@@ -47,7 +47,7 @@ class _ServiceListingCateringScreenState
   int _currentNavIndex = 0;
   String _userFullName = '';
   String? _profilePicUrl;
-  bool _canForwardReturn =
+  final bool _canForwardReturn =
       false; // Controls the right-side inactive/active return button
 
   Widget _buildCircleItem(
@@ -71,7 +71,7 @@ class _ServiceListingCateringScreenState
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.12),
+                color: Colors.black.withValues(alpha: 0.12),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),
@@ -704,9 +704,7 @@ class _ServiceListingCateringScreenState
   Widget _buildPromoCard(
     double screenWidth,
     double screenHeight,
-    double promoHeight, {
-    String mainText = 'GET YOUR SPECIAL CAR BOOKING\n',
-  }) {
+    double promoHeight) {
     final cardWidth = screenWidth * 0.82;
     return SizedBox(
       width: cardWidth,
@@ -741,7 +739,7 @@ class _ServiceListingCateringScreenState
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -866,7 +864,7 @@ class _ServiceListingCateringScreenState
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                       colors: [
-                        Colors.black.withOpacity(0.7),
+                        Colors.black.withValues(alpha: 0.7),
                         Colors.transparent,
                       ],
                     ),
@@ -946,7 +944,7 @@ class _ServiceListingCateringScreenState
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.white, width: 2),
                               borderRadius: BorderRadius.circular(30),
-                              color: Colors.white.withOpacity(0.1),
+                              color: Colors.white.withValues(alpha: 0.1),
                             ),
                             padding: EdgeInsets.symmetric(
                               horizontal: screenWidth * 0.03,
@@ -1034,7 +1032,7 @@ class _ServiceListingCateringScreenState
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 7),
                     ),
@@ -1092,7 +1090,7 @@ class _ServiceListingCateringScreenState
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       spreadRadius: 2,
                       offset: const Offset(0, 7),
@@ -1154,7 +1152,7 @@ class _ServiceListingCateringScreenState
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 7),
                     ),
@@ -1181,7 +1179,7 @@ class _ServiceListingCateringScreenState
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(2, 7),
                     ),
@@ -1213,7 +1211,7 @@ class _ServiceListingCateringScreenState
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 12,
                       spreadRadius: 2,
                       offset: const Offset(2, 7),
@@ -1227,7 +1225,7 @@ class _ServiceListingCateringScreenState
                       padding: EdgeInsets.only(left: screenWidth * 0.04),
                       child: Icon(
                         Icons.search,
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         size: screenWidth * 0.06,
                       ),
                     ),
@@ -1243,7 +1241,7 @@ class _ServiceListingCateringScreenState
                         decoration: InputDecoration(
                           hintText: 'Search for services, vendors',
                           hintStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.5),
+                            color: Colors.black.withValues(alpha: 0.5),
                             fontSize: screenWidth * 0.035,
                             fontFamily: 'Montserrat',
                           ),
@@ -1300,7 +1298,7 @@ class _ServiceListingCateringScreenState
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -1320,7 +1318,7 @@ class _ServiceListingCateringScreenState
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.15),
+                                      color: Colors.black.withValues(alpha: 0.15),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
                                     ),
@@ -1359,7 +1357,7 @@ class _ServiceListingCateringScreenState
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -1379,7 +1377,7 @@ class _ServiceListingCateringScreenState
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.15),
+                                      color: Colors.black.withValues(alpha: 0.15),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
                                     ),
@@ -1418,7 +1416,7 @@ class _ServiceListingCateringScreenState
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -1438,7 +1436,7 @@ class _ServiceListingCateringScreenState
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.15),
+                                      color: Colors.black.withValues(alpha: 0.15),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
                                     ),
@@ -1476,7 +1474,7 @@ class _ServiceListingCateringScreenState
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -1496,7 +1494,7 @@ class _ServiceListingCateringScreenState
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.15),
+                                      color: Colors.black.withValues(alpha: 0.15),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
                                     ),

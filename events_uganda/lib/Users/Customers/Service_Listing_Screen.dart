@@ -39,7 +39,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
   final Set<int> _cartedCategoryImages = {};
   int _currentNavIndex = 0;
   String _userFullName = '';
-  bool _canForwardReturn =
+  final bool _canForwardReturn =
       false; 
 
   Widget _buildCircleItem(
@@ -63,7 +63,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.12),
+                color: Colors.black.withValues(alpha: 0.12),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),
@@ -670,9 +670,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
   Widget _buildPromoCard(
     double screenWidth,
     double screenHeight,
-    double promoHeight, {
-    String mainText = 'GET YOUR SPECIAL CAR BOOKING\n',
-  }) {
+    double promoHeight) {
     final cardWidth = screenWidth * 0.82;
     return SizedBox(
       width: cardWidth,
@@ -706,7 +704,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 8,
               offset: const Offset(0, 4),
             ),
@@ -821,7 +819,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                       colors: [
-                        Colors.black.withOpacity(0.7),
+                        Colors.black.withValues(alpha: 0.7),
                         Colors.transparent,
                       ],
                     ),
@@ -901,7 +899,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.white, width: 2),
                               borderRadius: BorderRadius.circular(30),
-                              color: Colors.white.withOpacity(0.1),
+                              color: Colors.white.withValues(alpha: 0.1),
                             ),
                             padding: EdgeInsets.symmetric(
                               horizontal: screenWidth * 0.03,
@@ -989,7 +987,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 7),
                     ),
@@ -1047,7 +1045,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       spreadRadius: 2,
                       offset: const Offset(0, 7),
@@ -1075,7 +1073,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 7),
                     ),
@@ -1102,7 +1100,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(2, 7),
                     ),
@@ -1134,7 +1132,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 12,
                       spreadRadius: 2,
                       offset: const Offset(2, 7),
@@ -1148,7 +1146,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       padding: EdgeInsets.only(left: screenWidth * 0.04),
                       child: Icon(
                         Icons.search,
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         size: screenWidth * 0.06,
                       ),
                     ),
@@ -1164,7 +1162,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         decoration: InputDecoration(
                           hintText: 'Search for services, vendors',
                           hintStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.5),
+                            color: Colors.black.withValues(alpha: 0.5),
                             fontSize: screenWidth * 0.035,
                             fontFamily: 'Montserrat',
                           ),
@@ -1221,7 +1219,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -1241,7 +1239,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.15),
+                                      color: Colors.black.withValues(alpha: 0.15),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
                                     ),
@@ -1280,7 +1278,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -1300,7 +1298,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.15),
+                                      color: Colors.black.withValues(alpha: 0.15),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
                                     ),
@@ -1339,7 +1337,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -1359,7 +1357,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.15),
+                                      color: Colors.black.withValues(alpha: 0.15),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
                                     ),
@@ -1397,7 +1395,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 8,
                             offset: const Offset(0, 4),
                           ),
@@ -1417,7 +1415,7 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.15),
+                                      color: Colors.black.withValues(alpha: 0.15),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
                                     ),

@@ -71,7 +71,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.12),
+                  color: Colors.black.withValues(alpha: 0.12),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),
@@ -736,7 +736,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
               borderRadius: BorderRadius.circular(25),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0),
+                  color: Colors.black.withValues(alpha: 0),
                   blurRadius: 12,
                   spreadRadius: 2,
                   offset: const Offset(2, 7),
@@ -886,7 +886,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 7),
                     ),
@@ -944,7 +944,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       spreadRadius: 2,
                       offset: const Offset(0, 7),
@@ -1006,7 +1006,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 7),
                     ),
@@ -1033,7 +1033,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(2, 7),
                     ),
@@ -1065,7 +1065,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 12,
                       spreadRadius: 2,
                       offset: const Offset(2, 7),
@@ -1079,7 +1079,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                       padding: EdgeInsets.only(left: screenWidth * 0.04),
                       child: Icon(
                         Icons.search,
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         size: screenWidth * 0.06,
                       ),
                     ),
@@ -1095,7 +1095,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                         decoration: InputDecoration(
                           hintText: 'Search for services, vendors',
                           hintStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.5),
+                            color: Colors.black.withValues(alpha: 0.5),
                             fontSize: screenWidth * 0.035,
                             fontFamily: 'Montserrat',
                           ),

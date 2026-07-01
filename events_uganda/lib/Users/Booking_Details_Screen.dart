@@ -14,7 +14,7 @@ class BookingDetailsScreen extends StatefulWidget {
 class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     with SingleTickerProviderStateMixin {
   final TextEditingController _reviewController = TextEditingController();
-  bool _hasText = false;
+  final bool _hasText = false;
   final List<ReviewModel> _reviews = [];
   final ScrollController _galleryScrollController = ScrollController();
   int _galleryScrollIndex = 0;
@@ -35,14 +35,14 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   int _selectedGalleryIndex = 0;
   final FocusNode _searchFocus = FocusNode();
   Timer? _countdownTimer;
-  bool _isFavorite = false;
+  final bool _isFavorite = false;
   Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
   String _userFullName = '';
   String? _profilePicUrl;
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
-  int _rating = 0;
-  bool _showReviewSection = false;
+  final int _rating = 0;
+  final bool _showReviewSection = false;
   bool _showAllReviews = false;
   bool _canForwardReturn = false;
 

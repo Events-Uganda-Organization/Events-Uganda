@@ -55,10 +55,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +124,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   border: Border.all(color: Color(0XFFF19124), width: 2),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       spreadRadius: 2,
                       offset: const Offset(0, 7),
@@ -202,7 +198,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 7),
                     ),
@@ -349,7 +345,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                   right: screen.width * 0.02,
                                 ),
                                 child: Divider(
-                                  color: Colors.black.withOpacity(0.6),
+                                  color: Colors.black.withValues(alpha: 0.6),
                                   thickness: 1,
                                   height: 1,
                                 ),
@@ -416,7 +412,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             right: screen.width * 0.02,
                           ),
                           child: Divider(
-                            color: Colors.black.withOpacity(0.6),
+                            color: Colors.black.withValues(alpha: 0.6),
                             thickness: 1,
                             height: 1,
                           ),
@@ -480,7 +476,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             right: screen.width * 0.02,
                           ),
                           child: Divider(
-                            color: Colors.black.withOpacity(0.6),
+                            color: Colors.black.withValues(alpha: 0.6),
                             thickness: 1,
                             height: 1,
                           ),
@@ -544,7 +540,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             right: screen.width * 0.02,
                           ),
                           child: Divider(
-                            color: Colors.black.withOpacity(0.6),
+                            color: Colors.black.withValues(alpha: 0.6),
                             thickness: 1,
                             height: 1,
                           ),
@@ -608,7 +604,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             right: screen.width * 0.02,
                           ),
                           child: Divider(
-                            color: Colors.black.withOpacity(0.6),
+                            color: Colors.black.withValues(alpha: 0.6),
                             thickness: 1,
                             height: 1,
                           ),
@@ -672,7 +668,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             right: screen.width * 0.02,
                           ),
                           child: Divider(
-                            color: Colors.black.withOpacity(0.6),
+                            color: Colors.black.withValues(alpha: 0.6),
                             thickness: 1,
                             height: 1,
                           ),

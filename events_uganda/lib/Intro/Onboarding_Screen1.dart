@@ -140,7 +140,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
                   width: screenWidth * 0.06,
                   height: screenHeight * 0.010,
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(6),
                   ),
                 ),
@@ -149,7 +149,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
                   width: screenWidth * 0.06,
                   height: screenHeight * 0.010,
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.3),
+                    color: Colors.black.withValues(alpha: 0.3),
                     borderRadius: BorderRadius.circular(6),
                   ),
                 ),
@@ -383,7 +383,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
                     vertical: screenHeight * 0.012,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.7),
+                    color: Colors.black.withValues(alpha: 0.7),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
@@ -428,7 +428,7 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.18),
+            color: Colors.black.withValues(alpha: 0.18),
             blurRadius: 18,
             offset: Offset(0, 8),
           ),

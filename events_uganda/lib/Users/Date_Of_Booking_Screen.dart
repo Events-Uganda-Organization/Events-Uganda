@@ -229,7 +229,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
         textColor = Colors.white;
         fontWeight = FontWeight.bold;
       } else if (inRange) {
-        bgColor = brandColor.withOpacity(0.12);
+        bgColor = brandColor.withValues(alpha: 0.12);
         textColor = brandColor;
         fontWeight = FontWeight.w600;
       } else if (todayDate) {
@@ -405,10 +405,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   Widget _buildStepCircle(double screenWidth, double screenHeight, String label, bool isActive) {
     return Column(
@@ -475,7 +471,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 7),
                     ),
@@ -533,7 +529,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       spreadRadius: 2,
                       offset: const Offset(0, 7),
@@ -561,7 +557,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                   border: Border.all(color: Colors.white, width: 3),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withValues(alpha: 0.15),
                       blurRadius: 10,
                       offset: const Offset(0, 7),
                     ),
@@ -691,7 +687,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -739,7 +735,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -762,7 +758,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),
@@ -809,7 +805,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                     borderRadius: BorderRadius.circular(30),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha: 0.08),
                         blurRadius: 12,
                         offset: const Offset(0, 4),
                       ),

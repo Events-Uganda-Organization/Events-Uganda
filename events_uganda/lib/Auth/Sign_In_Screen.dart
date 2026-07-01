@@ -384,7 +384,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: accent.withOpacity(0.25),
+                                  color: accent.withValues(alpha: 0.25),
                                   blurRadius: 10,
                                   offset: const Offset(0, 6),
                                 ),
@@ -587,7 +587,7 @@ class _RoundedFieldState extends State<_RoundedField> {
           ),
           hintText: widget.hint,
           hintStyle: TextStyle(
-            color: Colors.black.withOpacity(0.55),
+            color: Colors.black.withValues(alpha: 0.55),
             fontSize: screen.width * 0.040,
             fontWeight: FontWeight.w500,
           ),

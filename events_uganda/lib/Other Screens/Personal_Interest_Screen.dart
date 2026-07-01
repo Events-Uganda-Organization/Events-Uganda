@@ -44,10 +44,10 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
             decoration: BoxDecoration(
               color: isSelected
                   ? Color(0xFF35B9F2)
-                  : Colors.white.withOpacity(0.2),
+                  : Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(25),
               border: Border.all(
-                color: Color(0XFF35B9F2).withOpacity(0.6),
+                color: Color(0XFF35B9F2).withValues(alpha: 0.6),
                 width: 2,
               ),
             ),
@@ -380,7 +380,7 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                               child: Container(
                                 height: 40,
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.15),
+                                  color: Colors.white.withValues(alpha: 0.15),
                                   borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
                                     color: Color(0XFF35B9F2),

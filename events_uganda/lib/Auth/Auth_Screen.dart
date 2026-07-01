@@ -165,10 +165,10 @@ class _AuthScreenState extends State<AuthScreen>
                     width: screenWidth * (370 / 390),
                     height: screenHeight * (390 / 844),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.18),
+                      color: Colors.white.withValues(alpha: 0.18),
                       borderRadius: BorderRadius.circular(30),
                       border: Border.all(
-                        color: Colors.white.withOpacity(0.3),
+                        color: Colors.white.withValues(alpha: 0.3),
                         width: 1.5,
                       ),
                     ),
@@ -277,10 +277,10 @@ class _AuthScreenState extends State<AuthScreen>
                                       screenHeight *
                                       0.07, // Adjust height as needed
                                   decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.18),
+                                    color: Colors.white.withValues(alpha: 0.18),
                                     borderRadius: BorderRadius.circular(30),
                                     border: Border.all(
-                                      color: Colors.white.withOpacity(0.3),
+                                      color: Colors.white.withValues(alpha: 0.3),
                                       width: 1.5,
                                     ),
                                   ),

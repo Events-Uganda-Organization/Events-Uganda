@@ -157,7 +157,7 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
                     width: screenWidth * 0.06,
                     height: screenHeight * 0.010,
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
@@ -175,7 +175,7 @@ class _OnboardingScreen2State extends State<OnboardingScreen2> {
                     width: screenWidth * 0.06,
                     height: screenHeight * 0.010,
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.3),
+                      color: Colors.black.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(6),
                     ),
                   ),
