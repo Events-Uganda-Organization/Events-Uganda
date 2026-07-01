@@ -661,7 +661,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       },
                                     ),
                                   ),
-                                  SizedBox(height: screenWidth * 0.025),
+                                  SizedBox(height: screenWidth * 0.05),
                                   TextFormField(
                                     cursorColor: const Color(0xFFCB471B),
                                     decoration: InputDecoration(
