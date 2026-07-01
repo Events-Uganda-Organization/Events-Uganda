@@ -796,25 +796,24 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: screenHeight * 0.85 - offset,
-                        left: screenWidth * 0.02,
-                        right: screenWidth * 0.02,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.02,
-                            vertical: screenHeight * 0.006,
+                    SizedBox(height: screenHeight * 0.03),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.02,
+                          vertical: screenHeight * 0.006,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF3F3F3),
+                          borderRadius: BorderRadius.circular(
+                            32 * (screenWidth / 412),
                           ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3F3F3),
-                            borderRadius: BorderRadius.circular(
-                              32 * (screenWidth / 412),
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // ===== WHITE CARD 1: PRICE + AVAILABILITY =====
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // ===== WHITE CARD 1: PRICE + AVAILABILITY =====
                               Container(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: screenWidth * 0.04,
