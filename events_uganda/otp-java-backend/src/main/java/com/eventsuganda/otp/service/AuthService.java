@@ -18,19 +18,22 @@ public class AuthService {
     private final UserService userService;
     private final JwtService jwtService;
     private final OtpService otpService;
+    private final EmailService emailService;
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
-    public AuthService(UserService userService, JwtService jwtService, OtpService otpService) {
+    public AuthService(UserService userService, JwtService jwtService, OtpService otpService, EmailService emailService) {
         this.userService = userService;
         this.jwtService = jwtService;
         this.otpService = otpService;
+        this.emailService = emailService;
     }
 
     public AuthResponse register(String email, String password, String fullName, String phone) {
         String hashed = encoder.encode(password);
         User user = userService.createUser(email, hashed, fullName, phone, "email");
         String token = jwtService.generateToken(user.getId(), user.getEmail());
+        emailService.sendWelcomeEmail(user.getEmail(), user.getFullName());
         return new AuthResponse(token, user);
     }
 
