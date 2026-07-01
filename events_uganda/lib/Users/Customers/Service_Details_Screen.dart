@@ -311,32 +311,22 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               right: 0,
               bottom: 0,
               child: SingleChildScrollView(
-                child: SizedBox(
-                  height:
-                      screenHeight *
-                      2.5 *
-                      verticalMultiplier, // Adjust height for landscape
-                  child: Stack(
-                    children: [
-                      // Introduction image
-                      Positioned(
-                        top: 0,
-                        left: (screenWidth - screenWidth * 0.95) / 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child: Image.asset(
-                                _galleryImages[_selectedGalleryIndex],
-                                width: screenWidth * 0.95,
-                                height: screenWidth * 0.95 * (336 / 350),
-                                fit: BoxFit.cover,
-                              ),
+                child: Column(
+                  children: [
+                    // ===== IMAGE + BADGE + GALLERY OVERLAY =====
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: Image.asset(
+                              _galleryImages[_selectedGalleryIndex],
+                              width: screenWidth * 0.95,
+                              height: screenWidth * 0.95 * (336 / 350),
+                              fit: BoxFit.cover,
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
                       Positioned(
                         top:
                             screenHeight * 0.59 -
