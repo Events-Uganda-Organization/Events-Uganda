@@ -1035,19 +1035,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // ===== WHITE CARD: SERVICES OFFERED (empty) =====
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: screenWidth * 0.04,
-                                      vertical: screenHeight * 0.012,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(
-                                        24 * (screenWidth / 412),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
