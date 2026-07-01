@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
@@ -63,6 +65,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   final bool _showReviewSection = false;
   bool _showAllReviews = false;
   bool _canForwardReturn = false;
+  final MapController _mapController = MapController();
+  LatLng _pinPosition = const LatLng(0.3136, 32.5811);
 
   @override
   void initState() {
