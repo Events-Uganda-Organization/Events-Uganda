@@ -512,12 +512,22 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                 : [],
                                           ),
                                           child: TextFormField(
+                                            controller: _venueTypeController,
+                                            focusNode: _venueTypeFocus,
                                             cursorColor: const Color(0xFF8715C9),
                                             decoration: InputDecoration(
                                               prefixIcon: Icon(
                                                 Icons.business,
                                                 color: Colors.black,
                                                 size: screenWidth * 0.05,
+                                              ),
+                                              suffixIcon: GestureDetector(
+                                                onTap: () => _showVenueTypeDropdown(context),
+                                                child: Icon(
+                                                  Icons.arrow_drop_down,
+                                                  color: Colors.black,
+                                                  size: screenWidth * 0.08,
+                                                ),
                                               ),
                                               labelText: 'Enter Your Venue Type',
                                               labelStyle: TextStyle(
