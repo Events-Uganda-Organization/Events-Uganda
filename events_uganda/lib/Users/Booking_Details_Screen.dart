@@ -775,7 +775,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       ),
                                     ),
                                     SizedBox(height: screenWidth * 0.025),
-                              ],
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                           Positioned(
