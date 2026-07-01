@@ -1095,12 +1095,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                             ),
                           ),
                           ),
-                        ],
-                      ),
-                    ),
-                                ],
-                              ),
-                            ),
                           ),
                           Positioned(
               bottom: 20,
