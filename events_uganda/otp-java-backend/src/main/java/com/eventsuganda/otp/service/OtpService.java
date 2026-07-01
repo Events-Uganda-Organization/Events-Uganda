@@ -17,7 +17,7 @@ public class OtpService {
     private final OtpRepository otpRepository;
     private final SecureRandom random = new SecureRandom();
 
-    private static final long OTP_VALIDITY_MS = 10 * 60 * 1000;
+    private static final long OTP_VALIDITY_MS = 30 * 60 * 1000;
     private static final int OTP_LENGTH = 4;
 
     public OtpService(OtpRepository otpRepository) {
