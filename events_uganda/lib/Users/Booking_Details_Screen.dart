@@ -390,10 +390,11 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                     color: Colors.black,
                     size: screenWidth * 0.07,
                   ),
-                ),
-              ),
-            ),
-            Positioned(
+                              ),
+                            ),
+                          ),
+                          ),
+                          Positioned(
               top: offset,
               left: 0,
               right: 0,
