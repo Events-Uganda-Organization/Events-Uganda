@@ -475,56 +475,79 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     thickness: 1,
                                   ),
                                   SizedBox(height: screenWidth * 0.025),
-                                  TextFormField(
-                                    cursorColor: const Color(0xFFCB471B),
-                                    decoration: InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.business,
-                                        color: Colors.black,
-                                        size: screenWidth * 0.05,
-                                      ),
-                                      labelText: 'Enter Your Venue Type',
-                                      labelStyle: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: screenWidth * 0.035,
-                                        color: Colors.grey[500],
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      floatingLabelBehavior:
-                                          FloatingLabelBehavior.auto,
-                                      filled: true,
-                                      fillColor: Colors.grey[100],
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                          color: Colors.grey[300]!,
-                                        ),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                          color: Colors.grey[300]!,
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        borderSide: BorderSide(
-                                          color: const Color(0xFFCB471B),
-                                        ),
-                                      ),
-                                      contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 8,
-                                      ),
-                                    ),
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: screenWidth * 0.035,
-                                      color: Colors.black87,
-                                      fontWeight: FontWeight.w600,
+                                  Focus(
+                                    child: Builder(
+                                      builder: (context) {
+                                        final isFocused = Focus.of(context).hasFocus;
+                                        return AnimatedContainer(
+                                          duration: const Duration(milliseconds: 200),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(30),
+                                            boxShadow: isFocused
+                                                ? [
+                                                    BoxShadow(
+                                                      color: const Color(0xFFCB471B).withValues(alpha: 0.4),
+                                                      blurRadius: 12,
+                                                      spreadRadius: 1,
+                                                    ),
+                                                  ]
+                                                : [],
+                                          ),
+                                          child: TextFormField(
+                                            cursorColor: const Color(0xFFCB471B),
+                                            decoration: InputDecoration(
+                                              prefixIcon: Icon(
+                                                Icons.business,
+                                                color: Colors.black,
+                                                size: screenWidth * 0.05,
+                                              ),
+                                              labelText: 'Enter Your Venue Type',
+                                              labelStyle: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: screenWidth * 0.035,
+                                                color: Colors.grey[500],
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                              floatingLabelBehavior:
+                                                  FloatingLabelBehavior.auto,
+                                              filled: true,
+                                              fillColor: Colors.grey[100],
+                                              border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                borderSide: BorderSide(
+                                                  color: Colors.grey[300]!,
+                                                ),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                borderSide: BorderSide(
+                                                  color: Colors.grey[300]!,
+                                                ),
+                                              ),
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                                borderSide: const BorderSide(
+                                                  color: Color(0xFFCB471B),
+                                                  width: 1.8,
+                                                ),
+                                              ),
+                                              contentPadding: EdgeInsets.symmetric(
+                                                horizontal: 16,
+                                                vertical: 8,
+                                              ),
+                                            ),
+                                            style: TextStyle(
+                                              fontFamily: 'Montserrat',
+                                              fontSize: screenWidth * 0.035,
+                                              color: Colors.black87,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                   SizedBox(height: screenWidth * 0.025),
