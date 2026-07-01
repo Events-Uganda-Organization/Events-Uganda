@@ -662,7 +662,69 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     ),
                                   ),
                                   SizedBox(height: screenWidth * 0.025),
-                                ],
+                                  TextFormField(
+                                    cursorColor: const Color(0xFFCB471B),
+                                    decoration: InputDecoration(
+                                      prefixIcon: Icon(
+                                        Icons.location_on,
+                                        color: Colors.black,
+                                        size: screenWidth * 0.05,
+                                      ),
+                                      labelText: 'Venue Location',
+                                      labelStyle: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: screenWidth * 0.035,
+                                        color: Colors.grey[500],
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      hintText: 'Enter Venue Location',
+                                      hintStyle: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: screenWidth * 0.035,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.auto,
+                                      filled: true,
+                                      fillColor: Colors.grey[100],
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30),
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFCB471B),
+                                          width: 1,
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30),
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFCB471B),
+                                          width: 1,
+                                        ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30),
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFCB471B),
+                                          width: 2,
+                                        ),
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 8,
+                                      ),
+                                    ),
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: screenWidth * 0.035,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  SizedBox(height: screenWidth * 0.025),
                               ),
                             ),
                           ),
