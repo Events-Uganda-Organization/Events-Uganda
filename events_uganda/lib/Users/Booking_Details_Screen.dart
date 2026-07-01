@@ -1100,7 +1100,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               ),
                             ),
                           ),
-                        ),
                           Positioned(
               bottom: 20,
               left: (screenWidth - 270) / 2,
