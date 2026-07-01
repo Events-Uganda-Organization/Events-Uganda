@@ -25,7 +25,7 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
           _videoElement!.src =
               'assets/videos/Bride_and_groom_merge_light_202606290000.mp4';
           _videoElement!.muted = true;
-          _videoElement!.loop = true;
+          _videoElement!.loop = false;
           _videoElement!.autoplay = true;
           _videoElement!.playsInline = true;
           _videoElement!.playbackRate = 1.3;

@@ -18,7 +18,7 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
       'assets/videos/Bride_and_groom_merge_light_202606290000.mp4',
     );
     _controller.initialize().then((_) {
-      _controller.setLooping(true);
+      _controller.setLooping(false);
       _controller.setVolume(0);
       _controller.play();
       if (mounted) setState(() => _initialized = true);
