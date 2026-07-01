@@ -95,7 +95,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   }
 
   void _showVenueTypeDropdown(BuildContext context) {
-    final RenderBox? renderBox = _venueTypeKey.currentContext?.findRenderObject() as RenderBox?;
+    final RenderBox? renderBox =
+        _venueTypeKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox == null) return;
 
     final size = renderBox.size;
@@ -140,7 +141,10 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                         entry.remove();
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 10,
+                        ),
                         child: Text(
                           _venueTypes[index],
                           style: TextStyle(
@@ -393,7 +397,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                 ),
               ),
             ),
-                          Positioned(
+            Positioned(
               top: offset,
               left: 0,
               right: 0,
@@ -555,191 +559,226 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         'Events Details',
                                         style: TextStyle(
                                           fontFamily: 'Abril Fatface',
-                                        fontSize: screenWidth * 0.05,
-                                        fontWeight: FontWeight.bold,
-                                        color: const Color(0xFFCB471B),
+                                          fontSize: screenWidth * 0.05,
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color(0xFFCB471B),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(height: screenWidth * 0.025),
-                                  Divider(
-                                    color: Colors.grey[200],
-                                    thickness: 1,
-                                  ),
-                                  SizedBox(height: screenWidth * 0.025),
-                                  Focus(
-                                    key: _venueTypeKey,
-                                    child: Builder(
-                                      builder: (context) {
-                                        final isFocused = Focus.of(context).hasFocus;
-                                        return AnimatedContainer(
-                                          duration: const Duration(milliseconds: 200),
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(30),
-                                            boxShadow: isFocused
-                                                ? [
-                                                    BoxShadow(
-                                                      color: const Color(0xFFCB471B).withValues(alpha: 0.4),
-                                                      blurRadius: 12,
-                                                      spreadRadius: 1,
-                                                    ),
-                                                  ]
-                                                : [],
-                                          ),
-                                          child: TextFormField(
-                                            controller: _venueTypeController,
-                                            focusNode: _venueTypeFocus,
-                                            cursorColor: const Color(0xFFCB471B),
-                                            decoration: InputDecoration(
-                                              prefixIcon: Icon(
-                                                Icons.business,
-                                                color: Colors.black,
-                                                size: screenWidth * 0.05,
+                                    SizedBox(height: screenWidth * 0.025),
+                                    Divider(
+                                      color: Colors.grey[200],
+                                      thickness: 1,
+                                    ),
+                                    SizedBox(height: screenWidth * 0.025),
+                                    Focus(
+                                      key: _venueTypeKey,
+                                      child: Builder(
+                                        builder: (context) {
+                                          final isFocused = Focus.of(
+                                            context,
+                                          ).hasFocus;
+                                          return AnimatedContainer(
+                                            duration: const Duration(
+                                              milliseconds: 200,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              boxShadow: isFocused
+                                                  ? [
+                                                      BoxShadow(
+                                                        color:
+                                                            const Color(
+                                                              0xFFCB471B,
+                                                            ).withValues(
+                                                              alpha: 0.4,
+                                                            ),
+                                                        blurRadius: 12,
+                                                        spreadRadius: 1,
+                                                      ),
+                                                    ]
+                                                  : [],
+                                            ),
+                                            child: TextFormField(
+                                              controller: _venueTypeController,
+                                              focusNode: _venueTypeFocus,
+                                              cursorColor: const Color(
+                                                0xFFCB471B,
                                               ),
+                                              decoration: InputDecoration(
+                                                prefixIcon: Icon(
+                                                  Icons.business,
+                                                  color: Colors.black,
+                                                  size: screenWidth * 0.05,
+                                                ),
                                                 suffixIcon: GestureDetector(
-                                                onTap: () => _showVenueTypeDropdown(context),
-                                                child: Icon(
-                                                  Icons.arrow_drop_down,
-                                                  color: const Color(0xFFCB471B),
-                                                  size: screenWidth * 0.08,
+                                                  onTap: () =>
+                                                      _showVenueTypeDropdown(
+                                                        context,
+                                                      ),
+                                                  child: Icon(
+                                                    Icons.arrow_drop_down,
+                                                    color: const Color(
+                                                      0xFFCB471B,
+                                                    ),
+                                                    size: screenWidth * 0.08,
+                                                  ),
                                                 ),
+                                                labelText:
+                                                    'Enter Your Venue Type',
+                                                labelStyle: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: screenWidth * 0.035,
+                                                  color: Colors.grey[500],
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                                hintText:
+                                                    'Enter Your Venue Type',
+                                                hintStyle: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize: screenWidth * 0.035,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                                floatingLabelBehavior:
+                                                    FloatingLabelBehavior.auto,
+                                                filled: true,
+                                                fillColor: Colors.grey[100],
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0xFFCB471B),
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            30,
+                                                          ),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                            color: Color(
+                                                              0xFFCB471B,
+                                                            ),
+                                                            width: 1,
+                                                          ),
+                                                    ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            30,
+                                                          ),
+                                                      borderSide:
+                                                          const BorderSide(
+                                                            color: Color(
+                                                              0xFFCB471B,
+                                                            ),
+                                                            width: 2,
+                                                          ),
+                                                    ),
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 8,
+                                                    ),
                                               ),
-                                              labelText: 'Enter Your Venue Type',
-                                              labelStyle: TextStyle(
-                                                fontFamily: 'Montserrat',
-                                                fontSize: screenWidth * 0.035,
-                                                color: Colors.grey[500],
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                              hintText: 'Enter Your Venue Type',
-                                              hintStyle: TextStyle(
+                                              style: TextStyle(
                                                 fontFamily: 'Montserrat',
                                                 fontSize: screenWidth * 0.035,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w600,
                                               ),
-                                              floatingLabelBehavior:
-                                                  FloatingLabelBehavior.auto,
-                                              filled: true,
-                                              fillColor: Colors.grey[100],
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                borderSide: const BorderSide(
-                                                  color: Color(0xFFCB471B),
-                                                  width: 1,
-                                                ),
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                borderSide: const BorderSide(
-                                                  color: Color(0xFFCB471B),
-                                                  width: 1,
-                                                ),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                borderSide: const BorderSide(
-                                                  color: Color(0xFFCB471B),
-                                                  width: 2,
-                                                ),
-                                              ),
-                                              contentPadding: EdgeInsets.symmetric(
-                                                horizontal: 16,
-                                                vertical: 8,
-                                              ),
                                             ),
-                                            style: TextStyle(
-                                              fontFamily: 'Montserrat',
-                                              fontSize: screenWidth * 0.035,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(height: screenWidth * 0.05),
+                                    TextFormField(
+                                      cursorColor: const Color(0xFFCB471B),
+                                      decoration: InputDecoration(
+                                        prefixIcon: Icon(
+                                          Icons.location_on,
+                                          color: Colors.black,
+                                          size: screenWidth * 0.05,
+                                        ),
+                                        labelText: 'Venue Location',
+                                        labelStyle: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.035,
+                                          color: Colors.grey[500],
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        hintText: 'Enter Venue Location',
+                                        hintStyle: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.035,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.auto,
+                                        filled: true,
+                                        fillColor: Colors.grey[100],
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            30,
                                           ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(height: screenWidth * 0.05),
-                                  TextFormField(
-                                    cursorColor: const Color(0xFFCB471B),
-                                    decoration: InputDecoration(
-                                      prefixIcon: Icon(
-                                        Icons.location_on,
-                                        color: Colors.black,
-                                        size: screenWidth * 0.05,
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFFCB471B),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFFCB471B),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFFCB471B),
+                                            width: 2,
+                                          ),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                          vertical: 8,
+                                        ),
                                       ),
-                                      labelText: 'Venue Location',
-                                      labelStyle: TextStyle(
+                                      style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: screenWidth * 0.035,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    SizedBox(height: screenWidth * 0.025),
+                                    Text(
+                                      'Drag the location pin to your location',
+                                      style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: screenWidth * 0.03,
                                         color: Colors.grey[500],
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      hintText: 'Enter Venue Location',
-                                      hintStyle: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: screenWidth * 0.035,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      floatingLabelBehavior:
-                                          FloatingLabelBehavior.auto,
-                                      filled: true,
-                                      fillColor: Colors.grey[100],
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFCB471B),
-                                          width: 1,
-                                        ),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFCB471B),
-                                          width: 1,
-                                        ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30),
-                                        borderSide: const BorderSide(
-                                          color: Color(0xFFCB471B),
-                                          width: 2,
-                                        ),
-                                      ),
-                                      contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 16,
-                                        vertical: 8,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: screenWidth * 0.035,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  SizedBox(height: screenWidth * 0.025),
-                                  Text(
-                                    'Drag the location pin to your location',
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: screenWidth * 0.03,
-                                      color: Colors.grey[500],
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  SizedBox(height: screenWidth * 0.025),
-                                ],
+                                    SizedBox(height: screenWidth * 0.025),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
                           ),
                           Positioned(
                             top:
@@ -845,7 +884,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       ),
                                     ],
                                   ),
-                              child: Column(
+                                  child: Column(
                                     children: [
                                       SizedBox(height: 6),
                                       if (_galleryScrollIndex > 0)
@@ -1094,69 +1133,72 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               ],
                             ),
                           ),
-                          ),
-                          ),
-                          Positioned(
-              bottom: 20,
-              left: (screenWidth - 270) / 2,
-              child: Container(
-                width: 270,
-                height: 62,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF3CA9B),
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
-                    color: const Color.fromARGB(255, 182, 122, 53),
-                    width: 1,
-                  ),
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DateOfBookingScreen(),
+                        ],
                       ),
-                    ).then((_) {
-                      if (mounted) {
-                        setState(() {
-                          _canForwardReturn = true;
-                        });
-                      }
-                    });
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Book Now',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
+                    ),
+                    Positioned(
+                      bottom: 20,
+                      left: (screenWidth - 270) / 2,
+                      child: Container(
+                        width: 270,
+                        height: 62,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF3CA9B),
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(
+                            color: const Color.fromARGB(255, 182, 122, 53),
+                            width: 1,
+                          ),
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DateOfBookingScreen(),
+                              ),
+                            ).then((_) {
+                              if (mounted) {
+                                setState(() {
+                                  _canForwardReturn = true;
+                                });
+                              }
+                            });
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Book Now',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat',
+                                ),
+                              ),
+                              SizedBox(width: 8),
+                              Transform.rotate(
+                                angle: -40 * 3.14159 / 180,
+                                child: Icon(
+                                  Icons.arrow_forward,
+                                  color: Colors.black,
+                                  size: 25,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(width: 8),
-                      Transform.rotate(
-                        angle: -40 * 3.14159 / 180,
-                        child: Icon(
-                          Icons.arrow_forward,
-                          color: Colors.black,
-                          size: 25,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ],
         ),
       ),
-                          ),)   
     );
-          
   }
 
   Widget _buildReviewsList(double screenWidth) {
