@@ -537,7 +537,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                             boxShadow: isFocused
                                                 ? [
                                                     BoxShadow(
-                                                      color: const Color(0xFF8715C9).withValues(alpha: 0.4),
+                                                      color: const Color(0xFFCB471B).withValues(alpha: 0.4),
                                                       blurRadius: 12,
                                                       spreadRadius: 1,
                                                     ),
