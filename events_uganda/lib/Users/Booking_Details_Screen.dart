@@ -725,6 +725,16 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     ),
                                   ),
                                   SizedBox(height: screenWidth * 0.025),
+                                  Text(
+                                    'Drag the location pin to your location',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: screenWidth * 0.03,
+                                      color: Colors.grey[500],
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(height: screenWidth * 0.025),
                                 ],
                               ),
                             ),
