@@ -554,11 +554,11 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                 color: Colors.black,
                                                 size: screenWidth * 0.05,
                                               ),
-                                              suffixIcon: GestureDetector(
+                                                suffixIcon: GestureDetector(
                                                 onTap: () => _showVenueTypeDropdown(context),
                                                 child: Icon(
                                                   Icons.arrow_drop_down,
-                                                  color: Colors.black,
+                                                  color: const Color(0xFFCB471B),
                                                   size: screenWidth * 0.08,
                                                 ),
                                               ),
