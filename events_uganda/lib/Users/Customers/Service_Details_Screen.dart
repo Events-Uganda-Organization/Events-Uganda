@@ -333,7 +333,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 width: 80,
                                 height: 30,
                                 decoration: BoxDecoration(
-                                  color: Colors.green,
+                                  color: Colors.red,
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: Center(
