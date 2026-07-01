@@ -1154,7 +1154,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
           ],
         ),
       ),
+                          ),)   
     );
+          
   }
 
   Widget _buildReviewsList(double screenWidth) {
