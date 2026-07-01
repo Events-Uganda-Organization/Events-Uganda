@@ -512,7 +512,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                               hintStyle: TextStyle(
                                                 fontFamily: 'Montserrat',
                                                 fontSize: screenWidth * 0.035,
-                                                color: Colors.grey[400],
+                                                color: Colors.black,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                               floatingLabelBehavior:
