@@ -546,14 +546,15 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                 horizontal: screenWidth * 0.05,
                                 vertical: screenWidth * 0.04,
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      'Events Details',
-                                      style: TextStyle(
-                                        fontFamily: 'Abril Fatface',
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Center(
+                                      child: Text(
+                                        'Events Details',
+                                        style: TextStyle(
+                                          fontFamily: 'Abril Fatface',
                                         fontSize: screenWidth * 0.05,
                                         fontWeight: FontWeight.bold,
                                         color: const Color(0xFFCB471B),
