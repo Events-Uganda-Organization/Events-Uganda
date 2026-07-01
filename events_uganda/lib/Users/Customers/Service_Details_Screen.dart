@@ -826,6 +826,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   SizedBox(width: 6),
                                   Expanded(
                                     child: ListView.builder(
+                                      shrinkWrap: true,
                                       controller: _galleryScrollController,
                                       scrollDirection: Axis.horizontal,
                                       physics:

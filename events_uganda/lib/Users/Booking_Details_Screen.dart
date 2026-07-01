@@ -676,6 +676,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       SizedBox(height: 6),
                                       Expanded(
                                         child: ListView.builder(
+                                          shrinkWrap: true,
                                           controller: _galleryScrollController,
                                           scrollDirection: Axis.vertical,
                                           physics:
