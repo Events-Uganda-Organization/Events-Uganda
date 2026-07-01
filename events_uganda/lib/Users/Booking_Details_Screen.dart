@@ -465,6 +465,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       style: TextStyle(
                                         fontFamily: 'Abril Fatface',
                                         fontSize: screenWidth * 0.05,
+                                        fontWeight: FontWeight.bold,
                                         color: const Color(0xFFCB471B),
                                       ),
                                     ),
