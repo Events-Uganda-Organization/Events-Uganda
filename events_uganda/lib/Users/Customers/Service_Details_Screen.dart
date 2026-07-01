@@ -117,9 +117,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     final orientation = MediaQuery.of(context).orientation;
 
     final offset = screenHeight * 0.13;
-    final verticalMultiplier = orientation == Orientation.portrait
-        ? 1.0
-        : 1.5; // Increase spacing in landscape
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -1498,7 +1495,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
-                    ),
                     SizedBox(height: screenHeight * 0.03),
                   ],
                 ),
