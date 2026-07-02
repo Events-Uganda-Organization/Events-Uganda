@@ -338,31 +338,45 @@ class _SignInScreenState extends State<SignInScreen> {
                           onToggleObscure: () => setState(() => _obscurePassword = !_obscurePassword),
                         ),
                         SizedBox(height: screen.height * 0.016),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ForgotPasswordScreen(),
-                              ),
-                            );
-                          },
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                right: screen.width * 0.02,
-                              ),
-                              child: Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screen.width * 0.038,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w700,
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screen.width * 0.02,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () => _showCustomSnackBar(context, 'Sign in to see your referral code'),
+                                child: Text(
+                                  'See Referral Code',
+                                  style: TextStyle(
+                                    color: const Color(0xFFCC471B),
+                                    fontSize: screen.width * 0.038,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
-                            ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ForgotPasswordScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Forgot Password?',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screen.width * 0.038,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(height: screen.height * 0.028),
