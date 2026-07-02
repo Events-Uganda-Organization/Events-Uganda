@@ -35,6 +35,9 @@ class AuthService {
   static Future<void> saveUser(Map<String, dynamic> user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_userKey, jsonEncode(user));
+    if (user.containsKey('referralCode')) {
+      await prefs.setString('userReferralCode', user['referralCode'] as String);
+    }
   }
 
   // ─── API Calls ─────────────────────────────────────

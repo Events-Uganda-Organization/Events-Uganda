@@ -1,5 +1,6 @@
 import 'package:events_uganda/Auth/Forgot_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_Up_Screen.dart';
+import 'package:events_uganda/Auth/ReferralCodeBottomSheet.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -346,7 +347,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GestureDetector(
-                                onTap: () => _showCustomSnackBar(context, 'Sign in to see your referral code'),
+                                onTap: () => ReferralCodeBottomSheet.show(context),
                                 child: Text(
                                   'See Referral Code',
                                   style: TextStyle(
