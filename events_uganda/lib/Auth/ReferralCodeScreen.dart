@@ -75,7 +75,7 @@ class _ReferralCodeScreenState extends State<ReferralCodeScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: const Color(0xFFCC471B),
+        backgroundColor: const Color(0xFF009688),
       ),
     );
   }
