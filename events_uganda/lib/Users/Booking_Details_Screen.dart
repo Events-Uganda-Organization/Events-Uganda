@@ -1030,6 +1030,51 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     ),
                                   ],
                                 ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.05,
+                                  vertical: screenWidth * 0.04,
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: screenWidth * 0.05,
+                                      height: screenWidth * 0.05,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(6),
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 2,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: screenWidth * 0.03),
+                                    Expanded(
+                                      child: RichText(
+                                        text: TextSpan(
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontSize: screenWidth * 0.032,
+                                            color: Colors.black87,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: 'I agree to the cancellation and refund policy ',
+                                            ),
+                                            TextSpan(
+                                              text: 'View Policy',
+                                              style: TextStyle(
+                                                color: const Color(0xFFCB471B),
+                                                fontWeight: FontWeight.bold,
+                                                decoration: TextDecoration.underline,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             Positioned(
