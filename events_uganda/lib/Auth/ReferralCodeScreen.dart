@@ -376,7 +376,7 @@ class _ReferralCodeScreenState extends State<ReferralCodeScreen> {
                                 'Learn how referral code works',
                                 style: TextStyle(
                                   color: accent,
-                                  fontSize: screen.width * 0.040,
+                                  fontSize: screen.width * 0.038,
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w700,
                                 ),
