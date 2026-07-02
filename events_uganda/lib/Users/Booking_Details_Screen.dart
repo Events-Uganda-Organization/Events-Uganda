@@ -932,11 +932,12 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                 ],
                               ),
                             ),
-                          ),
-                          Positioned(
-                            top:
-                                screenHeight * 0.59 -
-                                offset, // Provider name sits above
+                           ),
+                           ),
+                           Positioned(
+                             top:
+                                 screenHeight * 0.59 -
+                                 offset, // Provider name sits above
                             left: screenWidth * 0.03,
                             right: screenWidth * 0.03,
                             child: Column(
