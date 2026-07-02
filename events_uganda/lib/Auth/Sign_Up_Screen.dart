@@ -1,4 +1,5 @@
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
+import 'package:events_uganda/Auth/ReferralCodeScreen.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -398,7 +399,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             height: MediaQuery.of(context).size.height * 0.03,
                           ),
                           GestureDetector(
-                            onTap: () => _showCustomSnackBar(context, 'Referral code feature coming soon'),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ReferralCodeScreen(),
+                                ),
+                              );
+                            },
                             child: Text(
                               'Use Referral Code',
                               style: TextStyle(
