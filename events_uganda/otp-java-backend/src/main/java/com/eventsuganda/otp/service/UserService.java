@@ -11,9 +11,11 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ReferralCodeService referralCodeService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, ReferralCodeService referralCodeService) {
         this.userRepository = userRepository;
+        this.referralCodeService = referralCodeService;
     }
 
     public User createUser(String email, String password, String fullName, String phone, String authProvider) {
@@ -22,7 +24,9 @@ public class UserService {
         }
 
         String id = UUID.randomUUID().toString();
+        String referralCode = referralCodeService.generateReferralCode();
         User user = new User(id, email, password, fullName, phone, authProvider);
+        user.setReferralCode(referralCode);
         return userRepository.save(user);
     }
 
