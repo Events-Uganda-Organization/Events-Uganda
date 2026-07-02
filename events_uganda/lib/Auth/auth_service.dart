@@ -47,6 +47,7 @@ class AuthService {
     required String email,
     required String password,
     String? phone,
+    String? referralCode,
   }) async {
     final body = <String, String>{
       'fullName': fullName,
@@ -54,6 +55,7 @@ class AuthService {
       'password': password,
     };
     if (phone != null && phone.isNotEmpty) body['phone'] = phone;
+    if (referralCode != null && referralCode.isNotEmpty) body['referralCode'] = referralCode;
 
     final response = await http.post(
       Uri.parse('$_baseUrl/register'),

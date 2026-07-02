@@ -94,11 +94,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() => _isLoading = true);
 
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final savedReferralCode = prefs.getString('savedReferralCode') ?? '';
+
       await AuthService.register(
         fullName: _fullNameController.text.trim(),
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
         phone: _phoneController.text.trim(),
+        referralCode: savedReferralCode.isNotEmpty ? savedReferralCode : null,
       );
 
       await _saveSignUpData();
