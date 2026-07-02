@@ -727,7 +727,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               child: SizedBox(
-                height: screenHeight * 0.44,
+                height: screenHeight * 0.45,
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.008),
                   decoration: BoxDecoration(
