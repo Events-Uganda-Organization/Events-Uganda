@@ -41,7 +41,7 @@ class ReferralCodeBottomSheet extends StatelessWidget {
               Text(
                 'Your Referral Code',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Montserrat',
                   color: Colors.black,
@@ -52,7 +52,7 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                 'Share this code with friends to earn rewards!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 12,
                   fontFamily: 'Montserrat',
                   color: Colors.grey[600],
                 ),
