@@ -929,17 +929,17 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       color: Colors.black87,
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
+                                 ],
+                               ),
+                             ),
                            ),
                            ),
                            Positioned(
                              top:
                                  screenHeight * 0.59 -
                                  offset, // Provider name sits above
-                            left: screenWidth * 0.03,
-                            right: screenWidth * 0.03,
+                             left: screenWidth * 0.03,
+                             right: screenWidth * 0.03,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
