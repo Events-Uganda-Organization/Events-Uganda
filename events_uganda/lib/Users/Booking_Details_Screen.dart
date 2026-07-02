@@ -900,34 +900,76 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     thickness: 1,
                                   ),
                                   SizedBox(height: screenWidth * 0.02),
-                                  Text(
-                                    'Base Price',
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: screenWidth * 0.035,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black87,
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Base Price',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.035,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      Text(
+                                        '800,000 UGX',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.035,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(height: screenWidth * 0.012),
-                                  Text(
-                                    'Transport Fee',
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: screenWidth * 0.035,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black87,
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Transport Fee',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.035,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      Text(
+                                        '50,000 UGX',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.035,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(height: screenWidth * 0.012),
-                                  Text(
-                                    'Service Fee',
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: screenWidth * 0.035,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black87,
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Service Fee',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.035,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      Text(
+                                        '20,000 UGX',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.035,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                  ],
                                ),
