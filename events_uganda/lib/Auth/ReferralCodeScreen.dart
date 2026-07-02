@@ -371,16 +371,9 @@ class _ReferralCodeScreenState extends State<ReferralCodeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SignInScreen(),
-                                  ),
-                                );
-                              },
+                              onTap: () => ReferralCodeExplanationSheet.show(context),
                               child: Text(
-                                'Skip for now',
+                                'Learn how referral code works',
                                 style: TextStyle(
                                   color: accent,
                                   fontSize: screen.width * 0.040,
