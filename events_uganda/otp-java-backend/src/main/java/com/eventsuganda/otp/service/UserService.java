@@ -18,7 +18,7 @@ public class UserService {
         this.referralCodeService = referralCodeService;
     }
 
-    public User createUser(String email, String password, String fullName, String phone, String authProvider) {
+    public User createUser(String email, String password, String fullName, String phone, String authProvider, String referralCodeInput) {
         if (userRepository.existsByEmail(email)) {
             throw new OtpException("Email already registered");
         }
@@ -27,6 +27,17 @@ public class UserService {
         String referralCode = referralCodeService.generateReferralCode();
         User user = new User(id, email, password, fullName, phone, authProvider);
         user.setReferralCode(referralCode);
+
+        // Validate and process referral code if provided
+        if (referralCodeInput != null && !referralCodeInput.isBlank()) {
+            Optional<User> referrer = userRepository.findByReferralCode(referralCodeInput);
+            if (referrer.isPresent()) {
+                user.setReferredBy(referrer.get().getId());
+            } else {
+                throw new OtpException("Invalid referral code");
+            }
+        }
+
         return userRepository.save(user);
     }
 

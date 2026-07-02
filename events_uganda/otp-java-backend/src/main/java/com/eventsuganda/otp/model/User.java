@@ -34,6 +34,8 @@ public class User {
     @Column(unique = true)
     private String referralCode;
 
+    private String referredBy;
+
     public User() {}
 
     public User(String id, String email, String password, String fullName, String phone, String authProvider) {
@@ -72,4 +74,7 @@ public class User {
 
     public String getReferralCode() { return referralCode; }
     public void setReferralCode(String referralCode) { this.referralCode = referralCode; }
+
+    public String getReferredBy() { return referredBy; }
+    public void setReferredBy(String referredBy) { this.referredBy = referredBy; }
 }
