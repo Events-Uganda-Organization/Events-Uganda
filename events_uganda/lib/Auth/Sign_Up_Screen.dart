@@ -425,7 +425,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 width: MediaQuery.of(context).size.width * 0.05,
                               ),
                               GestureDetector(
-                                onTap: () => _showCustomSnackBar(context, 'Sign up to get your referral code'),
+                                onTap: () => ReferralCodeBottomSheet.show(context),
                                 child: Text(
                                   'See Referral Code',
                                   style: TextStyle(
