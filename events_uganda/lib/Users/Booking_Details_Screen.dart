@@ -65,6 +65,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   final bool _showReviewSection = false;
   bool _showAllReviews = false;
   bool _canForwardReturn = false;
+  bool _agreeToPolicy = false;
   final MapController _mapController = MapController();
   LatLng _pinPosition = const LatLng(0.3136, 32.5811);
 
@@ -1037,15 +1038,32 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
-                                      width: screenWidth * 0.05,
-                                      height: screenWidth * 0.05,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(6),
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: 2,
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _agreeToPolicy = !_agreeToPolicy;
+                                        });
+                                      },
+                                      child: Container(
+                                        width: screenWidth * 0.05,
+                                        height: screenWidth * 0.05,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(6),
+                                          border: Border.all(
+                                            color: Colors.black,
+                                            width: 2,
+                                          ),
+                                          color: _agreeToPolicy
+                                              ? const Color(0xFFCB471B)
+                                              : Colors.transparent,
                                         ),
+                                        child: _agreeToPolicy
+                                            ? Icon(
+                                                Icons.check,
+                                                size: screenWidth * 0.035,
+                                                color: Colors.white,
+                                              )
+                                            : null,
                                       ),
                                     ),
                                     SizedBox(width: screenWidth * 0.03),
