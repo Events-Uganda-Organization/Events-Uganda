@@ -898,6 +898,36 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     color: Colors.grey[200],
                                     thickness: 1,
                                   ),
+                                  SizedBox(height: screenWidth * 0.02),
+                                  Text(
+                                    'Base Price',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: screenWidth * 0.04,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  SizedBox(height: screenWidth * 0.015),
+                                  Text(
+                                    'Transport Fee',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: screenWidth * 0.04,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                  SizedBox(height: screenWidth * 0.015),
+                                  Text(
+                                    'Service Fee',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: screenWidth * 0.04,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
