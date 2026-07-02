@@ -63,14 +63,14 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF8715C9), Color(0xFFB388FF)],
+                    colors: [Color(0xFFE8C7B6), Color(0xFFCC471B)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFF8715C9).withOpacity(0.3),
+                      color: Color(0xFFCC471B).withOpacity(0.3),
                       blurRadius: 15,
                       offset: Offset(0, 5),
                     ),
@@ -99,7 +99,7 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Referral code copied!'),
-                            backgroundColor: Color(0xFF8715C9),
+                            backgroundColor: Color(0xFFCC471B),
                             duration: Duration(seconds: 2),
                           ),
                         );
