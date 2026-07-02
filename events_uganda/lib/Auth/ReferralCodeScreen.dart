@@ -175,7 +175,7 @@ class _ReferralCodeScreenState extends State<ReferralCodeScreen> {
                   child: Center(
                     child: Icon(
                       Icons.chevron_left,
-                      color: Colors.black,
+                      color: Colors.white,
                       size: MediaQuery.of(context).size.width * 0.10,
                     ),
                   ),
