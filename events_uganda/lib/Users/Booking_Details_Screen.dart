@@ -878,6 +878,20 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     ),
                                   ],
                                 ),
+                                padding: EdgeInsets.symmetric(
+                                  vertical: screenWidth * 0.04,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Customer Requirements',
+                                    style: TextStyle(
+                                      fontFamily: 'Abril Fatface',
+                                      fontSize: screenWidth * 0.05,
+                                      fontWeight: FontWeight.bold,
+                                      color: const Color(0xFFCB471B),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             Positioned(
