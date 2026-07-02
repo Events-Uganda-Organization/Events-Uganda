@@ -892,7 +892,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                             left: (screenWidth - screenWidth * 0.95) / 2,
                             child: Container(
                               width: screenWidth * 0.95,
-                               height: screenWidth * 0.95 * (336 / 350) * 0.55,
+                               height: screenWidth * 0.95 * (336 / 350) * 0.65,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
@@ -1034,14 +1034,16 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                            ),
                             // Customer payment summary rectangle
                             Positioned(
-                              top:
-                                  screenWidth * 0.95 * (336 / 350) +
-                                  8 +
-                                  screenWidth * 0.95 * (336 / 350) * 0.7 +
-                                  screenWidth * 0.58 +
-                                  12 +
-                                  screenWidth * 0.95 * (336 / 350) * 0.55 +
-                                  8,
+                               top:
+                                   screenWidth * 0.95 * (336 / 350) +
+                                   8 +
+                                   screenWidth * 0.95 * (336 / 350) * 0.7 +
+                                   screenWidth * 0.58 +
+                                   6 +
+                                   screenWidth * 0.06 +
+                                   6 +
+                                   screenWidth * 0.95 * (336 / 350) * 0.65 +
+                                   8,
                               left: (screenWidth - screenWidth * 0.95) / 2,
                               child: Container(
                                 width: screenWidth * 0.95,
