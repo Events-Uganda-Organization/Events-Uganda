@@ -23,7 +23,7 @@ public class EmailService {
         this.mailSender = mailSender;
     }
 
-    public void sendWelcomeEmail(String to, String fullName) {
+    public void sendWelcomeEmail(String to, String fullName, String referralCode) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -31,6 +31,16 @@ public class EmailService {
             helper.setFrom(fromEmail);
             helper.setTo(to);
             helper.setSubject("Welcome to Events Uganda!");
+
+            String referralHtml = referralCode != null && !referralCode.isBlank()
+                ? """
+                  <div style="margin-top: 20px; padding: 15px; background-color: #FFF3E0; border-radius: 8px; text-align: center;">
+                    <p style="margin: 0 0 8px 0; font-size: 14px; color: #555;">Your Referral Code</p>
+                    <p style="margin: 0; font-size: 24px; font-weight: bold; letter-spacing: 4px; color: #D59A00;">%s</p>
+                    <p style="margin: 8px 0 0 0; font-size: 13px; color: #777;">Share this code with friends — they get a perk, you get rewarded!</p>
+                  </div>
+                  """.formatted(referralCode)
+                : "";
 
             String html = """
                 <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto;">
@@ -44,11 +54,12 @@ public class EmailService {
                     <li>Save your favorite events</li>
                     <li>Share events with friends</li>
                   </ul>
+                  %s
                   <p>If you ever need help, feel free to reach out to our support team.</p>
                   <br>
                   <p>Best regards,<br/><strong>Events Uganda Team</strong></p>
                 </div>
-                """.formatted(fullName != null ? fullName : "there");
+                """.formatted(fullName != null ? fullName : "there", referralHtml);
 
             helper.setText(html, true);
             mailSender.send(message);

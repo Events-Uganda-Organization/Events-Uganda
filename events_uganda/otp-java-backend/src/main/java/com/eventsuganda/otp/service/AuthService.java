@@ -33,7 +33,7 @@ public class AuthService {
         String hashed = encoder.encode(password);
         User user = userService.createUser(email, hashed, fullName, phone, "email", referralCode);
         String token = jwtService.generateToken(user.getId(), user.getEmail());
-        emailService.sendWelcomeEmail(user.getEmail(), user.getFullName());
+        emailService.sendWelcomeEmail(user.getEmail(), user.getFullName(), user.getReferralCode());
         return new AuthResponse(token, user);
     }
 
@@ -110,6 +110,7 @@ public class AuthService {
             newUser.setPhotoUrl(picture);
 
             String token = jwtService.generateToken(newUser.getId(), newUser.getEmail());
+            emailService.sendWelcomeEmail(newUser.getEmail(), newUser.getFullName(), newUser.getReferralCode());
             return new AuthResponse(token, newUser);
         } catch (OtpException e) {
             throw e;
