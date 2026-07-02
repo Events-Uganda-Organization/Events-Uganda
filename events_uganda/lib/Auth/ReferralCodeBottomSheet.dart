@@ -60,7 +60,7 @@ class ReferralCodeBottomSheet extends StatelessWidget {
               SizedBox(height: 30),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 30),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [Color(0xFF8715C9), Color(0xFFB388FF)],
@@ -79,16 +79,20 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      referralCode,
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
-                        color: Colors.white,
-                        letterSpacing: 2,
+                    Expanded(
+                      child: Text(
+                        referralCode,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                          color: Colors.white,
+                          letterSpacing: 1.5,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {
                         Clipboard.setData(ClipboardData(text: referralCode));
@@ -101,7 +105,7 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                         );
                       },
                       child: Container(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(12),
@@ -109,7 +113,7 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                         child: Icon(
                           Icons.copy,
                           color: Colors.white,
-                          size: 24,
+                          size: 20,
                         ),
                       ),
                     ),
