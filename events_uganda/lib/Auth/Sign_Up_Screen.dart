@@ -398,24 +398,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.03,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ReferralCodeScreen(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ReferralCodeScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Use Referral Code',
+                                  style: TextStyle(
+                                    color: Color(0xFF8715C9),
+                                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              );
-                            },
-                            child: Text(
-                              'Use Referral Code',
-                              style: TextStyle(
-                                color: Color(0xFF8715C9),
-                                fontSize: MediaQuery.of(context).size.width * 0.04,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
                               ),
-                            ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.05,
+                              ),
+                              GestureDetector(
+                                onTap: () => _showCustomSnackBar(context, 'Sign up to get your referral code'),
+                                child: Text(
+                                  'See Referral Code',
+                                  style: TextStyle(
+                                    color: Color(0xFF8715C9),
+                                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
