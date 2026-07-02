@@ -27,6 +27,7 @@ public class AuthResponse {
         private String phone;
         private String photoUrl;
         private String authProvider;
+        private String referralCode;
 
         UserProfile(User user) {
             this.id = user.getId();
@@ -35,6 +36,7 @@ public class AuthResponse {
             this.phone = user.getPhone();
             this.photoUrl = user.getPhotoUrl();
             this.authProvider = user.getAuthProvider();
+            this.referralCode = user.getReferralCode();
         }
 
         public String getId() { return id; }
@@ -43,5 +45,6 @@ public class AuthResponse {
         public String getPhone() { return phone; }
         public String getPhotoUrl() { return photoUrl; }
         public String getAuthProvider() { return authProvider; }
+        public String getReferralCode() { return referralCode; }
     }
 }
