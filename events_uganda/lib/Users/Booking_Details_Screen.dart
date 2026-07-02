@@ -881,8 +881,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                 horizontal: screenWidth * 0.05,
                                 vertical: screenWidth * 0.04,
                               ),
-                              child: SingleChildScrollView(
-                                child: Column(
+                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Center(
