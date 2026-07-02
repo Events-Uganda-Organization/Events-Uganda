@@ -727,7 +727,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               child: SizedBox(
-                height: screenHeight * 0.43,
+                height: screenHeight * 0.44,
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.008),
                   decoration: BoxDecoration(
@@ -746,7 +746,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.76,
+              top: screenHeight * 0.77,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               child: SizedBox(
@@ -790,7 +790,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.82,
+              top: screenHeight * 0.83,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               child: SizedBox(
