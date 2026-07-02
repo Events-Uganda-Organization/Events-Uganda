@@ -31,6 +31,9 @@ public class User {
     @Column(nullable = false)
     private long createdAt;
 
+    @Column(unique = true)
+    private String referralCode;
+
     public User() {}
 
     public User(String id, String email, String password, String fullName, String phone, String authProvider) {
@@ -66,4 +69,7 @@ public class User {
 
     public long getCreatedAt() { return createdAt; }
     public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
+
+    public String getReferralCode() { return referralCode; }
+    public void setReferralCode(String referralCode) { this.referralCode = referralCode; }
 }
