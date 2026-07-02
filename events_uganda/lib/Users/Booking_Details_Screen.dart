@@ -887,7 +887,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                 children: [
                                   Center(
                                     child: Text(
-                                      'Customer Requirements',
+                                      'Price Breakdown',
                                       style: TextStyle(
                                         fontFamily: 'Abril Fatface',
                                         fontSize: screenWidth * 0.05,
