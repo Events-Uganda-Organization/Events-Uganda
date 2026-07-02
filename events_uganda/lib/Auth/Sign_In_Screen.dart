@@ -350,8 +350,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                 child: Text(
                                   'See Referral Code',
                                   style: TextStyle(
-                                    color: const Color(0xFFCC471B),
-                                    fontSize: screen.width * 0.038,
+                                    color: Colors.black,
+                                    fontSize: screen.width * 0.035,
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w700,
                                   ),

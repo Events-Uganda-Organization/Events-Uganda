@@ -413,8 +413,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: Text(
                                   'Use Referral Code',
                                   style: TextStyle(
-                                    color: Color(0xFF8715C9),
-                                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                                    color: Colors.black,
+                                    fontSize: MediaQuery.of(context).size.width * 0.035,
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -428,8 +428,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 child: Text(
                                   'See Referral Code',
                                   style: TextStyle(
-                                    color: Color(0xFF8715C9),
-                                    fontSize: MediaQuery.of(context).size.width * 0.04,
+                                    color: Colors.black,
+                                    fontSize: MediaQuery.of(context).size.width * 0.035,
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.bold,
                                   ),
