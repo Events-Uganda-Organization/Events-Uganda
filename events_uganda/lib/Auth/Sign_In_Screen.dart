@@ -370,7 +370,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   'Forgot Password?',
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: screen.width * 0.038,
+                                    fontSize: screen.width * 0.035,
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w700,
                                   ),
