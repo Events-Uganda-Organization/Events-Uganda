@@ -969,7 +969,12 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                           color: Colors.black87,
                                         ),
                                       ),
-                                    ],
+                                     ],
+                                   ),
+                                  SizedBox(height: screenWidth * 0.025),
+                                  Divider(
+                                    color: Colors.grey[200],
+                                    thickness: 1,
                                   ),
                                  ],
                                ),
