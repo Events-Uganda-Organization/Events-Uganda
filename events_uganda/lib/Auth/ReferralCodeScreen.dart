@@ -91,9 +91,9 @@ class _ReferralCodeScreenState extends State<ReferralCodeScreen> {
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context).size;
     final screenWidth = MediaQuery.of(context).size.width;
-    const accent = Color(0xFFCC471B);
-    const socialBg = Color(0xFFF4D7C7);
-    const lightGrad = Color(0xFFE8C7B6);
+    const accent = Color(0xFF009688);
+    const socialBg = Color(0xFFB2DFDB);
+    const lightGrad = Color(0xFF80CBC4);
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -168,7 +168,7 @@ class _ReferralCodeScreenState extends State<ReferralCodeScreen> {
                   width: MediaQuery.of(context).size.width * 0.13,
                   height: MediaQuery.of(context).size.width * 0.13,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF8C2B0),
+                    color: const Color(0xFFB2DFDB),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Center(
@@ -284,7 +284,7 @@ class _ReferralCodeScreenState extends State<ReferralCodeScreen> {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
                               border: Border.all(
-                                color: const Color(0xFFCB471B),
+                                color: const Color(0xFF009688),
                                 width: 1,
                               ),
                               gradient: const LinearGradient(
@@ -485,15 +485,15 @@ class _ResponsiveTextField extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: const Color(0xFFCB471B), width: 1),
+            borderSide: BorderSide(color: const Color(0xFF009688), width: 1),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: const Color(0xFFCB471B), width: 2),
+            borderSide: BorderSide(color: const Color(0xFF009688), width: 2),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: const Color(0xFFCB471B), width: 1),
+            borderSide: BorderSide(color: const Color(0xFF009688), width: 1),
           ),
         ),
         onSubmitted: (_) {
