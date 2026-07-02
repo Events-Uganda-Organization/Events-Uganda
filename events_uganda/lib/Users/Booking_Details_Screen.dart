@@ -1005,7 +1005,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                ),
                              ),
                            ),
-                            ),
                             // Customer payment summary rectangle
                             Positioned(
                               top:
