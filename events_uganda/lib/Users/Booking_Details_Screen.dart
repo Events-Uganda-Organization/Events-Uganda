@@ -1248,76 +1248,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               ],
                             ),
                           ),
-                          // Reviews and Ratings card removed
 
-                          // ===== Reviews & Ratings Section in nested cards =====
-                          Positioned(
-                            top: _showReviewSection
-                                ? screenHeight * 1.85 - offset
-                                : screenHeight * 1.65 - offset,
-                            left: screenWidth * 0.022,
-                            right: screenWidth * 0.022,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Rating and some reviews are verified and are\nfrom people who use the same type of device that you use.',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: screenWidth * 0.038,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Abril Fatface',
-                                  ),
-                                ),
-                                SizedBox(height: screenHeight * 0.025),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // LEFT: Rating column
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '4.8',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: screenWidth * 0.15,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Abril Fatface',
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        _buildStarRating(4.8, starSize: 24),
-                                      ],
-                                    ),
-                                    SizedBox(width: screenWidth * 0.03),
-                                    // CENTER: Vertical separator
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        top: screenHeight * 0.02,
-                                      ),
-                                      child: Container(
-                                        width: screenWidth * 0.012,
-                                        height: screenHeight * 0.16,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius: BorderRadius.circular(
-                                            screenWidth * 0.01,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: screenWidth * 0.03),
-                                    // RIGHT: Rating distribution bars
-                                    _buildRatingBars(screenWidth),
-                                  ],
-                                ),
-                                SizedBox(height: screenHeight * 0.025),
-                                _buildReviewsList(screenWidth),
-                              ],
-                            ),
-                          ),
                         ],
                       ),
                     ),
