@@ -128,7 +128,7 @@ class _ReferralCodeScreenState extends State<ReferralCodeScreen> {
                       MediaQuery.of(context).size.width * 0.15) /
                   1,
               child: Image.asset(
-                'assets/vectors/signinvect.png',
+                'assets/vectors/referralscreenvect.png',
                 width: screen.width * 0.10,
                 height: screen.width * 0.10,
                 fit: BoxFit.contain,
@@ -141,7 +141,7 @@ class _ReferralCodeScreenState extends State<ReferralCodeScreen> {
                       MediaQuery.of(context).size.width * 0.15) /
                   1,
               child: Image.asset(
-                'assets/vectors/signinvect.png',
+                'assets/vectors/referralscreenvect.png',
                 width: screen.width * 0.10,
                 height: screen.width * 0.10,
                 fit: BoxFit.contain,
