@@ -27,7 +27,8 @@ public class AuthController {
             request.getEmail(),
             request.getPassword(),
             request.getFullName(),
-            request.getPhone()
+            request.getPhone(),
+            request.getReferralCode()
         );
         return ResponseEntity.ok(response);
     }

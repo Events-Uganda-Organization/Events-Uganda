@@ -19,6 +19,10 @@ public class UserService {
         this.referralCodeService = referralCodeService;
     }
 
+    public User createUser(String email, String password, String fullName, String phone, String authProvider) {
+        return createUser(email, password, fullName, phone, authProvider, null);
+    }
+
     public User createUser(String email, String password, String fullName, String phone, String authProvider, String referralCodeInput) {
         if (userRepository.existsByEmail(email)) {
             throw new OtpException("Email already registered");
