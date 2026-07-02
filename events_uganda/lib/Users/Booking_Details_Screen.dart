@@ -728,7 +728,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                           fontWeight: FontWeight.w600,
                                         ),
                                         floatingLabelBehavior:
-                                            FloatingLabelBehavior.auto,
+                                            FloatingLabelBehavior.never,
                                         filled: true,
                                         fillColor: Colors.grey[100],
                                         border: OutlineInputBorder(
