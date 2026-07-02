@@ -976,6 +976,30 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     color: Colors.grey[200],
                                     thickness: 1,
                                   ),
+                                  SizedBox(height: screenWidth * 0.015),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Total',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.04,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      Text(
+                                        '870,000 UGX',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.04,
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color(0xFFCB471B),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                  ],
                                ),
                              ),
