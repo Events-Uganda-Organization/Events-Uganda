@@ -397,6 +397,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.03,
                           ),
+                          GestureDetector(
+                            onTap: () => _showCustomSnackBar(context, 'Referral code feature coming soon'),
+                            child: Text(
+                              'Use Referral Code',
+                              style: TextStyle(
+                                color: Color(0xFF8715C9),
+                                fontSize: MediaQuery.of(context).size.width * 0.04,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
                           Container(
                             width: screenWidth * 0.8,
                             height: screenWidth * 0.13,
