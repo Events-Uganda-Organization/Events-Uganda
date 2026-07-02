@@ -110,7 +110,7 @@ class _ReferralCodeScreenState extends State<ReferralCodeScreen> {
                       MediaQuery.of(context).size.width * 1) /
                   300,
               child: Image.asset(
-                'assets/backgroundcolors/signinscreen.png',
+                'assets/backgroundcolors/referralcodescreen.png',
                 width:
                     MediaQuery.of(context).size.width *
                     1.08, // responsive width
