@@ -5,6 +5,7 @@ import com.eventsuganda.otp.model.User;
 import com.eventsuganda.otp.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
