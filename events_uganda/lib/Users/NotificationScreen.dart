@@ -497,7 +497,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                               _buildStepCircle(
                                 screenWidth,
                                 screenHeight,
-                                'Booking Details',
+                                'Notifications',
                                 true,
                               ),
                               _buildStepCircle(
