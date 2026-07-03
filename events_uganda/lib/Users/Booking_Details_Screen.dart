@@ -1118,7 +1118,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     screenWidth * 0.95 * (336 / 350) * 0.7 +
                                     screenWidth * 0.58 +
                                     6 +
-                                     screenWidth * 0.55 +
+                                      screenWidth * 0.7 +
                                      6 +
                                      screenWidth * 0.95 * (336 / 350) * 0.65 +
                                      8,
