@@ -651,7 +651,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                             ),
                           ),
                         ),
-                        SizedBox(height: screenHeight * 0.015),
+                        SizedBox(height: screenHeight * 0.035),
                         Padding(
                           padding: EdgeInsets.only(
                             left: screenWidth * 0.04,
