@@ -627,7 +627,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                           ),
                           child: Container(
                             width: _calculateFilterRowWidth(screenWidth),
-                            height: screenWidth * 0.025,
+                            height: screenWidth * 0.02,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(30),
@@ -640,7 +640,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                   curve: Curves.easeInOut,
                                   child: Container(
                                     width: _getFilterWidth(_selectedFilter, screenWidth),
-                                    height: screenWidth * 0.025,
+                                    height: screenWidth * 0.02,
                                     decoration: BoxDecoration(
                                       color: const Color(0xFFCB471B),
                                       borderRadius: BorderRadius.circular(30),
