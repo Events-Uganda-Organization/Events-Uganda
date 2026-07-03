@@ -184,6 +184,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     _reviewController.dispose();
     _venueTypeController.dispose();
     _venueTypeFocus.dispose();
+    _specialRequestsController.dispose();
+    _specialRequestsFocus.dispose();
     super.dispose();
   }
 
@@ -904,57 +906,109 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       thickness: 1,
                                     ),
                                     SizedBox(height: screenWidth * 0.02),
-                                    TextFormField(
-                                      maxLines: 5,
-                                      cursorColor: const Color(0xFFCB471B),
-                                      decoration: InputDecoration(
-                                        hintText: 'Any special requests?',
-                                        hintStyle: TextStyle(
-                                          fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
-                                          color: Colors.grey[400],
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        filled: true,
-                                        fillColor: Colors.grey[100],
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            30,
-                                          ),
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFCB471B),
-                                            width: 1,
-                                          ),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            30,
-                                          ),
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFCB471B),
-                                            width: 1,
-                                          ),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(
-                                            30,
-                                          ),
-                                          borderSide: const BorderSide(
-                                            color: Color(0xFFCB471B),
-                                            width: 2,
-                                          ),
-                                        ),
-                                        contentPadding: EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                          vertical: 12,
-                                        ),
-                                        isDense: true,
-                                      ),
-                                      style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontSize: screenWidth * 0.035,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
+                                    Focus(
+                                      key: _specialRequestsKey,
+                                      child: Builder(
+                                        builder: (context) {
+                                          final isFocused = Focus.of(
+                                            context,
+                                          ).hasFocus;
+                                          return AnimatedContainer(
+                                            duration: const Duration(
+                                              milliseconds: 200,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              boxShadow: isFocused
+                                                  ? [
+                                                      BoxShadow(
+                                                        color: const Color(
+                                                          0xFFCB471B,
+                                                        ).withValues(
+                                                          alpha: 0.4,
+                                                        ),
+                                                        blurRadius: 12,
+                                                        spreadRadius: 1,
+                                                      ),
+                                                    ]
+                                                  : [],
+                                            ),
+                                            child: TextFormField(
+                                              controller:
+                                                  _specialRequestsController,
+                                              focusNode:
+                                                  _specialRequestsFocus,
+                                              maxLines: 5,
+                                              maxLength: 500,
+                                              cursorColor:
+                                                  const Color(0xFFCB471B),
+                                              decoration: InputDecoration(
+                                                prefixIcon: Padding(
+                                                  padding: EdgeInsets.only(
+                                                    bottom: screenWidth * 0.12,
+                                                  ),
+                                                  child: Icon(
+                                                    Icons.edit_note_rounded,
+                                                    color: const Color(
+                                                      0xFFCB471B,
+                                                    ),
+                                                    size: screenWidth * 0.06,
+                                                  ),
+                                                ),
+                                                hintText:
+                                                    'Any special requests?',
+                                                hintStyle: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize:
+                                                      screenWidth * 0.035,
+                                                  color: Colors.grey[400],
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.grey[100],
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0xFFCB471B),
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0xFFCB471B),
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0xFFCB471B),
+                                                    width: 2,
+                                                  ),
+                                                ),
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                  horizontal: 16,
+                                                  vertical: 14,
+                                                ),
+                                              ),
+                                              style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize:
+                                                    screenWidth * 0.035,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ],
