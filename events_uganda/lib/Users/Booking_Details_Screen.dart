@@ -1349,6 +1349,57 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                             ),
                             Positioned(
                               top:
+                                  screenWidth * 0.95 * (336 / 350) +
+                                  8 +
+                                  screenWidth * 0.95 * (336 / 350) * 0.7 +
+                                  screenWidth * 0.58 +
+                                  6 +
+                                  screenWidth * 0.7 +
+                                  6 +
+                                  screenWidth * 0.95 * (336 / 350) * 0.65 +
+                                  8 +
+                                  screenWidth * 0.18 +
+                                  8,
+                              left: (screenWidth - screenWidth * 0.95) / 2,
+                              child: SizedBox(
+                                width: screenWidth * 0.95,
+                                height: screenHeight * 0.055,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Color(0xFFE0E7FF),
+                                        Color(0xFFCD7C20),
+                                      ],
+                                      stops: [0.0, 0.47],
+                                    ),
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.transparent,
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'Confirm Booking',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: screenWidth * 0.035,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top:
                                   screenHeight * 0.59 -
                                   offset, // Provider name sits above
                              left: screenWidth * 0.03,
