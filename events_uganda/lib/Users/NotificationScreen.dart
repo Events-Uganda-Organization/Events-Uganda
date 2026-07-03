@@ -707,6 +707,19 @@ class _NotificationScreenState extends State<NotificationScreen>
                                   ),
                                 ),
                                 Positioned(
+                                  right: screenWidth * 0.04,
+                                  top: screenWidth * 0.025,
+                                  child: Text(
+                                    '15 secs ago',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: screenWidth * 0.025,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
                                   left: screenWidth * 0.18,
                                   top: (screenWidth * 0.19 - screenWidth * 0.09) / 2 - screenWidth * 0.035,
                                   child: SizedBox(
