@@ -1051,13 +1051,13 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                top:
                                    screenWidth * 0.95 * (336 / 350) +
                                    8 +
-                                   screenWidth * 0.95 * (336 / 350) * 0.7 +
-                                   screenWidth * 0.58 +
-                                   6 +
-                                   screenWidth * 0.06 +
-                                   6 +
-                                   screenWidth * 0.95 * (336 / 350) * 0.65 +
-                                   8,
+                                    screenWidth * 0.95 * (336 / 350) * 0.7 +
+                                    screenWidth * 0.58 +
+                                    6 +
+                                    screenWidth * 0.28 +
+                                    6 +
+                                    screenWidth * 0.95 * (336 / 350) * 0.65 +
+                                    8,
                               left: (screenWidth - screenWidth * 0.95) / 2,
                               child: Container(
                                 width: screenWidth * 0.95,
