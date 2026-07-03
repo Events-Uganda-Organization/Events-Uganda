@@ -556,6 +556,8 @@ class _NotificationScreenState extends State<NotificationScreen>
                               ],
                             ),
                           ),
+                          ],
+                          ),
                           Container(
                             width: screenWidth * 0.12,
                             height: screenWidth * 0.12,
