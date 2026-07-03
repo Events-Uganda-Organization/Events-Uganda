@@ -944,18 +944,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                               cursorColor:
                                                   const Color(0xFFCB471B),
                                               decoration: InputDecoration(
-                                                prefixIcon: Padding(
-                                                  padding: EdgeInsets.only(
-                                                    bottom: screenWidth * 0.12,
-                                                  ),
-                                                  child: Icon(
-                                                    Icons.edit_note_rounded,
-                                                    color: const Color(
-                                                      0xFFCB471B,
-                                                    ),
-                                                    size: screenWidth * 0.06,
-                                                  ),
-                                                ),
                                                 hintText:
                                                     'Any special requests?',
                                                 hintStyle: TextStyle(
