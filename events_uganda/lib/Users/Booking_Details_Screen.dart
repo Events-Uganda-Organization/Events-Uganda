@@ -964,13 +964,13 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   8 +
                                   screenWidth * 0.95 * (336 / 350) * 0.7 +
                                   screenWidth * 0.58 +
-                                  6 +
-                                  screenWidth * 0.28 +
-                                  6,
-                            left: (screenWidth - screenWidth * 0.95) / 2,
-                            child: Container(
-                              width: screenWidth * 0.95,
-                               height: screenWidth * 0.95 * (336 / 350) * 0.65,
+                                   6 +
+                                   screenWidth * 0.55 +
+                                   6,
+                             left: (screenWidth - screenWidth * 0.95) / 2,
+                             child: Container(
+                               width: screenWidth * 0.95,
+                                height: screenWidth * 0.95 * (336 / 350) * 0.65,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
