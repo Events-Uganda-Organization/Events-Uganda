@@ -53,6 +53,7 @@ Add these environment variables:
 | `DATABASE_NAME` | Your database name | From Render database settings |
 | `DATABASE_USERNAME` | Your database username | From Render database settings |
 | `DATABASE_PASSWORD` | Your database password | From Render database settings |
+| `JWT_SECRET` | A secret key (min 32 characters) | Used for JWT token signing (e.g., `EventsUganda2026SuperSecretKeyForJWTSigning!!`) |
 | `SPRING_PROFILES_ACTIVE` | `prod` | Use production profile |
 
 **Note**: Do NOT use `DATABASE_URL` (Render provides it in `postgres://` format, which is not compatible with JDBC). Instead, use the individual host/port/name/user/password env vars listed above.

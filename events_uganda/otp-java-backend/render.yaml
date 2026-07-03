@@ -15,5 +15,7 @@ services:
         sync: false
       - key: DATABASE_PASSWORD
         sync: false
+      - key: JWT_SECRET
+        sync: false
       - key: SPRING_PROFILES_ACTIVE
         value: prod
