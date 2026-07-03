@@ -641,11 +641,11 @@ class _NotificationScreenState extends State<NotificationScreen>
                             ),
                           ],
                         ),
-                        child: Row(
+                        child: Column(
                           children: [
                             Container(
-                              width: screenWidth * 0.028,
-                              height: screenWidth * 0.28,
+                              width: double.infinity,
+                              height: screenWidth * 0.022,
                               decoration: BoxDecoration(
                                 color: const Color(0xFFCB471B),
                                 borderRadius: BorderRadius.circular(30),
