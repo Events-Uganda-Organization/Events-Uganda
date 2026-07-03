@@ -537,20 +537,54 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   Positioned(
                                     bottom: 12,
                                     left: 12,
-                                    child: Text(
-                                      "Provider's Name",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: screenWidth * 0.045,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat',
-                                        shadows: [
-                                          Shadow(
-                                            blurRadius: 4,
-                                            color: Colors.black54,
-                                            offset: Offset(1, 1),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 8.0,
+                                          sigmaY: 8.0,
+                                        ),
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 14,
+                                            vertical: 8,
                                           ),
-                                        ],
+                                          decoration: BoxDecoration(
+                                            color: Colors.white.withValues(
+                                              alpha: 0.2,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            border: Border.all(
+                                              color: Colors.white.withValues(
+                                                alpha: 0.4,
+                                              ),
+                                              width: 1.5,
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.business,
+                                                color: Colors.white,
+                                                size: screenWidth * 0.04,
+                                              ),
+                                              SizedBox(width: 6),
+                                              Text(
+                                                "Provider's Name",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize:
+                                                      screenWidth * 0.04,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontFamily: 'Montserrat',
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
