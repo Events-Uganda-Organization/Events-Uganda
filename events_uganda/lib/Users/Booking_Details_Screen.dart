@@ -563,24 +563,72 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                               width: 1.5,
                                             ),
                                           ),
-                                          child: Row(
+                                          child: Column(
                                             mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Icon(
-                                                Icons.business,
-                                                color: Colors.white,
-                                                size: screenWidth * 0.04,
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Icon(
+                                                    Icons.business,
+                                                    color: Colors.white,
+                                                    size: screenWidth * 0.04,
+                                                  ),
+                                                  SizedBox(width: 6),
+                                                  Text(
+                                                    "Provider's Name",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize:
+                                                          screenWidth * 0.04,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontFamily: 'Montserrat',
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              SizedBox(width: 6),
-                                              Text(
-                                                "Provider's Name",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize:
-                                                      screenWidth * 0.04,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontFamily: 'Montserrat',
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  vertical: 6,
                                                 ),
+                                                child: Container(
+                                                  height: 1,
+                                                  color: Colors.white
+                                                      .withValues(alpha: 0.4),
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Icon(
+                                                    Icons.star_rounded,
+                                                    color: Colors.white,
+                                                    size: screenWidth * 0.04,
+                                                  ),
+                                                  SizedBox(width: 6),
+                                                  Text(
+                                                    'Reviews',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize:
+                                                          screenWidth * 0.035,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Montserrat',
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      width: screenWidth *
+                                                          0.04),
+                                                  Icon(
+                                                    Icons.chevron_right,
+                                                    color: Colors.white,
+                                                    size: screenWidth * 0.05,
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
