@@ -905,7 +905,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   }
 
   Widget _buildFilterChip(IconData icon, String label, double screenWidth, {bool isActive = false}) {
-    final color = isActive ? const Color(0xFFCB471B) : Colors.black;
+    final color = isActive ? Colors.black : const Color(0xFFCB471B);
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
