@@ -621,6 +621,40 @@ class _NotificationScreenState extends State<NotificationScreen>
                         ),
                       ],
                     ),
+                    SizedBox(height: screenHeight * 0.02),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.04,
+                      ),
+                      child: Container(
+                        width: double.infinity,
+                        height: screenWidth * 0.28,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.1),
+                              blurRadius: 12,
+                              spreadRadius: 2,
+                              offset: const Offset(2, 7),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: screenWidth * 0.028,
+                              height: screenWidth * 0.28,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFCB471B),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
