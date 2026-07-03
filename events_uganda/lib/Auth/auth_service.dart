@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  static const String _baseUrl = 'https://events-uganda-26.onrender.com/api/auth';
+  static const String _baseUrl = 'http://localhost:8080/api/auth';
   static const String _tokenKey = 'auth_token';
   static const String _userKey = 'auth_user';
 
