@@ -909,7 +909,8 @@ class _NotificationScreenState extends State<NotificationScreen>
         betweenChipGap +
         messagesWidth +
         betweenChipGap +
-        remindersWidth;
+        remindersWidth +
+        screenWidth * 0.07;
   }
 
   double _getFilterWidth(String filter, double screenWidth) {
@@ -961,7 +962,6 @@ class _NotificationScreenState extends State<NotificationScreen>
     for (int i = 0; i < index; i++) {
       offset += iconSize + chipGap + textWidth(filterOrder[i]) + betweenChipGap;
     }
-    if (filter == 'Reminders') offset -= screenWidth * 0.035;
     return offset;
   }
 
