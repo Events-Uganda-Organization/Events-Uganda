@@ -909,6 +909,54 @@ class _NotificationScreenState extends State<NotificationScreen>
         remindersWidth;
   }
 
+  double _getFilterWidth(String filter, double screenWidth) {
+    final textStyle = TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: screenWidth * 0.03,
+      fontWeight: FontWeight.w600,
+    );
+
+    double textWidth(String text) {
+      final tp = TextPainter(
+        text: TextSpan(text: text, style: textStyle),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      return tp.width;
+    }
+
+    return screenWidth * 0.035 + screenWidth * 0.015 + textWidth(filter);
+  }
+
+  double _getFilterOffset(String filter, double screenWidth) {
+    final textStyle = TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: screenWidth * 0.03,
+      fontWeight: FontWeight.w600,
+    );
+
+    double textWidth(String text) {
+      final tp = TextPainter(
+        text: TextSpan(text: text, style: textStyle),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      return tp.width;
+    }
+
+    final iconSize = screenWidth * 0.035;
+    final chipGap = screenWidth * 0.015;
+    final betweenChipGap = screenWidth * 0.05;
+
+    const filterOrder = ['All', 'Bookings', 'Messages', 'Reminders'];
+    final index = filterOrder.indexOf(filter);
+    if (index <= 0) return 0;
+
+    double offset = 0;
+    for (int i = 0; i < index; i++) {
+      offset += iconSize + chipGap + textWidth(filterOrder[i]) + betweenChipGap;
+    }
+    return offset;
+  }
+
   Widget _buildFilterChip(IconData icon, String label, double screenWidth, {bool isActive = false}) {
     final color = isActive ? const Color(0xFFCB471B) : Colors.grey;
     return Row(
