@@ -907,7 +907,7 @@ class _NotificationScreenState extends State<NotificationScreen>
         messagesWidth +
         betweenChipGap +
         remindersWidth +
-        screenWidth * 0.07;
+        screenWidth * 0.03;
   }
 
   double _getFilterWidth(String filter, double screenWidth) {
@@ -925,9 +925,8 @@ class _NotificationScreenState extends State<NotificationScreen>
       return tp.width;
     }
 
-    double extra = screenWidth * 0.04;
-    if (filter == 'Bookings') extra = screenWidth * 0.02;
-    if (filter == 'Reminders') extra = screenWidth * 0.07;
+    double extra = screenWidth * 0.02;
+    if (filter == 'Bookings') extra = screenWidth * 0.01;
 
     return screenWidth * 0.035 + screenWidth * 0.015 + textWidth(filter) + extra;
   }
