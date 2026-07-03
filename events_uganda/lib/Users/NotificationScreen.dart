@@ -961,7 +961,7 @@ class _NotificationScreenState extends State<NotificationScreen>
     for (int i = 0; i < index; i++) {
       offset += iconSize + chipGap + textWidth(filterOrder[i]) + betweenChipGap;
     }
-    if (filter == 'Reminders') offset -= screenWidth * 0.02;
+    if (filter == 'Reminders') offset -= screenWidth * 0.035;
     return offset;
   }
 
