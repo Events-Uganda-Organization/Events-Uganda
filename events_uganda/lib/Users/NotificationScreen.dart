@@ -924,7 +924,7 @@ class _NotificationScreenState extends State<NotificationScreen>
       return tp.width;
     }
 
-    return screenWidth * 0.035 + screenWidth * 0.015 + textWidth(filter);
+    return screenWidth * 0.035 + screenWidth * 0.015 + textWidth(filter) + screenWidth * 0.04;
   }
 
   double _getFilterOffset(String filter, double screenWidth) {
