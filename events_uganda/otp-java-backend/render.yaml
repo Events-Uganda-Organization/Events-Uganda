@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: eventsuganda-backend
+    env: java
+    plan: free
+    buildCommand: ./mvnw.cmd clean package -DskipTests
+    startCommand: java -jar target/otp-backend-1.0.0.jar
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: DATABASE_USERNAME
+        sync: false
+      - key: DATABASE_PASSWORD
+        sync: false
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
