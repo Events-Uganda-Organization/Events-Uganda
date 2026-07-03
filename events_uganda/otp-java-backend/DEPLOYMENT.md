@@ -48,10 +48,14 @@ Add these environment variables:
 
 | Key | Value | Description |
 |-----|-------|-------------|
-| `DATABASE_URL` | Your PostgreSQL Internal Database URL | Database connection string |
+| `DATABASE_HOST` | Your database host | From Render database settings (e.g., `dpg-...a.oregon-postgres.render.com`) |
+| `DATABASE_PORT` | `5432` | Database port (default: 5432) |
+| `DATABASE_NAME` | Your database name | From Render database settings |
 | `DATABASE_USERNAME` | Your database username | From Render database settings |
 | `DATABASE_PASSWORD` | Your database password | From Render database settings |
 | `SPRING_PROFILES_ACTIVE` | `prod` | Use production profile |
+
+**Note**: Do NOT use `DATABASE_URL` (Render provides it in `postgres://` format, which is not compatible with JDBC). Instead, use the individual host/port/name/user/password env vars listed above.
 
 **Note**: Get the database credentials from your PostgreSQL database page on Render.
 
@@ -81,9 +85,10 @@ static const String _baseUrl = 'https://your-app.onrender.com/api/auth';
 - Verify `pom.xml` is correct
 
 ### Database Connection Issues
-- Verify environment variables are set correctly
+- Verify environment variables are set correctly (use `DATABASE_HOST`, `DATABASE_PORT`, `DATABASE_NAME`, `DATABASE_USERNAME`, `DATABASE_PASSWORD` - NOT `DATABASE_URL`)
 - Check database is in the same region as the web service
 - Ensure database is not in "Suspended" state
+- **"Driver claims to not accept jdbcUrl"**: This error means Render's `postgres://` URL format was used directly as a JDBC URL. Fix by using the individual env vars (`DATABASE_HOST`, `DATABASE_PORT`, etc.) instead of `DATABASE_URL`.
 
 ### Application Won't Start
 - Check logs for Java errors
