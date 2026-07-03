@@ -523,20 +523,39 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                           Positioned(
                             top: 0,
                             left: (screenWidth - screenWidth * 0.95) / 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(30),
-                                  child: Image.asset(
-                                    _galleryImages[_selectedGalleryIndex],
-                                    width: screenWidth * 0.95,
-                                    height: screenWidth * 0.95 * (336 / 350),
-                                    fit: BoxFit.cover,
+                              child: Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(30),
+                                    child: Image.asset(
+                                      _galleryImages[_selectedGalleryIndex],
+                                      width: screenWidth * 0.95,
+                                      height: screenWidth * 0.95 * (336 / 350),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
+                                  Positioned(
+                                    bottom: 12,
+                                    left: 12,
+                                    child: Text(
+                                      "Provider's Name",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: screenWidth * 0.045,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                        shadows: [
+                                          Shadow(
+                                            blurRadius: 4,
+                                            color: Colors.black54,
+                                            offset: Offset(1, 1),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                           ),
                           // White card below image
                           Positioned(
