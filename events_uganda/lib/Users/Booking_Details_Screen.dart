@@ -547,7 +547,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         child: Container(
                                           padding: EdgeInsets.symmetric(
                                             horizontal: 14,
-                                            vertical: 8,
+                                            vertical: 10,
                                           ),
                                           decoration: BoxDecoration(
                                             color: Colors.white.withValues(
