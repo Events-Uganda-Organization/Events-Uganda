@@ -17,5 +17,9 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
       - key: SPRING_PROFILES_ACTIVE
         value: prod
