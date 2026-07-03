@@ -72,6 +72,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   bool _agreeToPolicy = false;
   final MapController _mapController = MapController();
   LatLng _pinPosition = const LatLng(0.3136, 32.5811);
+  String _selectedFilter = 'All';
 
   @override
   void initState() {
@@ -580,29 +581,44 @@ class _NotificationScreenState extends State<NotificationScreen>
                           ),
                           child: Row(
                             children: [
-                              _buildFilterChip(
-                                Icons.done_all,
-                                'All',
-                                screenWidth,
-                                isActive: true,
+                              GestureDetector(
+                                onTap: () => setState(() => _selectedFilter = 'All'),
+                                child: _buildFilterChip(
+                                  Icons.done_all,
+                                  'All',
+                                  screenWidth,
+                                  isActive: _selectedFilter == 'All',
+                                ),
                               ),
                               SizedBox(width: screenWidth * 0.05),
-                              _buildFilterChip(
-                                Icons.calendar_today,
-                                'Bookings',
-                                screenWidth,
+                              GestureDetector(
+                                onTap: () => setState(() => _selectedFilter = 'Bookings'),
+                                child: _buildFilterChip(
+                                  Icons.calendar_today,
+                                  'Bookings',
+                                  screenWidth,
+                                  isActive: _selectedFilter == 'Bookings',
+                                ),
                               ),
                               SizedBox(width: screenWidth * 0.05),
-                              _buildFilterChip(
-                                Icons.message,
-                                'Messages',
-                                screenWidth,
+                              GestureDetector(
+                                onTap: () => setState(() => _selectedFilter = 'Messages'),
+                                child: _buildFilterChip(
+                                  Icons.message,
+                                  'Messages',
+                                  screenWidth,
+                                  isActive: _selectedFilter == 'Messages',
+                                ),
                               ),
                               SizedBox(width: screenWidth * 0.05),
-                              _buildFilterChip(
-                                Icons.notifications_active,
-                                'Reminders',
-                                screenWidth,
+                              GestureDetector(
+                                onTap: () => setState(() => _selectedFilter = 'Reminders'),
+                                child: _buildFilterChip(
+                                  Icons.notifications_active,
+                                  'Reminders',
+                                  screenWidth,
+                                  isActive: _selectedFilter == 'Reminders',
+                                ),
                               ),
                             ],
                           ),
