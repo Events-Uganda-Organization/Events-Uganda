@@ -173,10 +173,24 @@ class _NotificationScreenState extends State<NotificationScreen>
                   },
                 ),
               ),
-            ),
-          ),
-        ],
-      ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: screenWidth * 0.04,
+                          ),
+                          child: Text(
+                            'Today',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              fontSize: screenWidth * 0.04,
+                              color: const Color(0xFFCB471B),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
     );
 
     overlay.insert(entry);
