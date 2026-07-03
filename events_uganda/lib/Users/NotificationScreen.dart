@@ -697,6 +697,13 @@ class _NotificationScreenState extends State<NotificationScreen>
                                       color: Color(0xFF55FF27),
                                       shape: BoxShape.circle,
                                     ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.monetization_on,
+                                        color: Colors.black,
+                                        size: screenWidth * 0.07,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
