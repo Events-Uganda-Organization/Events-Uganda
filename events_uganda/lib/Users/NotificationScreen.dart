@@ -665,6 +665,19 @@ class _NotificationScreenState extends State<NotificationScreen>
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.04,
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            height: screenWidth * 0.04,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],
