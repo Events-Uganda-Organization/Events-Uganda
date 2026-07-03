@@ -676,6 +676,14 @@ class _NotificationScreenState extends State<NotificationScreen>
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(18),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  blurRadius: 12,
+                                  spreadRadius: 2,
+                                  offset: const Offset(2, 7),
+                                ),
+                              ],
                             ),
                           ),
                         ),
