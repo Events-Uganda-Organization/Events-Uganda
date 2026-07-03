@@ -866,7 +866,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               left: (screenWidth - screenWidth * 0.95) / 2,
                               child: Container(
                                 width: screenWidth * 0.95,
-                                height: screenWidth * 0.28,
+                                height: screenWidth * 0.55,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(30),
@@ -879,18 +879,82 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   ],
                                 ),
                                 padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.05,
                                   vertical: screenWidth * 0.04,
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    'Customer Requirements',
-                                    style: TextStyle(
-                                      fontFamily: 'Abril Fatface',
-                                      fontSize: screenWidth * 0.05,
-                                      fontWeight: FontWeight.bold,
-                                      color: const Color(0xFFCB471B),
+                                child: Column(
+                                  children: [
+                                    Center(
+                                      child: Text(
+                                        'Customer Requirements',
+                                        style: TextStyle(
+                                          fontFamily: 'Abril Fatface',
+                                          fontSize: screenWidth * 0.05,
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color(0xFFCB471B),
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    SizedBox(height: screenWidth * 0.025),
+                                    Divider(
+                                      color: Colors.grey[200],
+                                      thickness: 1,
+                                    ),
+                                    SizedBox(height: screenWidth * 0.02),
+                                    TextFormField(
+                                      maxLines: 5,
+                                      cursorColor: const Color(0xFFCB471B),
+                                      decoration: InputDecoration(
+                                        hintText: 'Any special requests?',
+                                        hintStyle: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.035,
+                                          color: Colors.grey[400],
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        filled: true,
+                                        fillColor: Colors.grey[100],
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFFCB471B),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFFCB471B),
+                                            width: 1,
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            30,
+                                          ),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFFCB471B),
+                                            width: 2,
+                                          ),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                          vertical: 12,
+                                        ),
+                                        isDense: true,
+                                      ),
+                                      style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: screenWidth * 0.035,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
