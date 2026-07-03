@@ -478,22 +478,10 @@ class _NotificationScreenState extends State<NotificationScreen>
                         right: screenWidth * 0.04,
                       ),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                           Row(
-                             mainAxisSize: MainAxisSize.min,
-                             children: [
-                               Container(
-                                 width: screenWidth * 0.028,
-                                 height: screenWidth * 0.12,
-                                 decoration: BoxDecoration(
-                                   color: const Color(0xFFCB471B),
-                                   borderRadius: BorderRadius.circular(30),
-                                 ),
-                               ),
-                               SizedBox(width: screenWidth * 0.02),
-                               Container(
-                             width: screenWidth * 0.75,
+                           Container(
+                             width: screenWidth * 0.78,
                              height: screenWidth * 0.12,
                              decoration: BoxDecoration(
                                color: Colors.white,
@@ -555,8 +543,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                                 ),
                               ],
                             ),
-                          ),
-                          ],
                           ),
                           Container(
                             width: screenWidth * 0.12,
