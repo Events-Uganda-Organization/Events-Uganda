@@ -1627,7 +1627,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Book Now',
+                                'Confirm Booking',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 18,
