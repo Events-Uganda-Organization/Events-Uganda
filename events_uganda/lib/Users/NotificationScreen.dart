@@ -685,6 +685,22 @@ class _NotificationScreenState extends State<NotificationScreen>
                                 ),
                               ],
                             ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: screenWidth * 0.03,
+                                  top: (screenWidth * 0.19 - screenWidth * 0.128) / 2,
+                                  child: Container(
+                                    width: screenWidth * 0.128,
+                                    height: screenWidth * 0.128,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xFF55FF27),
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
