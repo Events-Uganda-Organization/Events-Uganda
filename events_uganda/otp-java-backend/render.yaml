@@ -5,7 +5,11 @@ services:
     plan: free
     dockerfilePath: ./Dockerfile
     envVars:
-      - key: DATABASE_URL
+      - key: DATABASE_HOST
+        sync: false
+      - key: DATABASE_PORT
+        value: "5432"
+      - key: DATABASE_NAME
         sync: false
       - key: DATABASE_USERNAME
         sync: false
