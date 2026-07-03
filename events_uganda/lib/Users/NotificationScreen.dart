@@ -651,6 +651,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                             ),
                           ),
                         ),
+                        SizedBox(height: screenHeight * 0.015),
                         Padding(
                           padding: EdgeInsets.only(
                             left: screenWidth * 0.04,
@@ -661,7 +662,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w600,
                               fontSize: screenWidth * 0.04,
-                              color: const Color(0xFFCB471B),
+                              color: Colors.black,
                             ),
                           ),
                         ),
