@@ -58,6 +58,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   int _selectedGalleryIndex = 0;
   final FocusNode _searchFocus = FocusNode();
   Timer? _countdownTimer;
+  bool _isSearchFocused = false;
   final bool _isFavorite = false;
   Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
   String _userFullName = '';
@@ -84,7 +85,11 @@ class _NotificationScreenState extends State<NotificationScreen>
       end: 1.2,
     ).animate(_animationController);
     _startCountdown();
-    _searchFocus.addListener(() {});
+    _searchFocus.addListener(() {
+      setState(() {
+        _isSearchFocused = _searchFocus.hasFocus;
+      });
+    });
     // Fetch user's display name if available
     AuthService.getUser().then((userData) {
       if (mounted) {
