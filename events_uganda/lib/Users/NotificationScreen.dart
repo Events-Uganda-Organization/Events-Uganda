@@ -671,7 +671,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                           ),
                           child: Container(
                             width: double.infinity,
-                            height: screenWidth * 0.04,
+                            height: screenWidth * 0.19,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(18),
