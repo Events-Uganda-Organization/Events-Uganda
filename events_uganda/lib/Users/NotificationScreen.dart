@@ -634,22 +634,25 @@ class _NotificationScreenState extends State<NotificationScreen>
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            child: Stack(
-                              children: [
-                                AnimatedPositioned(
-                                  left: _getFilterOffset(_selectedFilter, screenWidth),
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                  child: Container(
-                                    width: _getFilterWidth(_selectedFilter, screenWidth),
-                                    height: screenWidth * 0.025,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFCB471B),
-                                      borderRadius: BorderRadius.circular(30),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(30),
+                              child: Stack(
+                                children: [
+                                  AnimatedPositioned(
+                                    left: _getFilterOffset(_selectedFilter, screenWidth),
+                                    duration: const Duration(milliseconds: 300),
+                                    curve: Curves.easeInOut,
+                                    child: Container(
+                                      width: _getFilterWidth(_selectedFilter, screenWidth),
+                                      height: screenWidth * 0.025,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFCB471B),
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -958,6 +961,7 @@ class _NotificationScreenState extends State<NotificationScreen>
     for (int i = 0; i < index; i++) {
       offset += iconSize + chipGap + textWidth(filterOrder[i]) + betweenChipGap;
     }
+    if (filter == 'Reminders') offset -= screenWidth * 0.02;
     return offset;
   }
 
