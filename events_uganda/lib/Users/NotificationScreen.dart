@@ -706,6 +706,38 @@ class _NotificationScreenState extends State<NotificationScreen>
                                     ),
                                   ),
                                 ),
+                                Positioned(
+                                  left: screenWidth * 0.18,
+                                  top: (screenWidth * 0.19 - screenWidth * 0.09) / 2,
+                                  child: SizedBox(
+                                    width: screenWidth * 0.6,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Booking Accepted',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: screenWidth * 0.035,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(height: screenWidth * 0.01),
+                                        Text(
+                                          'Your booking has finally been accepted! Congratulations.',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: screenWidth * 0.028,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
