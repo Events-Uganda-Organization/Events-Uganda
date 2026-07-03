@@ -8,6 +8,7 @@ import 'package:events_uganda/Users/Customers/Service_Listing_Decoration_Screen.
 import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_CarHiring_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Cakes_Screen.dart';
+import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:image_picker/image_picker.dart';
@@ -997,29 +998,39 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 10,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.notifications_none_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
-                  ),
-                ),
-              ),
+  child: GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const NotificationScreen(),
+        ),
+      );
+    },
+    child: Container(
+      width: screenWidth * 0.128,
+      height: screenWidth * 0.128,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 3),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 10,
+            offset: const Offset(0, 7),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Icon(
+          Icons.notifications_none_rounded,
+          color: Colors.black,
+          size: screenWidth * 0.07,
+        ),
+      ),
+    ),
+  ),
             ),
             Positioned(
               top: screenHeight * 0.122,

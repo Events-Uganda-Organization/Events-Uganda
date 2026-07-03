@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
+import 'package:events_uganda/Users/NotificationScreen.dart';
 
 class ServiceListingSaloonScreen extends StatefulWidget {
   final String? category;

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
+import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -383,29 +384,39 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 10,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.notifications_none_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
-                  ),
-                ),
-              ),
+  child: GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const NotificationScreen(),
+        ),
+      );
+    },
+    child: Container(
+      width: screenWidth * 0.128,
+      height: screenWidth * 0.128,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 3),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 10,
+            offset: const Offset(0, 7),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Icon(
+          Icons.notifications_none_rounded,
+          color: Colors.black,
+          size: screenWidth * 0.07,
+        ),
+      ),
+    ),
+  ),
             ),
             Positioned(
               top: offset,
