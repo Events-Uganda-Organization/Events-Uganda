@@ -19,6 +19,9 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   final TextEditingController _venueTypeController = TextEditingController();
   final FocusNode _venueTypeFocus = FocusNode();
   final GlobalKey _venueTypeKey = GlobalKey();
+  final TextEditingController _specialRequestsController = TextEditingController();
+  final FocusNode _specialRequestsFocus = FocusNode();
+  final GlobalKey _specialRequestsKey = GlobalKey();
   final bool _hasText = false;
   final List<ReviewModel> _reviews = [];
   final ScrollController _galleryScrollController = ScrollController();
