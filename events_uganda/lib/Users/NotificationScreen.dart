@@ -708,7 +708,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                 ),
                                 Positioned(
                                   left: screenWidth * 0.18,
-                                  top: (screenWidth * 0.19 - screenWidth * 0.09) / 2 - screenWidth * 0.015,
+                                  top: (screenWidth * 0.19 - screenWidth * 0.09) / 2 - screenWidth * 0.035,
                                   child: SizedBox(
                                     width: screenWidth * 0.6,
                                     child: Column(
