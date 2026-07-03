@@ -69,7 +69,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   final bool _showReviewSection = false;
   bool _showAllReviews = false;
   bool _canForwardReturn = false;
-  bool _agreeToPolicy = false;
+  String _selectedFilter = 'All';
   final MapController _mapController = MapController();
   LatLng _pinPosition = const LatLng(0.3136, 32.5811);
   String _selectedFilter = 'All';
