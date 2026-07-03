@@ -479,13 +479,25 @@ class _NotificationScreenState extends State<NotificationScreen>
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: screenWidth * 0.78,
-                            height: screenWidth * 0.12,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30),
+                          children: [
+                           Row(
+                             mainAxisSize: MainAxisSize.min,
+                             children: [
+                               Container(
+                                 width: screenWidth * 0.028,
+                                 height: screenWidth * 0.12,
+                                 decoration: BoxDecoration(
+                                   color: const Color(0xFFCB471B),
+                                   borderRadius: BorderRadius.circular(30),
+                                 ),
+                               ),
+                               SizedBox(width: screenWidth * 0.02),
+                               Container(
+                             width: screenWidth * 0.75,
+                             height: screenWidth * 0.12,
+                             decoration: BoxDecoration(
+                               color: Colors.white,
+                               borderRadius: BorderRadius.circular(30),
                               border: Border.all(
                                 color: _isSearchFocused
                                     ? const Color(0xFFCC471B)
