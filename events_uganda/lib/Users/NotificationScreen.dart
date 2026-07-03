@@ -72,7 +72,6 @@ class _NotificationScreenState extends State<NotificationScreen>
   String _selectedFilter = 'All';
   final MapController _mapController = MapController();
   LatLng _pinPosition = const LatLng(0.3136, 32.5811);
-  String _selectedFilter = 'All';
 
   @override
   void initState() {
@@ -172,8 +171,12 @@ class _NotificationScreenState extends State<NotificationScreen>
                     );
                   },
                 ),
-              );
-              },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
