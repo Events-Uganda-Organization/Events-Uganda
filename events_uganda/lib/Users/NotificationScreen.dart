@@ -467,50 +467,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                         ],
                       ),
                     ),
-                    SizedBox(height: screenHeight * 0.02),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.08,
-                      ),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        alignment: Alignment.center,
-                        children: [
-                          Positioned(
-                            left: screenWidth * 0.09,
-                            right: screenWidth * 0.15,
-                            top: screenWidth * 0.015,
-                            child: CustomPaint(
-                              size: Size(double.infinity, 2),
-                              painter: _DottedLinePainter(),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              _buildStepCircle(
-                                screenWidth,
-                                screenHeight,
-                                'Choose Date',
-                                true,
-                              ),
-                              _buildStepCircle(
-                                screenWidth,
-                                screenHeight,
-                                'Notifications',
-                                true,
-                              ),
-                              _buildStepCircle(
-                                screenWidth,
-                                screenHeight,
-                                'Payment Details',
-                                false,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+
                   ],
                 ),
               ),
