@@ -584,6 +584,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                 Icons.done_all,
                                 'All',
                                 screenWidth,
+                                isActive: true,
                               ),
                               SizedBox(width: screenWidth * 0.05),
                               _buildFilterChip(
@@ -887,14 +888,15 @@ class _NotificationScreenState extends State<NotificationScreen>
         remindersWidth;
   }
 
-  Widget _buildFilterChip(IconData icon, String label, double screenWidth) {
+  Widget _buildFilterChip(IconData icon, String label, double screenWidth, {bool isActive = false}) {
+    final color = isActive ? const Color(0xFFCB471B) : Colors.black;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(
           icon,
           size: screenWidth * 0.035,
-          color: Colors.black,
+          color: color,
         ),
         SizedBox(width: screenWidth * 0.015),
         Text(
@@ -903,7 +905,7 @@ class _NotificationScreenState extends State<NotificationScreen>
             fontFamily: 'Montserrat',
             fontSize: screenWidth * 0.03,
             fontWeight: FontWeight.w600,
-            color: Colors.black,
+            color: color,
           ),
         ),
       ],
