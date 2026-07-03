@@ -771,4 +771,3 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     );
   }
 }
-                     
