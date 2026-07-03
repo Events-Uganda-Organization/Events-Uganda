@@ -1,10 +1,9 @@
 services:
   - type: web
     name: eventsuganda-backend
-    env: java
+    env: docker
     plan: free
-    buildCommand: ./mvnw.cmd clean package -DskipTests
-    startCommand: java -jar target/otp-backend-1.0.0.jar
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: DATABASE_URL
         sync: false

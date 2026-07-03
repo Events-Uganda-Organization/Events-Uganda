@@ -472,7 +472,155 @@ class _NotificationScreenState extends State<NotificationScreen>
                         ],
                       ),
                     ),
-
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: screenWidth * 0.04,
+                        right: screenWidth * 0.04,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: screenWidth * 0.78,
+                            height: screenWidth * 0.12,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30),
+                              border: Border.all(
+                                color: _isSearchFocused
+                                    ? const Color(0xFFCC471B)
+                                    : Colors.transparent,
+                                width: 2,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  blurRadius: 12,
+                                  spreadRadius: 2,
+                                  offset: const Offset(2, 7),
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: screenWidth * 0.04,
+                                  ),
+                                  child: Icon(
+                                    Icons.search,
+                                    color: Colors.black.withValues(alpha: 0.5),
+                                    size: screenWidth * 0.06,
+                                  ),
+                                ),
+                                SizedBox(width: screenWidth * 0.03),
+                                Expanded(
+                                  child: TextField(
+                                    focusNode: _searchFocus,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: screenWidth * 0.04,
+                                      fontFamily: 'Montserrat',
+                                    ),
+                                    decoration: InputDecoration(
+                                      hintText:
+                                          'Search for notifications here...',
+                                      hintStyle: TextStyle(
+                                        color: Colors.black.withValues(
+                                          alpha: 0.5,
+                                        ),
+                                        fontSize: screenWidth * 0.035,
+                                        fontFamily: 'Montserrat',
+                                      ),
+                                      border: InputBorder.none,
+                                      isDense: true,
+                                      contentPadding: EdgeInsets.symmetric(
+                                        vertical: 0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: screenWidth * 0.12,
+                            height: screenWidth * 0.12,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  blurRadius: 12,
+                                  spreadRadius: 2,
+                                  offset: const Offset(2, 7),
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.more_vert,
+                                color: Colors.black,
+                                size: screenWidth * 0.07,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.02),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: screenWidth * 0.04,
+                          ),
+                          child: Row(
+                            children: [
+                              _buildFilterChip(
+                                Icons.done_all,
+                                'All',
+                                screenWidth,
+                              ),
+                              SizedBox(width: screenWidth * 0.05),
+                              _buildFilterChip(
+                                Icons.calendar_today,
+                                'Bookings',
+                                screenWidth,
+                              ),
+                              SizedBox(width: screenWidth * 0.05),
+                              _buildFilterChip(
+                                Icons.message,
+                                'Messages',
+                                screenWidth,
+                              ),
+                              SizedBox(width: screenWidth * 0.05),
+                              _buildFilterChip(
+                                Icons.notifications_active,
+                                'Reminders',
+                                screenWidth,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: screenWidth * 0.04,
+                          ),
+                          child: Container(
+                            width: _calculateFilterRowWidth(screenWidth),
+                            height: 4,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -688,6 +836,62 @@ class _NotificationScreenState extends State<NotificationScreen>
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.w500,
             color: isActive ? const Color(0xFFCB471B) : Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
+
+  double _calculateFilterRowWidth(double screenWidth) {
+    final textStyle = TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: screenWidth * 0.03,
+      fontWeight: FontWeight.w600,
+    );
+
+    double textWidth(String text) {
+      final tp = TextPainter(
+        text: TextSpan(text: text, style: textStyle),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      return tp.width;
+    }
+
+    final iconSize = screenWidth * 0.035;
+    final chipGap = screenWidth * 0.015;
+    final betweenChipGap = screenWidth * 0.05;
+
+    final allWidth = iconSize + chipGap + textWidth('All');
+    final bookingsWidth = iconSize + chipGap + textWidth('Bookings');
+    final messagesWidth = iconSize + chipGap + textWidth('Messages');
+    final remindersWidth = iconSize + chipGap + textWidth('Reminders');
+
+    return allWidth +
+        betweenChipGap +
+        bookingsWidth +
+        betweenChipGap +
+        messagesWidth +
+        betweenChipGap +
+        remindersWidth;
+  }
+
+  Widget _buildFilterChip(IconData icon, String label, double screenWidth) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          icon,
+          size: screenWidth * 0.035,
+          color: Colors.black,
+        ),
+        SizedBox(width: screenWidth * 0.015),
+        Text(
+          label,
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontSize: screenWidth * 0.03,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
           ),
         ),
       ],
