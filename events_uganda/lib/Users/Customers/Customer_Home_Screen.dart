@@ -23,7 +23,7 @@ class CustomerHomeScreen extends StatefulWidget {
 }
 
 class _CustomerHomeScreenState extends State<CustomerHomeScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final FocusNode _searchFocus = FocusNode();
   bool _isSearchFocused = false;
   Timer? _countdownTimer;
