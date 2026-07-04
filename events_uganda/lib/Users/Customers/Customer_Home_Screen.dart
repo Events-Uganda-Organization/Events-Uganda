@@ -45,6 +45,9 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
   final Set<int> _likedImages = {};
   final Set<int> _cartedImages = {};
   int _currentNavIndex = 0;
+  bool _isNavbarVisible = true;
+  late AnimationController _navbarSlideController;
+  late Animation<Offset> _navbarSlideAnimation;
   String _userFullName = '';
   String? _profilePicUrl;
 
@@ -103,6 +106,16 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     _circleScrollController.addListener(_onCircleScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
     _forYouScrollController.addListener(_onForYouScroll);
+    _navbarSlideController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _navbarSlideAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0, 3),
+    ).animate(
+      CurvedAnimation(parent: _navbarSlideController, curve: Curves.easeInOut),
+    );
     _startCountdown();
     _searchFocus.addListener(() {
       setState(() {
@@ -232,8 +245,19 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     }
   }
 
+  void _hideNavbar() {
+    _navbarSlideController.forward();
+    setState(() => _isNavbarVisible = false);
+  }
+
+  void _showNavbar() {
+    _navbarSlideController.reverse();
+    setState(() => _isNavbarVisible = true);
+  }
+
   @override
   void dispose() {
+    _navbarSlideController.dispose();
     _countdownTimer?.cancel();
     _searchFocus.dispose();
     _circleScrollController.dispose();
@@ -1546,30 +1570,69 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                 ),
               ),
             ),
-            // Bottom Navigation Bar - Floating
+            // Bottom Navbar - swipe down to hide
             Positioned(
               bottom: screenHeight * 0.02,
               left: 0,
               right: 0,
-              child: Center(
-                child: BottomNavbar(
-                  activeIndex: _currentNavIndex,
-                  onItemSelected: (index) {
-                    setState(() {
-                      _currentNavIndex = index;
-                    });
-                    if (index == 3) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CustomerProfileScreen(),
-                        ),
-                      );
-                    }
-                  },
+              child: GestureDetector(
+                onVerticalDragEnd: (details) {
+                  if (details.primaryVelocity != null &&
+                      details.primaryVelocity! > 300) {
+                    _hideNavbar();
+                  }
+                },
+                child: SlideTransition(
+                  position: _navbarSlideAnimation,
+                  child: Center(
+                    child: BottomNavbar(
+                      activeIndex: _currentNavIndex,
+                      onItemSelected: (index) {
+                        setState(() {
+                          _currentNavIndex = index;
+                        });
+                        if (index == 3) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CustomerProfileScreen(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
                 ),
               ),
             ),
+            // Green circle to show navbar when hidden
+            if (!_isNavbarVisible)
+              Positioned(
+                bottom: screenHeight * 0.06,
+                right: screenWidth * 0.06,
+                child: GestureDetector(
+                  onTap: _showNavbar,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF7EED27),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.arrow_upward,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
