@@ -1614,12 +1614,12 @@ fontSize: screenWidth * 0.025,
   }
 
   Widget _buildDismissibleCard({
-    required Key key,
+    required _NotificationItem item,
     required Widget child,
     required double screenWidth,
   }) {
     return Dismissible(
-      key: key,
+      key: ValueKey(item.id),
       direction: DismissDirection.endToStart,
       background: Container(
         decoration: BoxDecoration(
@@ -1647,21 +1647,121 @@ fontSize: screenWidth * 0.025,
         ),
       ),
       confirmDismiss: (direction) async {
+        final completer = Completer<bool>();
         final messenger = ScaffoldMessenger.of(context);
         messenger.showSnackBar(
           SnackBar(
             content: const Text('Notification dismissed'),
             behavior: SnackBarBehavior.floating,
-            duration: const Duration(seconds: 2),
+            duration: const Duration(seconds: 3),
             action: SnackBarAction(
               label: 'Undo',
-              onPressed: () {},
+              onPressed: () => completer.complete(false),
             ),
           ),
         );
-        return false;
+        final result = await completer.future.timeout(
+          const Duration(seconds: 3),
+          onTimeout: () => true,
+        );
+        if (result) {
+          setState(() => _itemDismissed(item));
+        }
+        return result;
       },
       child: child,
+    );
+  }
+
+  void _itemDismissed(_NotificationItem item) {
+    _todayNotifications.removeWhere((e) => e.id == item.id);
+    _yesterdayNotifications.removeWhere((e) => e.id == item.id);
+  }
+
+  Widget _buildCardContent(_NotificationItem item, double screenWidth) {
+    return Container(
+      width: double.infinity,
+      height: screenWidth * 0.19,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 12,
+            spreadRadius: 2,
+            offset: const Offset(2, 7),
+          ),
+        ],
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            left: screenWidth * 0.03,
+            top: (screenWidth * 0.19 - screenWidth * 0.128) / 2,
+            child: Container(
+              width: screenWidth * 0.128,
+              height: screenWidth * 0.128,
+              decoration: BoxDecoration(
+                color: item.iconColor.withValues(alpha: 0.5),
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Icon(
+                  item.icon,
+                  color: Colors.black,
+                  size: screenWidth * 0.07,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            right: screenWidth * 0.04,
+            top: screenWidth * 0.025,
+            child: Text(
+              item.timestamp,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: screenWidth * 0.025,
+                color: Colors.grey,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Positioned(
+            left: screenWidth * 0.18,
+            top: (screenWidth * 0.19 - screenWidth * 0.09) / 2 - screenWidth * 0.035,
+            child: SizedBox(
+              width: screenWidth * 0.6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    item.title,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w600,
+                      fontSize: screenWidth * 0.035,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: screenWidth * 0.01),
+                  Text(
+                    item.subtitle,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w300,
+                      fontSize: screenWidth * 0.022,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
