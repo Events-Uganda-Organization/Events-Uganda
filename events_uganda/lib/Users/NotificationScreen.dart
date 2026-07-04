@@ -195,8 +195,19 @@ class _NotificationScreenState extends State<NotificationScreen>
   }
 
   @override
+  void _hideNavbar() {
+    _navbarSlideController.forward();
+    setState(() => _isNavbarVisible = false);
+  }
+
+  void _showNavbar() {
+    _navbarSlideController.reverse();
+    setState(() => _isNavbarVisible = true);
+  }
+
   void dispose() {
     _animationController.dispose();
+    _navbarSlideController.dispose();
     _countdownTimer?.cancel();
     _galleryScrollController.dispose();
     _reviewController.dispose();
@@ -866,6 +877,61 @@ class _NotificationScreenState extends State<NotificationScreen>
                 ),
               ),
             ),
+            // Bottom Navbar - swipe down to hide
+            Positioned(
+              bottom: screenHeight * 0.02,
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onVerticalDragEnd: (details) {
+                  if (details.primaryVelocity != null &&
+                      details.primaryVelocity! > 300) {
+                    _hideNavbar();
+                  }
+                },
+                child: SlideTransition(
+                  position: _navbarSlideAnimation,
+                  child: Center(
+                    child: BottomNavbar(
+                      activeIndex: _currentNavIndex,
+                      onItemSelected: (index) {
+                        setState(() {
+                          _currentNavIndex = index;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // Green circle to show navbar when hidden
+            if (!_isNavbarVisible)
+              Positioned(
+                bottom: screenHeight * 0.06,
+                right: screenWidth * 0.06,
+                child: GestureDetector(
+                  onTap: _showNavbar,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF7EED27),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.arrow_upward,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
