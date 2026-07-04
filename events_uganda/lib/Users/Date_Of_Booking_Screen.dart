@@ -941,6 +941,11 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+      ),
+            // Bottom Navbar - fixed at bottom of screen
             Positioned(
               bottom: screenHeight * 0.02,
               left: 0,
@@ -1004,8 +1009,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                 ),
               ),
           ],
-        ),
-      ),
         ),
       ),
     );
