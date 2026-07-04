@@ -1537,7 +1537,7 @@ class _NotificationScreenState extends State<NotificationScreen>
           label,
           style: TextStyle(
             fontFamily: 'Montserrat',
-            fontSize: screenWidth * 0.03,
+fontSize: screenWidth * 0.025,
             fontWeight: FontWeight.w600,
             color: color,
           ),
