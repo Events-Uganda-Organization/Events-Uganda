@@ -1112,7 +1112,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                   right: screenWidth * 0.04,
                                   top: screenWidth * 0.025,
                                   child: Text(
-                                    '15 secs ago',
+                                    '1 day ago',
                                     style: TextStyle(
                                       fontFamily: 'Montserrat',
                                       fontSize: screenWidth * 0.025,
@@ -1131,7 +1131,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Text(
-                                          'Booking Accepted',
+                                          'Birthday Reminder',
                                           style: TextStyle(
                                             fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w600,
@@ -1141,7 +1141,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                         ),
                                         SizedBox(height: screenWidth * 0.01),
                                         Text(
-                                          'Your booking has finally been accepted! Congratulations.',
+                                          'Dont forget the birthday party tomorrow!',
                                           style: TextStyle(
                                             fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w300,
