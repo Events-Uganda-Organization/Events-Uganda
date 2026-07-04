@@ -47,8 +47,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   bool _showReviewSection = false;
   bool _showAllReviews = false;
   bool _canForwardReturn = false;
-
-
+  int _currentNavIndex = 0;
+  bool _isNavbarVisible = true;
+  late AnimationController _navbarSlideController;
+  late Animation<Offset> _navbarSlideAnimation;
 
   @override
   void initState() {
@@ -61,6 +63,16 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       begin: 1.0,
       end: 1.2,
     ).animate(_animationController);
+    _navbarSlideController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _navbarSlideAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0, 3),
+    ).animate(
+      CurvedAnimation(parent: _navbarSlideController, curve: Curves.easeInOut),
+    );
     _startCountdown();
     _searchFocus.addListener(() {});
     // Fetch user's display name if available
@@ -80,9 +92,20 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     return 'Good Evening';
   }
 
+  void _hideNavbar() {
+    _navbarSlideController.forward();
+    setState(() => _isNavbarVisible = false);
+  }
+
+  void _showNavbar() {
+    _navbarSlideController.reverse();
+    setState(() => _isNavbarVisible = true);
+  }
+
   @override
   void dispose() {
     _animationController.dispose();
+    _navbarSlideController.dispose();
     _countdownTimer?.cancel();
     _galleryScrollController.dispose();
     _reviewController.dispose();
