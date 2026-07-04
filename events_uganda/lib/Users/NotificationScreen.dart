@@ -1141,7 +1141,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                         ),
                                         SizedBox(height: screenWidth * 0.01),
                                         Text(
-                                          'Dont forget the birthday party tomorrow!',
+                                          'Don\'t forget the birthday party tomorrow!',
                                           style: TextStyle(
                                             fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w300,
