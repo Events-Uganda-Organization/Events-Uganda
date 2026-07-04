@@ -596,9 +596,12 @@ class _NotificationScreenState extends State<NotificationScreen>
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.02),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                         Padding(
                           padding: EdgeInsets.only(
                             left: screenWidth * 0.04,
