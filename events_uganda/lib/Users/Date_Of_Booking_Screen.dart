@@ -15,10 +15,13 @@ class DateOfBookingScreen extends StatefulWidget {
 }
 
 class _DateOfBookingScreenState extends State<DateOfBookingScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   int _currentNavIndex = 0;
   String _userFullName = '';
   bool _canForwardReturn = false;
+  bool _isNavbarVisible = true;
+  late AnimationController _navbarSlideController;
+  late Animation<Offset> _navbarSlideAnimation;
   late DateTime _currentMonth;
   Set<DateTime> _unavailableDates = {};
   TimeOfDay? _fromTime;
