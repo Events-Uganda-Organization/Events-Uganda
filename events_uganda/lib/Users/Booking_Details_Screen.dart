@@ -73,6 +73,10 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   bool _agreeToPolicy = false;
   final MapController _mapController = MapController();
   LatLng _pinPosition = const LatLng(0.3136, 32.5811);
+  int _currentNavIndex = 0;
+  bool _isNavbarVisible = true;
+  late AnimationController _navbarSlideController;
+  late Animation<Offset> _navbarSlideAnimation;
 
   @override
   void initState() {
@@ -85,6 +89,16 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
       begin: 1.0,
       end: 1.2,
     ).animate(_animationController);
+    _navbarSlideController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _navbarSlideAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0, 3),
+    ).animate(
+      CurvedAnimation(parent: _navbarSlideController, curve: Curves.easeInOut),
+    );
     _startCountdown();
     _searchFocus.addListener(() {});
     // Fetch user's display name if available
@@ -178,9 +192,20 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     overlay.insert(entry);
   }
 
+  void _hideNavbar() {
+    _navbarSlideController.forward();
+    setState(() => _isNavbarVisible = false);
+  }
+
+  void _showNavbar() {
+    _navbarSlideController.reverse();
+    setState(() => _isNavbarVisible = true);
+  }
+
   @override
   void dispose() {
     _animationController.dispose();
+    _navbarSlideController.dispose();
     _countdownTimer?.cancel();
     _galleryScrollController.dispose();
     _reviewController.dispose();
