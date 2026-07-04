@@ -991,12 +991,11 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       ),
                                      ),
                                   SizedBox(height: screenWidth * 0.05),
-                                 ],
-                               ),
+                                  ],
+                                ),
+                              ),
                              ),
-                           ),
-                            ),
-                            // Middle white rectangle
+                             // Middle white rectangle
                             Positioned(
                               top:
                                   screenWidth * 0.95 * (336 / 350) +
