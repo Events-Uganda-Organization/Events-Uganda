@@ -1546,6 +1546,58 @@ fontSize: screenWidth * 0.025,
       ],
     );
   }
+
+  Widget _buildDismissibleCard({
+    required Key key,
+    required Widget child,
+    required double screenWidth,
+  }) {
+    return Dismissible(
+      key: key,
+      direction: DismissDirection.endToStart,
+      background: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18),
+          gradient: const LinearGradient(
+            colors: [Color(0xFFFF5F5F), Color(0xFFD32F2F)],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+        ),
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.only(right: screenWidth * 0.06),
+        child: Container(
+          width: screenWidth * 0.09,
+          height: screenWidth * 0.09,
+          decoration: const BoxDecoration(
+            color: Colors.white24,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            Icons.delete_outline_rounded,
+            color: Colors.white,
+            size: screenWidth * 0.045,
+          ),
+        ),
+      ),
+      confirmDismiss: (direction) async {
+        final messenger = ScaffoldMessenger.of(context);
+        messenger.showSnackBar(
+          SnackBar(
+            content: const Text('Notification dismissed'),
+            behavior: SnackBarBehavior.floating,
+            duration: const Duration(seconds: 2),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {},
+            ),
+          ),
+        );
+        return false;
+      },
+      child: child,
+    );
+  }
 }
 
 Widget _availabilityCard(double screenWidth) {
