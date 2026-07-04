@@ -78,6 +78,52 @@ class _NotificationScreenState extends State<NotificationScreen>
   late AnimationController _navbarSlideController;
   late Animation<Offset> _navbarSlideAnimation;
 
+  final List<_NotificationItem> _todayNotifications = const [
+    _NotificationItem(
+      id: 1,
+      icon: Icons.monetization_on,
+      iconColor: Color(0xFF55FF27),
+      timestamp: '15 secs ago',
+      title: 'Booking Accepted',
+      subtitle: 'Your booking has finally been accepted! Congratulations.',
+    ),
+    _NotificationItem(
+      id: 2,
+      icon: Icons.message,
+      iconColor: Color(0xFFE4351D),
+      timestamp: '15 secs ago',
+      title: 'Booking Accepted',
+      subtitle: 'Your booking has finally been accepted! Congratulations.',
+    ),
+  ];
+
+  final List<_NotificationItem> _yesterdayNotifications = const [
+    _NotificationItem(
+      id: 3,
+      icon: Icons.notifications_active,
+      iconColor: Color(0xFF96E8F4),
+      timestamp: '2 days ago',
+      title: 'Upcoming Wedding',
+      subtitle: 'Your wedding event is coming up this Saturday!',
+    ),
+    _NotificationItem(
+      id: 4,
+      icon: Icons.message,
+      iconColor: Color(0xFFE4351D),
+      timestamp: '15 secs ago',
+      title: 'Booking Accepted',
+      subtitle: 'Your booking has finally been accepted! Congratulations.',
+    ),
+    _NotificationItem(
+      id: 5,
+      icon: Icons.notifications_active,
+      iconColor: Color(0xFF96E8F4),
+      timestamp: '1 day ago',
+      title: 'Birthday Reminder',
+      subtitle: "Don't forget the birthday party tomorrow!",
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
