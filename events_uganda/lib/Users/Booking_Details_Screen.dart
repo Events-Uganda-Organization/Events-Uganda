@@ -1002,7 +1002,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   screenWidth * 0.95 * (336 / 350) +
                                   8 +
                                   screenWidth * 0.95 * (336 / 350) * 0.7 +
-                                  screenWidth * 0.58 +
+                                  screenWidth * 0.78 +
                                   6,
                               left: (screenWidth - screenWidth * 0.95) / 2,
                               child: Container(
@@ -1144,7 +1144,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   screenWidth * 0.95 * (336 / 350) +
                                   8 +
                                   screenWidth * 0.95 * (336 / 350) * 0.7 +
-                                  screenWidth * 0.58 +
+                                  screenWidth * 0.78 +
                                    6 +
                                    screenWidth * 0.7 +
                                    6,
@@ -1297,7 +1297,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                    screenWidth * 0.95 * (336 / 350) +
                                    8 +
                                     screenWidth * 0.95 * (336 / 350) * 0.7 +
-                                    screenWidth * 0.58 +
+                                    screenWidth * 0.78 +
                                     6 +
                                       screenWidth * 0.7 +
                                      6 +
@@ -1387,7 +1387,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   screenWidth * 0.95 * (336 / 350) +
                                   8 +
                                   screenWidth * 0.95 * (336 / 350) * 0.7 +
-                                  screenWidth * 0.58 +
+                                  screenWidth * 0.78 +
                                   6 +
                                   screenWidth * 0.7 +
                                   6 +
