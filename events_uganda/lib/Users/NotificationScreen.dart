@@ -443,6 +443,7 @@ class _NotificationScreenState extends State<NotificationScreen>
               right: 0,
               bottom: 0,
               child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   children: [
                     Padding(
