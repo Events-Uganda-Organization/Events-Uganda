@@ -1823,6 +1823,24 @@ Widget _buildRatingBars(double screenWidth) {
   );
 }
 
+class _NotificationItem {
+  const _NotificationItem({
+    required this.id,
+    required this.icon,
+    required this.iconColor,
+    required this.timestamp,
+    required this.title,
+    required this.subtitle,
+  });
+
+  final int id;
+  final IconData icon;
+  final Color iconColor;
+  final String timestamp;
+  final String title;
+  final String subtitle;
+}
+
 class _DottedLinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
