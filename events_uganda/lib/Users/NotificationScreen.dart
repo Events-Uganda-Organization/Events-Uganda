@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/components/Bottom_Navbar.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -14,7 +15,7 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final TextEditingController _reviewController = TextEditingController();
   final TextEditingController _venueTypeController = TextEditingController();
   final FocusNode _venueTypeFocus = FocusNode();
@@ -72,6 +73,10 @@ class _NotificationScreenState extends State<NotificationScreen>
   String _selectedFilter = 'All';
   final MapController _mapController = MapController();
   LatLng _pinPosition = const LatLng(0.3136, 32.5811);
+  int _currentNavIndex = 0;
+  bool _isNavbarVisible = true;
+  late AnimationController _navbarSlideController;
+  late Animation<Offset> _navbarSlideAnimation;
 
   @override
   void initState() {
@@ -84,6 +89,16 @@ class _NotificationScreenState extends State<NotificationScreen>
       begin: 1.0,
       end: 1.2,
     ).animate(_animationController);
+    _navbarSlideController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _navbarSlideAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0, 3),
+    ).animate(
+      CurvedAnimation(parent: _navbarSlideController, curve: Curves.easeInOut),
+    );
     _startCountdown();
     _searchFocus.addListener(() {
       setState(() {
