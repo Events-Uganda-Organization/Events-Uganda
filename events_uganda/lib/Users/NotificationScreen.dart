@@ -872,6 +872,290 @@ class _NotificationScreenState extends State<NotificationScreen>
                             ),
                           ),
                         ),
+                        SizedBox(height: screenHeight * 0.035),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            left: screenWidth * 0.04,
+                          ),
+                          child: Text(
+                            'Yesterday',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              fontSize: screenWidth * 0.04,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.04,
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            height: screenWidth * 0.19,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(18),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  blurRadius: 12,
+                                  spreadRadius: 2,
+                                  offset: const Offset(2, 7),
+                                ),
+                              ],
+                            ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: screenWidth * 0.03,
+                                  top: (screenWidth * 0.19 - screenWidth * 0.128) / 2,
+                                  child: Container(
+                                    width: screenWidth * 0.128,
+                                    height: screenWidth * 0.128,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF55FF27).withValues(alpha: 0.5),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.monetization_on,
+                                        color: Colors.black,
+                                        size: screenWidth * 0.07,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: screenWidth * 0.04,
+                                  top: screenWidth * 0.025,
+                                  child: Text(
+                                    '15 secs ago',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: screenWidth * 0.025,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  left: screenWidth * 0.18,
+                                  top: (screenWidth * 0.19 - screenWidth * 0.09) / 2 - screenWidth * 0.035,
+                                  child: SizedBox(
+                                    width: screenWidth * 0.6,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Booking Accepted',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: screenWidth * 0.035,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(height: screenWidth * 0.01),
+                                        Text(
+                                          'Your booking has finally been accepted! Congratulations.',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: screenWidth * 0.022,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.015),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.04,
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            height: screenWidth * 0.19,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(18),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  blurRadius: 12,
+                                  spreadRadius: 2,
+                                  offset: const Offset(2, 7),
+                                ),
+                              ],
+                            ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: screenWidth * 0.03,
+                                  top: (screenWidth * 0.19 - screenWidth * 0.128) / 2,
+                                  child: Container(
+                                    width: screenWidth * 0.128,
+                                    height: screenWidth * 0.128,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFE4351D).withValues(alpha: 0.5),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.message,
+                                        color: Colors.black,
+                                        size: screenWidth * 0.07,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: screenWidth * 0.04,
+                                  top: screenWidth * 0.025,
+                                  child: Text(
+                                    '15 secs ago',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: screenWidth * 0.025,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  left: screenWidth * 0.18,
+                                  top: (screenWidth * 0.19 - screenWidth * 0.09) / 2 - screenWidth * 0.035,
+                                  child: SizedBox(
+                                    width: screenWidth * 0.6,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Booking Accepted',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: screenWidth * 0.035,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(height: screenWidth * 0.01),
+                                        Text(
+                                          'Your booking has finally been accepted! Congratulations.',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: screenWidth * 0.022,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.015),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.04,
+                          ),
+                          child: Container(
+                            width: double.infinity,
+                            height: screenWidth * 0.19,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(18),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  blurRadius: 12,
+                                  spreadRadius: 2,
+                                  offset: const Offset(2, 7),
+                                ),
+                              ],
+                            ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: screenWidth * 0.03,
+                                  top: (screenWidth * 0.19 - screenWidth * 0.128) / 2,
+                                  child: Container(
+                                    width: screenWidth * 0.128,
+                                    height: screenWidth * 0.128,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF55FF27).withValues(alpha: 0.5),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.monetization_on,
+                                        color: Colors.black,
+                                        size: screenWidth * 0.07,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: screenWidth * 0.04,
+                                  top: screenWidth * 0.025,
+                                  child: Text(
+                                    '15 secs ago',
+                                    style: TextStyle(
+                                      fontFamily: 'Montserrat',
+                                      fontSize: screenWidth * 0.025,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  left: screenWidth * 0.18,
+                                  top: (screenWidth * 0.19 - screenWidth * 0.09) / 2 - screenWidth * 0.035,
+                                  child: SizedBox(
+                                    width: screenWidth * 0.6,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Booking Accepted',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: screenWidth * 0.035,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(height: screenWidth * 0.01),
+                                        Text(
+                                          'Your booking has finally been accepted! Congratulations.',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: screenWidth * 0.022,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ],
