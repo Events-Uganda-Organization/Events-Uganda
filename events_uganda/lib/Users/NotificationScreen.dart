@@ -205,6 +205,7 @@ class _NotificationScreenState extends State<NotificationScreen>
     setState(() => _isNavbarVisible = true);
   }
 
+  @override
   void dispose() {
     _animationController.dispose();
     _navbarSlideController.dispose();
