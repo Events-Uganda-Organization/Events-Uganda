@@ -1163,7 +1163,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                       ),
                     ),
                   ],
-                ),
+              ),
             // Bottom Navbar - swipe down to hide
             Positioned(
               bottom: screenHeight * 0.02,
