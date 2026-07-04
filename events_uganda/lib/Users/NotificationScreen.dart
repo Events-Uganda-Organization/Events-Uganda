@@ -769,7 +769,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                           'Your booking has finally been accepted! Congratulations.',
                                           style: TextStyle(
                                             fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w200,
+                                            fontWeight: FontWeight.w300,
                                             fontSize: screenWidth * 0.022,
                                             color: Colors.black87,
                                           ),
@@ -859,7 +859,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                           'Your booking has finally been accepted! Congratulations.',
                                           style: TextStyle(
                                             fontFamily: 'Montserrat',
-                                            fontWeight: FontWeight.w200,
+                                            fontWeight: FontWeight.w300,
                                             fontSize: screenWidth * 0.022,
                                             color: Colors.black87,
                                           ),
