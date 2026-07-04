@@ -770,7 +770,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                           style: TextStyle(
                                             fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w200,
-                                            fontSize: screenWidth * 0.028,
+                                            fontSize: screenWidth * 0.022,
                                             color: Colors.black87,
                                           ),
                                         ),
@@ -860,7 +860,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                           style: TextStyle(
                                             fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w200,
-                                            fontSize: screenWidth * 0.028,
+                                            fontSize: screenWidth * 0.022,
                                             color: Colors.black87,
                                           ),
                                         ),
@@ -1486,3 +1486,4 @@ class _DottedLinePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
