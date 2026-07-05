@@ -129,7 +129,7 @@ class _SplashScreenState extends State<SplashScreen>
             Positioned(
               left: 0,
               right: 0,
-              bottom: screenHeight * 0.18,
+              bottom: screenHeight * 0.12,
               child: AnimatedBuilder(
                 animation: _fadeIn,
                 builder: (context, child) {
