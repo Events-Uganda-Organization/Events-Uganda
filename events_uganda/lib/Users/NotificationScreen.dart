@@ -78,8 +78,8 @@ class _NotificationScreenState extends State<NotificationScreen>
   late AnimationController _navbarSlideController;
   late Animation<Offset> _navbarSlideAnimation;
 
-  final List<_NotificationItem> _todayNotifications = const [
-    _NotificationItem(
+  final List<_NotificationItem> _todayNotifications = [
+    const _NotificationItem(
       id: 1,
       icon: Icons.monetization_on,
       iconColor: Color(0xFF55FF27),
@@ -87,7 +87,7 @@ class _NotificationScreenState extends State<NotificationScreen>
       title: 'Booking Accepted',
       subtitle: 'Your booking has finally been accepted! Congratulations.',
     ),
-    _NotificationItem(
+    const _NotificationItem(
       id: 2,
       icon: Icons.message,
       iconColor: Color(0xFFE4351D),
@@ -97,8 +97,8 @@ class _NotificationScreenState extends State<NotificationScreen>
     ),
   ];
 
-  final List<_NotificationItem> _yesterdayNotifications = const [
-    _NotificationItem(
+  final List<_NotificationItem> _yesterdayNotifications = [
+    const _NotificationItem(
       id: 3,
       icon: Icons.notifications_active,
       iconColor: Color(0xFF96E8F4),
@@ -106,7 +106,7 @@ class _NotificationScreenState extends State<NotificationScreen>
       title: 'Upcoming Wedding',
       subtitle: 'Your wedding event is coming up this Saturday!',
     ),
-    _NotificationItem(
+    const _NotificationItem(
       id: 4,
       icon: Icons.message,
       iconColor: Color(0xFFE4351D),
@@ -114,7 +114,7 @@ class _NotificationScreenState extends State<NotificationScreen>
       title: 'Booking Accepted',
       subtitle: 'Your booking has finally been accepted! Congratulations.',
     ),
-    _NotificationItem(
+    const _NotificationItem(
       id: 5,
       icon: Icons.notifications_active,
       iconColor: Color(0xFF96E8F4),
@@ -123,6 +123,8 @@ class _NotificationScreenState extends State<NotificationScreen>
       subtitle: "Don't forget the birthday party tomorrow!",
     ),
   ];
+
+  final List<_NotificationItem> _archivedNotifications = [];
 
   @override
   void initState() {
@@ -1181,7 +1183,7 @@ fontSize: screenWidth * 0.025,
   }) {
     return Dismissible(
       key: ValueKey(item.id),
-      direction: DismissDirection.endToStart,
+      direction: DismissDirection.horizontal,
       background: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
@@ -1207,11 +1209,38 @@ fontSize: screenWidth * 0.025,
           ),
         ),
       ),
+      secondaryBackground: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18),
+          gradient: const LinearGradient(
+            colors: [Color(0xFFF3CA9B), Color(0xFFCB471B)],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+        ),
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.only(left: screenWidth * 0.06),
+        child: Container(
+          width: screenWidth * 0.09,
+          height: screenWidth * 0.09,
+          decoration: const BoxDecoration(
+            color: Colors.white24,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            Icons.archive_rounded,
+            color: Colors.white,
+            size: screenWidth * 0.045,
+          ),
+        ),
+      ),
       confirmDismiss: (direction) async {
         final completer = Completer<bool>();
         final messenger = ScaffoldMessenger.of(context);
         final mq = MediaQuery.of(context);
         final bottomInset = mq.viewInsets.bottom;
+        final isArchive = direction == DismissDirection.startToEnd;
+
         messenger.showSnackBar(
           SnackBar(
             content: Row(
@@ -1223,7 +1252,7 @@ fontSize: screenWidth * 0.025,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    Icons.notifications_off_outlined,
+                    isArchive ? Icons.archive_rounded : Icons.notifications_off_outlined,
                     color: Colors.white,
                     size: screenWidth * 0.045,
                   ),
@@ -1231,7 +1260,7 @@ fontSize: screenWidth * 0.025,
                 SizedBox(width: screenWidth * 0.03),
                 Expanded(
                   child: Text(
-                    'Notification dismissed',
+                    isArchive ? 'Notification archived' : 'Notification dismissed',
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w500,
@@ -1271,7 +1300,13 @@ fontSize: screenWidth * 0.025,
           onTimeout: () => true,
         );
         if (result) {
-          setState(() => _itemDismissed(item));
+          setState(() {
+            if (isArchive) {
+              _itemArchived(item);
+            } else {
+              _itemDismissed(item);
+            }
+          });
         }
         return result;
       },
@@ -1282,6 +1317,12 @@ fontSize: screenWidth * 0.025,
   void _itemDismissed(_NotificationItem item) {
     _todayNotifications.removeWhere((e) => e.id == item.id);
     _yesterdayNotifications.removeWhere((e) => e.id == item.id);
+  }
+
+  void _itemArchived(_NotificationItem item) {
+    _todayNotifications.removeWhere((e) => e.id == item.id);
+    _yesterdayNotifications.removeWhere((e) => e.id == item.id);
+    _archivedNotifications.add(item);
   }
 
   Widget _buildCardContent(_NotificationItem item, double screenWidth) {
