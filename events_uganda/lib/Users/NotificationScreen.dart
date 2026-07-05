@@ -87,6 +87,9 @@ class _NotificationScreenState extends State<NotificationScreen>
   late AnimationController _navbarSlideController;
   late Animation<Offset> _navbarSlideAnimation;
 
+  List<_NotificationItem> get _sortedToday => _sortedNotifications(_todayNotifications);
+  List<_NotificationItem> get _sortedYesterday => _sortedNotifications(_yesterdayNotifications);
+
   final List<_NotificationItem> _todayNotifications = [
     _NotificationItem(
       id: 1,
@@ -826,17 +829,16 @@ class _NotificationScreenState extends State<NotificationScreen>
                             ),
                           ),
                         ),
-                        final sortedToday = _sortedNotifications(_todayNotifications);
-                        for (int i = 0; i < sortedToday.length; i++) ...[
+                        for (int i = 0; i < _sortedToday.length; i++) ...[
                           if (i > 0) SizedBox(height: screenHeight * 0.015),
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: screenWidth * 0.04,
                             ),
                             child: _buildDismissibleCard(
-                              item: sortedToday[i],
+                              item: _sortedToday[i],
                               screenWidth: screenWidth,
-                              child: _buildCardContent(sortedToday[i], screenWidth),
+                              child: _buildCardContent(_sortedToday[i], screenWidth),
                             ),
                           ),
                         ],
@@ -855,17 +857,16 @@ class _NotificationScreenState extends State<NotificationScreen>
                             ),
                           ),
                         ),
-                        final sortedYesterday = _sortedNotifications(_yesterdayNotifications);
-                        for (int i = 0; i < sortedYesterday.length; i++) ...[
+                        for (int i = 0; i < _sortedYesterday.length; i++) ...[
                           if (i > 0) SizedBox(height: screenHeight * 0.015),
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: screenWidth * 0.04,
                             ),
                             child: _buildDismissibleCard(
-                              item: sortedYesterday[i],
+                              item: _sortedYesterday[i],
                               screenWidth: screenWidth,
-                              child: _buildCardContent(sortedYesterday[i], screenWidth),
+                              child: _buildCardContent(_sortedYesterday[i], screenWidth),
                             ),
                           ),
                         ],
