@@ -1325,7 +1325,6 @@ fontSize: screenWidth * 0.025,
       ),
       );
     }
-  }
 
   void _showOptionsSheet(BuildContext context, double screenWidth) {
     showModalBottomSheet(
