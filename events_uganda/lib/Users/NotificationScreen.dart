@@ -1429,12 +1429,20 @@ fontSize: screenWidth * 0.025,
           color: item.isRead ? Colors.white : const Color(0xFFFEF9F0),
           borderRadius: BorderRadius.circular(18),
           boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: 12,
-              spreadRadius: 2,
-              offset: const Offset(2, 7),
-            ),
+            if (item.isRead)
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 12,
+                spreadRadius: 2,
+                offset: const Offset(2, 7),
+              ),
+            if (!item.isRead)
+              BoxShadow(
+                color: const Color(0xFFCB471B).withValues(alpha: 0.25),
+                blurRadius: 24,
+                spreadRadius: 1,
+                offset: const Offset(4, 10),
+              ),
           ],
         ),
         child: Stack(
