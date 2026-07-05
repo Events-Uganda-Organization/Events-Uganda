@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: SizedBox.expand(
         child: Stack(
           children: [
-            const SizedBox.expand(child: SplashVideoPlayer()),
+            SizedBox.expand(child: SplashVideoPlayer(screenWidth: screenWidth)),
             SizedBox.expand(
               child: Container(color: Colors.black.withValues(alpha: 0.25)),
             ),
