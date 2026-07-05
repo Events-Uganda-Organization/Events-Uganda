@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
+import 'package:events_uganda/Users/NotificationSettingsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -642,6 +643,13 @@ class _NotificationScreenState extends State<NotificationScreen>
                                 case _MenuAction.deleteAllRead:
                                   _deleteAllReadNotifications();
                                 case _MenuAction.settings:
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const NotificationSettingsScreen(),
+                                    ),
+                                  );
                                 case _MenuAction.categories:
                                 case _MenuAction.archived:
                                 case _MenuAction.help:

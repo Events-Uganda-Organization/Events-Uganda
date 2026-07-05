@@ -363,7 +363,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       ),
                     ),
                     _buildSettingTile(
-        screenWidth: screenWidth,
+                      screenWidth: screenWidth,
                       title: 'Push Notifications',
                       subtitle: 'Receive notifications on your device',
                       value: _pushEnabled,
@@ -372,7 +372,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       onChanged: (v) => setState(() => _pushEnabled = v),
                     ),
                     _buildSettingTile(
-        screenWidth: screenWidth,
+                      screenWidth: screenWidth,
                       title: 'Email Notifications',
                       subtitle: 'Receive notifications via email',
                       value: _emailEnabled,
@@ -381,7 +381,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       onChanged: (v) => setState(() => _emailEnabled = v),
                     ),
                     _buildSettingTile(
-        screenWidth: screenWidth,
+                      screenWidth: screenWidth,
                       title: 'SMS Notifications',
                       subtitle: 'Receive notifications via text message',
                       value: _smsEnabled,
@@ -407,7 +407,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       ),
                     ),
                     _buildSettingTile(
-        screenWidth: screenWidth,
+                      screenWidth: screenWidth,
                       title: 'Booking Updates',
                       subtitle: 'Booking confirmations, changes & cancellations',
                       value: _bookingUpdates,
@@ -416,7 +416,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       onChanged: (v) => setState(() => _bookingUpdates = v),
                     ),
                     _buildSettingTile(
-        screenWidth: screenWidth,
+                      screenWidth: screenWidth,
                       title: 'Promotions & Offers',
                       subtitle: 'Special deals and promotional content',
                       value: _promotions,
@@ -425,7 +425,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       onChanged: (v) => setState(() => _promotions = v),
                     ),
                     _buildSettingTile(
-        screenWidth: screenWidth,
+                      screenWidth: screenWidth,
                       title: 'Messages',
                       subtitle: 'Direct messages from event planners',
                       value: _messages,
@@ -434,7 +434,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       onChanged: (v) => setState(() => _messages = v),
                     ),
                     _buildSettingTile(
-        screenWidth: screenWidth,
+                      screenWidth: screenWidth,
                       title: 'Reminders',
                       subtitle: 'Upcoming event reminders',
                       value: _reminders,
@@ -460,7 +460,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       ),
                     ),
                     _buildSettingTile(
-        screenWidth: screenWidth,
+                      screenWidth: screenWidth,
                       title: 'Sound',
                       subtitle: 'Play a sound when notification arrives',
                       value: _soundEnabled,
@@ -469,7 +469,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       onChanged: (v) => setState(() => _soundEnabled = v),
                     ),
                     _buildSettingTile(
-        screenWidth: screenWidth,
+                      screenWidth: screenWidth,
                       title: 'Vibration',
                       subtitle: 'Vibrate device on notification',
                       value: _vibrationEnabled,
