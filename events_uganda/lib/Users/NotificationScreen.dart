@@ -74,6 +74,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   final MapController _mapController = MapController();
   LatLng _pinPosition = const LatLng(0.3136, 32.5811);
   int _currentNavIndex = 0;
+  final GlobalKey _optionsButtonKey = GlobalKey();
   bool _isNavbarVisible = true;
   late AnimationController _navbarSlideController;
   late Animation<Offset> _navbarSlideAnimation;
@@ -618,7 +619,8 @@ class _NotificationScreenState extends State<NotificationScreen>
                             ),
                           ),
                           GestureDetector(
-                            onTap: () => _showOptionsSheet(context, screenWidth),
+                            onTap: () => _showOptionsMenu(context, screenWidth),
+                            key: _optionsButtonKey,
                             child: Container(
                               width: screenWidth * 0.12,
                               height: screenWidth * 0.12,
@@ -1412,301 +1414,150 @@ fontSize: screenWidth * 0.025,
       );
     }
 
-  void _showOptionsSheet(BuildContext context, double screenWidth) {
-    showModalBottomSheet(
+  void _showOptionsMenu(BuildContext context, double screenWidth) {
+    final RenderBox? renderBox =
+        _optionsButtonKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox == null) return;
+
+    final offset = renderBox.localToGlobal(Offset.zero);
+    final size = renderBox.size;
+
+    showMenu<_MenuAction>(
       context: context,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) => Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFF1A1A2E),
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(32),
-            topRight: Radius.circular(32),
+      position: RelativeRect.fromLTRB(
+        offset.dx,
+        offset.dy + size.height + 6,
+        offset.dx + size.width,
+        offset.dy + size.height + 6,
+      ),
+      elevation: 16,
+      color: const Color(0xFF1A1A2E),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+      items: [
+        _buildMenuItem(
+          icon: Icons.check_circle_outline_rounded,
+          label: 'Mark all as read',
+          dotColor: const Color(0xFF4CAF50),
+          value: _MenuAction.markAllRead,
+          screenWidth: screenWidth,
+        ),
+        _buildMenuItem(
+          icon: Icons.delete_sweep_outlined,
+          label: 'Delete all read',
+          dotColor: const Color(0xFFFF5F5F),
+          isDestructive: true,
+          value: _MenuAction.deleteAllRead,
+          screenWidth: screenWidth,
+        ),
+        const PopupMenuDivider(height: 1),
+        _buildMenuItem(
+          icon: Icons.notifications_outlined,
+          label: 'Notification Settings',
+          dotColor: const Color(0xFF42A5F5),
+          value: _MenuAction.settings,
+          screenWidth: screenWidth,
+        ),
+        _buildMenuItem(
+          icon: Icons.category_outlined,
+          label: 'Manage Categories',
+          dotColor: const Color(0xFFAB47BC),
+          value: _MenuAction.categories,
+          screenWidth: screenWidth,
+        ),
+        const PopupMenuDivider(height: 1),
+        _buildMenuItem(
+          icon: Icons.archive_outlined,
+          label: 'Archived',
+          dotColor: const Color(0xFFF3CA9B),
+          value: _MenuAction.archived,
+          screenWidth: screenWidth,
+        ),
+        _buildMenuItem(
+          icon: Icons.help_outline_rounded,
+          label: 'Help',
+          dotColor: const Color(0xFF90A4AE),
+          value: _MenuAction.help,
+          screenWidth: screenWidth,
+        ),
+      ],
+    ).then((action) {
+      if (action == null) return;
+      switch (action) {
+        case _MenuAction.markAllRead:
+          _markAllAsRead();
+        case _MenuAction.deleteAllRead:
+          _deleteAllReadNotifications();
+        case _MenuAction.settings:
+        case _MenuAction.categories:
+        case _MenuAction.archived:
+        case _MenuAction.help:
+          break;
+      }
+    });
+  }
+
+  PopupMenuItem<_MenuAction> _buildMenuItem({
+    required IconData icon,
+    required String label,
+    required Color dotColor,
+    required _MenuAction value,
+    required double screenWidth,
+    bool isDestructive = false,
+  }) {
+    return PopupMenuItem<_MenuAction>(
+      value: value,
+      height: screenWidth * 0.14,
+      child: Row(
+        children: [
+          Container(
+            width: screenWidth * 0.028,
+            height: screenWidth * 0.028,
+            decoration: BoxDecoration(
+              color: dotColor,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: dotColor.withValues(alpha: 0.4),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
-              blurRadius: 30,
-              offset: const Offset(0, -8),
+          SizedBox(width: screenWidth * 0.04),
+          Container(
+            width: screenWidth * 0.09,
+            height: screenWidth * 0.09,
+            decoration: BoxDecoration(
+              color: dotColor.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(12),
             ),
-          ],
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Drag handle
-            Padding(
-              padding: EdgeInsets.only(top: screenWidth * 0.04),
-              child: Container(
-                width: screenWidth * 0.14,
-                height: 5,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFF3CA9B), Color(0xFFCB471B)],
-                  ),
-                  borderRadius: BorderRadius.circular(3),
-                ),
+            child: Icon(icon, color: dotColor, size: screenWidth * 0.048),
+          ),
+          SizedBox(width: screenWidth * 0.035),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: screenWidth * 0.035,
+                fontWeight: FontWeight.w500,
+                color: isDestructive ? dotColor : Colors.white,
               ),
             ),
-            // Header
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                screenWidth * 0.06,
-                screenWidth * 0.06,
-                screenWidth * 0.06,
-                screenWidth * 0.05,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: screenWidth * 0.14,
-                    height: screenWidth * 0.14,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFF3CA9B), Color(0xFFCB471B)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(18),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFFCB471B).withValues(alpha: 0.3),
-                          blurRadius: 12,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.notifications_rounded,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                  ),
-                  SizedBox(width: screenWidth * 0.04),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Notifications',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: screenWidth * 0.05,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(height: screenWidth * 0.01),
-                      Text(
-                        'Manage your preferences',
-                        style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: screenWidth * 0.03,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white60,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // Divider
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
-              child: Container(height: 1, color: Colors.white12),
-            ),
-            // Menu items
-            Padding(
-              padding: EdgeInsets.only(top: screenWidth * 0.02),
-              child: _sheetOption(
-                icon: Icons.check_circle_outline_rounded,
-                label: 'Mark all as read',
-                iconColors: const [Color(0xFF4CAF50), Color(0xFF2E7D32)],
-                screenWidth: screenWidth,
-                onTap: () {
-                  Navigator.pop(ctx);
-                  _markAllAsRead();
-                },
-              ),
-            ),
-            _sheetOption(
-              icon: Icons.delete_sweep_outlined,
-              label: 'Delete all read notifications',
-              iconColors: const [Color(0xFFFF5F5F), Color(0xFFD32F2F)],
-              isDestructive: true,
-              screenWidth: screenWidth,
-              onTap: () {
-                Navigator.pop(ctx);
-                _deleteAllReadNotifications();
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
-              child: Container(height: 1, color: Colors.white12),
-            ),
-            _sheetOption(
-              icon: Icons.notifications_outlined,
-              label: 'Notification Settings',
-              iconColors: const [Color(0xFF42A5F5), Color(0xFF1565C0)],
-              screenWidth: screenWidth,
-              onTap: () {
-                Navigator.pop(ctx);
-              },
-            ),
-            _sheetOption(
-              icon: Icons.category_outlined,
-              label: 'Manage Categories',
-              iconColors: const [Color(0xFFAB47BC), Color(0xFF7B1FA2)],
-              screenWidth: screenWidth,
-              onTap: () {
-                Navigator.pop(ctx);
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
-              child: Container(height: 1, color: Colors.white12),
-            ),
-            _sheetOption(
-              icon: Icons.archive_outlined,
-              label: 'Archived Notifications',
-              iconColors: const [Color(0xFFF3CA9B), Color(0xFFCB471B)],
-              screenWidth: screenWidth,
-              onTap: () {
-                Navigator.pop(ctx);
-              },
-            ),
-            _sheetOption(
-              icon: Icons.help_outline_rounded,
-              label: 'Help',
-              iconColors: const [Color(0xFF90A4AE), Color(0xFF546E7A)],
-              screenWidth: screenWidth,
-              onTap: () {
-                Navigator.pop(ctx);
-              },
-            ),
-            // Cancel button
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                screenWidth * 0.06,
-                screenWidth * 0.03,
-                screenWidth * 0.06,
-                screenWidth * 0.04,
-              ),
-              child: SizedBox(
-                width: double.infinity,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFF3CA9B), Color(0xFFCB471B)],
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFFCB471B).withValues(alpha: 0.35),
-                        blurRadius: 16,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
-                  ),
-                  child: TextButton(
-                    onPressed: () => Navigator.pop(ctx),
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: screenWidth * 0.038),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    child: Text(
-                      'Cancel',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: screenWidth * 0.042,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: MediaQuery.of(ctx).padding.bottom),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _sheetOption({
-    required IconData icon,
-    required String label,
-    required double screenWidth,
-    required VoidCallback onTap,
-    List<Color>? iconColors,
-    bool isDestructive = false,
-  }) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-          margin: EdgeInsets.symmetric(vertical: screenWidth * 0.005),
-          padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.03,
-            vertical: screenWidth * 0.032,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: screenWidth * 0.11,
-                height: screenWidth * 0.11,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: iconColors ?? [Color(0xFFF3CA9B), Color(0xFFCB471B)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(14),
-                  boxShadow: [
-                    BoxShadow(
-                      color: (iconColors ?? [const Color(0xFFF3CA9B), const Color(0xFFCB471B)]).last.withValues(alpha: 0.3),
-                      blurRadius: 8,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Icon(
-                  icon,
-                  color: Colors.white,
-                  size: screenWidth * 0.052,
-                ),
-              ),
-              SizedBox(width: screenWidth * 0.04),
-              Expanded(
-                child: Text(
-                  label,
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: screenWidth * 0.037,
-                    fontWeight: FontWeight.w500,
-                    color: isDestructive ? const Color(0xFFFF5F5F) : Colors.white,
-                  ),
-                ),
-              ),
-              Icon(
-                Icons.chevron_right_rounded,
-                color: isDestructive
-                    ? const Color(0xFFFF5F5F).withValues(alpha: 0.5)
-                    : Colors.white30,
-                size: screenWidth * 0.05,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  enum _MenuAction {
+    markAllRead,
+    deleteAllRead,
+    settings,
+    categories,
+    archived,
+    help,
   }
 
   void _showStyledSnackBar(String message, IconData icon) {
