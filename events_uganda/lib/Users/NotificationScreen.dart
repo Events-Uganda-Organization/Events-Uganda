@@ -88,48 +88,53 @@ class _NotificationScreenState extends State<NotificationScreen>
   late Animation<Offset> _navbarSlideAnimation;
 
   final List<_NotificationItem> _todayNotifications = [
-    const _NotificationItem(
+    _NotificationItem(
       id: 1,
       icon: Icons.monetization_on,
       iconColor: Color(0xFF55FF27),
       timestamp: '15 secs ago',
       title: 'Booking Accepted',
       subtitle: 'Your booking has finally been accepted! Congratulations.',
+      isRead: true,
     ),
-    const _NotificationItem(
+    _NotificationItem(
       id: 2,
       icon: Icons.message,
       iconColor: Color(0xFFE4351D),
-      timestamp: '15 secs ago',
-      title: 'Booking Accepted',
-      subtitle: 'Your booking has finally been accepted! Congratulations.',
+      timestamp: '5 secs ago',
+      title: 'New Message',
+      subtitle: 'You have a new message from the event planner.',
+      isRead: false,
     ),
   ];
 
   final List<_NotificationItem> _yesterdayNotifications = [
-    const _NotificationItem(
+    _NotificationItem(
       id: 3,
       icon: Icons.notifications_active,
       iconColor: Color(0xFF96E8F4),
       timestamp: '2 days ago',
       title: 'Upcoming Wedding',
       subtitle: 'Your wedding event is coming up this Saturday!',
+      isRead: false,
     ),
-    const _NotificationItem(
+    _NotificationItem(
       id: 4,
       icon: Icons.message,
       iconColor: Color(0xFFE4351D),
-      timestamp: '15 secs ago',
+      timestamp: '1 day ago',
       title: 'Booking Accepted',
       subtitle: 'Your booking has finally been accepted! Congratulations.',
+      isRead: true,
     ),
-    const _NotificationItem(
+    _NotificationItem(
       id: 5,
       icon: Icons.notifications_active,
       iconColor: Color(0xFF96E8F4),
       timestamp: '1 day ago',
       title: 'Birthday Reminder',
       subtitle: "Don't forget the birthday party tomorrow!",
+      isRead: false,
     ),
   ];
 
@@ -821,16 +826,17 @@ class _NotificationScreenState extends State<NotificationScreen>
                             ),
                           ),
                         ),
-                        for (int i = 0; i < _todayNotifications.length; i++) ...[
+                        final sortedToday = _sortedNotifications(_todayNotifications);
+                        for (int i = 0; i < sortedToday.length; i++) ...[
                           if (i > 0) SizedBox(height: screenHeight * 0.015),
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: screenWidth * 0.04,
                             ),
                             child: _buildDismissibleCard(
-                              item: _todayNotifications[i],
+                              item: sortedToday[i],
                               screenWidth: screenWidth,
-                              child: _buildCardContent(_todayNotifications[i], screenWidth),
+                              child: _buildCardContent(sortedToday[i], screenWidth),
                             ),
                           ),
                         ],
@@ -849,16 +855,17 @@ class _NotificationScreenState extends State<NotificationScreen>
                             ),
                           ),
                         ),
-                        for (int i = 0; i < _yesterdayNotifications.length; i++) ...[
+                        final sortedYesterday = _sortedNotifications(_yesterdayNotifications);
+                        for (int i = 0; i < sortedYesterday.length; i++) ...[
                           if (i > 0) SizedBox(height: screenHeight * 0.015),
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: screenWidth * 0.04,
                             ),
                             child: _buildDismissibleCard(
-                              item: _yesterdayNotifications[i],
+                              item: sortedYesterday[i],
                               screenWidth: screenWidth,
-                              child: _buildCardContent(_yesterdayNotifications[i], screenWidth),
+                              child: _buildCardContent(sortedYesterday[i], screenWidth),
                             ),
                           ),
                         ],
@@ -1399,92 +1406,127 @@ fontSize: screenWidth * 0.025,
     _archivedNotifications.add(item);
   }
 
+  List<_NotificationItem> _sortedNotifications(List<_NotificationItem> list) {
+    final sorted = List<_NotificationItem>.from(list);
+    sorted.sort((a, b) => a.isRead == b.isRead ? 0 : a.isRead ? 1 : -1);
+    return sorted;
+  }
+
+  void _markAsRead(_NotificationItem item) {
+    if (!item.isRead) {
+      setState(() => item.isRead = true);
+    }
+  }
+
   Widget _buildCardContent(_NotificationItem item, double screenWidth) {
-    return Container(
-      width: double.infinity,
-      height: screenWidth * 0.19,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 12,
-            spreadRadius: 2,
-            offset: const Offset(2, 7),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            left: screenWidth * 0.03,
-            top: (screenWidth * 0.19 - screenWidth * 0.128) / 2,
-            child: Container(
-              width: screenWidth * 0.128,
-              height: screenWidth * 0.128,
-              decoration: BoxDecoration(
-                color: item.iconColor.withValues(alpha: 0.5),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Icon(
-                  item.icon,
-                  color: Colors.black,
-                  size: screenWidth * 0.07,
+    return GestureDetector(
+      onTap: () => _markAsRead(item),
+      child: Container(
+        width: double.infinity,
+        height: screenWidth * 0.19,
+        decoration: BoxDecoration(
+          color: item.isRead ? Colors.white : const Color(0xFFFEF9F0),
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 12,
+              spreadRadius: 2,
+              offset: const Offset(2, 7),
+            ),
+          ],
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              left: screenWidth * 0.03,
+              top: (screenWidth * 0.19 - screenWidth * 0.128) / 2,
+              child: Container(
+                width: screenWidth * 0.128,
+                height: screenWidth * 0.128,
+                decoration: BoxDecoration(
+                  color: item.iconColor.withValues(alpha: item.isRead ? 0.3 : 0.5),
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Icon(
+                    item.icon,
+                    color: item.isRead ? Colors.grey : Colors.black,
+                    size: screenWidth * 0.07,
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            right: screenWidth * 0.04,
-            top: screenWidth * 0.025,
-            child: Text(
-              item.timestamp,
-              style: TextStyle(
-                fontFamily: 'Montserrat',
-                fontSize: screenWidth * 0.025,
-                color: Colors.grey,
-                fontWeight: FontWeight.w400,
+            if (!item.isRead)
+              Positioned(
+                left: screenWidth * 0.03 + screenWidth * 0.128 - screenWidth * 0.015,
+                top: (screenWidth * 0.19 - screenWidth * 0.128) / 2 - screenWidth * 0.005,
+                child: Container(
+                  width: screenWidth * 0.028,
+                  height: screenWidth * 0.028,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF42A5F5),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFF42A5F5).withValues(alpha: 0.4),
+                        blurRadius: 6,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            Positioned(
+              right: screenWidth * 0.04,
+              top: screenWidth * 0.025,
+              child: Text(
+                item.timestamp,
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: screenWidth * 0.025,
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            left: screenWidth * 0.18,
-            top: (screenWidth * 0.19 - screenWidth * 0.09) / 2 - screenWidth * 0.035,
-            child: SizedBox(
-              width: screenWidth * 0.6,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    item.title,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      fontSize: screenWidth * 0.035,
-                      color: Colors.black,
+            Positioned(
+              left: screenWidth * 0.18,
+              top: (screenWidth * 0.19 - screenWidth * 0.09) / 2 - screenWidth * 0.035,
+              child: SizedBox(
+                width: screenWidth * 0.6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      item.title,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: item.isRead ? FontWeight.w500 : FontWeight.w700,
+                        fontSize: screenWidth * 0.035,
+                        color: item.isRead ? Colors.black54 : Colors.black,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: screenWidth * 0.01),
-                  Text(
-                    item.subtitle,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w300,
-                      fontSize: screenWidth * 0.022,
-                      color: Colors.black87,
+                    SizedBox(height: screenWidth * 0.01),
+                    Text(
+                      item.subtitle,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w300,
+                        fontSize: screenWidth * 0.022,
+                        color: item.isRead ? Colors.grey : Colors.black87,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-      );
-    }
+    );
+  }
 
   PopupMenuItem<_MenuAction> _buildMenuItem({
     required IconData icon,
@@ -1814,13 +1856,14 @@ Widget _buildRatingBars(double screenWidth) {
 }
 
 class _NotificationItem {
-  const _NotificationItem({
+  _NotificationItem({
     required this.id,
     required this.icon,
     required this.iconColor,
     required this.timestamp,
     required this.title,
     required this.subtitle,
+    this.isRead = false,
   });
 
   final int id;
@@ -1829,6 +1872,7 @@ class _NotificationItem {
   final String timestamp;
   final String title;
   final String subtitle;
+  bool isRead;
 }
 
 class _DottedLinePainter extends CustomPainter {
