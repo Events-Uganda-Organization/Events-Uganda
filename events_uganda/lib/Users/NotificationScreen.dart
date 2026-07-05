@@ -83,7 +83,6 @@ class _NotificationScreenState extends State<NotificationScreen>
   final MapController _mapController = MapController();
   LatLng _pinPosition = const LatLng(0.3136, 32.5811);
   int _currentNavIndex = 0;
-  final GlobalKey _optionsButtonKey = GlobalKey();
   bool _isNavbarVisible = true;
   late AnimationController _navbarSlideController;
   late Animation<Offset> _navbarSlideAnimation;
@@ -627,9 +626,73 @@ class _NotificationScreenState extends State<NotificationScreen>
                               ],
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () => _showOptionsMenu(context, screenWidth),
-                            key: _optionsButtonKey,
+                          PopupMenuButton<_MenuAction>(
+                            onSelected: (action) {
+                              switch (action) {
+                                case _MenuAction.markAllRead:
+                                  _markAllAsRead();
+                                case _MenuAction.deleteAllRead:
+                                  _deleteAllReadNotifications();
+                                case _MenuAction.settings:
+                                case _MenuAction.categories:
+                                case _MenuAction.archived:
+                                case _MenuAction.help:
+                                  break;
+                              }
+                            },
+                            offset: const Offset(0, 8),
+                            elevation: 16,
+                            color: const Color(0xFF1A1A2E),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            itemBuilder: (ctx) => [
+                              _buildMenuItem(
+                                icon: Icons.check_circle_outline_rounded,
+                                label: 'Mark all as read',
+                                dotColor: const Color(0xFF4CAF50),
+                                value: _MenuAction.markAllRead,
+                                screenWidth: screenWidth,
+                              ),
+                              _buildMenuItem(
+                                icon: Icons.delete_sweep_outlined,
+                                label: 'Delete all read',
+                                dotColor: const Color(0xFFFF5F5F),
+                                isDestructive: true,
+                                value: _MenuAction.deleteAllRead,
+                                screenWidth: screenWidth,
+                              ),
+                              const PopupMenuDivider(height: 1),
+                              _buildMenuItem(
+                                icon: Icons.notifications_outlined,
+                                label: 'Notification Settings',
+                                dotColor: const Color(0xFF42A5F5),
+                                value: _MenuAction.settings,
+                                screenWidth: screenWidth,
+                              ),
+                              _buildMenuItem(
+                                icon: Icons.category_outlined,
+                                label: 'Manage Categories',
+                                dotColor: const Color(0xFFAB47BC),
+                                value: _MenuAction.categories,
+                                screenWidth: screenWidth,
+                              ),
+                              const PopupMenuDivider(height: 1),
+                              _buildMenuItem(
+                                icon: Icons.archive_outlined,
+                                label: 'Archived',
+                                dotColor: const Color(0xFFF3CA9B),
+                                value: _MenuAction.archived,
+                                screenWidth: screenWidth,
+                              ),
+                              _buildMenuItem(
+                                icon: Icons.help_outline_rounded,
+                                label: 'Help',
+                                dotColor: const Color(0xFF90A4AE),
+                                value: _MenuAction.help,
+                                screenWidth: screenWidth,
+                              ),
+                            ],
                             child: Container(
                               width: screenWidth * 0.12,
                               height: screenWidth * 0.12,
@@ -1422,88 +1485,6 @@ fontSize: screenWidth * 0.025,
       ),
       );
     }
-
-  void _showOptionsMenu(BuildContext context, double screenWidth) {
-    final RenderBox? renderBox =
-        _optionsButtonKey.currentContext?.findRenderObject() as RenderBox?;
-    if (renderBox == null) return;
-
-    final offset = renderBox.localToGlobal(Offset.zero);
-    final size = renderBox.size;
-
-    showMenu<_MenuAction>(
-      context: context,
-      position: RelativeRect.fromLTRB(
-        offset.dx,
-        offset.dy + size.height + 6,
-        offset.dx + size.width,
-        offset.dy + size.height + 6,
-      ),
-      elevation: 16,
-      color: const Color(0xFF1A1A2E),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-      items: [
-        _buildMenuItem(
-          icon: Icons.check_circle_outline_rounded,
-          label: 'Mark all as read',
-          dotColor: const Color(0xFF4CAF50),
-          value: _MenuAction.markAllRead,
-          screenWidth: screenWidth,
-        ),
-        _buildMenuItem(
-          icon: Icons.delete_sweep_outlined,
-          label: 'Delete all read',
-          dotColor: const Color(0xFFFF5F5F),
-          isDestructive: true,
-          value: _MenuAction.deleteAllRead,
-          screenWidth: screenWidth,
-        ),
-        const PopupMenuDivider(height: 1),
-        _buildMenuItem(
-          icon: Icons.notifications_outlined,
-          label: 'Notification Settings',
-          dotColor: const Color(0xFF42A5F5),
-          value: _MenuAction.settings,
-          screenWidth: screenWidth,
-        ),
-        _buildMenuItem(
-          icon: Icons.category_outlined,
-          label: 'Manage Categories',
-          dotColor: const Color(0xFFAB47BC),
-          value: _MenuAction.categories,
-          screenWidth: screenWidth,
-        ),
-        const PopupMenuDivider(height: 1),
-        _buildMenuItem(
-          icon: Icons.archive_outlined,
-          label: 'Archived',
-          dotColor: const Color(0xFFF3CA9B),
-          value: _MenuAction.archived,
-          screenWidth: screenWidth,
-        ),
-        _buildMenuItem(
-          icon: Icons.help_outline_rounded,
-          label: 'Help',
-          dotColor: const Color(0xFF90A4AE),
-          value: _MenuAction.help,
-          screenWidth: screenWidth,
-        ),
-      ],
-    ).then((action) {
-      if (action == null) return;
-      switch (action) {
-        case _MenuAction.markAllRead:
-          _markAllAsRead();
-        case _MenuAction.deleteAllRead:
-          _deleteAllReadNotifications();
-        case _MenuAction.settings:
-        case _MenuAction.categories:
-        case _MenuAction.archived:
-        case _MenuAction.help:
-          break;
-      }
-    });
-  }
 
   PopupMenuItem<_MenuAction> _buildMenuItem({
     required IconData icon,
