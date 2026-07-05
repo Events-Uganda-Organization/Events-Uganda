@@ -615,26 +615,29 @@ class _NotificationScreenState extends State<NotificationScreen>
                               ],
                             ),
                           ),
-                          Container(
-                            width: screenWidth * 0.12,
-                            height: screenWidth * 0.12,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.1),
-                                  blurRadius: 12,
-                                  spreadRadius: 2,
-                                  offset: const Offset(2, 7),
+                          GestureDetector(
+                            onTap: () => _showOptionsSheet(context, screenWidth),
+                            child: Container(
+                              width: screenWidth * 0.12,
+                              height: screenWidth * 0.12,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.1),
+                                    blurRadius: 12,
+                                    spreadRadius: 2,
+                                    offset: const Offset(2, 7),
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.more_vert,
+                                  color: Colors.black,
+                                  size: screenWidth * 0.07,
                                 ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Icon(
-                                Icons.more_vert,
-                                color: Colors.black,
-                                size: screenWidth * 0.07,
                               ),
                             ),
                           ),
