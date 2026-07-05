@@ -1213,7 +1213,7 @@ fontSize: screenWidth * 0.025,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(18),
           gradient: const LinearGradient(
-            colors: [Color(0xFFF3CA9B), Color(0xFFCB471B)],
+            colors: [Color(0xFF4CAF50), Color(0xFF2E7D32)],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),
