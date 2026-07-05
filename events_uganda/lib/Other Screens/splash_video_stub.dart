@@ -13,9 +13,7 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
   bool _initialized = false;
 
   String _selectVideoAsset(double width) {
-    if (width < 400) {
-      return 'assets/videos/splash_small.mp4';
-    } else if (width < 600) {
+    if (width < 600) {
       return 'assets/videos/splash_medium.mp4';
     }
     return 'assets/videos/splash_large.mp4';
