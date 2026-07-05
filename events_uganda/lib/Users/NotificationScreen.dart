@@ -7,6 +7,15 @@ import 'package:latlong2/latlong.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 
+enum _MenuAction {
+  markAllRead,
+  deleteAllRead,
+  settings,
+  categories,
+  archived,
+  help,
+}
+
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
 
@@ -1549,15 +1558,6 @@ fontSize: screenWidth * 0.025,
         ],
       ),
     );
-  }
-
-  enum _MenuAction {
-    markAllRead,
-    deleteAllRead,
-    settings,
-    categories,
-    archived,
-    help,
   }
 
   void _showStyledSnackBar(String message, IconData icon) {
