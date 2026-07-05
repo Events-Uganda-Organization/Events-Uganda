@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:web/web.dart' as web;
 
 class SplashVideoPlayer extends StatefulWidget {
-  const SplashVideoPlayer({super.key});
+  final double screenWidth;
+  const SplashVideoPlayer({super.key, required this.screenWidth});
   @override
   State<SplashVideoPlayer> createState() => _SplashVideoPlayerState();
 }
@@ -12,9 +13,19 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
   static bool _registered = false;
   web.HTMLVideoElement? _videoElement;
 
+  String _selectVideoAsset(double width) {
+    if (width < 400) {
+      return 'assets/videos/splash_small.mp4';
+    } else if (width < 600) {
+      return 'assets/videos/splash_medium.mp4';
+    }
+    return 'assets/videos/splash_large.mp4';
+  }
+
   @override
   void initState() {
     super.initState();
+    final videoSrc = _selectVideoAsset(widget.screenWidth);
     if (!_registered) {
       _registered = true;
       ui_web.platformViewRegistry.registerViewFactory(
@@ -22,8 +33,7 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
         (int viewId) {
           _videoElement =
               web.document.createElement('video') as web.HTMLVideoElement;
-          _videoElement!.src =
-              'assets/videos/Bride_and_groom_merge_light_202606290000.mp4';
+          _videoElement!.src = videoSrc;
           _videoElement!.muted = true;
           _videoElement!.loop = false;
           _videoElement!.autoplay = true;
