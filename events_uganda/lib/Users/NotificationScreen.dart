@@ -1210,14 +1210,59 @@ fontSize: screenWidth * 0.025,
       confirmDismiss: (direction) async {
         final completer = Completer<bool>();
         final messenger = ScaffoldMessenger.of(context);
+        final mq = MediaQuery.of(context);
+        final bottomInset = mq.viewInsets.bottom;
         messenger.showSnackBar(
           SnackBar(
-            content: const Text('Notification dismissed'),
-            behavior: SnackBarBehavior.floating,
-            duration: const Duration(seconds: 3),
+            content: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(screenWidth * 0.015),
+                  decoration: const BoxDecoration(
+                    color: Colors.white24,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.notifications_off_outlined,
+                    color: Colors.white,
+                    size: screenWidth * 0.045,
+                  ),
+                ),
+                SizedBox(width: screenWidth * 0.03),
+                Expanded(
+                  child: Text(
+                    'Notification dismissed',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w500,
+                      fontSize: screenWidth * 0.035,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             action: SnackBarAction(
               label: 'Undo',
+              textColor: const Color(0xFFF3CA9B),
               onPressed: () => completer.complete(false),
+            ),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            duration: const Duration(seconds: 3),
+            margin: EdgeInsets.fromLTRB(
+              screenWidth * 0.04,
+              0,
+              screenWidth * 0.04,
+              bottomInset + mq.size.height * 0.08,
+            ),
+            backgroundColor: const Color(0xFF1A1A2E),
+            elevation: 12,
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.04,
+              vertical: screenWidth * 0.025,
             ),
           ),
         );
@@ -1513,14 +1558,64 @@ fontSize: screenWidth * 0.025,
     );
   }
 
-  void _markAllAsRead() {
-    ScaffoldMessenger.of(context).showSnackBar(
+  void _showStyledSnackBar(String message, IconData icon) {
+    final messenger = ScaffoldMessenger.of(context);
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    messenger.showSnackBar(
       SnackBar(
-        content: const Text('All notifications marked as read'),
+        content: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(screenWidth * 0.015),
+              decoration: const BoxDecoration(
+                color: Colors.white24,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                icon,
+                color: Colors.white,
+                size: screenWidth * 0.045,
+              ),
+            ),
+            SizedBox(width: screenWidth * 0.03),
+            Expanded(
+              child: Text(
+                message,
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w500,
+                  fontSize: screenWidth * 0.035,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
         behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
         duration: const Duration(seconds: 2),
+        margin: EdgeInsets.fromLTRB(
+          screenWidth * 0.04,
+          0,
+          screenWidth * 0.04,
+          bottomInset + screenHeight * 0.08,
+        ),
+        backgroundColor: const Color(0xFF1A1A2E),
+        elevation: 12,
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.04,
+          vertical: screenWidth * 0.025,
+        ),
       ),
     );
+  }
+
+  void _markAllAsRead() {
+    _showStyledSnackBar('All notifications marked as read', Icons.done_all_rounded);
   }
 
   void _deleteAllReadNotifications() {
@@ -1528,13 +1623,7 @@ fontSize: screenWidth * 0.025,
       _todayNotifications.clear();
       _yesterdayNotifications.clear();
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('All read notifications deleted'),
-        behavior: SnackBarBehavior.floating,
-        duration: const Duration(seconds: 2),
-      ),
-    );
+    _showStyledSnackBar('All read notifications deleted', Icons.delete_sweep_outlined);
   }
 }
 
