@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class OtpApiService {
-  static const String _baseUrl = 'http://localhost:8080/api/otp';
+  static const String _baseUrl = 'https://events-uganda-26.onrender.com/api/otp';
 
   static Future<Map<String, dynamic>> sendOtp({
     String? email,
