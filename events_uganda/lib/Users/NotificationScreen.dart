@@ -1323,6 +1323,218 @@ fontSize: screenWidth * 0.025,
           ),
         ],
       ),
+      );
+    }
+  }
+
+  void _showOptionsSheet(BuildContext context, double screenWidth) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(28),
+            topRight: Radius.circular(28),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Drag handle
+            Padding(
+              padding: EdgeInsets.only(top: screenWidth * 0.04),
+              child: Container(
+                width: screenWidth * 0.12,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            // Title
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                screenWidth * 0.06,
+                screenWidth * 0.06,
+                screenWidth * 0.06,
+                screenWidth * 0.04,
+              ),
+              child: Column(
+                children: [
+                  Divider(color: Colors.grey.shade300, thickness: 0.5),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: screenWidth * 0.035),
+                    child: Text(
+                      'Notifications',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: screenWidth * 0.045,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  Divider(color: Colors.grey.shade300, thickness: 0.5),
+                ],
+              ),
+            ),
+            // Menu items
+            _sheetOption(
+              icon: Icons.check_circle_outline_rounded,
+              label: 'Mark all as read',
+              screenWidth: screenWidth,
+              onTap: () {
+                Navigator.pop(ctx);
+                _markAllAsRead();
+              },
+            ),
+            _sheetOption(
+              icon: Icons.delete_sweep_outlined,
+              label: 'Delete all read notifications',
+              screenWidth: screenWidth,
+              onTap: () {
+                Navigator.pop(ctx);
+                _deleteAllReadNotifications();
+              },
+            ),
+            _sheetOption(
+              icon: Icons.notifications_outlined,
+              label: 'Notification Settings',
+              screenWidth: screenWidth,
+              onTap: () {
+                Navigator.pop(ctx);
+              },
+            ),
+            _sheetOption(
+              icon: Icons.category_outlined,
+              label: 'Manage Notification Categories',
+              screenWidth: screenWidth,
+              onTap: () {
+                Navigator.pop(ctx);
+              },
+            ),
+            _sheetOption(
+              icon: Icons.archive_outlined,
+              label: 'Archived Notifications',
+              screenWidth: screenWidth,
+              onTap: () {
+                Navigator.pop(ctx);
+              },
+            ),
+            _sheetOption(
+              icon: Icons.help_outline_rounded,
+              label: 'Help',
+              screenWidth: screenWidth,
+              onTap: () {
+                Navigator.pop(ctx);
+              },
+            ),
+            // Cancel button
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                screenWidth * 0.06,
+                screenWidth * 0.02,
+                screenWidth * 0.06,
+                screenWidth * 0.04,
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () => Navigator.pop(ctx),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.grey.shade100,
+                    padding: EdgeInsets.symmetric(vertical: screenWidth * 0.035),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: screenWidth * 0.04,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(ctx).padding.bottom),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _sheetOption({
+    required IconData icon,
+    required String label,
+    required double screenWidth,
+    required VoidCallback onTap,
+  }) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: screenWidth * 0.035),
+          child: Row(
+            children: [
+              Container(
+                width: screenWidth * 0.1,
+                height: screenWidth * 0.1,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF3CA9B).withValues(alpha: 0.25),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  color: const Color(0xFFCB471B),
+                  size: screenWidth * 0.05,
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.04),
+              Text(
+                label,
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontSize: screenWidth * 0.037,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _markAllAsRead() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('All notifications marked as read'),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  void _deleteAllReadNotifications() {
+    setState(() {
+      _todayNotifications.clear();
+      _yesterdayNotifications.clear();
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('All read notifications deleted'),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ),
     );
   }
 }
