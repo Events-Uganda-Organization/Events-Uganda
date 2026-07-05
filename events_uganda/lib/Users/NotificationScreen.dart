@@ -1417,12 +1417,19 @@ fontSize: screenWidth * 0.025,
       context: context,
       backgroundColor: Colors.transparent,
       builder: (ctx) => Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(28),
-            topRight: Radius.circular(28),
+        decoration: BoxDecoration(
+          color: const Color(0xFF1A1A2E),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(32),
+            topRight: Radius.circular(32),
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.3),
+              blurRadius: 30,
+              offset: const Offset(0, -8),
+            ),
+          ],
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -1431,63 +1438,116 @@ fontSize: screenWidth * 0.025,
             Padding(
               padding: EdgeInsets.only(top: screenWidth * 0.04),
               child: Container(
-                width: screenWidth * 0.12,
-                height: 4,
+                width: screenWidth * 0.14,
+                height: 5,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(2),
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFF3CA9B), Color(0xFFCB471B)],
+                  ),
+                  borderRadius: BorderRadius.circular(3),
                 ),
               ),
             ),
-            // Title
+            // Header
             Padding(
               padding: EdgeInsets.fromLTRB(
                 screenWidth * 0.06,
                 screenWidth * 0.06,
                 screenWidth * 0.06,
-                screenWidth * 0.04,
+                screenWidth * 0.05,
               ),
-              child: Column(
+              child: Row(
                 children: [
-                  Divider(color: Colors.grey.shade300, thickness: 0.5),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: screenWidth * 0.035),
-                    child: Text(
-                      'Notifications',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: screenWidth * 0.045,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black87,
+                  Container(
+                    width: screenWidth * 0.14,
+                    height: screenWidth * 0.14,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFFF3CA9B), Color(0xFFCB471B)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFFCB471B).withValues(alpha: 0.3),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.notifications_rounded,
+                      color: Colors.white,
+                      size: 28,
                     ),
                   ),
-                  Divider(color: Colors.grey.shade300, thickness: 0.5),
+                  SizedBox(width: screenWidth * 0.04),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Notifications',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: screenWidth * 0.05,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: screenWidth * 0.01),
+                      Text(
+                        'Manage your preferences',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: screenWidth * 0.03,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white60,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
+            // Divider
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
+              child: Container(height: 1, color: Colors.white12),
+            ),
             // Menu items
-            _sheetOption(
-              icon: Icons.check_circle_outline_rounded,
-              label: 'Mark all as read',
-              screenWidth: screenWidth,
-              onTap: () {
-                Navigator.pop(ctx);
-                _markAllAsRead();
-              },
+            Padding(
+              padding: EdgeInsets.only(top: screenWidth * 0.02),
+              child: _sheetOption(
+                icon: Icons.check_circle_outline_rounded,
+                label: 'Mark all as read',
+                iconColors: const [Color(0xFF4CAF50), Color(0xFF2E7D32)],
+                screenWidth: screenWidth,
+                onTap: () {
+                  Navigator.pop(ctx);
+                  _markAllAsRead();
+                },
+              ),
             ),
             _sheetOption(
               icon: Icons.delete_sweep_outlined,
               label: 'Delete all read notifications',
+              iconColors: const [Color(0xFFFF5F5F), Color(0xFFD32F2F)],
+              isDestructive: true,
               screenWidth: screenWidth,
               onTap: () {
                 Navigator.pop(ctx);
                 _deleteAllReadNotifications();
               },
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
+              child: Container(height: 1, color: Colors.white12),
+            ),
             _sheetOption(
               icon: Icons.notifications_outlined,
               label: 'Notification Settings',
+              iconColors: const [Color(0xFF42A5F5), Color(0xFF1565C0)],
               screenWidth: screenWidth,
               onTap: () {
                 Navigator.pop(ctx);
@@ -1495,15 +1555,21 @@ fontSize: screenWidth * 0.025,
             ),
             _sheetOption(
               icon: Icons.category_outlined,
-              label: 'Manage Notification Categories',
+              label: 'Manage Categories',
+              iconColors: const [Color(0xFFAB47BC), Color(0xFF7B1FA2)],
               screenWidth: screenWidth,
               onTap: () {
                 Navigator.pop(ctx);
               },
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
+              child: Container(height: 1, color: Colors.white12),
+            ),
             _sheetOption(
               icon: Icons.archive_outlined,
               label: 'Archived Notifications',
+              iconColors: const [Color(0xFFF3CA9B), Color(0xFFCB471B)],
               screenWidth: screenWidth,
               onTap: () {
                 Navigator.pop(ctx);
@@ -1512,6 +1578,7 @@ fontSize: screenWidth * 0.025,
             _sheetOption(
               icon: Icons.help_outline_rounded,
               label: 'Help',
+              iconColors: const [Color(0xFF90A4AE), Color(0xFF546E7A)],
               screenWidth: screenWidth,
               onTap: () {
                 Navigator.pop(ctx);
@@ -1521,28 +1588,42 @@ fontSize: screenWidth * 0.025,
             Padding(
               padding: EdgeInsets.fromLTRB(
                 screenWidth * 0.06,
-                screenWidth * 0.02,
+                screenWidth * 0.03,
                 screenWidth * 0.06,
                 screenWidth * 0.04,
               ),
               child: SizedBox(
                 width: double.infinity,
-                child: TextButton(
-                  onPressed: () => Navigator.pop(ctx),
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.grey.shade100,
-                    padding: EdgeInsets.symmetric(vertical: screenWidth * 0.035),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFF3CA9B), Color(0xFFCB471B)],
                     ),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0xFFCB471B).withValues(alpha: 0.35),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
                   ),
-                  child: Text(
-                    'Cancel',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontSize: screenWidth * 0.04,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87,
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(ctx),
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: screenWidth * 0.038),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                    ),
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: screenWidth * 0.042,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -1560,37 +1641,66 @@ fontSize: screenWidth * 0.025,
     required String label,
     required double screenWidth,
     required VoidCallback onTap,
+    List<Color>? iconColors,
+    bool isDestructive = false,
   }) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: screenWidth * 0.035),
+          margin: EdgeInsets.symmetric(vertical: screenWidth * 0.005),
+          padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.03,
+            vertical: screenWidth * 0.032,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+          ),
           child: Row(
             children: [
               Container(
-                width: screenWidth * 0.1,
-                height: screenWidth * 0.1,
+                width: screenWidth * 0.11,
+                height: screenWidth * 0.11,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF3CA9B).withValues(alpha: 0.25),
-                  borderRadius: BorderRadius.circular(12),
+                  gradient: LinearGradient(
+                    colors: iconColors ?? [Color(0xFFF3CA9B), Color(0xFFCB471B)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: (iconColors ?? [const Color(0xFFF3CA9B), const Color(0xFFCB471B)]).last.withValues(alpha: 0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
                 ),
                 child: Icon(
                   icon,
-                  color: const Color(0xFFCB471B),
-                  size: screenWidth * 0.05,
+                  color: Colors.white,
+                  size: screenWidth * 0.052,
                 ),
               ),
               SizedBox(width: screenWidth * 0.04),
-              Text(
-                label,
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontSize: screenWidth * 0.037,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black87,
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: screenWidth * 0.037,
+                    fontWeight: FontWeight.w500,
+                    color: isDestructive ? const Color(0xFFFF5F5F) : Colors.white,
+                  ),
                 ),
+              ),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: isDestructive
+                    ? const Color(0xFFFF5F5F).withValues(alpha: 0.5)
+                    : Colors.white30,
+                size: screenWidth * 0.05,
               ),
             ],
           ),
