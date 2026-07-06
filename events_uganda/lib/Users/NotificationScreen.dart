@@ -1649,6 +1649,14 @@ fontSize: screenWidth * 0.025,
   }
 
   void _markAllAsRead() {
+    setState(() {
+      for (final item in _todayNotifications) {
+        item.isRead = true;
+      }
+      for (final item in _yesterdayNotifications) {
+        item.isRead = true;
+      }
+    });
     _showStyledSnackBar('All notifications marked as read', Icons.done_all_rounded);
   }
 
