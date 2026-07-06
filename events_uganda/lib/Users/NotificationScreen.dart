@@ -12,7 +12,6 @@ enum _MenuAction {
   markAllRead,
   deleteAllRead,
   settings,
-  categories,
   archived,
   help,
 }
@@ -650,8 +649,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                           const NotificationSettingsScreen(),
                                     ),
                                   );
-                                case _MenuAction.categories:
-                                case _MenuAction.archived:
+                              case _MenuAction.archived:
                                 case _MenuAction.help:
                                   break;
                               }
@@ -684,13 +682,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                                 label: 'Notification Settings',
                                 dotColor: const Color(0xFF42A5F5),
                                 value: _MenuAction.settings,
-                                screenWidth: screenWidth,
-                              ),
-                              _buildMenuItem(
-                                icon: Icons.category_outlined,
-                                label: 'Manage Categories',
-                                dotColor: const Color(0xFFAB47BC),
-                                value: _MenuAction.categories,
                                 screenWidth: screenWidth,
                               ),
                               const PopupMenuDivider(height: 1),
