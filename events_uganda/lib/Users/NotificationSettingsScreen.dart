@@ -143,10 +143,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                     Text(
                       subtitle,
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w300,
-                        fontSize: screenWidth * 0.024,
-                        color: Colors.black54,
+                        fontFamily: 'Abril Fatface',
+                        fontWeight: FontWeight.w400,
+                        fontSize: screenWidth * 0.035,
+                        color: Colors.black,
                       ),
                     ),
                   ],
