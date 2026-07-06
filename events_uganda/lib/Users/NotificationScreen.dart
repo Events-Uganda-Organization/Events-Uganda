@@ -882,6 +882,47 @@ class _NotificationScreenState extends State<NotificationScreen>
                         ),
                       ),
                     ),
+                    SizedBox(height: screenHeight * 0.015),
+                    SizedBox(
+                      width: double.infinity,
+                      height: screenHeight * 0.05,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xFFE0E7FF),
+                                Color(0xFFCD7C20),
+                              ],
+                              stops: [0.0, 0.47],
+                            ),
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // TODO: Restore default settings
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.transparent,
+                              shadowColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: Text(
+                              'Restore Default Settings',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w700,
+                                fontSize: screenWidth * 0.03,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
               ),
             ),
