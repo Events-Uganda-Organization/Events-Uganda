@@ -1787,7 +1787,7 @@ fontSize: screenWidth * 0.025,
           content: Row(
             children: [
               Container(
-                padding: EdgeInsets.all(screenWidth * 0.015),
+                padding: const EdgeInsets.all(6),
                 decoration: const BoxDecoration(
                   color: Colors.white24,
                   shape: BoxShape.circle,
@@ -1798,13 +1798,13 @@ fontSize: screenWidth * 0.025,
                   size: 20,
                 ),
               ),
-              SizedBox(width: screenWidth * 0.03),
-              Text(
+              const SizedBox(width: 12),
+              const Text(
                 'Read notifications deleted',
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w500,
-                  fontSize: screenWidth * 0.035,
+                  fontSize: 14,
                   color: Colors.white,
                 ),
               ),
