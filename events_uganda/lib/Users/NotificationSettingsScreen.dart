@@ -207,16 +207,8 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                   width: screenWidth * 0.128,
                   height: screenWidth * 0.128,
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.white, width: 3),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.15),
-                        blurRadius: 10,
-                        offset: const Offset(0, 7),
-                      ),
-                    ],
+                    color: const Color(0xFFF3CA9B),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   child: Center(
                     child: Icon(
