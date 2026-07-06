@@ -340,20 +340,20 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                   Text(
                     'Manage how you receive updates from Events Uganda',
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
+                      fontFamily: 'Abril Fatface',
                       fontWeight: FontWeight.w400,
-                      fontSize: screenWidth * 0.028,
-                      color: Colors.black54,
+                      fontSize: screenWidth * 0.035,
+                      color: Colors.black,
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.003),
                   Text(
                     'Simply tap the toggle button to turn on or off',
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
+                      fontFamily: 'Abril Fatface',
                       fontWeight: FontWeight.w400,
-                      fontSize: screenWidth * 0.028,
-                      color: Colors.black54,
+                      fontSize: screenWidth * 0.035,
+                      color: Colors.black,
                     ),
                   ),
                 ],
