@@ -324,14 +324,39 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
             Positioned(
               top: screenHeight * 0.03 + screenWidth * 0.128 + screenHeight * 0.02,
               left: screenWidth * 0.04,
-              child: Text(
-                'Notification Settings',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w700,
-                  fontSize: screenWidth * 0.045,
-                  color: Colors.black,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Notification Settings',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: screenWidth * 0.045,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.006),
+                  Text(
+                    'Manage how you receive updates from Events Uganda',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w400,
+                      fontSize: screenWidth * 0.028,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.003),
+                  Text(
+                    'Simply tap the toggle button to turn on or off',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w400,
+                      fontSize: screenWidth * 0.028,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
               ),
             ),
             Positioned(
