@@ -517,41 +517,14 @@ class _NotificationScreenState extends State<NotificationScreen>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Notifications',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: screenWidth * 0.045,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              SizedBox(height: screenHeight * 0.006),
-                              Text(
-                                'Manage how you receive updates from Events Uganda',
-                                style: TextStyle(
-                                  fontFamily: 'Abril Fatface',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: screenWidth * 0.024,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              SizedBox(height: screenHeight * 0.003),
-                              Text(
-                                'Simply tap the toggle button to turn on or off',
-                                style: TextStyle(
-                                  fontFamily: 'Abril Fatface',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: screenWidth * 0.024,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
+                          Text(
+                            'Notifications',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: screenWidth * 0.045,
+                              color: Colors.black,
+                            ),
                           ),
                           Opacity(
                             opacity: _canForwardReturn ? 1.0 : 0.35,

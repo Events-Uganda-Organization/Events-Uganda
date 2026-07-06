@@ -342,7 +342,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                     style: TextStyle(
                       fontFamily: 'Abril Fatface',
                       fontWeight: FontWeight.w400,
-                      fontSize: screenWidth * 0.035,
+                      fontSize: screenWidth * 0.024,
                       color: Colors.black,
                     ),
                   ),
@@ -352,7 +352,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                     style: TextStyle(
                       fontFamily: 'Abril Fatface',
                       fontWeight: FontWeight.w400,
-                      fontSize: screenWidth * 0.035,
+                      fontSize: screenWidth * 0.024,
                       color: Colors.black,
                     ),
                   ),
