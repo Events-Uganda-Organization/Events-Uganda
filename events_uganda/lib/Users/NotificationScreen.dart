@@ -1772,11 +1772,62 @@ fontSize: screenWidth * 0.025,
     );
 
     if (confirmed == true) {
+      final removedToday = _todayNotifications.where((n) => n.isRead).toList();
+      final removedYesterday = _yesterdayNotifications.where((n) => n.isRead).toList();
+
       setState(() {
         _todayNotifications.removeWhere((n) => n.isRead);
         _yesterdayNotifications.removeWhere((n) => n.isRead);
       });
-      _showStyledSnackBar('All read notifications deleted', Icons.delete_sweep_outlined);
+
+      final messenger = ScaffoldMessenger.of(context);
+      messenger.clearSnackBars();
+      messenger.showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(screenWidth * 0.015),
+                decoration: const BoxDecoration(
+                  color: Colors.white24,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.delete_sweep_outlined,
+                  color: Colors.white,
+                  size: 20,
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.03),
+              Text(
+                'Read notifications deleted',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w500,
+                  fontSize: screenWidth * 0.035,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          action: SnackBarAction(
+            label: 'Undo',
+            textColor: const Color(0xFFF3CA9B),
+            onPressed: () {
+              setState(() {
+                _todayNotifications.addAll(removedToday);
+                _yesterdayNotifications.addAll(removedYesterday);
+              });
+            },
+          ),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          backgroundColor: const Color(0xFF1A1A2E),
+          duration: const Duration(seconds: 4),
+        ),
+      );
     }
   }
 }
