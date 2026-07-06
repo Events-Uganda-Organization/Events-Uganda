@@ -517,7 +517,8 @@ class _NotificationScreenState extends State<NotificationScreen>
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
+                          Expanded(
+                            child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
@@ -550,6 +551,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                 ),
                               ),
                             ],
+                          ),
                           ),
                           Opacity(
                             opacity: _canForwardReturn ? 1.0 : 0.35,
