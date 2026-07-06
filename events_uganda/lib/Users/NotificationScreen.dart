@@ -1660,12 +1660,124 @@ fontSize: screenWidth * 0.025,
     _showStyledSnackBar('All notifications marked as read', Icons.done_all_rounded);
   }
 
-  void _deleteAllReadNotifications() {
-    setState(() {
-      _todayNotifications.clear();
-      _yesterdayNotifications.clear();
-    });
-    _showStyledSnackBar('All read notifications deleted', Icons.delete_sweep_outlined);
+  Future<void> _deleteAllReadNotifications() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) {
+        final w = MediaQuery.of(ctx).size.width;
+        return AlertDialog(
+          backgroundColor: const Color(0xFF1A1A2E),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          contentPadding: EdgeInsets.zero,
+          content: Container(
+            padding: EdgeInsets.fromLTRB(w * 0.06, w * 0.08, w * 0.06, w * 0.04),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: w * 0.14,
+                  height: w * 0.14,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFF5F5F).withValues(alpha: 0.15),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.delete_sweep_outlined,
+                    color: const Color(0xFFFF5F5F),
+                    size: w * 0.07,
+                  ),
+                ),
+                SizedBox(height: w * 0.04),
+                Text(
+                  'Delete All Read',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    fontSize: w * 0.045,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: w * 0.02),
+                Text(
+                  'This will permanently remove all read notifications. This action cannot be undone.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w400,
+                    fontSize: w * 0.03,
+                    color: Colors.white70,
+                  ),
+                ),
+                SizedBox(height: w * 0.06),
+                Row(
+                  children: [
+                    Expanded(
+                      child: SizedBox(
+                        height: w * 0.1,
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.of(ctx).pop(false),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white.withValues(alpha: 0.1),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              fontSize: w * 0.035,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: w * 0.03),
+                    Expanded(
+                      child: SizedBox(
+                        height: w * 0.1,
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.of(ctx).pop(true),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFFF5F5F),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: Text(
+                            'Delete',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              fontSize: w * 0.035,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+
+    if (confirmed == true) {
+      setState(() {
+        _todayNotifications.removeWhere((n) => n.isRead);
+        _yesterdayNotifications.removeWhere((n) => n.isRead);
+      });
+      _showStyledSnackBar('All read notifications deleted', Icons.delete_sweep_outlined);
+    }
   }
 }
 
