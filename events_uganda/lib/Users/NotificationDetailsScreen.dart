@@ -42,24 +42,16 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            // Background gradient
+            // Background image (same as all other screens)
             Positioned(
               top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: screenHeight * 0.45,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      widget.iconColor.withValues(alpha: 0.15),
-                      widget.iconColor.withValues(alpha: 0.05),
-                      Colors.white,
-                    ],
-                  ),
-                ),
+              bottom: 0,
+              right: (screen.width + screen.width) / 300,
+              child: Image.asset(
+                'assets/backgroundcolors/normalscreen.png',
+                width: screen.width * 1.08,
+                height: screen.height * 0.9,
+                fit: BoxFit.contain,
               ),
             ),
             // Decorative circles
