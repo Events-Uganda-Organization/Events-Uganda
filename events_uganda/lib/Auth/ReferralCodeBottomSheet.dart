@@ -97,12 +97,11 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Clipboard.setData(ClipboardData(text: referralCode));
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Referral code copied!'),
-                            backgroundColor: Color(0xFFCC471B),
-                            duration: Duration(seconds: 2),
-                          ),
+                        SnackbarHelper.show(
+                          context,
+                          'Referral code copied!',
+                          icon: Icons.check_circle_rounded,
+                          backgroundColor: const Color(0xFFCC471B),
                         );
                       },
                       child: Container(

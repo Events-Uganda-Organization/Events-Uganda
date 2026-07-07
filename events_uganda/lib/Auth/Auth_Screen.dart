@@ -40,8 +40,11 @@ class _AuthScreenState extends State<AuthScreen>
     } catch (e) {
       debugPrint('Google sign-in error: $e');
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Sign-in failed: ${e.toString().replaceFirst('Exception: ', '')}')),
+        SnackbarHelper.show(
+          context,
+          'Sign-in failed: ${e.toString().replaceFirst('Exception: ', '')}',
+          icon: Icons.error_outline_rounded,
+          backgroundColor: const Color(0xFFCC471B),
         );
       }
     }

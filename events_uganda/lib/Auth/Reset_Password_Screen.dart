@@ -39,29 +39,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     final confirmPassword = _confirmPasswordController.text.trim();
 
     if (newPassword.isEmpty || confirmPassword.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all fields')),
-      );
+      SnackbarHelper.show(context, 'Please fill in all fields', icon: Icons.error_outline_rounded);
       return;
     }
 
     if (newPassword != confirmPassword) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.red,
-          content: Text('Passwords do not match!'),
-        ),
-      );
+      SnackbarHelper.show(context, 'Passwords do not match!', icon: Icons.error_outline_rounded, backgroundColor: Colors.red);
       return;
     }
 
     if (newPassword.length < 6) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.red,
-          content: Text('Password must be at least 6 characters'),
-        ),
-      );
+      SnackbarHelper.show(context, 'Password must be at least 6 characters', icon: Icons.error_outline_rounded, backgroundColor: Colors.red);
       return;
     }
 
@@ -77,14 +65,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       setState(() => _isLoading = false);
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Color(0xFFF23598),
-            content: Text(
-              'Password changed successfully!',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
+        SnackbarHelper.show(
+          context,
+          'Password changed successfully!',
+          icon: Icons.check_circle_rounded,
+          backgroundColor: const Color(0xFFF23598),
         );
 
         Navigator.pushAndRemoveUntil(
@@ -95,11 +80,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       }
     } catch (e) {
       setState(() => _isLoading = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.red,
-          content: Text('Error: ${e.toString().replaceFirst("Exception: ", "")}'),
-        ),
+      SnackbarHelper.show(
+        context,
+        'Error: ${e.toString().replaceFirst("Exception: ", "")}',
+        icon: Icons.error_outline_rounded,
+        backgroundColor: Colors.red,
       );
     }
   }

@@ -45,9 +45,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     final input = _emailController.text.trim();
 
     if (input.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter email or phone number')),
-      );
+      SnackbarHelper.show(context, 'Please enter email or phone number', icon: Icons.error_outline_rounded);
       return;
     }
 
@@ -63,11 +61,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         email = input;
       } else {
         setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Please enter a valid email or phone number'),
-          ),
-        );
+        SnackbarHelper.show(context, 'Please enter a valid email or phone number', icon: Icons.error_outline_rounded);
         return;
       }
 
@@ -76,14 +70,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       setState(() => _isLoading = false);
 
       if (result['success'] == true) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: const Color(0xFF1BCC94),
-            content: Text(
-              result['message'] ?? 'OTP sent successfully',
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
+        SnackbarHelper.show(
+          context,
+          result['message'] ?? 'OTP sent successfully',
+          icon: Icons.check_circle_rounded,
+          backgroundColor: const Color(0xFF1BCC94),
         );
         Navigator.push(
           context,
@@ -94,15 +85,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           ),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(result['message'] ?? 'Failed to send OTP')),
+        SnackbarHelper.show(
+          context,
+          result['message'] ?? 'Failed to send OTP',
+          icon: Icons.error_outline_rounded,
         );
       }
     } catch (e) {
       setState(() => _isLoading = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      SnackbarHelper.show(context, 'Error: $e', icon: Icons.error_outline_rounded);
     }
   }
 

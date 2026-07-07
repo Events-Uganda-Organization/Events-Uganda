@@ -3,6 +3,7 @@ import 'package:events_uganda/Auth/Sign_Up_Screen.dart';
 import 'package:events_uganda/Auth/ReferralCodeExplanationSheet.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -73,11 +74,11 @@ class _ReferralCodeScreenState extends State<ReferralCodeScreen> {
   }
 
   void _showCustomSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: const Color(0xFF009688),
-      ),
+    SnackbarHelper.show(
+      context,
+      message,
+      icon: Icons.info_outline_rounded,
+      backgroundColor: const Color(0xFF009688),
     );
   }
 

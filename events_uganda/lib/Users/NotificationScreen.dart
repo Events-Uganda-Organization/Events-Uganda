@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 
 enum _MenuAction {
@@ -1318,64 +1319,18 @@ fontSize: screenWidth * 0.025,
       ),
       confirmDismiss: (direction) async {
         final completer = Completer<bool>();
-        final messenger = ScaffoldMessenger.of(context);
-        final mq = MediaQuery.of(context);
-        final bottomInset = mq.viewInsets.bottom;
         final isArchive = direction == DismissDirection.startToEnd;
 
-        messenger.showSnackBar(
-          SnackBar(
-            content: Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(screenWidth * 0.015),
-                  decoration: const BoxDecoration(
-                    color: Colors.white24,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    isArchive ? Icons.archive_rounded : Icons.notifications_off_outlined,
-                    color: Colors.white,
-                    size: screenWidth * 0.045,
-                  ),
-                ),
-                SizedBox(width: screenWidth * 0.03),
-                Expanded(
-                  child: Text(
-                    isArchive ? 'Notification archived' : 'Notification dismissed',
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w500,
-                      fontSize: screenWidth * 0.035,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            action: SnackBarAction(
-              label: 'Undo',
-              textColor: const Color(0xFFF3CA9B),
-              onPressed: () => completer.complete(false),
-            ),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            duration: const Duration(seconds: 3),
-            margin: EdgeInsets.fromLTRB(
-              screenWidth * 0.04,
-              0,
-              screenWidth * 0.04,
-              bottomInset + mq.size.height * 0.08,
-            ),
-        backgroundColor: const Color(0xFF1A1A2E),
-            elevation: 12,
-            padding: EdgeInsets.symmetric(
-              horizontal: screenWidth * 0.04,
-              vertical: screenWidth * 0.025,
-            ),
+        SnackbarHelper.show(
+          context,
+          isArchive ? 'Notification archived' : 'Notification dismissed',
+          icon: isArchive ? Icons.archive_rounded : Icons.notifications_off_outlined,
+          action: SnackBarAction(
+            label: 'Undo',
+            textColor: const Color(0xFFF3CA9B),
+            onPressed: () => completer.complete(false),
           ),
+          duration: const Duration(seconds: 3),
         );
         final result = await completer.future.timeout(
           const Duration(seconds: 3),
@@ -1593,59 +1548,7 @@ fontSize: screenWidth * 0.025,
   }
 
   void _showStyledSnackBar(String message, IconData icon) {
-    final messenger = ScaffoldMessenger.of(context);
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
-    messenger.showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            Container(
-              padding: EdgeInsets.all(screenWidth * 0.015),
-              decoration: const BoxDecoration(
-                color: Colors.white24,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                icon,
-                color: Colors.white,
-                size: screenWidth * 0.045,
-              ),
-            ),
-            SizedBox(width: screenWidth * 0.03),
-            Expanded(
-              child: Text(
-                message,
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w500,
-                  fontSize: screenWidth * 0.035,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        ),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        duration: const Duration(seconds: 2),
-        margin: EdgeInsets.fromLTRB(
-          screenWidth * 0.04,
-          0,
-          screenWidth * 0.04,
-          bottomInset + screenHeight * 0.08,
-        ),
-        backgroundColor: const Color(0xFF1A1A2E),
-        elevation: 12,
-        padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.04,
-          vertical: screenWidth * 0.025,
-        ),
-      ),
-    );
+    SnackbarHelper.show(context, message, icon: icon);
   }
 
   void _markAllAsRead() {
@@ -1780,53 +1683,21 @@ fontSize: screenWidth * 0.025,
         _yesterdayNotifications.removeWhere((n) => n.isRead);
       });
 
-      final messenger = ScaffoldMessenger.of(context);
-      messenger.clearSnackBars();
-      messenger.showSnackBar(
-        SnackBar(
-          content: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(6),
-                decoration: const BoxDecoration(
-                  color: Colors.white24,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.delete_sweep_outlined,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 12),
-              const Text(
-                'Read notifications deleted',
-                style: TextStyle(
-                  fontFamily: 'Montserrat',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-          action: SnackBarAction(
-            label: 'Undo',
-            textColor: const Color(0xFFF3CA9B),
-            onPressed: () {
-              setState(() {
-                _todayNotifications.addAll(removedToday);
-                _yesterdayNotifications.addAll(removedYesterday);
-              });
-            },
-          ),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          backgroundColor: const Color(0xFF1A1A2E),
-          duration: const Duration(seconds: 4),
+      SnackbarHelper.show(
+        context,
+        'Read notifications deleted',
+        icon: Icons.delete_sweep_outlined,
+        action: SnackBarAction(
+          label: 'Undo',
+          textColor: const Color(0xFFF3CA9B),
+          onPressed: () {
+            setState(() {
+              _todayNotifications.addAll(removedToday);
+              _yesterdayNotifications.addAll(removedYesterday);
+            });
+          },
         ),
+        duration: const Duration(seconds: 4),
       );
     }
   }

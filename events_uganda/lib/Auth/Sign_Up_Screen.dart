@@ -3,6 +3,7 @@ import 'package:events_uganda/Auth/ReferralCodeScreen.dart';
 import 'package:events_uganda/Auth/ReferralCodeBottomSheet.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
