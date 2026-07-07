@@ -58,16 +58,19 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            // Background image (same as all other screens)
-            Positioned.fill(
-              child: Image.asset(
-                'assets/backgroundcolors/normalscreen.png',
-                fit: BoxFit.cover,
-              ),
+      body: Stack(
+        children: [
+          // Background image - outside SafeArea to fill entire screen
+          Positioned.fill(
+            child: Image.asset(
+              'assets/backgroundcolors/normalscreen.png',
+              fit: BoxFit.cover,
             ),
+          ),
+          // Content
+          SafeArea(
+            child: Stack(
+              children: [
             // Back and forward buttons
             Positioned(
               top: screenHeight * 0.035,
@@ -496,6 +499,8 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
           ],
         ),
       ),
-    );
-  }
+    ],
+  ),
+);
+}
 }
