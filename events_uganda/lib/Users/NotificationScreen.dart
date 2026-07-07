@@ -821,67 +821,8 @@ class _NotificationScreenState extends State<NotificationScreen>
                             padding: EdgeInsets.only(top: screenHeight * 0.06),
                             child: const EmptyNotificationsWidget(),
                           )
-                        else ...[
-                          if (_sortedToday.isNotEmpty) ...[
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: screenWidth * 0.04,
-                              ),
-                              child: Text(
-                                'Today',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: screenWidth * 0.04,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            for (int i = 0; i < _sortedToday.length; i++) ...[
-                              if (i > 0) SizedBox(height: screenHeight * 0.015),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth * 0.04,
-                                ),
-                                child: _buildDismissibleCard(
-                                  item: _sortedToday[i],
-                                  screenWidth: screenWidth,
-                                  child: _buildCardContent(_sortedToday[i], screenWidth),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: screenHeight * 0.035),
-                          ],
-                          if (_sortedYesterday.isNotEmpty) ...[
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: screenWidth * 0.04,
-                              ),
-                              child: Text(
-                                  'Yesterday',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: screenWidth * 0.04,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            for (int i = 0; i < _sortedYesterday.length; i++) ...[
-                              if (i > 0) SizedBox(height: screenHeight * 0.015),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth * 0.04,
-                                ),
-                                child: _buildDismissibleCard(
-                                  item: _sortedYesterday[i],
-                                  screenWidth: screenWidth,
-                                  child: _buildCardContent(_sortedYesterday[i], screenWidth),
-                                ),
-                              ),
-                            ],
-                          ],
-                        ],
+                        else
+                          ..._buildNotificationLists(screenWidth, screenHeight),
                           ],
                         ),
                       ),
@@ -1269,6 +1210,70 @@ fontSize: screenWidth * 0.025,
         ),
       ],
     );
+  }
+
+  List<Widget> _buildNotificationLists(double screenWidth, double screenHeight) {
+    final widgets = <Widget>[];
+    if (_sortedToday.isNotEmpty) {
+      widgets.add(
+        Padding(
+          padding: EdgeInsets.only(left: screenWidth * 0.04),
+          child: Text(
+            'Today',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w600,
+              fontSize: screenWidth * 0.04,
+              color: Colors.black,
+            ),
+          ),
+        ),
+      );
+      for (int i = 0; i < _sortedToday.length; i++) {
+        if (i > 0) widgets.add(SizedBox(height: screenHeight * 0.015));
+        widgets.add(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+            child: _buildDismissibleCard(
+              item: _sortedToday[i],
+              screenWidth: screenWidth,
+              child: _buildCardContent(_sortedToday[i], screenWidth),
+            ),
+          ),
+        );
+      }
+      widgets.add(SizedBox(height: screenHeight * 0.035));
+    }
+    if (_sortedYesterday.isNotEmpty) {
+      widgets.add(
+        Padding(
+          padding: EdgeInsets.only(left: screenWidth * 0.04),
+          child: Text(
+            'Yesterday',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w600,
+              fontSize: screenWidth * 0.04,
+              color: Colors.black,
+            ),
+          ),
+        ),
+      );
+      for (int i = 0; i < _sortedYesterday.length; i++) {
+        if (i > 0) widgets.add(SizedBox(height: screenHeight * 0.015));
+        widgets.add(
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+            child: _buildDismissibleCard(
+              item: _sortedYesterday[i],
+              screenWidth: screenWidth,
+              child: _buildCardContent(_sortedYesterday[i], screenWidth),
+            ),
+          ),
+        );
+      }
+    }
+    return widgets;
   }
 
   Widget _buildDismissibleCard({
