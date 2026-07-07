@@ -1,3 +1,5 @@
+import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:flutter/material.dart';
 
 class NotificationDetailsScreen extends StatefulWidget {
@@ -24,11 +26,28 @@ class NotificationDetailsScreen extends StatefulWidget {
 
 class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
   late bool _isRead;
+  String _userFullName = '';
+  String? _profilePicUrl;
+
+  String get _greetingText {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Good Morning';
+    if (hour < 17) return 'Good Afternoon';
+    return 'Good Evening';
+  }
 
   @override
   void initState() {
     super.initState();
     _isRead = widget.isRead;
+    AuthService.getUser().then((userData) {
+      if (mounted) {
+        setState(() {
+          _userFullName = userData?['fullName'] as String? ?? 'User';
+          _profilePicUrl = userData?['profilePic'] as String?;
+        });
+      }
+    });
   }
 
   @override
@@ -54,113 +73,172 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                 fit: BoxFit.contain,
               ),
             ),
-            // Decorative circles
+            // Back and forward buttons
             Positioned(
-              top: -screenWidth * 0.15,
-              right: -screenWidth * 0.1,
-              child: Container(
-                width: screenWidth * 0.5,
-                height: screenWidth * 0.5,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: widget.iconColor.withValues(alpha: 0.06),
-                ),
+              top: screenHeight * 0.035,
+              left: screenWidth * 0.04,
+              right: screenWidth * 0.04,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).maybePop(),
+                    child: Container(
+                      width: screenWidth * 0.128,
+                      height: screenWidth * 0.128,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF3CA9B),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.chevron_left,
+                          color: Colors.black,
+                          size: screenWidth * 0.10,
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DateOfBookingScreen(),
+                        ),
+                      ).then((_) {
+                        if (mounted) setState(() {});
+                      });
+                    },
+                    child: Container(
+                      width: screenWidth * 0.128,
+                      height: screenWidth * 0.128,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF3CA9B),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.chevron_right,
+                          color: Colors.black,
+                          size: screenWidth * 0.10,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
+            // Greeting and user name
             Positioned(
-              top: screenHeight * 0.1,
-              left: -screenWidth * 0.12,
+              top: screenHeight * 0.03 + screenWidth * 0.015,
+              left: screenWidth * 0.04 + screenWidth * 0.128 + screenWidth * 0.03,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _greetingText,
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.w700,
+                      fontSize: screenWidth * 0.045,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: screenWidth * 0.005),
+                  Text(
+                    _userFullName,
+                    style: TextStyle(
+                      fontFamily: 'Abril Fatface',
+                      fontWeight: FontWeight.w600,
+                      fontSize: screenWidth * 0.038,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // Profile picture circle
+            Positioned(
+              top: screenHeight * 0.03,
+              right: screenWidth * 0.2,
               child: Container(
-                width: screenWidth * 0.3,
-                height: screenWidth * 0.3,
+                width: screenWidth * 0.128,
+                height: screenWidth * 0.128,
                 decoration: BoxDecoration(
+                  color: Colors.white,
                   shape: BoxShape.circle,
-                  color: widget.iconColor.withValues(alpha: 0.04),
+                  border: Border.all(color: Colors.white, width: 3),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.15),
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 7),
+                    ),
+                  ],
+                ),
+                child: _profilePicUrl != null && _profilePicUrl!.isNotEmpty
+                    ? ClipOval(
+                        child: Image.network(
+                          _profilePicUrl!,
+                          width: screenWidth * 0.128,
+                          height: screenWidth * 0.128,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Center(
+                              child: Icon(
+                                Icons.person,
+                                color: Colors.black,
+                                size: screenWidth * 0.07,
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Center(
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                          size: screenWidth * 0.07,
+                        ),
+                      ),
+              ),
+            ),
+            // Notification bell circle
+            Positioned(
+              top: screenHeight * 0.03,
+              right: screenWidth * 0.04,
+              child: Container(
+                width: screenWidth * 0.128,
+                height: screenWidth * 0.128,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.white, width: 3),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.15),
+                      blurRadius: 10,
+                      offset: const Offset(0, 7),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.notifications_none_rounded,
+                    color: Colors.black,
+                    size: screenWidth * 0.07,
+                  ),
                 ),
               ),
             ),
             // Content
             SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.only(top: screenHeight * 0.18),
               child: Column(
                 children: [
-                  // App Bar
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: screenWidth * 0.02,
-                      top: screenHeight * 0.01,
-                      right: screenWidth * 0.02,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Container(
-                            width: screenWidth * 0.1,
-                            height: screenWidth * 0.1,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.06),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              size: screenWidth * 0.04,
-                              color: Colors.black87,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.03,
-                            vertical: screenWidth * 0.012,
-                          ),
-                          decoration: BoxDecoration(
-                            color: _isRead
-                                ? Colors.grey.withValues(alpha: 0.1)
-                                : const Color(0xFFCC471B).withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: _isRead
-                                  ? Colors.grey.withValues(alpha: 0.3)
-                                  : const Color(0xFFCC471B).withValues(alpha: 0.3),
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                width: screenWidth * 0.015,
-                                height: screenWidth * 0.015,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: _isRead ? Colors.grey : const Color(0xFFCC471B),
-                                ),
-                              ),
-                              SizedBox(width: screenWidth * 0.015),
-                              Text(
-                                _isRead ? 'Read' : 'New',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: screenWidth * 0.028,
-                                  color: _isRead ? Colors.grey : const Color(0xFFCC471B),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.02),
                   // Hero Icon
                   Container(
                     width: screenWidth * 0.28,
@@ -189,7 +267,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.03),
+                  SizedBox(height: screenHeight * 0.025),
                   // Title
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
@@ -206,7 +284,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.012),
-                  // Timestamp
+                  // Timestamp + status
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -223,6 +301,47 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                           fontWeight: FontWeight.w400,
                           fontSize: screenWidth * 0.03,
                           color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(width: screenWidth * 0.025),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.025,
+                          vertical: screenWidth * 0.008,
+                        ),
+                        decoration: BoxDecoration(
+                          color: _isRead
+                              ? Colors.grey.withValues(alpha: 0.1)
+                              : const Color(0xFFCC471B).withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: _isRead
+                                ? Colors.grey.withValues(alpha: 0.3)
+                                : const Color(0xFFCC471B).withValues(alpha: 0.3),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              width: screenWidth * 0.012,
+                              height: screenWidth * 0.012,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: _isRead ? Colors.grey : const Color(0xFFCC471B),
+                              ),
+                            ),
+                            SizedBox(width: screenWidth * 0.01),
+                            Text(
+                              _isRead ? 'Read' : 'New',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.025,
+                                color: _isRead ? Colors.grey : const Color(0xFFCC471B),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
