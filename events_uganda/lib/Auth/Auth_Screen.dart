@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';

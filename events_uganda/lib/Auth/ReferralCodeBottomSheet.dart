@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
 
 class ReferralCodeBottomSheet extends StatelessWidget {
   const ReferralCodeBottomSheet({super.key});
