@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:events_uganda/Users/NotificationSettingsScreen.dart';
+import 'package:events_uganda/components/empty_notifications_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -815,60 +816,71 @@ class _NotificationScreenState extends State<NotificationScreen>
                           ),
                         ),
                         SizedBox(height: screenHeight * 0.035),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: screenWidth * 0.04,
-                          ),
-                          child: Text(
-                            'Today',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w600,
-                              fontSize: screenWidth * 0.04,
-                              color: Colors.black,
+                        if (_sortedToday.isEmpty && _sortedYesterday.isEmpty)
+                          const Padding(
+                            padding: EdgeInsets.only(top: 40),
+                            child: EmptyNotificationsWidget(),
+                          )
+                        else ...[
+                          if (_sortedToday.isNotEmpty) ...[
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: screenWidth * 0.04,
+                              ),
+                              child: Text(
+                                'Today',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: screenWidth * 0.04,
+                                  color: Colors.black,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                        for (int i = 0; i < _sortedToday.length; i++) ...[
-                          if (i > 0) SizedBox(height: screenHeight * 0.015),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.04,
+                            for (int i = 0; i < _sortedToday.length; i++) ...[
+                              if (i > 0) SizedBox(height: screenHeight * 0.015),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.04,
+                                ),
+                                child: _buildDismissibleCard(
+                                  item: _sortedToday[i],
+                                  screenWidth: screenWidth,
+                                  child: _buildCardContent(_sortedToday[i], screenWidth),
+                                ),
+                              ),
                             ),
-                            child: _buildDismissibleCard(
-                              item: _sortedToday[i],
-                              screenWidth: screenWidth,
-                              child: _buildCardContent(_sortedToday[i], screenWidth),
+                            SizedBox(height: screenHeight * 0.035),
+                          ],
+                          if (_sortedYesterday.isNotEmpty) ...[
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: screenWidth * 0.04,
+                              ),
+                              child: Text(
+                                  'Yesterday',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: screenWidth * 0.04,
+                                  color: Colors.black,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                        SizedBox(height: screenHeight * 0.035),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: screenWidth * 0.04,
-                          ),
-                          child: Text(
-                              'Yesterday',
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w600,
-                              fontSize: screenWidth * 0.04,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        for (int i = 0; i < _sortedYesterday.length; i++) ...[
-                          if (i > 0) SizedBox(height: screenHeight * 0.015),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.04,
-                            ),
-                            child: _buildDismissibleCard(
-                              item: _sortedYesterday[i],
-                              screenWidth: screenWidth,
-                              child: _buildCardContent(_sortedYesterday[i], screenWidth),
-                            ),
-                          ),
+                            for (int i = 0; i < _sortedYesterday.length; i++) ...[
+                              if (i > 0) SizedBox(height: screenHeight * 0.015),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.04,
+                                ),
+                                child: _buildDismissibleCard(
+                                  item: _sortedYesterday[i],
+                                  screenWidth: screenWidth,
+                                  child: _buildCardContent(_sortedYesterday[i], screenWidth),
+                                ),
+                              ),
+                            ],
+                          ],
                         ],
                           ],
                         ),
