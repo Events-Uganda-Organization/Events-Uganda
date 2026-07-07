@@ -62,18 +62,10 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
         child: Stack(
           children: [
             // Background image (same as all other screens)
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.0,
-              bottom: MediaQuery.of(context).size.height * 0.0,
-              right:
-                  (MediaQuery.of(context).size.width +
-                      MediaQuery.of(context).size.width * 1) /
-                  300,
+            Positioned.fill(
               child: Image.asset(
                 'assets/backgroundcolors/normalscreen.png',
-                width: MediaQuery.of(context).size.width * 1.08,
-                height: MediaQuery.of(context).size.height * 0.9,
-                fit: BoxFit.contain,
+                fit: BoxFit.cover,
               ),
             ),
             // Back and forward buttons
