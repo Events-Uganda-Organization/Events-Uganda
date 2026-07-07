@@ -342,142 +342,151 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                     ],
                   ),
                   SizedBox(height: screenHeight * 0.035),
-                  // Gradient divider
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
-                    child: Container(
-                      height: 2,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.transparent,
-                            const Color(0xFFCC471B).withValues(alpha: 0.3),
-                            Colors.transparent,
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.035),
-                  // Description
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Details',
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            fontSize: screenWidth * 0.04,
-                            color: Colors.black54,
-                          ),
-                        ),
-                        SizedBox(height: screenHeight * 0.015),
-                        Text(
-                          widget.subtitle,
-                          style: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w400,
-                            fontSize: screenWidth * 0.038,
-                            color: Colors.black87,
-                            height: 1.6,
-                          ),
+                  // White card with details
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.08),
+                          blurRadius: 25,
+                          offset: const Offset(0, 8),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(height: screenHeight * 0.04),
-                  // Action buttons
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() => _isRead = !_isRead);
-                            },
-                            child: Container(
-                              height: screenWidth * 0.11,
-                              decoration: BoxDecoration(
-                                color: _isRead
-                                    ? const Color(0xFFCC471B).withValues(alpha: 0.1)
-                                    : const Color(0xFFCC471B),
-                                borderRadius: BorderRadius.circular(14),
-                                border: Border.all(
-                                  color: _isRead
-                                      ? const Color(0xFFCC471B).withValues(alpha: 0.3)
-                                      : const Color(0xFFCC471B),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    _isRead
-                                        ? Icons.mark_email_unread_outlined
-                                        : Icons.mark_email_read_outlined,
-                                    size: screenWidth * 0.045,
-                                    color: _isRead ? const Color(0xFFCC471B) : Colors.white,
-                                  ),
-                                  SizedBox(width: screenWidth * 0.02),
-                                  Text(
-                                    _isRead ? 'Mark as Unread' : 'Mark as Read',
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: screenWidth * 0.032,
-                                      color: _isRead ? const Color(0xFFCC471B) : Colors.white,
-                                    ),
-                                  ),
+                    child: Padding(
+                      padding: EdgeInsets.all(screenWidth * 0.05),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Description
+                          Text(
+                            'Details',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              fontSize: screenWidth * 0.04,
+                              color: Colors.black54,
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.015),
+                          Text(
+                            widget.subtitle,
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w400,
+                              fontSize: screenWidth * 0.038,
+                              color: Colors.black87,
+                              height: 1.6,
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.03),
+                          // Gradient divider
+                          Container(
+                            height: 2,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.transparent,
+                                  const Color(0xFFCC471B).withValues(alpha: 0.3),
+                                  Colors.transparent,
                                 ],
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(width: screenWidth * 0.03),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            width: screenWidth * 0.11,
-                            height: screenWidth * 0.11,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.withValues(alpha: 0.08),
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(
-                                color: Colors.grey.withValues(alpha: 0.2),
+                          SizedBox(height: screenHeight * 0.03),
+                          // Action buttons
+                          Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() => _isRead = !_isRead);
+                                  },
+                                  child: Container(
+                                    height: screenWidth * 0.11,
+                                    decoration: BoxDecoration(
+                                      color: _isRead
+                                          ? const Color(0xFFCC471B).withValues(alpha: 0.1)
+                                          : const Color(0xFFCC471B),
+                                      borderRadius: BorderRadius.circular(14),
+                                      border: Border.all(
+                                        color: _isRead
+                                            ? const Color(0xFFCC471B).withValues(alpha: 0.3)
+                                            : const Color(0xFFCC471B),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          _isRead
+                                              ? Icons.mark_email_unread_outlined
+                                              : Icons.mark_email_read_outlined,
+                                          size: screenWidth * 0.045,
+                                          color: _isRead ? const Color(0xFFCC471B) : Colors.white,
+                                        ),
+                                        SizedBox(width: screenWidth * 0.02),
+                                        Text(
+                                          _isRead ? 'Mark as Unread' : 'Mark as Read',
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: screenWidth * 0.032,
+                                            color: _isRead ? const Color(0xFFCC471B) : Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                            child: Icon(
-                              Icons.share_outlined,
-                              size: screenWidth * 0.045,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: screenWidth * 0.03),
-                        GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Container(
-                            width: screenWidth * 0.11,
-                            height: screenWidth * 0.11,
-                            decoration: BoxDecoration(
-                              color: Colors.red.withValues(alpha: 0.08),
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(
-                                color: Colors.red.withValues(alpha: 0.2),
+                              SizedBox(width: screenWidth * 0.03),
+                              GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  width: screenWidth * 0.11,
+                                  height: screenWidth * 0.11,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.withValues(alpha: 0.08),
+                                    borderRadius: BorderRadius.circular(14),
+                                    border: Border.all(
+                                      color: Colors.grey.withValues(alpha: 0.2),
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    Icons.share_outlined,
+                                    size: screenWidth * 0.045,
+                                    color: Colors.black54,
+                                  ),
+                                ),
                               ),
-                            ),
-                            child: Icon(
-                              Icons.delete_outline_rounded,
-                              size: screenWidth * 0.045,
-                              color: Colors.red.shade400,
-                            ),
+                              SizedBox(width: screenWidth * 0.03),
+                              GestureDetector(
+                                onTap: () => Navigator.pop(context),
+                                child: Container(
+                                  width: screenWidth * 0.11,
+                                  height: screenWidth * 0.11,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red.withValues(alpha: 0.08),
+                                    borderRadius: BorderRadius.circular(14),
+                                    border: Border.all(
+                                      color: Colors.red.withValues(alpha: 0.2),
+                                    ),
+                                  ),
+                                  child: Icon(
+                                    Icons.delete_outline_rounded,
+                                    size: screenWidth * 0.045,
+                                    color: Colors.red.shade400,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.04),
