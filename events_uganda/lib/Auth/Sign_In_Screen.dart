@@ -87,10 +87,57 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _showCustomSnackBar(BuildContext context, String message) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final isSuccess = message == 'Sign in successful!' || message == 'Signed up with Google!';
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(message),
+        content: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(screenWidth * 0.015),
+              decoration: const BoxDecoration(
+                color: Colors.white24,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                isSuccess ? Icons.check_circle_rounded : Icons.error_outline_rounded,
+                color: Colors.white,
+                size: screenWidth * 0.045,
+              ),
+            ),
+            SizedBox(width: screenWidth * 0.03),
+            Expanded(
+              child: Text(
+                message,
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w500,
+                  fontSize: screenWidth * 0.035,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        duration: const Duration(seconds: 2),
+        margin: EdgeInsets.fromLTRB(
+          screenWidth * 0.04,
+          0,
+          screenWidth * 0.04,
+          bottomInset + screenHeight * 0.08,
+        ),
         backgroundColor: const Color(0xFFCC471B),
+        elevation: 12,
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.04,
+          vertical: screenWidth * 0.025,
+        ),
       ),
     );
   }

@@ -1369,7 +1369,7 @@ fontSize: screenWidth * 0.025,
               screenWidth * 0.04,
               bottomInset + mq.size.height * 0.08,
             ),
-        backgroundColor: const Color(0xFFCC471B),
+        backgroundColor: const Color(0xFF1A1A2E),
             elevation: 12,
             padding: EdgeInsets.symmetric(
               horizontal: screenWidth * 0.04,
