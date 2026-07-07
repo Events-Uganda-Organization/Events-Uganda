@@ -817,9 +817,9 @@ class _NotificationScreenState extends State<NotificationScreen>
                         ),
                         SizedBox(height: screenHeight * 0.035),
                         if (_sortedToday.isEmpty && _sortedYesterday.isEmpty)
-                          const Padding(
-                            padding: EdgeInsets.only(top: 40),
-                            child: EmptyNotificationsWidget(),
+                          Padding(
+                            padding: EdgeInsets.only(top: screenHeight * 0.06),
+                            child: const EmptyNotificationsWidget(),
                           )
                         else ...[
                           if (_sortedToday.isNotEmpty) ...[
