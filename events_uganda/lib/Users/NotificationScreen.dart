@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
+import 'package:events_uganda/Users/NotificationDetailsScreen.dart';
 import 'package:events_uganda/Users/NotificationSettingsScreen.dart';
 import 'package:events_uganda/components/empty_notifications_widget.dart';
 import 'package:flutter/material.dart';
@@ -1391,9 +1392,28 @@ fontSize: screenWidth * 0.025,
     }
   }
 
+  void _openNotificationDetails(_NotificationItem item) {
+    if (!item.isRead) {
+      setState(() => item.isRead = true);
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => NotificationDetailsScreen(
+          icon: item.icon,
+          iconColor: item.iconColor,
+          title: item.title,
+          subtitle: item.subtitle,
+          timestamp: item.timestamp,
+          isRead: item.isRead,
+        ),
+      ),
+    );
+  }
+
   Widget _buildCardContent(_NotificationItem item, double screenWidth) {
     return GestureDetector(
-      onTap: () => _markAsRead(item),
+      onTap: () => _openNotificationDetails(item),
       child: Container(
         width: double.infinity,
         height: screenWidth * 0.19,
