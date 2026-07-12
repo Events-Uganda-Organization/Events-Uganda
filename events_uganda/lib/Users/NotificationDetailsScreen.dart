@@ -69,6 +69,8 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
           ),
           // Content
           SafeArea(
+              top: true,
+              bottom: false,
             child: Stack(
               children: [
             // Back and forward buttons
