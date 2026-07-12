@@ -738,80 +738,28 @@ class _NotificationScreenState extends State<NotificationScreen>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: screenWidth * 0.04,
-                          ),
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () => setState(() => _selectedFilter = 'All'),
-                                child: _buildFilterChip(
-                                  Icons.done_all,
-                                  'All',
-                                  screenWidth,
-                                  isActive: _selectedFilter == 'All',
-                                ),
-                              ),
-                              SizedBox(width: screenWidth * 0.05),
-                              GestureDetector(
-                                onTap: () => setState(() => _selectedFilter = 'Bookings'),
-                                child: _buildFilterChip(
-                                  Icons.calendar_today,
-                                  'Bookings',
-                                  screenWidth,
-                                  isActive: _selectedFilter == 'Bookings',
-                                ),
-                              ),
-                              SizedBox(width: screenWidth * 0.05),
-                              GestureDetector(
-                                onTap: () => setState(() => _selectedFilter = 'Messages'),
-                                child: _buildFilterChip(
-                                  Icons.message,
-                                  'Messages',
-                                  screenWidth,
-                                  isActive: _selectedFilter == 'Messages',
-                                ),
-                              ),
-                              SizedBox(width: screenWidth * 0.05),
-                              GestureDetector(
-                                onTap: () => setState(() => _selectedFilter = 'Reminders'),
-                                child: _buildFilterChip(
-                                  Icons.notifications_active,
-                                  'Reminders',
-                                  screenWidth,
-                                  isActive: _selectedFilter == 'Reminders',
-                                ),
-                              ),
-                            ],
-                          ),
-                          ),
-                        SizedBox(height: screenHeight * 0.01),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: screenWidth * 0.04,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.04,
                           ),
                           child: Container(
-                            width: _calculateFilterRowWidth(screenWidth),
-                            height: screenWidth * 0.02,
+                            height: screenWidth * 0.12,
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Stack(
-                              children: [
-                                AnimatedPositioned(
-                                  left: _getFilterOffset(_selectedFilter, screenWidth),
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.easeInOut,
-                                  child: Container(
-                                    width: _getFilterWidth(_selectedFilter, screenWidth),
-                                    height: screenWidth * 0.02,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFCB471B),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                  ),
+                              borderRadius: BorderRadius.circular(screenWidth * 0.06),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.08),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 4),
                                 ),
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                _buildSegment('All', screenWidth),
+                                _buildSegment('Members', screenWidth),
+                                _buildSegment('Bookings', screenWidth),
+                                _buildSegment('Reminders', screenWidth),
                               ],
                             ),
                           ),
@@ -1189,27 +1137,32 @@ class _NotificationScreenState extends State<NotificationScreen>
     return offset;
   }
 
-  Widget _buildFilterChip(IconData icon, String label, double screenWidth, {bool isActive = false}) {
-    final color = isActive ? const Color(0xFFCB471B) : Colors.grey;
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Icon(
-          icon,
-          size: screenWidth * 0.035,
-          color: color,
-        ),
-        SizedBox(width: screenWidth * 0.015),
-        Text(
-          label,
-          style: TextStyle(
-            fontFamily: 'Montserrat',
-fontSize: screenWidth * 0.025,
-            fontWeight: FontWeight.w600,
-            color: color,
+  Widget _buildSegment(String label, double screenWidth) {
+    final isActive = _selectedFilter == label;
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => setState(() => _selectedFilter = label),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          margin: EdgeInsets.all(screenWidth * 0.01),
+          decoration: BoxDecoration(
+            color: isActive ? const Color(0xFFCB471B) : Colors.transparent,
+            borderRadius: BorderRadius.circular(screenWidth * 0.05),
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w600,
+                fontSize: screenWidth * 0.03,
+                color: isActive ? Colors.white : Colors.black54,
+              ),
+            ),
           ),
         ),
-      ],
+      ),
     );
   }
 
