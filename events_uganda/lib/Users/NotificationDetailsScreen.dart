@@ -233,9 +233,13 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
               ),
             ),
             // Content
-            SingleChildScrollView(
+            Positioned(
+              top: screenHeight * 0.18,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.only(top: screenHeight * 0.18),
               child: Column(
                 children: [
                   // Hero Icon
@@ -496,6 +500,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                   SizedBox(height: screenHeight * 0.04),
                 ],
               ),
+            ),
             ),
           ],
         ),
