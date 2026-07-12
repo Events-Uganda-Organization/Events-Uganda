@@ -154,14 +154,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
               ),
             ),
             SizedBox(width: screenWidth * 0.02),
-            SizedBox(
-              height: screenWidth * 0.09,
-              child: Switch.adaptive(
-                value: value,
-                onChanged: onChanged,
-                activeColor: const Color(0xFFCB471B),
-                activeTrackColor: const Color(0xFFCB471B).withValues(alpha: 0.4),
-              ),
+            _buildModernToggle(
+              value: value,
+              onChanged: onChanged,
+              screenWidth: screenWidth,
             ),
           ],
         ),
