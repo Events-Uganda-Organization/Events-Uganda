@@ -165,6 +165,101 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
     );
   }
 
+  Widget _buildModernToggle({
+    required bool value,
+    required ValueChanged<bool> onChanged,
+    required double screenWidth,
+  }) {
+    return GestureDetector(
+      onTap: () => onChanged(!value),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeInOut,
+        width: screenWidth * 0.14,
+        height: screenWidth * 0.068,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(screenWidth * 0.034),
+          gradient: LinearGradient(
+            colors: value
+                ? [const Color(0xFFFFB74D), const Color(0xFFFF8A65)]
+                : [const Color(0xFF37474F), const Color(0xFF1A237E)],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: value
+                  ? const Color(0xFFFFB74D).withValues(alpha: 0.5)
+                  : Colors.black.withValues(alpha: 0.3),
+              blurRadius: value ? 12 : 6,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Stack(
+          children: [
+            if (!value)
+              Positioned(
+                left: screenWidth * 0.015,
+                top: screenWidth * 0.01,
+                child: Icon(
+                  Icons.star,
+                  size: screenWidth * 0.016,
+                  color: Colors.white.withValues(alpha: 0.5),
+                ),
+              ),
+            if (!value)
+              Positioned(
+                left: screenWidth * 0.045,
+                bottom: screenWidth * 0.012,
+                child: Icon(
+                  Icons.star,
+                  size: screenWidth * 0.01,
+                  color: Colors.white.withValues(alpha: 0.3),
+                ),
+              ),
+            AnimatedAlign(
+              duration: const Duration(milliseconds: 350),
+              curve: Curves.easeInOut,
+              alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+              child: Container(
+                width: screenWidth * 0.052,
+                height: screenWidth * 0.052,
+                margin: EdgeInsets.all(screenWidth * 0.008),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.15),
+                      blurRadius: 4,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 250),
+                  switchInCurve: Curves.easeOut,
+                  switchOutCurve: Curves.easeIn,
+                  transitionBuilder: (child, anim) => RotationTransition(
+                    turns: child.key == const ValueKey('sun')
+                        ? Tween<double>(begin: -0.25, end: 0).animate(anim)
+                        : Tween<double>(begin: 0.25, end: 0).animate(anim),
+                    child: ScaleTransition(scale: anim, child: child),
+                  ),
+                  child: Icon(
+                    value ? Icons.wb_sunny : Icons.nightlight_round,
+                    key: ValueKey(value ? 'sun' : 'moon'),
+                    size: screenWidth * 0.032,
+                    color: value ? const Color(0xFFFF8A65) : const Color(0xFF1A237E),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
