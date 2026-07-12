@@ -98,7 +98,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
             ),
             // Right chevron button
             Positioned(
-              top: screenHeight * 0.035,
+              top: screenHeight * 0.12,
               right: screenWidth * 0.04,
               child: GestureDetector(
                 onTap: () {
