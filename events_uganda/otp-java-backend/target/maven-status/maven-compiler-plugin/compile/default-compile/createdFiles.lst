@@ -19,6 +19,7 @@ com\eventsuganda\otp\dto\request\VerifyOtpRequest.class
 com\eventsuganda\otp\controller\AuthController.class
 com\eventsuganda\otp\service\OtpService.class
 com\eventsuganda\otp\dto\request\LoginRequest.class
+com\eventsuganda\otp\service\ReferralCodeService.class
 com\eventsuganda\otp\service\AuthService.class
 com\eventsuganda\otp\dto\request\SendOtpRequest.class
 com\eventsuganda\otp\model\User.class
