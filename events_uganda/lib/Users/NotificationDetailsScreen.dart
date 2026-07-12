@@ -73,60 +73,59 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
               bottom: false,
             child: Stack(
               children: [
-            // Back and forward buttons
+            // Back button
             Positioned(
               top: screenHeight * 0.035,
               left: screenWidth * 0.04,
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).maybePop(),
+                child: Container(
+                  width: screenWidth * 0.128,
+                  height: screenWidth * 0.128,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF3CA9B),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.chevron_left,
+                      color: Colors.black,
+                      size: screenWidth * 0.10,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // Right chevron button
+            Positioned(
+              top: screenHeight * 0.035,
               right: screenWidth * 0.04,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).maybePop(),
-                    child: Container(
-                      width: screenWidth * 0.128,
-                      height: screenWidth * 0.128,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF3CA9B),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.chevron_left,
-                          color: Colors.black,
-                          size: screenWidth * 0.10,
-                        ),
-                      ),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DateOfBookingScreen(),
+                    ),
+                  ).then((_) {
+                    if (mounted) setState(() {});
+                  });
+                },
+                child: Container(
+                  width: screenWidth * 0.128,
+                  height: screenWidth * 0.128,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF3CA9B),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.chevron_right,
+                      color: Colors.black,
+                      size: screenWidth * 0.10,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DateOfBookingScreen(),
-                        ),
-                      ).then((_) {
-                        if (mounted) setState(() {});
-                      });
-                    },
-                    child: Container(
-                      width: screenWidth * 0.128,
-                      height: screenWidth * 0.128,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF3CA9B),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.chevron_right,
-                          color: Colors.black,
-                          size: screenWidth * 0.10,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
             // Greeting and user name
