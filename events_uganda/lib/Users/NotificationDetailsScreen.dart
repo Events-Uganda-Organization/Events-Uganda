@@ -25,7 +25,9 @@ class NotificationDetailsScreen extends StatefulWidget {
 }
 
 class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
+  static bool _hasVisitedBefore = false;
   late bool _isRead;
+  bool _canGoForward = false;
   String _userFullName = '';
   String? _profilePicUrl;
 
@@ -40,6 +42,10 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
   void initState() {
     super.initState();
     _isRead = widget.isRead;
+    if (_hasVisitedBefore) {
+      _canGoForward = true;
+    }
+    _hasVisitedBefore = true;
     AuthService.getUser().then((userData) {
       if (mounted) {
         setState(() {
@@ -100,29 +106,34 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
             Positioned(
               top: screenHeight * 0.12,
               right: screenWidth * 0.04,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DateOfBookingScreen(),
+              child: Opacity(
+                opacity: _canGoForward ? 1.0 : 0.35,
+                child: GestureDetector(
+                  onTap: _canGoForward
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DateOfBookingScreen(),
+                            ),
+                          ).then((_) {
+                            if (mounted) setState(() {});
+                          });
+                        }
+                      : null,
+                  child: Container(
+                    width: screenWidth * 0.128,
+                    height: screenWidth * 0.128,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF3CA9B),
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                  ).then((_) {
-                    if (mounted) setState(() {});
-                  });
-                },
-                child: Container(
-                  width: screenWidth * 0.128,
-                  height: screenWidth * 0.128,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF3CA9B),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.chevron_right,
-                      color: Colors.black,
-                      size: screenWidth * 0.10,
+                    child: Center(
+                      child: Icon(
+                        Icons.chevron_right,
+                        color: Colors.black,
+                        size: screenWidth * 0.10,
+                      ),
                     ),
                   ),
                 ),
