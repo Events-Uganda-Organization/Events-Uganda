@@ -318,6 +318,27 @@ class _SidebarPanel extends StatelessWidget {
                                         ],
                                     ),
                                 ),
+                                SizedBox(height: h * 0.015),
+                                Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: w * 0.046),
+                                    child: Column(
+                                        children: [
+                                            _NavItem(
+                                                icon: Icons.event_rounded,
+                                                label: 'My Events',
+                                                w: w,
+                                                h: h,
+                                            ),
+                                            SizedBox(height: h * 0.006),
+                                            _NavItem(
+                                                icon: Icons.checklist_rounded,
+                                                label: 'Event Checklist',
+                                                w: w,
+                                                h: h,
+                                            ),
+                                        ],
+                                    ),
+                                ),
                             ],
                         ),
                     ),
