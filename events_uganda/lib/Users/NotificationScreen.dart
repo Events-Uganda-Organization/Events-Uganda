@@ -657,7 +657,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                               case _MenuAction.archived:
                                   setState(() => _showArchived = true);
                                 case _MenuAction.help:
-                                  break;
+                                  _showHelpSheet();
                               }
                             },
                             offset: const Offset(0, 8),
