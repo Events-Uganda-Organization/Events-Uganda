@@ -294,3 +294,63 @@ class _SidebarPanel extends StatelessWidget {
         );
     }
 }
+
+class _NavItem extends StatelessWidget {
+    final IconData icon;
+    final String label;
+    final bool isActive;
+    final double w;
+    final double h;
+
+    const _NavItem({
+        required this.icon,
+        required this.label,
+        this.isActive = false,
+        required this.w,
+        required this.h,
+    });
+
+    @override
+    Widget build(BuildContext context) {
+        return Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(16),
+            child: InkWell(
+                borderRadius: BorderRadius.circular(16),
+                onTap: () {},
+                child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: w * 0.03, vertical: h * 0.013),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: isActive ? const Color(0xFFF3CA9B).withValues(alpha: 0.15) : Colors.transparent,
+                    ),
+                    child: Row(
+                        children: [
+                            Icon(
+                                icon,
+                                color: isActive ? const Color(0xFFD4A050) : Colors.black54,
+                                size: w * 0.045,
+                            ),
+                            SizedBox(width: w * 0.03),
+                            Text(
+                                label,
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: w * 0.032,
+                                    fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+                                    color: isActive ? const Color(0xFF1A1A2E) : Colors.black54,
+                                ),
+                            ),
+                            const Spacer(),
+                            Icon(
+                                Icons.chevron_right_rounded,
+                                color: Colors.grey[300],
+                                size: w * 0.04,
+                            ),
+                        ],
+                    ),
+                ),
+            ),
+        );
+    }
+}
