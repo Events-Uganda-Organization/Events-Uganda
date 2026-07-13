@@ -473,36 +473,84 @@ class _NavItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 onTap: () {},
                 child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: w * 0.03, vertical: h * 0.013),
+                    padding: EdgeInsets.only(
+                        left: isActive ? w * 0.0 : w * 0.03,
+                        right: w * 0.03,
+                        top: h * 0.013,
+                        bottom: h * 0.013,
+                    ),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
-                        color: isActive ? const Color(0xFFF3CA9B).withValues(alpha: 0.15) : Colors.transparent,
+                        color: isActive ? const Color(0xFFF3CA9B).withValues(alpha: 0.12) : Colors.transparent,
                     ),
-                    child: Row(
-                        children: [
-                            Icon(
-                                icon,
-                                color: isActive ? const Color(0xFFD4A050) : Colors.black54,
-                                size: w * 0.045,
-                            ),
-                            SizedBox(width: w * 0.03),
-                            Text(
-                                label,
-                                style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    fontSize: w * 0.032,
-                                    fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                                    color: isActive ? const Color(0xFF1A1A2E) : Colors.black54,
+                    child: isActive
+                        ? Stack(
+                            children: [
+                                Row(
+                                    children: [
+                                        SizedBox(width: w * 0.03),
+                                        Icon(
+                                            icon,
+                                            color: const Color(0xFFD4A050),
+                                            size: w * 0.045,
+                                        ),
+                                        SizedBox(width: w * 0.03),
+                                        Text(
+                                            label,
+                                            style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize: w * 0.032,
+                                                fontWeight: FontWeight.w600,
+                                                color: const Color(0xFF1A1A2E),
+                                            ),
+                                        ),
+                                        const Spacer(),
+                                        Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: const Color(0xFFD4A050).withValues(alpha: 0.5),
+                                            size: w * 0.04,
+                                        ),
+                                    ],
                                 ),
-                            ),
-                            const Spacer(),
-                            Icon(
-                                Icons.chevron_right_rounded,
-                                color: Colors.grey[300],
-                                size: w * 0.04,
-                            ),
-                        ],
-                    ),
+                                Positioned(
+                                    left: 0,
+                                    top: h * 0.004,
+                                    bottom: h * 0.004,
+                                    child: Container(
+                                        width: 3,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFD4A050),
+                                            borderRadius: BorderRadius.circular(3),
+                                        ),
+                                    ),
+                                ),
+                            ],
+                        )
+                        : Row(
+                            children: [
+                                Icon(
+                                    icon,
+                                    color: Colors.black54,
+                                    size: w * 0.045,
+                                ),
+                                SizedBox(width: w * 0.03),
+                                Text(
+                                    label,
+                                    style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: w * 0.032,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black54,
+                                    ),
+                                ),
+                                const Spacer(),
+                                Icon(
+                                    Icons.chevron_right_rounded,
+                                    color: Colors.grey[300],
+                                    size: w * 0.04,
+                                ),
+                            ],
+                        ),
                 ),
             ),
         );
