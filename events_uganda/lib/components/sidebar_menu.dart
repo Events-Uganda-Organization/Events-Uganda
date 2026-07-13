@@ -67,7 +67,7 @@ class _SidebarPanel extends StatelessWidget {
                         ),
                         child: Column(
                             children: [
-                                SizedBox(height: h * 0.06),
+                                SizedBox(height: h * 0.025),
                                 Center(
                                     child: Row(
                                         mainAxisSize: MainAxisSize.min,
