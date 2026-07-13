@@ -188,6 +188,27 @@ class _SidebarPanel extends StatelessWidget {
                                                 width: 1.5,
                                             ),
                                         ),
+                                        child: Padding(
+                                            padding: EdgeInsets.symmetric(horizontal: w * 0.025),
+                                            child: Row(
+                                                children: [
+                                                    Icon(
+                                                        Icons.search,
+                                                        color: Colors.black,
+                                                        size: w * 0.035,
+                                                    ),
+                                                    SizedBox(width: w * 0.015),
+                                                    Text(
+                                                        'Search...',
+                                                        style: TextStyle(
+                                                            fontFamily: 'Montserrat',
+                                                            fontSize: w * 0.028,
+                                                            color: const Color(0xFFCD7C20),
+                                                        ),
+                                                    ),
+                                                ],
+                                            ),
+                                        ),
                                     ),
                                 ),
                             ],
