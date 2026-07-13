@@ -342,7 +342,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
-                      fontSize: screenWidth * 0.045,
+                      fontSize: screenWidth * 0.035,
                       color: Colors.black,
                     ),
                   ),
@@ -464,7 +464,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
-                              fontSize: screenWidth * 0.045,
+                              fontSize: screenWidth * 0.035,
                               color: Colors.black,
                             ),
                           ),
@@ -706,7 +706,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         'Events Details',
                                         style: TextStyle(
                                           fontFamily: 'Abril Fatface',
-                                          fontSize: screenWidth * 0.05,
+                                          fontSize: screenWidth * 0.035,
                                           fontWeight: FontWeight.bold,
                                           color: const Color(0xFFCB471B),
                                         ),
@@ -1030,7 +1030,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         'Customer Requirements',
                                         style: TextStyle(
                                           fontFamily: 'Abril Fatface',
-                                          fontSize: screenWidth * 0.05,
+                                          fontSize: screenWidth * 0.035,
                                           fontWeight: FontWeight.bold,
                                           color: const Color(0xFFCB471B),
                                         ),
@@ -1175,7 +1175,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       'Price Breakdown',
                                       style: TextStyle(
                                         fontFamily: 'Abril Fatface',
-                                        fontSize: screenWidth * 0.05,
+                                        fontSize: screenWidth * 0.035,
                                         fontWeight: FontWeight.bold,
                                         color: const Color(0xFFCB471B),
                                       ),
@@ -1271,7 +1271,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         'Total',
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.04,
+                                          fontSize: screenWidth * 0.035,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black87,
                                         ),
@@ -1280,7 +1280,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         '870,000 UGX',
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.04,
+                                          fontSize: screenWidth * 0.035,
                                           fontWeight: FontWeight.bold,
                                           color: const Color(0xFFCB471B),
                                         ),
@@ -1830,7 +1830,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                   'See more',
                   style: TextStyle(
                     color: const Color.fromARGB(255, 228, 172, 1),
-                    fontSize: screenWidth * 0.045,
+                    fontSize: screenWidth * 0.035,
                     fontWeight: FontWeight.w900,
                     fontFamily: 'Abril Fatface',
                     shadows: [
@@ -1859,7 +1859,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                   'Show less',
                   style: TextStyle(
                     color: const Color.fromARGB(255, 228, 172, 1),
-                    fontSize: screenWidth * 0.045,
+                    fontSize: screenWidth * 0.035,
                     fontWeight: FontWeight.w900,
                     fontFamily: 'Abril Fatface',
                     shadows: [
