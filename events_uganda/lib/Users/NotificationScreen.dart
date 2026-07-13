@@ -86,6 +86,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   final MapController _mapController = MapController();
   LatLng _pinPosition = const LatLng(0.3136, 32.5811);
   int _currentNavIndex = 0;
+  bool _showArchived = false;
   bool _isNavbarVisible = true;
   late AnimationController _navbarSlideController;
   late Animation<Offset> _navbarSlideAnimation;
@@ -653,6 +654,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                                     ),
                                   );
                               case _MenuAction.archived:
+                                  setState(() => _showArchived = true);
                                 case _MenuAction.help:
                                   break;
                               }
@@ -765,7 +767,9 @@ class _NotificationScreenState extends State<NotificationScreen>
                           ),
                         ),
                         SizedBox(height: screenHeight * 0.035),
-                        if (_sortedToday.isEmpty && _sortedYesterday.isEmpty)
+                        if (_showArchived)
+                          _buildArchivedView(screenWidth, screenHeight)
+                        else if (_sortedToday.isEmpty && _sortedYesterday.isEmpty)
                           Padding(
                             padding: EdgeInsets.only(top: screenHeight * 0.06),
                             child: const EmptyNotificationsWidget(),
