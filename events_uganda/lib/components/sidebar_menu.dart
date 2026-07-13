@@ -111,7 +111,7 @@ class _SidebarPanelState extends State<_SidebarPanel>
                 _buildSearch(w),
                 Expanded(
                   child: SingleChildScrollView(
-                    physics: const BouncyScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.only(bottom: w * 0.04),
                     child: Column(
                       children: [
