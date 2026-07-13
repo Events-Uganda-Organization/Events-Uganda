@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:events_uganda/Users/NotificationDetailsScreen.dart';
 import 'package:events_uganda/Users/NotificationSettingsScreen.dart';
+import 'package:events_uganda/components/archived_empty_animation.dart';
 import 'package:events_uganda/components/empty_notifications_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -1147,6 +1148,90 @@ class _NotificationScreenState extends State<NotificationScreen>
       }
     }
     return widgets;
+  }
+
+  Widget _buildArchivedView(double screenWidth, double screenHeight) {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: screenWidth * 0.04, right: screenWidth * 0.04),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () => setState(() => _showArchived = false),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.03,
+                    vertical: screenWidth * 0.015,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF3CA9B).withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: const Color(0xFFF3CA9B)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.arrow_back_rounded,
+                        size: screenWidth * 0.04,
+                        color: const Color(0xFFCB471B),
+                      ),
+                      SizedBox(width: screenWidth * 0.015),
+                      Text(
+                        'Active Notifications',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w600,
+                          fontSize: screenWidth * 0.03,
+                          color: const Color(0xFFCB471B),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '${_archivedNotifications.length} archived',
+                style: TextStyle(
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w400,
+                  fontSize: screenWidth * 0.028,
+                  color: Colors.black45,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: screenHeight * 0.025),
+        if (_archivedNotifications.isEmpty)
+          _buildArchivedEmptyState(screenWidth)
+        else
+          ..._archivedNotifications.map(
+            (item) => Padding(
+              padding: EdgeInsets.only(
+                left: screenWidth * 0.04,
+                right: screenWidth * 0.04,
+                bottom: screenHeight * 0.015,
+              ),
+              child: _buildCardContent(item, screenWidth),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildArchivedEmptyState(double screenWidth) {
+    return Padding(
+      padding: EdgeInsets.only(top: screenWidth * 0.08),
+      child: Center(
+        child: SizedBox(
+          width: screenWidth * 0.8,
+          child: const ArchivedEmptyAnimation(),
+        ),
+      ),
+    );
   }
 
   Widget _buildDismissibleCard({
