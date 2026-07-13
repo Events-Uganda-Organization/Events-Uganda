@@ -396,6 +396,47 @@ class _SidebarPanel extends StatelessWidget {
                                                 w: w,
                                                 h: h,
                                             ),
+                                            SizedBox(height: h * 0.015),
+                                            Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: w * 0.0),
+                                                child: Material(
+                                                    color: Colors.transparent,
+                                                    borderRadius: BorderRadius.circular(14),
+                                                    child: InkWell(
+                                                        borderRadius: BorderRadius.circular(14),
+                                                        onTap: () {},
+                                                        child: Container(
+                                                            padding: EdgeInsets.symmetric(
+                                                                horizontal: w * 0.03,
+                                                                vertical: h * 0.015,
+                                                            ),
+                                                            decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(14),
+                                                                color: const Color(0xFFFF5F5F).withValues(alpha: 0.08),
+                                                            ),
+                                                            child: Row(
+                                                                children: [
+                                                                    Icon(
+                                                                        Icons.logout_rounded,
+                                                                        color: const Color(0xFFFF5F5F),
+                                                                        size: w * 0.045,
+                                                                    ),
+                                                                    SizedBox(width: w * 0.03),
+                                                                    Text(
+                                                                        'Log Out',
+                                                                        style: TextStyle(
+                                                                            fontFamily: 'Montserrat',
+                                                                            fontSize: w * 0.034,
+                                                                            fontWeight: FontWeight.w600,
+                                                                            color: const Color(0xFFFF5F5F),
+                                                                        ),
+                                                                    ),
+                                                                ],
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
                                         ],
                                     ),
                                 ),
