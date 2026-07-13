@@ -93,50 +93,76 @@ class _SidebarPanel extends StatelessWidget {
                                     ),
                                 ),
                                 SizedBox(height: h * 0.025),
-                                Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                        padding: EdgeInsets.only(left: w * 0.046),
-                                        child: SizedBox(
-                                            width: w * 0.12,
-                                            height: w * 0.12,
-                                            child: DecoratedBox(
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    gradient: RadialGradient(
-                                                        colors: [
-                                                            const Color(0xFFF7DCB0),
-                                                            const Color(0xFFF3CA9B),
-                                                            const Color(0xFFE8B87E),
+                                Padding(
+                                    padding: EdgeInsets.only(left: w * 0.046),
+                                    child: Row(
+                                        children: [
+                                            SizedBox(
+                                                width: w * 0.12,
+                                                height: w * 0.12,
+                                                child: DecoratedBox(
+                                                    decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        gradient: RadialGradient(
+                                                            colors: [
+                                                                const Color(0xFFF7DCB0),
+                                                                const Color(0xFFF3CA9B),
+                                                                const Color(0xFFE8B87E),
+                                                            ],
+                                                            stops: const [0.0, 0.6, 1.0],
+                                                        ),
+                                                        border: Border.all(color: Colors.white, width: 2.5),
+                                                        boxShadow: [
+                                                            BoxShadow(
+                                                                color: const Color(0xFFD4A050).withValues(alpha: 0.25),
+                                                                blurRadius: 8,
+                                                                offset: const Offset(0, 3),
+                                                            ),
+                                                            BoxShadow(
+                                                                color: Colors.black.withValues(alpha: 0.06),
+                                                                blurRadius: 4,
+                                                                offset: const Offset(0, 1),
+                                                            ),
                                                         ],
-                                                        stops: const [0.0, 0.6, 1.0],
                                                     ),
-                                                    border: Border.all(color: Colors.white, width: 2.5),
-                                                    boxShadow: [
-                                                        BoxShadow(
-                                                            color: const Color(0xFFD4A050).withValues(alpha: 0.25),
-                                                            blurRadius: 8,
-                                                            offset: const Offset(0, 3),
-                                                        ),
-                                                        BoxShadow(
-                                                            color: Colors.black.withValues(alpha: 0.06),
-                                                            blurRadius: 4,
-                                                            offset: const Offset(0, 1),
-                                                        ),
-                                                    ],
-                                                ),
-                                                child: Padding(
-                                                    padding: EdgeInsets.all(w * 0.022),
-                                                    child: FittedBox(
-                                                        fit: BoxFit.contain,
-                                                        child: Icon(
-                                                            Icons.person_rounded,
-                                                            color: const Color(0xFF2C1810),
+                                                    child: Padding(
+                                                        padding: EdgeInsets.all(w * 0.022),
+                                                        child: FittedBox(
+                                                            fit: BoxFit.contain,
+                                                            child: Icon(
+                                                                Icons.person_rounded,
+                                                                color: const Color(0xFF2C1810),
+                                                            ),
                                                         ),
                                                     ),
                                                 ),
                                             ),
-                                        ),
+                                            SizedBox(width: w * 0.03),
+                                            Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                    Text(
+                                                        'Events Uganda',
+                                                        style: TextStyle(
+                                                            fontFamily: 'Poppins',
+                                                            fontSize: w * 0.038,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.black,
+                                                        ),
+                                                    ),
+                                                    SizedBox(height: h * 0.004),
+                                                    Text(
+                                                        'Referral Code',
+                                                        style: TextStyle(
+                                                            fontFamily: 'Poppins',
+                                                            fontSize: w * 0.026,
+                                                            color: const Color(0xFFFC8A07),
+                                                        ),
+                                                    ),
+                                                ],
+                                            ),
+                                        ],
                                     ),
                                 ),
                             ],
