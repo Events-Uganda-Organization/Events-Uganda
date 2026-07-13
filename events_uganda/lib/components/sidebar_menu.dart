@@ -158,7 +158,7 @@ class _SidebarPanel extends StatelessWidget {
                                                             Icon(
                                                                 Icons.verified,
                                                                 color: const Color(0xFF1DA1F2),
-                                                                size: w * 0.032,
+                                                                size: w * 0.042,
                                                             ),
                                                         ],
                                                     ),
