@@ -187,6 +187,13 @@ class _SidebarPanel extends StatelessWidget {
                                                 color: const Color(0xFFCD7C20),
                                                 width: 1.5,
                                             ),
+                                            boxShadow: [
+                                                BoxShadow(
+                                                    color: const Color(0xFFCD7C20).withValues(alpha: 0.2),
+                                                    blurRadius: 6,
+                                                    offset: const Offset(0, 3),
+                                                ),
+                                            ],
                                         ),
                                         child: Padding(
                                             padding: EdgeInsets.symmetric(horizontal: w * 0.025),
