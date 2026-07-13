@@ -1545,6 +1545,146 @@ class _NotificationScreenState extends State<NotificationScreen>
     SnackbarHelper.show(context, message, icon: icon);
   }
 
+  void _showHelpSheet() {
+    final w = MediaQuery.of(context).size.width;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (ctx) => Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFF1A1A2E),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+        padding: EdgeInsets.fromLTRB(w * 0.06, w * 0.04, w * 0.06, w * 0.08),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: w * 0.12,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.white24,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            SizedBox(height: w * 0.06),
+            Text(
+              'Help & Support',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w700,
+                fontSize: w * 0.05,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: w * 0.04),
+            _buildHelpOption(
+              icon: Icons.chat_outlined,
+              label: 'Live Chat',
+              subtitle: 'Talk to our support team',
+              screenWidth: w,
+            ),
+            _buildHelpOption(
+              icon: Icons.email_outlined,
+              label: 'Email Us',
+              subtitle: 'support@eventsuganda.com',
+              screenWidth: w,
+            ),
+            _buildHelpOption(
+              icon: Icons.help_outline_rounded,
+              label: 'FAQ',
+              subtitle: 'Find answers to common questions',
+              screenWidth: w,
+            ),
+            _buildHelpOption(
+              icon: Icons.phone_outlined,
+              label: 'Call Us',
+              subtitle: '+256 700 123456',
+              screenWidth: w,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHelpOption({
+    required IconData icon,
+    required String label,
+    required String subtitle,
+    required double screenWidth,
+  }) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: screenWidth * 0.025),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            Navigator.pop(context);
+            _showStyledSnackBar('$label selected', Icons.check_circle_outline);
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.04,
+              vertical: screenWidth * 0.04,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: screenWidth * 0.1,
+                  height: screenWidth * 0.1,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF3CA9B).withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(icon, color: const Color(0xFFF3CA9B), size: screenWidth * 0.05),
+                ),
+                SizedBox(width: screenWidth * 0.035),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w600,
+                        fontSize: screenWidth * 0.038,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: screenWidth * 0.005),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w400,
+                        fontSize: screenWidth * 0.028,
+                        color: Colors.white54,
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+                Icon(
+                  Icons.chevron_right,
+                  color: Colors.white38,
+                  size: screenWidth * 0.05,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   void _markAllAsRead() {
     setState(() {
       for (final item in _todayNotifications) {
