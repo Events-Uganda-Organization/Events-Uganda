@@ -29,44 +29,8 @@ class SidebarMenu {
                                 reverseCurve: Curves.easeInCubic,
                             )),
                             child: child,
-                                ),
-                                SizedBox(height: h * 0.015),
-                                Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: w * 0.046),
-                                    child: Column(
-                                        children: [
-                                            _NavItem(
-                                                icon: Icons.home_rounded,
-                                                label: 'Home',
-                                                isActive: true,
-                                                w: w,
-                                                h: h,
-                                            ),
-                                            SizedBox(height: h * 0.006),
-                                            _NavItem(
-                                                icon: Icons.calendar_month_rounded,
-                                                label: 'My Bookings',
-                                                w: w,
-                                                h: h,
-                                            ),
-                                            SizedBox(height: h * 0.006),
-                                            _NavItem(
-                                                icon: Icons.favorite_rounded,
-                                                label: 'My Favorites',
-                                                w: w,
-                                                h: h,
-                                            ),
-                                            SizedBox(height: h * 0.006),
-                                            _NavItem(
-                                                icon: Icons.chat_rounded,
-                                                label: 'Messages',
-                                                w: w,
-                                                h: h,
-                                            ),
-                                        ],
-                                    ),
-                                ),
-                            ],
+                        ),
+                    ],
                 );
             },
         );
@@ -282,6 +246,42 @@ class _SidebarPanel extends StatelessWidget {
                                                     color: Colors.grey,
                                                     thickness: 0.8,
                                                 ),
+                                            ),
+                                        ],
+                                    ),
+                                ),
+                                SizedBox(height: h * 0.015),
+                                Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: w * 0.046),
+                                    child: Column(
+                                        children: [
+                                            _NavItem(
+                                                icon: Icons.home_rounded,
+                                                label: 'Home',
+                                                isActive: true,
+                                                w: w,
+                                                h: h,
+                                            ),
+                                            SizedBox(height: h * 0.006),
+                                            _NavItem(
+                                                icon: Icons.calendar_month_rounded,
+                                                label: 'My Bookings',
+                                                w: w,
+                                                h: h,
+                                            ),
+                                            SizedBox(height: h * 0.006),
+                                            _NavItem(
+                                                icon: Icons.favorite_rounded,
+                                                label: 'My Favorites',
+                                                w: w,
+                                                h: h,
+                                            ),
+                                            SizedBox(height: h * 0.006),
+                                            _NavItem(
+                                                icon: Icons.chat_rounded,
+                                                label: 'Messages',
+                                                w: w,
+                                                h: h,
                                             ),
                                         ],
                                     ),
