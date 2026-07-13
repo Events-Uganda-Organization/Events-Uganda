@@ -270,10 +270,6 @@ class _BoxBodyPainter extends CustomPainter {
       ..color = const Color(0xFFD4A574)
       ..style = PaintingStyle.fill;
 
-    final bodyDarkPaint = Paint()
-      ..color = const Color(0xFFC49565)
-      ..style = PaintingStyle.fill;
-
     final strokePaint = Paint()
       ..color = const Color(0xFF8B6B4A)
       ..style = PaintingStyle.stroke
