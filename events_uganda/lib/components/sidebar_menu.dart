@@ -146,24 +146,26 @@ class _CartoonAvatarState extends State<_CartoonAvatar>
 
                 return Transform.scale(
                     scale: scale,
-                    child: Container(
+                    child: SizedBox(
                         width: size,
                         height: size,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: const Color(0xFFF3CA9B),
-                            border: Border.all(color: Colors.white, width: 3),
-                            boxShadow: [
-                                BoxShadow(
-                                    color: const Color(0xFFD4A050).withValues(alpha: 0.3),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 4),
+                        child: DecoratedBox(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: const Color(0xFFF3CA9B),
+                                border: Border.all(color: Colors.white, width: 3),
+                                boxShadow: [
+                                    BoxShadow(
+                                        color: const Color(0xFFD4A050).withValues(alpha: 0.3),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 4),
+                                    ),
+                                ],
+                            ),
+                            child: ClipOval(
+                                child: CustomPaint(
+                                    painter: _CartoonPersonPainter(),
                                 ),
-                            ],
-                        ),
-                        child: ClipOVal(
-                            child: CustomPaint(
-                                painter: _CartoonPersonPainter(),
                             ),
                         ),
                     ),
