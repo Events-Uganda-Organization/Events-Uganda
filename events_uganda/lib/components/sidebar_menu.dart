@@ -339,6 +339,38 @@ class _SidebarPanel extends StatelessWidget {
                                         ],
                                     ),
                                 ),
+                                SizedBox(height: h * 0.02),
+                                Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: w * 0.046),
+                                    child: Row(
+                                        children: [
+                                            const Expanded(
+                                                child: Divider(
+                                                    color: Colors.grey,
+                                                    thickness: 0.8,
+                                                ),
+                                            ),
+                                            Padding(
+                                                padding: EdgeInsets.symmetric(horizontal: w * 0.025),
+                                                child: Text(
+                                                    'Support',
+                                                    style: TextStyle(
+                                                        color: Colors.black87,
+                                                        fontSize: w * 0.03,
+                                                        fontFamily: 'Epunda Slab',
+                                                        fontWeight: FontWeight.w400,
+                                                    ),
+                                                ),
+                                            ),
+                                            const Expanded(
+                                                child: Divider(
+                                                    color: Colors.grey,
+                                                    thickness: 0.8,
+                                                ),
+                                            ),
+                                        ],
+                                    ),
+                                ),
                             ],
                         ),
                     ),
