@@ -145,7 +145,7 @@ class _SidebarPanel extends StatelessWidget {
                                                     Text(
                                                         'Events Uganda',
                                                         style: TextStyle(
-                                                            fontFamily: 'Poppins',
+                                                            fontFamily: 'Montserrat',
                                                             fontSize: w * 0.038,
                                                             fontWeight: FontWeight.bold,
                                                             color: Colors.black,
@@ -155,7 +155,7 @@ class _SidebarPanel extends StatelessWidget {
                                                     Text(
                                                         'Referral Code',
                                                         style: TextStyle(
-                                                            fontFamily: 'Poppins',
+                                                            fontFamily: 'Montserrat',
                                                             fontSize: w * 0.026,
                                                             color: const Color(0xFFFC8A07),
                                                         ),
