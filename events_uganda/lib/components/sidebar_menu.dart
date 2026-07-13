@@ -371,6 +371,34 @@ class _SidebarPanel extends StatelessWidget {
                                         ],
                                     ),
                                 ),
+                                SizedBox(height: h * 0.015),
+                                Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: w * 0.046),
+                                    child: Column(
+                                        children: [
+                                            _NavItem(
+                                                icon: Icons.headset_mic_rounded,
+                                                label: 'Contact Support',
+                                                w: w,
+                                                h: h,
+                                            ),
+                                            SizedBox(height: h * 0.006),
+                                            _NavItem(
+                                                icon: Icons.quiz_rounded,
+                                                label: 'FAQs',
+                                                w: w,
+                                                h: h,
+                                            ),
+                                            SizedBox(height: h * 0.006),
+                                            _NavItem(
+                                                icon: Icons.flag_rounded,
+                                                label: 'Report a Problem',
+                                                w: w,
+                                                h: h,
+                                            ),
+                                        ],
+                                    ),
+                                ),
                             ],
                         ),
                     ),
