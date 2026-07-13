@@ -903,7 +903,9 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
             Positioned(
               top: screenHeight * 0.03,
               left: screenWidth * 0.04,
-              child: Container(
+              child: GestureDetector(
+                onTap: () => SidebarMenu.show(context),
+                child: Container(
                 width: screenWidth * 0.128,
                 height: screenWidth * 0.128,
                 decoration: BoxDecoration(
@@ -926,6 +928,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     fit: BoxFit.contain,
                   ),
                 ),
+              ),
               ),
             ),
             // Greeting and user name to the right of the menu circle
