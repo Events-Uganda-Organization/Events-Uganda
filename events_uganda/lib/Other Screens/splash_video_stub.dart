@@ -3,7 +3,8 @@ import 'package:video_player/video_player.dart';
 
 class SplashVideoPlayer extends StatefulWidget {
   final double screenWidth;
-  const SplashVideoPlayer({super.key, required this.screenWidth});
+  final VoidCallback? onVideoEnded;
+  const SplashVideoPlayer({super.key, required this.screenWidth, this.onVideoEnded});
   @override
   State<SplashVideoPlayer> createState() => _SplashVideoPlayerState();
 }
