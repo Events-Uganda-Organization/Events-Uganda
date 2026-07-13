@@ -142,14 +142,25 @@ class _SidebarPanel extends StatelessWidget {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 mainAxisSize: MainAxisSize.min,
                                                 children: [
-                                                    Text(
-                                                        'Events Uganda',
-                                                        style: TextStyle(
-                                                            fontFamily: 'Montserrat',
-                                                            fontSize: w * 0.038,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Colors.black,
-                                                        ),
+                                                    Row(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                            Text(
+                                                                'Events Uganda',
+                                                                style: TextStyle(
+                                                                    fontFamily: 'Montserrat',
+                                                                    fontSize: w * 0.038,
+                                                                    fontWeight: FontWeight.bold,
+                                                                    color: Colors.black,
+                                                                ),
+                                                            ),
+                                                            SizedBox(width: w * 0.015),
+                                                            Icon(
+                                                                Icons.verified,
+                                                                color: const Color(0xFF1DA1F2),
+                                                                size: w * 0.032,
+                                                            ),
+                                                        ],
                                                     ),
                                                     SizedBox(height: h * 0.004),
                                                     Text(
