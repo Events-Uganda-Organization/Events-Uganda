@@ -29,12 +29,18 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _navigate() {
+    _navTimer?.cancel();
     if (mounted) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const OnboardingScreen1()),
       );
     }
+  }
+
+  void _onVideoEnded() {
+    _navTimer?.cancel();
+    _navigate();
   }
 
   @override
@@ -54,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: SizedBox.expand(
         child: Stack(
           children: [
-            SizedBox.expand(child: SplashVideoPlayer(screenWidth: screenWidth)),
+            SizedBox.expand(child: SplashVideoPlayer(screenWidth: screenWidth, onVideoEnded: _onVideoEnded)),
             SizedBox.expand(
               child: Container(color: Colors.black.withValues(alpha: 0.25)),
             ),
