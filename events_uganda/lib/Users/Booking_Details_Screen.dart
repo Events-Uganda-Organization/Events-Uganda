@@ -333,7 +333,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
             Positioned(
               top: screenHeight * 0.03 + screenWidth * 0.015,
               left:
-                  screenWidth * 0.04 + screenWidth * 0.128 + screenWidth * 0.03,
+                  screenWidth * 0.04 + screenWidth * 0.128 + screenWidth * 0.025,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -352,7 +352,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                     style: TextStyle(
                       fontFamily: 'Abril Fatface',
                       fontWeight: FontWeight.w600,
-                      fontSize: screenWidth * 0.038,
+                      fontSize: screenWidth * 0.0258,
                       color: Colors.black,
                     ),
                   ),
@@ -619,7 +619,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                     style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize:
-                                                          screenWidth * 0.035,
+                                                          screenWidth * 0.0255,
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       fontFamily: 'Montserrat',
@@ -651,7 +651,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                     style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize:
-                                                          screenWidth * 0.035,
+                                                          screenWidth * 0.0255,
                                                       fontWeight:
                                                           FontWeight.w500,
                                                       fontFamily: 'Montserrat',
@@ -776,7 +776,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                     'Enter Your Venue Type',
                                                 labelStyle: TextStyle(
                                                   fontFamily: 'Montserrat',
-                                                  fontSize: screenWidth * 0.035,
+                                                  fontSize: screenWidth * 0.0255,
                                                   color: Colors.grey[500],
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -784,7 +784,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                     'Enter Your Venue Type',
                                                 hintStyle: TextStyle(
                                                   fontFamily: 'Montserrat',
-                                                  fontSize: screenWidth * 0.035,
+                                                  fontSize: screenWidth * 0.0255,
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -837,7 +837,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                               ),
                                               style: TextStyle(
                                                 fontFamily: 'Montserrat',
-                                                fontSize: screenWidth * 0.035,
+                                                fontSize: screenWidth * 0.0255,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -858,14 +858,14 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         labelText: 'Venue Location',
                                         labelStyle: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
+                                          fontSize: screenWidth * 0.0255,
                                           color: Colors.grey[500],
                                           fontWeight: FontWeight.w600,
                                         ),
                                         hintText: 'Enter Venue Location',
                                         hintStyle: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
+                                          fontSize: screenWidth * 0.0255,
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -908,7 +908,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       ),
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
-                                        fontSize: screenWidth * 0.035,
+                                        fontSize: screenWidth * 0.0255,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -918,7 +918,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       'Drag the location pin to your location',
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
-                                        fontSize: screenWidth * 0.03,
+                                        fontSize: screenWidth * 0.025,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -1085,7 +1085,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                 hintStyle: TextStyle(
                                                   fontFamily: 'Montserrat',
                                                   fontSize:
-                                                      screenWidth * 0.035,
+                                                      screenWidth * 0.0255,
                                                   color: Colors.grey[400],
                                                   fontWeight: FontWeight.w500,
                                                 ),
@@ -1126,7 +1126,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                               style: TextStyle(
                                                 fontFamily: 'Montserrat',
                                                 fontSize:
-                                                    screenWidth * 0.035,
+                                                    screenWidth * 0.0255,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w500,
                                               ),
@@ -1194,7 +1194,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         'Base Price',
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
+                                          fontSize: screenWidth * 0.0255,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black87,
                                         ),
@@ -1203,7 +1203,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         '800,000 UGX',
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
+                                          fontSize: screenWidth * 0.0255,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black87,
                                         ),
@@ -1218,7 +1218,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         'Transport Fee',
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
+                                          fontSize: screenWidth * 0.0255,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black87,
                                         ),
@@ -1227,7 +1227,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         '50,000 UGX',
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
+                                          fontSize: screenWidth * 0.0255,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black87,
                                         ),
@@ -1242,7 +1242,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         'Service Fee',
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
+                                          fontSize: screenWidth * 0.0255,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black87,
                                         ),
@@ -1251,7 +1251,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         '20,000 UGX',
                                         style: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
+                                          fontSize: screenWidth * 0.0255,
                                           fontWeight: FontWeight.w400,
                                           color: Colors.black87,
                                         ),
@@ -1347,19 +1347,19 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         child: _agreeToPolicy
                                             ? Icon(
                                                 Icons.check,
-                                                size: screenWidth * 0.035,
+                                                size: screenWidth * 0.0255,
                                                 color: Colors.white,
                                               )
                                             : null,
                                       ),
                                     ),
-                                    SizedBox(width: screenWidth * 0.03),
+                                    SizedBox(width: screenWidth * 0.025),
                                     Expanded(
                                       child: RichText(
                                         text: TextSpan(
                                           style: TextStyle(
                                             fontFamily: 'Montserrat',
-                                            fontSize: screenWidth * 0.032,
+                                            fontSize: screenWidth * 0.0252,
                                             color: Colors.black87,
                                           ),
                                           children: [
@@ -1426,7 +1426,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         color: Colors.white,
                                         fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.w700,
-                                        fontSize: screenWidth * 0.035,
+                                        fontSize: screenWidth * 0.0255,
                                       ),
                                     ),
                                   ),
@@ -1437,8 +1437,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               top:
                                   screenHeight * 0.59 -
                                   offset, // Provider name sits above
-                             left: screenWidth * 0.03,
-                             right: screenWidth * 0.03,
+                             left: screenWidth * 0.025,
+                             right: screenWidth * 0.025,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -1463,7 +1463,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   'Available',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: screenWidth * 0.03,
+                                    fontSize: screenWidth * 0.025,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Abril Fatface',
                                   ),
@@ -1990,8 +1990,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: screenWidth * 0.035,
-          height: screenWidth * 0.035,
+          width: screenWidth * 0.0255,
+          height: screenWidth * 0.0255,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: isActive ? const Color(0xFFCB471B) : Colors.grey.shade300,
@@ -2001,7 +2001,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
         Text(
           label,
           style: TextStyle(
-            fontSize: screenWidth * 0.028,
+            fontSize: screenWidth * 0.023,
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.w500,
             color: isActive ? const Color(0xFFCB471B) : Colors.grey,
