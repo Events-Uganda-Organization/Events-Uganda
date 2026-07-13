@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
     _fadeIn = CurvedAnimation(parent: _animController, curve: Curves.easeOutCubic);
     _animController.forward();
-    _navTimer = Timer(const Duration(seconds: 20), _navigate);
+    _navTimer = Timer(const Duration(seconds: 20), _navigate); // fallback if video never ends
   }
 
   void _navigate() {

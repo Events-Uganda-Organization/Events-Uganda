@@ -29,6 +29,11 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
     _controller.initialize().then((_) {
       _controller.setLooping(false);
       _controller.setVolume(0);
+      _controller.addListener(() {
+        if (_controller.value.isCompleted) {
+          widget.onVideoEnded?.call();
+        }
+      });
       _controller.play();
       if (mounted) setState(() => _initialized = true);
     }).catchError((_) {

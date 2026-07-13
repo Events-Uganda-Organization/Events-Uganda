@@ -4,7 +4,8 @@ import 'package:web/web.dart' as web;
 
 class SplashVideoPlayer extends StatefulWidget {
   final double screenWidth;
-  const SplashVideoPlayer({super.key, required this.screenWidth});
+  final VoidCallback? onVideoEnded;
+  const SplashVideoPlayer({super.key, required this.screenWidth, this.onVideoEnded});
   @override
   State<SplashVideoPlayer> createState() => _SplashVideoPlayerState();
 }
@@ -37,6 +38,9 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
           _videoElement!.autoplay = true;
           _videoElement!.playsInline = true;
           _videoElement!.playbackRate = 1.3;
+          _videoElement!.onEnded.listen((_) {
+            widget.onVideoEnded?.call();
+          });
           _videoElement!.style
             ..width = '100%'
             ..height = '100%'
