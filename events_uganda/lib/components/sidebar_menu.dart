@@ -103,20 +103,37 @@ class _SidebarPanel extends StatelessWidget {
                                             child: DecoratedBox(
                                                 decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
-                                                    color: const Color(0xFFF3CA9B),
-                                                    border: Border.all(color: Colors.white, width: 3),
+                                                    gradient: RadialGradient(
+                                                        colors: [
+                                                            const Color(0xFFF7DCB0),
+                                                            const Color(0xFFF3CA9B),
+                                                            const Color(0xFFE8B87E),
+                                                        ],
+                                                        stops: const [0.0, 0.6, 1.0],
+                                                    ),
+                                                    border: Border.all(color: Colors.white, width: 2.5),
                                                     boxShadow: [
                                                         BoxShadow(
-                                                            color: const Color(0xFFD4A050).withValues(alpha: 0.3),
-                                                            blurRadius: 10,
-                                                            offset: const Offset(0, 4),
+                                                            color: const Color(0xFFD4A050).withValues(alpha: 0.25),
+                                                            blurRadius: 8,
+                                                            offset: const Offset(0, 3),
+                                                        ),
+                                                        BoxShadow(
+                                                            color: Colors.black.withValues(alpha: 0.06),
+                                                            blurRadius: 4,
+                                                            offset: const Offset(0, 1),
                                                         ),
                                                     ],
                                                 ),
-                                                child: const Icon(
-                                                    Icons.person,
-                                                    color: Colors.black,
-                                                    size: 36,
+                                                child: Padding(
+                                                    padding: EdgeInsets.all(w * 0.022),
+                                                    child: FittedBox(
+                                                        fit: BoxFit.contain,
+                                                        child: Icon(
+                                                            Icons.person_rounded,
+                                                            color: const Color(0xFF2C1810),
+                                                        ),
+                                                    ),
                                                 ),
                                             ),
                                         ),
