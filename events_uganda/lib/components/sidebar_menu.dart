@@ -457,9 +457,10 @@ class _SidebarPanel extends StatelessWidget {
                                                                     begin: Alignment.topCenter,
                                                                     end: Alignment.bottomCenter,
                                                                     colors: [
-                                                                        const Color(0xFFD9D9D9),
                                                                         Colors.white,
+                                                                        const Color(0xFFD9D9D9),
                                                                     ],
+                                                                    stops: const [0.0, 0.61],
                                                                 ),
                                                             ),
                                                         ),
