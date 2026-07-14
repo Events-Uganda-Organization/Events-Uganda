@@ -80,6 +80,7 @@ class _SplashScreenState extends State<SplashScreen>
                           angle: 55 * (math.pi / 180),
                           child: SizedBox(
                             width: screenWidth,
+                            height: screenHeight * 0.35,
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
