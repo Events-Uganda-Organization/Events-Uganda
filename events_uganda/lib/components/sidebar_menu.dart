@@ -447,11 +447,11 @@ class _SidebarPanel extends StatelessWidget {
                                         child: ClipRRect(
                                             borderRadius: BorderRadius.circular(20),
                                             child: SizedBox(
-                                                height: h * 0.09,
+                                                height: h * 0.18,
                                                 child: Stack(
                                                     children: [
                                                         Container(
-                                                            height: h * 0.09,
+                                                            height: h * 0.18,
                                                             decoration: BoxDecoration(
                                                                 gradient: LinearGradient(
                                                                     begin: Alignment.topCenter,
