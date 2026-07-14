@@ -98,9 +98,8 @@ class _SidebarPanel extends StatelessWidget {
                                 ),
                             ],
                         ),
-                        child: SingleChildScrollView(
-                            child: Column(
-                                children: [
+                        child: ListView(
+                            children: [
                                     SizedBox(height: h * 0.025),
                                     Center(
                                         child: Row(
