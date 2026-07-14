@@ -10,29 +10,62 @@ class SidebarMenu {
             transitionDuration: const Duration(milliseconds: 400),
             pageBuilder: (ctx, anim1, anim2) => const _SidebarPanel(),
             transitionBuilder: (ctx, anim, secondaryAnim, child) {
-                return Stack(
-                    children: [
-                        GestureDetector(
-                            onTap: () => Navigator.of(ctx).pop(),
-                            child: FadeTransition(
-                                opacity: anim,
-                                child: Container(color: Colors.transparent),
-                            ),
-                        ),
-                        SlideTransition(
-                            position: Tween<Offset>(
-                                begin: const Offset(-1, 0),
-                                end: Offset.zero,
-                            ).animate(CurvedAnimation(
-                                parent: anim,
-                                curve: Curves.easeOutCubic,
-                                reverseCurve: Curves.easeInCubic,
-                            )),
-                            child: child,
-                        ),
-                    ],
-                );
+                return _SidebarTransition(anim: anim, child: child);
             },
+        );
+    }
+}
+
+class _SidebarTransition extends StatefulWidget {
+    final Animation<double> anim;
+    final Widget child;
+
+    const _SidebarTransition({required this.anim, required this.child});
+
+    @override
+    State<_SidebarTransition> createState() => _SidebarTransitionState();
+}
+
+class _SidebarTransitionState extends State<_SidebarTransition> {
+    late final CurvedAnimation _curve;
+    late final Animation<Offset> _slideAnimation;
+
+    @override
+    void initState() {
+        super.initState();
+        _curve = CurvedAnimation(
+            parent: widget.anim,
+            curve: Curves.easeOutCubic,
+            reverseCurve: Curves.easeInCubic,
+        );
+        _slideAnimation = Tween<Offset>(
+            begin: const Offset(-1, 0),
+            end: Offset.zero,
+        ).animate(_curve);
+    }
+
+    @override
+    void dispose() {
+        _curve.dispose();
+        super.dispose();
+    }
+
+    @override
+    Widget build(BuildContext context) {
+        return Stack(
+            children: [
+                GestureDetector(
+                    onTap: () => Navigator.of(context).pop(),
+                    child: FadeTransition(
+                        opacity: widget.anim,
+                        child: Container(color: Colors.transparent),
+                    ),
+                ),
+                SlideTransition(
+                    position: _slideAnimation,
+                    child: widget.child,
+                ),
+            ],
         );
     }
 }
