@@ -554,7 +554,6 @@ class _SidebarPanel extends StatelessWidget {
                                 ],
                             ),
                         ),
-                    ),
                 ),
             ),
         );
