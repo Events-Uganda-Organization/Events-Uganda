@@ -501,11 +501,16 @@ class _SidebarPanel extends StatelessWidget {
                                                             child: Padding(
                                                                 padding: EdgeInsets.only(top: h * 0.01),
                                                                 child: Container(
-                                                                    width: w * 0.07,
-                                                                    height: w * 0.07,
+                                                                    width: w * 0.1,
+                                                                    height: w * 0.1,
                                                                     decoration: BoxDecoration(
                                                                         color: Colors.white,
                                                                         borderRadius: BorderRadius.circular(8),
+                                                                    ),
+                                                                    child: Icon(
+                                                                        Icons.card_giftcard,
+                                                                        color: const Color(0xFFDC8520),
+                                                                        size: w * 0.06,
                                                                     ),
                                                                 ),
                                                             ),
