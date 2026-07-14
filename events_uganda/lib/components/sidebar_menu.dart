@@ -498,8 +498,8 @@ class _SidebarPanel extends StatelessWidget {
                                                         ),
                                                         Align(
                                                             alignment: Alignment.topCenter,
-                                                            child: Padding(
-                                                                padding: EdgeInsets.only(top: -h * 0.012),
+                                                            child: Transform.translate(
+                                                                offset: Offset(0, -h * 0.012),
                                                                 child: Container(
                                                                     width: w * 0.045,
                                                                     height: w * 0.045,
