@@ -460,7 +460,21 @@ class _SidebarPanel extends StatelessWidget {
                                                                         const Color(0xFFCD7C20),
                                                                         Colors.white,
                                                                     ],
-                                                                    stops: const [0.0, 0.61],
+                                                                    stops: const [0.0, 0.9],
+                                                                ),
+                                                            ),
+                                                        ),
+                                                        Align(
+                                                            alignment: Alignment.topCenter,
+                                                            child: Padding(
+                                                                padding: EdgeInsets.only(top: -h * 0.012),
+                                                                child: Container(
+                                                                    width: w * 0.045,
+                                                                    height: w * 0.045,
+                                                                    decoration: BoxDecoration(
+                                                                        color: Colors.white,
+                                                                        borderRadius: BorderRadius.circular(8),
+                                                                    ),
                                                                 ),
                                                             ),
                                                         ),
