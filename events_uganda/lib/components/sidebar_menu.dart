@@ -515,6 +515,35 @@ class _SidebarPanel extends StatelessWidget {
                                                                 ),
                                                             ),
                                                         ),
+                                                        Align(
+                                                            alignment: Alignment.topCenter,
+                                                            child: Padding(
+                                                                padding: EdgeInsets.only(top: h * 0.09),
+                                                                child: Column(
+                                                                    mainAxisSize: MainAxisSize.min,
+                                                                    children: [
+                                                                        Text(
+                                                                            'Invite Friends',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Montserrat',
+                                                                                fontSize: w * 0.032,
+                                                                                fontWeight: FontWeight.bold,
+                                                                                color: Colors.white,
+                                                                            ),
+                                                                        ),
+                                                                        SizedBox(height: h * 0.004),
+                                                                        Text(
+                                                                            'Earn rewards when your friends book',
+                                                                            style: TextStyle(
+                                                                                fontFamily: 'Montserrat',
+                                                                                fontSize: w * 0.022,
+                                                                                color: Colors.white,
+                                                                            ),
+                                                                        ),
+                                                                    ],
+                                                                ),
+                                                            ),
+                                                        ),
                                                         Positioned(
                                                             top: -h * 0.025,
                                                             right: -w * 0.02,
