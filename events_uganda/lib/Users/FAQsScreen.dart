@@ -21,7 +21,7 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
     String _userFullName = '';
     String? _profilePicUrl;
     bool _isNavbarVisible = true;
-    bool _canForwardReturn = false;
+    final bool _canForwardReturn = false;
     late AnimationController _navbarSlideController;
     late Animation<Offset> _navbarSlideAnimation;
     int _expandedIndex = -1;
