@@ -735,6 +735,7 @@ class _AnimatedInviteCardState extends State<_AnimatedInviteCard> with SingleTic
                                                             Text(
                                                                 t.$1,
                                                                 textAlign: TextAlign.center,
+                                                                overflow: TextOverflow.ellipsis,
                                                                 style: TextStyle(
                                                                     fontFamily: 'Montserrat',
                                                                     fontSize: w * 0.032,
@@ -746,6 +747,7 @@ class _AnimatedInviteCardState extends State<_AnimatedInviteCard> with SingleTic
                                                             Text(
                                                                 t.$2,
                                                                 textAlign: TextAlign.center,
+                                                                overflow: TextOverflow.ellipsis,
                                                                 style: TextStyle(
                                                                     fontFamily: 'Montserrat',
                                                                     fontSize: w * 0.022,
@@ -773,6 +775,7 @@ class _AnimatedInviteCardState extends State<_AnimatedInviteCard> with SingleTic
                                                         child: Text(
                                                             'Get Started',
                                                             textAlign: TextAlign.center,
+                                                            overflow: TextOverflow.ellipsis,
                                                             style: TextStyle(
                                                                 fontFamily: 'Montserrat',
                                                                 fontSize: w * 0.028,
