@@ -285,7 +285,7 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
                         ),
                         Positioned(
                             top: h * 0.03 + w * 0.015,
-                            left: w * 0.04 + w * 0.128 + w * 0.02 + w * 0.128 + w * 0.03,
+                            left: w * 0.04 + w * 0.128 + w * 0.03,
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
