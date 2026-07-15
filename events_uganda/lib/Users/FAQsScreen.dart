@@ -161,55 +161,54 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
                         Positioned(
                             top: h * 0.03,
                             left: w * 0.04,
-                            child: Row(
-                                children: [
-                                    GestureDetector(
-                                        onTap: () => Navigator.of(context).maybePop(),
-                                        child: Container(
-                                            width: w * 0.128,
-                                            height: w * 0.128,
-                                            decoration: BoxDecoration(
-                                                color: const Color(0xFFF3CA9B),
-                                                borderRadius: BorderRadius.circular(15),
+                            child: GestureDetector(
+                                onTap: () => SidebarMenu.show(context),
+                                child: Container(
+                                    width: w * 0.128,
+                                    height: w * 0.128,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(color: Colors.white, width: 3),
+                                        boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.black.withValues(alpha: 0.15),
+                                                blurRadius: 10,
+                                                offset: const Offset(0, 7),
                                             ),
-                                            child: Center(
-                                                child: Icon(
-                                                    Icons.chevron_left,
-                                                    color: Colors.black,
-                                                    size: w * 0.10,
-                                                ),
-                                            ),
+                                        ],
+                                    ),
+                                    child: Center(
+                                        child: Image.asset(
+                                            'assets/vectors/menu.png',
+                                            width: w * 0.07,
+                                            height: w * 0.07,
+                                            fit: BoxFit.contain,
                                         ),
                                     ),
-                                    SizedBox(width: w * 0.02),
-                                    GestureDetector(
-                                        onTap: () => SidebarMenu.show(context),
-                                        child: Container(
-                                            width: w * 0.128,
-                                            height: w * 0.128,
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                shape: BoxShape.circle,
-                                                border: Border.all(color: Colors.white, width: 3),
-                                                boxShadow: [
-                                                    BoxShadow(
-                                                        color: Colors.black.withValues(alpha: 0.15),
-                                                        blurRadius: 10,
-                                                        offset: const Offset(0, 7),
-                                                    ),
-                                                ],
-                                            ),
-                                            child: Center(
-                                                child: Image.asset(
-                                                    'assets/vectors/menu.png',
-                                                    width: w * 0.07,
-                                                    height: w * 0.07,
-                                                    fit: BoxFit.contain,
-                                                ),
-                                            ),
+                                ),
+                            ),
+                        ),
+                        Positioned(
+                            top: h * 0.03 + w * 0.128 + h * 0.015,
+                            left: w * 0.04,
+                            child: GestureDetector(
+                                onTap: () => Navigator.of(context).maybePop(),
+                                child: Container(
+                                    width: w * 0.128,
+                                    height: w * 0.128,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xFFF3CA9B),
+                                        borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Center(
+                                        child: Icon(
+                                            Icons.chevron_left,
+                                            color: Colors.black,
+                                            size: w * 0.10,
                                         ),
                                     ),
-                                ],
+                                ),
                             ),
                         ),
                         Positioned(
@@ -313,7 +312,7 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
                             ),
                         ),
                         Positioned(
-                            top: h * 0.03 + w * 0.128 + h * 0.02,
+                            top: h * 0.03 + w * 0.128 + h * 0.015 + w * 0.128 + h * 0.02,
                             left: w * 0.04,
                             right: w * 0.04,
                             bottom: h * 0.12,
