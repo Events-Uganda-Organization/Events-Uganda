@@ -612,6 +612,14 @@ class _AnimatedInviteCardState extends State<_AnimatedInviteCard> with SingleTic
         Color(0xFF8715C9),
     ];
 
+    static const _texts = [
+        ('Invite Friends', 'Earn rewards when your friends book'),
+        ('Share Events', 'Get 500 points for every referral'),
+        ('Review & Rate', 'Earn 200 points per event review'),
+    ];
+
+    int get _currentSegment => (_controller.value * 3).floor() % 3;
+
     @override
     void initState() {
         super.initState();
@@ -699,23 +707,35 @@ class _AnimatedInviteCardState extends State<_AnimatedInviteCard> with SingleTic
                                     child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                            Text(
-                                                'Invite Friends',
-                                                style: TextStyle(
-                                                    fontFamily: 'Montserrat',
-                                                    fontSize: w * 0.032,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white,
-                                                ),
+                                            AnimatedBuilder(
+                                                animation: _controller,
+                                                builder: (context, child) {
+                                                    final t = _texts[_currentSegment];
+                                                    return Text(
+                                                        t.$1,
+                                                        style: TextStyle(
+                                                            fontFamily: 'Montserrat',
+                                                            fontSize: w * 0.032,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.white,
+                                                        ),
+                                                    );
+                                                },
                                             ),
                                             SizedBox(height: h * 0.004),
-                                            Text(
-                                                'Earn rewards when your friends book',
-                                                style: TextStyle(
-                                                    fontFamily: 'Montserrat',
-                                                    fontSize: w * 0.022,
-                                                    color: Colors.white,
-                                                ),
+                                            AnimatedBuilder(
+                                                animation: _controller,
+                                                builder: (context, child) {
+                                                    final t = _texts[_currentSegment];
+                                                    return Text(
+                                                        t.$2,
+                                                        style: TextStyle(
+                                                            fontFamily: 'Montserrat',
+                                                            fontSize: w * 0.022,
+                                                            color: Colors.white,
+                                                        ),
+                                                    );
+                                                },
                                             ),
                                             SizedBox(height: h * 0.015),
                                             Material(
