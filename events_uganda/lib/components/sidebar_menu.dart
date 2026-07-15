@@ -719,29 +719,30 @@ class _AnimatedInviteCardState extends State<_AnimatedInviteCard> with SingleTic
                                                 animation: _controller,
                                                 builder: (context, child) {
                                                     final t = _texts[_currentSegment];
-                                                    return Text(
-                                                        t.$1,
-                                                        style: TextStyle(
-                                                            fontFamily: 'Montserrat',
-                                                            fontSize: w * 0.032,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Colors.white,
-                                                        ),
-                                                    );
-                                                },
-                                            ),
-                                            SizedBox(height: h * 0.004),
-                                            AnimatedBuilder(
-                                                animation: _controller,
-                                                builder: (context, child) {
-                                                    final t = _texts[_currentSegment];
-                                                    return Text(
-                                                        t.$2,
-                                                        style: TextStyle(
-                                                            fontFamily: 'Montserrat',
-                                                            fontSize: w * 0.022,
-                                                            color: Colors.white,
-                                                        ),
+                                                    return Column(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                            Text(
+                                                                t.$1,
+                                                                textAlign: TextAlign.center,
+                                                                style: TextStyle(
+                                                                    fontFamily: 'Montserrat',
+                                                                    fontSize: w * 0.032,
+                                                                    fontWeight: FontWeight.bold,
+                                                                    color: Colors.white,
+                                                                ),
+                                                            ),
+                                                            SizedBox(height: h * 0.004),
+                                                            Text(
+                                                                t.$2,
+                                                                textAlign: TextAlign.center,
+                                                                style: TextStyle(
+                                                                    fontFamily: 'Montserrat',
+                                                                    fontSize: w * 0.022,
+                                                                    color: Colors.white,
+                                                                ),
+                                                            ),
+                                                        ],
                                                     );
                                                 },
                                             ),
