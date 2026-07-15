@@ -541,32 +541,7 @@ class _SidebarPanel extends StatelessWidget {
                                                                             ),
                                                                         ),
                                                                         SizedBox(height: h * 0.015),
-                                                                        Material(
-                                                                            color: Colors.transparent,
-                                                                            borderRadius: BorderRadius.circular(15),
-                                                                            child: InkWell(
-                                                                                borderRadius: BorderRadius.circular(15),
-                                                                                onTap: () {},
-                                                                                child: Container(
-                                                                                    width: w * 0.4,
-                                                                                    padding: EdgeInsets.symmetric(vertical: h * 0.012),
-                                                                                    decoration: BoxDecoration(
-                                                                                        color: Colors.white,
-                                                                                        borderRadius: BorderRadius.circular(15),
-                                                                                    ),
-                                                                                    child: Text(
-                                                                                        'Get Started',
-                                                                                        textAlign: TextAlign.center,
-                                                                                        style: TextStyle(
-                                                                                            fontFamily: 'Montserrat',
-                                                                                            fontSize: w * 0.028,
-                                                                                            fontWeight: FontWeight.w600,
-                                                                                            color: const Color(0xFFCD7C20),
-                                                                                        ),
-                                                                                    ),
-                                                                                ),
-                                                                            ),
-                                                                        ),
+                                                                        _AnimatedButton(w: w, h: h),
                                                                     ],
                                                                 ),
                                                             ),
