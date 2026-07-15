@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Auth/Sign_In_Screen.dart';
 
 class SidebarMenu {
     static void show(BuildContext context) {
@@ -437,7 +438,14 @@ class _SidebarPanel extends StatelessWidget {
                                                         borderRadius: BorderRadius.circular(14),
                                                         child: InkWell(
                                                             borderRadius: BorderRadius.circular(14),
-                                                            onTap: () {},
+                                                            onTap: () {
+                                                                Navigator.of(context).pop();
+                                                                Navigator.pushAndRemoveUntil(
+                                                                    context,
+                                                                    MaterialPageRoute(builder: (ctx) => const SignInScreen()),
+                                                                    (route) => false,
+                                                                );
+                                                            },
                                                             child: Container(
                                                                 padding: EdgeInsets.symmetric(
                                                                     horizontal: w * 0.03,
