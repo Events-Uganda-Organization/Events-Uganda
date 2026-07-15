@@ -15,7 +15,6 @@ class FAQsScreen extends StatefulWidget {
 }
 
 class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
-    final FocusNode _searchFocus = FocusNode();
     Timer? _countdownTimer;
     Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
     int _currentNavIndex = 2;
@@ -118,9 +117,6 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
     void initState() {
         super.initState();
         _startCountdown();
-        _searchFocus.addListener(() {
-            setState(() => _isSearchFocused = _searchFocus.hasFocus);
-        });
         _loadUserProfile();
         _navbarSlideController = AnimationController(
             vsync: this,
@@ -138,7 +134,6 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
     void dispose() {
         _navbarSlideController.dispose();
         _countdownTimer?.cancel();
-        _searchFocus.dispose();
         super.dispose();
     }
 
