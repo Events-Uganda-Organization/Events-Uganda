@@ -116,6 +116,7 @@ class _SidebarPanel extends StatelessWidget {
                                                 SizedBox(width: w * 0.02),
                                                 Text(
                                                     'Events Uganda',
+                                                    overflow: TextOverflow.ellipsis,
                                                     style: TextStyle(
                                                         fontFamily: 'Poppins',
                                                         fontSize: w * 0.045,
@@ -181,6 +182,7 @@ class _SidebarPanel extends StatelessWidget {
                                                             children: [
                                                                 Text(
                                                                     'Events Uganda',
+                                                                    overflow: TextOverflow.ellipsis,
                                                                     style: TextStyle(
                                                                         fontFamily: 'Montserrat',
                                                                         fontSize: w * 0.038,
@@ -199,6 +201,7 @@ class _SidebarPanel extends StatelessWidget {
                                                         SizedBox(height: h * 0.004),
                                                         Text(
                                                             'Referral Code',
+                                                            overflow: TextOverflow.ellipsis,
                                                             style: TextStyle(
                                                                 fontFamily: 'Montserrat',
                                                                 fontSize: w * 0.026,
@@ -241,6 +244,7 @@ class _SidebarPanel extends StatelessWidget {
                                                         SizedBox(width: w * 0.015),
                                                         Text(
                                                             'Search...',
+                                                            overflow: TextOverflow.ellipsis,
                                                             style: TextStyle(
                                                                 fontFamily: 'Montserrat',
                                                                 fontSize: w * 0.028,
@@ -267,6 +271,7 @@ class _SidebarPanel extends StatelessWidget {
                                                     padding: EdgeInsets.symmetric(horizontal: w * 0.025),
                                                     child: Text(
                                                         'Main Navigation',
+                                                        overflow: TextOverflow.ellipsis,
                                                         style: TextStyle(
                                                             color: Colors.black87,
                                                             fontSize: w * 0.03,
@@ -335,6 +340,7 @@ class _SidebarPanel extends StatelessWidget {
                                                     padding: EdgeInsets.symmetric(horizontal: w * 0.025),
                                                     child: Text(
                                                         'Event Management',
+                                                        overflow: TextOverflow.ellipsis,
                                                         style: TextStyle(
                                                             color: Colors.black87,
                                                             fontSize: w * 0.03,
@@ -388,6 +394,7 @@ class _SidebarPanel extends StatelessWidget {
                                                     padding: EdgeInsets.symmetric(horizontal: w * 0.025),
                                                     child: Text(
                                                         'Support',
+                                                        overflow: TextOverflow.ellipsis,
                                                         style: TextStyle(
                                                             color: Colors.black87,
                                                             fontSize: w * 0.03,
@@ -465,6 +472,7 @@ class _SidebarPanel extends StatelessWidget {
                                                                         SizedBox(width: w * 0.03),
                                                                         Text(
                                                                             'Log Out',
+                                                                            overflow: TextOverflow.ellipsis,
                                                                             style: TextStyle(
                                                                                 fontFamily: 'Montserrat',
                                                                                 fontSize: w * 0.034,
@@ -540,6 +548,7 @@ class _NavItem extends StatelessWidget {
                                         SizedBox(width: w * 0.03),
                                         Text(
                                             label,
+                                            overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
                                                 fontFamily: 'Montserrat',
                                                 fontSize: w * 0.032,
@@ -579,6 +588,7 @@ class _NavItem extends StatelessWidget {
                                 SizedBox(width: w * 0.03),
                                 Text(
                                     label,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontSize: w * 0.032,
