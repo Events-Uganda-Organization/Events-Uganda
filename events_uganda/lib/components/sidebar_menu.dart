@@ -592,3 +592,203 @@ class _NavItem extends StatelessWidget {
     }
 }
 
+class _AnimatedInviteCard extends StatefulWidget {
+    final double w;
+    final double h;
+
+    const _AnimatedInviteCard({required this.w, required this.h});
+
+    @override
+    State<_AnimatedInviteCard> createState() => _AnimatedInviteCardState();
+}
+
+class _AnimatedInviteCardState extends State<_AnimatedInviteCard> with SingleTickerProviderStateMixin {
+    late AnimationController _controller;
+    late Animation<Color?> _animation;
+
+    static const _colors = [
+        Color(0xFFCD7C20),
+        Color(0xFF283ED0),
+        Color(0xFF8715C9),
+    ];
+
+    @override
+    void initState() {
+        super.initState();
+        _controller = AnimationController(
+            duration: const Duration(seconds: 6),
+            vsync: this,
+        )..repeat();
+
+        _animation = TweenSequence<Color?>([
+            TweenSequenceItem(
+                weight: 1,
+                tween: ColorTween(begin: _colors[0], end: _colors[1]),
+            ),
+            TweenSequenceItem(
+                weight: 1,
+                tween: ColorTween(begin: _colors[1], end: _colors[2]),
+            ),
+            TweenSequenceItem(
+                weight: 1,
+                tween: ColorTween(begin: _colors[2], end: _colors[0]),
+            ),
+        ]).animate(_controller);
+    }
+
+    @override
+    void dispose() {
+        _controller.dispose();
+        super.dispose();
+    }
+
+    @override
+    Widget build(BuildContext context) {
+        final w = widget.w;
+        final h = widget.h;
+        return Padding(
+            padding: EdgeInsets.symmetric(horizontal: w * 0.046),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: SizedBox(
+                    height: h * 0.23,
+                    child: Stack(
+                        children: [
+                            AnimatedBuilder(
+                                animation: _animation,
+                                builder: (context, child) {
+                                    return Container(
+                                        height: h * 0.23,
+                                        decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                colors: [
+                                                    _animation.value ?? _colors[0],
+                                                    Colors.white,
+                                                ],
+                                                stops: const [0.0, 0.9],
+                                            ),
+                                        ),
+                                    );
+                                },
+                            ),
+                            Align(
+                                alignment: Alignment.topCenter,
+                                child: Padding(
+                                    padding: EdgeInsets.only(top: h * 0.01),
+                                    child: Container(
+                                        width: w * 0.1,
+                                        height: w * 0.1,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(8),
+                                        ),
+                                        child: Icon(
+                                            Icons.card_giftcard,
+                                            color: const Color(0xFFDC8520),
+                                            size: w * 0.06,
+                                        ),
+                                    ),
+                                ),
+                            ),
+                            Align(
+                                alignment: Alignment.topCenter,
+                                child: Padding(
+                                    padding: EdgeInsets.only(top: h * 0.09),
+                                    child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                            Text(
+                                                'Invite Friends',
+                                                style: TextStyle(
+                                                    fontFamily: 'Montserrat',
+                                                    fontSize: w * 0.032,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                ),
+                                            ),
+                                            SizedBox(height: h * 0.004),
+                                            Text(
+                                                'Earn rewards when your friends book',
+                                                style: TextStyle(
+                                                    fontFamily: 'Montserrat',
+                                                    fontSize: w * 0.022,
+                                                    color: Colors.white,
+                                                ),
+                                            ),
+                                            SizedBox(height: h * 0.015),
+                                            Material(
+                                                color: Colors.transparent,
+                                                borderRadius: BorderRadius.circular(15),
+                                                child: InkWell(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                    onTap: () {},
+                                                    child: Container(
+                                                        width: w * 0.4,
+                                                        padding: EdgeInsets.symmetric(vertical: h * 0.012),
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.white,
+                                                            borderRadius: BorderRadius.circular(15),
+                                                        ),
+                                                        child: Text(
+                                                            'Get Started',
+                                                            textAlign: TextAlign.center,
+                                                            style: TextStyle(
+                                                                fontFamily: 'Montserrat',
+                                                                fontSize: w * 0.028,
+                                                                fontWeight: FontWeight.w600,
+                                                                color: const Color(0xFFCD7C20),
+                                                            ),
+                                                        ),
+                                                    ),
+                                                ),
+                                            ),
+                                        ],
+                                    ),
+                                ),
+                            ),
+                            Positioned(
+                                top: -h * 0.025,
+                                right: -w * 0.02,
+                                child: Container(
+                                    width: w * 0.22,
+                                    height: w * 0.22,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: const Color(0xFFD9D9D9).withValues(alpha: 0.15),
+                                    ),
+                                ),
+                            ),
+                            Positioned(
+                                bottom: -h * 0.015,
+                                left: -w * 0.01,
+                                child: Container(
+                                    width: w * 0.14,
+                                    height: w * 0.14,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: const Color(0xFFD9D9D9).withValues(alpha: 0.12),
+                                    ),
+                                ),
+                            ),
+                            Positioned(
+                                top: h * 0.015,
+                                right: w * 0.12,
+                                child: Container(
+                                    width: w * 0.07,
+                                    height: w * 0.07,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: const Color(0xFFD9D9D9).withValues(alpha: 0.18),
+                                    ),
+                                ),
+                            ),
+                        ],
+                    ),
+                ),
+            ),
+        );
+    }
+}
+
