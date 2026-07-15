@@ -5,6 +5,7 @@ import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Booking_Details_Screen.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
+import 'package:events_uganda/components/sidebar_menu.dart';
 
 class DateOfBookingScreen extends StatefulWidget {
   final int? categoryIndex;
