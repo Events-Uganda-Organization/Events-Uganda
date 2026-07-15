@@ -218,7 +218,7 @@ class _SidebarPanel extends StatelessWidget {
                                     Padding(
                                         padding: EdgeInsets.only(left: w * 0.046, right: w * 0.046),
                                         child: Container(
-                                            height: h * 0.035,
+                                            height: h * 0.045,
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(30),
                                                 border: Border.all(
