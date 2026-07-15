@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
+import 'package:events_uganda/components/sidebar_menu.dart';
 
 class ServiceListingSaloonScreen extends StatefulWidget {
   final String? category;
@@ -1023,7 +1024,9 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
             Positioned(
               top: screenHeight * 0.03,
               left: screenWidth * 0.04,
-              child: Container(
+              child: GestureDetector(
+                onTap: () => SidebarMenu.show(context),
+                child: Container(
                 width: screenWidth * 0.128,
                 height: screenWidth * 0.128,
                 decoration: BoxDecoration(
@@ -1045,6 +1048,7 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
                     height: screenWidth * 0.07,
                     fit: BoxFit.contain,
                   ),
+                ),
                 ),
               ),
             ),

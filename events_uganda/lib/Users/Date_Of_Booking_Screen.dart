@@ -495,7 +495,9 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
             Positioned(
               top: screenHeight * 0.03,
               left: screenWidth * 0.04,
-              child: Container(
+              child: GestureDetector(
+                onTap: () => SidebarMenu.show(context),
+                child: Container(
                 width: screenWidth * 0.128,
                 height: screenWidth * 0.128,
                 decoration: BoxDecoration(
@@ -517,6 +519,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                     height: screenWidth * 0.07,
                     fit: BoxFit.contain,
                   ),
+                ),
                 ),
               ),
             ),

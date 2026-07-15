@@ -12,6 +12,7 @@ import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Saloon_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_CarHiring_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Decoration_Screen.dart';
+import 'package:events_uganda/components/sidebar_menu.dart';
 
 class AllCategoriesScreen extends StatefulWidget {
   const AllCategoriesScreen({super.key});
@@ -1032,7 +1033,9 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
             Positioned(
               top: screenHeight * 0.03,
               left: screenWidth * 0.04,
-              child: Container(
+              child: GestureDetector(
+                onTap: () => SidebarMenu.show(context),
+                child: Container(
                 width: screenWidth * 0.128,
                 height: screenWidth * 0.128,
                 decoration: BoxDecoration(
@@ -1054,6 +1057,7 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                     height: screenWidth * 0.07,
                     fit: BoxFit.contain,
                   ),
+                ),
                 ),
               ),
             ),
