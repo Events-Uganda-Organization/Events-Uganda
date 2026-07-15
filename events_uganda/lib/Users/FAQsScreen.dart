@@ -21,6 +21,7 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
     String _userFullName = '';
     String? _profilePicUrl;
     bool _isNavbarVisible = true;
+    bool _canForwardReturn = false;
     late AnimationController _navbarSlideController;
     late Animation<Offset> _navbarSlideAnimation;
     int _expandedIndex = -1;
@@ -192,23 +193,60 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
                         Positioned(
                             top: h * 0.03 + w * 0.128 + h * 0.015,
                             left: w * 0.04,
-                            child: GestureDetector(
-                                onTap: () => Navigator.of(context).maybePop(),
-                                child: Container(
-                                    width: w * 0.128,
-                                    height: w * 0.128,
-                                    decoration: BoxDecoration(
-                                        color: const Color(0xFFF3CA9B),
-                                        borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: Center(
-                                        child: Icon(
-                                            Icons.chevron_left,
-                                            color: Colors.black,
-                                            size: w * 0.10,
+                            child: Row(
+                                children: [
+                                    GestureDetector(
+                                        onTap: () => Navigator.of(context).maybePop(),
+                                        child: Container(
+                                            width: w * 0.128,
+                                            height: w * 0.128,
+                                            decoration: BoxDecoration(
+                                                color: const Color(0xFFF3CA9B),
+                                                borderRadius: BorderRadius.circular(15),
+                                            ),
+                                            child: Center(
+                                                child: Icon(
+                                                    Icons.chevron_left,
+                                                    color: Colors.black,
+                                                    size: w * 0.10,
+                                                ),
+                                            ),
                                         ),
                                     ),
-                                ),
+                                    SizedBox(width: w * 0.02),
+                                    Opacity(
+                                        opacity: _canForwardReturn ? 1.0 : 0.35,
+                                        child: GestureDetector(
+                                            onTap: _canForwardReturn
+                                                ? () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => const FAQsScreen(),
+                                                        ),
+                                                    ).then((_) {
+                                                        if (mounted) setState(() {});
+                                                    });
+                                                }
+                                                : null,
+                                            child: Container(
+                                                width: w * 0.128,
+                                                height: w * 0.128,
+                                                decoration: BoxDecoration(
+                                                    color: const Color(0xFFF3CA9B),
+                                                    borderRadius: BorderRadius.circular(15),
+                                                ),
+                                                child: Center(
+                                                    child: Icon(
+                                                        Icons.chevron_right,
+                                                        color: Colors.black,
+                                                        size: w * 0.10,
+                                                    ),
+                                                ),
+                                            ),
+                                        ),
+                                    ),
+                                ],
                             ),
                         ),
                         Positioned(
