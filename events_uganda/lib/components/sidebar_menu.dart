@@ -506,6 +506,7 @@ class _NavItem extends StatelessWidget {
     final bool isActive;
     final double w;
     final double h;
+    final VoidCallback? onTap;
 
     const _NavItem({
         required this.icon,
@@ -513,6 +514,7 @@ class _NavItem extends StatelessWidget {
         this.isActive = false,
         required this.w,
         required this.h,
+        this.onTap,
     });
 
     @override
@@ -522,7 +524,7 @@ class _NavItem extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             child: InkWell(
                 borderRadius: BorderRadius.circular(16),
-                onTap: () {},
+                onTap: onTap ?? () {},
                 child: Container(
                     padding: EdgeInsets.only(
                         left: isActive ? w * 0.0 : w * 0.03,
