@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Auth/Sign_In_Screen.dart';
+import '../Users/FAQsScreen.dart';
 
 class SidebarMenu {
     static void show(BuildContext context) {
@@ -429,6 +430,13 @@ class _SidebarPanel extends StatelessWidget {
                                                     label: 'FAQs',
                                                     w: w,
                                                     h: h,
+                                                    onTap: () {
+                                                        Navigator.of(context).pop();
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(builder: (ctx) => const FAQsScreen()),
+                                                        );
+                                                    },
                                                 ),
                                                 SizedBox(height: h * 0.006),
                                                 _NavItem(
