@@ -703,3 +703,89 @@ class _NavItem extends StatelessWidget {
         );
     }
 }
+
+class _AnimatedButton extends StatefulWidget {
+    final double w;
+    final double h;
+
+    const _AnimatedButton({required this.w, required this.h});
+
+    @override
+    State<_AnimatedButton> createState() => _AnimatedButtonState();
+}
+
+class _AnimatedButtonState extends State<_AnimatedButton> with SingleTickerProviderStateMixin {
+    late AnimationController _controller;
+    late Animation<Color?> _animation;
+
+    static const _colors = [
+        Color(0xFFCD7C20),
+        Color(0xFF283ED0),
+        Color(0xFF8715C9),
+    ];
+
+    @override
+    void initState() {
+        super.initState();
+        _controller = AnimationController(
+            duration: const Duration(seconds: 6),
+            vsync: this,
+        )..repeat();
+
+        _animation = TweenSequence<Color?>([
+            TweenSequenceItem(
+                weight: 1,
+                tween: ColorTween(begin: _colors[0], end: _colors[1]),
+            ),
+            TweenSequenceItem(
+                weight: 1,
+                tween: ColorTween(begin: _colors[1], end: _colors[2]),
+            ),
+            TweenSequenceItem(
+                weight: 1,
+                tween: ColorTween(begin: _colors[2], end: _colors[0]),
+            ),
+        ]).animate(_controller);
+    }
+
+    @override
+    void dispose() {
+        _controller.dispose();
+        super.dispose();
+    }
+
+    @override
+    Widget build(BuildContext context) {
+        return AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+                return Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(15),
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(15),
+                        onTap: () {},
+                        child: Container(
+                            width: widget.w * 0.4,
+                            padding: EdgeInsets.symmetric(vertical: widget.h * 0.012),
+                            decoration: BoxDecoration(
+                                color: _animation.value,
+                                borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text(
+                                'Get Started',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontFamily: 'Montserrat',
+                                    fontSize: widget.w * 0.028,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                ),
+                            ),
+                        ),
+                    ),
+                );
+            },
+        );
+    }
+}
