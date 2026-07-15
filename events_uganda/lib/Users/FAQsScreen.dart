@@ -16,7 +16,6 @@ class FAQsScreen extends StatefulWidget {
 
 class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
     final FocusNode _searchFocus = FocusNode();
-    bool _isSearchFocused = false;
     Timer? _countdownTimer;
     Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
     int _currentNavIndex = 2;
