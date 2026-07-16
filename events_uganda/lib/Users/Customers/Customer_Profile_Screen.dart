@@ -577,11 +577,11 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _paymentMethod(Icon(Icons.credit_card, size: w * 0.045, color: Colors.grey.shade700), 'Visa ending in 4242', Icons.check_circle, Colors.green, w),
+        _paymentMethod(Icon(Icons.credit_card, size: w * 0.04, color: Colors.grey.shade700), 'Visa ending in 4242', Icons.check_circle, Colors.green, w),
         SizedBox(height: h * 0.008),
-        _paymentMethod(Image.asset('assets/images/mtn.png', width: w * 0.045, height: w * 0.045), 'MTN Mobile Money', Icons.radio_button_unchecked, Colors.grey, w),
+        _paymentMethod(Image.asset('assets/images/mtn.png', width: w * 0.04, height: w * 0.04), 'MTN Mobile Money', Icons.radio_button_unchecked, Colors.grey, w),
         SizedBox(height: h * 0.008),
-        _paymentMethod(Icon(Icons.account_balance_wallet, size: w * 0.045, color: Colors.grey.shade700), 'Airtel Money', Icons.radio_button_unchecked, Colors.grey, w),
+        _paymentMethod(Icon(Icons.account_balance_wallet, size: w * 0.04, color: Colors.grey.shade700), 'Airtel Money', Icons.radio_button_unchecked, Colors.grey, w),
         SizedBox(height: h * 0.012),
         SizedBox(
           width: double.infinity,
@@ -621,7 +621,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
 
   Widget _paymentMethod(Widget leading, String label, IconData trailingIcon, Color trailingColor, double w) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: w * 0.025, vertical: w * 0.02),
+      padding: EdgeInsets.symmetric(horizontal: w * 0.025, vertical: w * 0.015),
       decoration: BoxDecoration(
         color: Colors.grey.shade50,
         borderRadius: BorderRadius.circular(10),
@@ -630,9 +630,10 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
       child: Row(
         children: [
           leading,
-          SizedBox(width: w * 0.025),
-          Expanded(child: Text(label, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032))),
-          Icon(trailingIcon, size: w * 0.04, color: trailingColor),
+          SizedBox(width: w * 0.015),
+          Expanded(child: Text(label, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03))),
+          SizedBox(width: w * 0.01),
+          Icon(trailingIcon, size: w * 0.035, color: trailingColor),
         ],
       ),
     );
