@@ -24,35 +24,15 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
 
   final ImagePicker _picker = ImagePicker();
 
-  late AnimationController _arrowController;
-
   @override
   void initState() {
     super.initState();
     _loadUser();
-    _arrowController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 250),
-    );
-  }
-
-  @override
-  void dispose() {
-    _arrowController.dispose();
-    super.dispose();
   }
 
   void _toggleSection(int index) {
     setState(() {
-      if (_expandedIndex == index) {
-        _expandedIndex = null;
-        _arrowController.reverse();
-      } else {
-        if (_expandedIndex == null) {
-          _arrowController.forward();
-        }
-        _expandedIndex = index;
-      }
+      _expandedIndex = _expandedIndex == index ? null : index;
     });
   }
 
@@ -83,6 +63,449 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     );
   }
 
+  // ─── Menu Sections ────────────────────────────────────────────────
+
+  Widget _buildMenuSection(Size screen, double w, double h) {
+    final sections = [
+      _SectionData(Icons.person_outline, 'My Profile', const Color(0xFF027AC1), const Color(0xFFCAE8FA), _buildProfileContent(w, h)),
+      _SectionData(Icons.shopping_bag_outlined, 'My Orders', const Color(0xFFF19124), const Color(0xFFFFE0B2), _buildOrdersContent(w, h)),
+      _SectionData(Icons.attach_money, 'Refund', const Color(0xFFE24B19), const Color(0xFFF7A083), _buildRefundContent(w, h)),
+      _SectionData(Icons.password_rounded, 'Change Password', const Color(0xFF238E05), const Color(0xFF98EE81), _buildPasswordContent(w, h)),
+      _SectionData(Icons.payment_outlined, 'Payment Methods', const Color(0xFF5F0593), const Color(0xFFC491E2), _buildPaymentContent(w, h)),
+      _SectionData(Icons.help_outline_rounded, 'Help & Support', const Color(0xFFD76005), const Color(0xFFF3D8C4), _buildHelpContent(w, h)),
+      _SectionData(Icons.logout_rounded, 'Logout', const Color(0xFF009465), const Color(0xFF89E0C4), _buildLogoutContent(w, h), isLogout: true),
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: w * 0.01),
+          child: Text(
+            'Account Overview',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w800,
+              color: Colors.black,
+              fontSize: w * 0.045,
+            ),
+          ),
+        ),
+        SizedBox(height: h * 0.02),
+        ...List.generate(sections.length, (i) => _buildDropdownItem(screen, w, h, sections[i], i)),
+      ],
+    );
+  }
+
+  Widget _buildDropdownItem(Size screen, double w, double h, _SectionData section, int index) {
+    final isExpanded = _expandedIndex == index;
+    final iconSize = w * (28 / 375);
+    final indent = w * (45 / 375) + w * 0.06;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        GestureDetector(
+          onTap: () => _toggleSection(index),
+          behavior: HitTestBehavior.opaque,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: h * 0.006),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: w * (45 / 375),
+                      height: w * (45 / 375),
+                      decoration: BoxDecoration(
+                        color: section.bgColor,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Center(
+                        child: Icon(section.icon, color: section.color, size: iconSize),
+                      ),
+                    ),
+                    SizedBox(width: w * 0.06),
+                    Expanded(
+                      child: Text(
+                        section.label,
+                        style: TextStyle(
+                          fontFamily: 'Abril Fatface',
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                          fontSize: w * 0.045,
+                        ),
+                      ),
+                    ),
+                    AnimatedRotation(
+                      turns: isExpanded ? 0.5 : 0.0,
+                      duration: const Duration(milliseconds: 250),
+                      curve: Curves.easeInOut,
+                      child: Icon(
+                        section.isLogout ? Icons.logout : Icons.keyboard_arrow_down_rounded,
+                        color: Colors.black,
+                        size: w * 0.06,
+                      ),
+                    ),
+                  ],
+                ),
+                AnimatedSize(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeInOut,
+                  alignment: Alignment.topCenter,
+                  child: isExpanded
+                      ? Padding(
+                          padding: EdgeInsets.only(left: indent, top: h * 0.012, bottom: h * 0.006),
+                          child: section.content,
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: indent),
+          child: Divider(color: Colors.black.withValues(alpha: 0.6), thickness: 1, height: 1),
+        ),
+        if (!isExpanded) SizedBox(height: h * 0.024),
+      ],
+    );
+  }
+
+  // ─── Dropdown Content Builders ─────────────────────────────────────
+
+  Widget _buildProfileContent(double w, double h) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _infoRow(Icons.person_outline, 'Full Name', _userFullName, w),
+        SizedBox(height: h * 0.01),
+        _infoRow(Icons.email_outlined, 'Email', _userEmail, w),
+        SizedBox(height: h * 0.014),
+        SizedBox(
+          width: double.infinity,
+          height: 38,
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF027AC1),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              elevation: 0,
+            ),
+            child: const Text('Edit Profile', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+          ),
+        ),
+        SizedBox(height: h * 0.012),
+      ],
+    );
+  }
+
+  Widget _buildOrdersContent(double w, double h) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _orderTile('Wedding Catering', '25 Jul 2026', 'Completed', w),
+        SizedBox(height: h * 0.008),
+        _orderTile('Birthday Setup', '18 Jun 2026', 'In Progress', w),
+        SizedBox(height: h * 0.008),
+        _orderTile('Corporate Event', '02 May 2026', 'Completed', w),
+        SizedBox(height: h * 0.012),
+      ],
+    );
+  }
+
+  Widget _orderTile(String title, String date, String status, double w) {
+    final isCompleted = status == 'Completed';
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: w * 0.03, vertical: w * 0.025),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w700, fontSize: w * 0.036)),
+                SizedBox(height: 2),
+                Text(date, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.028, color: Colors.grey.shade600)),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: isCompleted ? Colors.green.shade50 : Colors.orange.shade50,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              status,
+              style: TextStyle(
+                fontFamily: 'Montserrat', fontSize: w * 0.026,
+                color: isCompleted ? Colors.green.shade700 : Colors.orange.shade700,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRefundContent(double w, double h) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Refunds are processed within 5-7 business days after approval.',
+          style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade700, height: 1.4),
+        ),
+        SizedBox(height: h * 0.012),
+        Container(
+          padding: EdgeInsets.all(w * 0.03),
+          decoration: BoxDecoration(
+            color: Colors.orange.shade50,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.orange.shade100),
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.info_outline, color: Colors.orange.shade700, size: w * 0.04),
+              SizedBox(width: w * 0.025),
+              Expanded(
+                child: Text(
+                  'Contact support to initiate a refund request.',
+                  style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.028, color: Colors.orange.shade800),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: h * 0.012),
+      ],
+    );
+  }
+
+  Widget _buildPasswordContent(double w, double h) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _passwordField('Current Password', w),
+        SizedBox(height: h * 0.01),
+        _passwordField('New Password', w),
+        SizedBox(height: h * 0.01),
+        _passwordField('Confirm Password', w),
+        SizedBox(height: h * 0.014),
+        SizedBox(
+          width: double.infinity,
+          height: 38,
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF238E05),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              elevation: 0,
+            ),
+            child: const Text('Update Password', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+          ),
+        ),
+        SizedBox(height: h * 0.012),
+      ],
+    );
+  }
+
+  Widget _passwordField(String hint, double w) {
+    return Container(
+      height: 40,
+      padding: EdgeInsets.symmetric(horizontal: w * 0.025),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade300),
+      ),
+      child: TextField(
+        obscureText: true,
+        style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032),
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade500),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.zero,
+          isDense: true,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaymentContent(double w, double h) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _paymentMethod(Icons.credit_card, 'Visa ending in 4242', Icons.check_circle, Colors.green, w),
+        SizedBox(height: h * 0.008),
+        _paymentMethod(Icons.account_balance_wallet, 'MTN Mobile Money', Icons.radio_button_unchecked, Colors.grey, w),
+        SizedBox(height: h * 0.008),
+        _paymentMethod(Icons.account_balance_wallet, 'Airtel Money', Icons.radio_button_unchecked, Colors.grey, w),
+        SizedBox(height: h * 0.012),
+        SizedBox(
+          width: double.infinity,
+          height: 38,
+          child: OutlinedButton.icon(
+            onPressed: () {},
+            icon: const Icon(Icons.add, size: 18),
+            label: const Text('Add Payment Method', style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+            style: OutlinedButton.styleFrom(
+              foregroundColor: const Color(0xFF5F0593),
+              side: const BorderSide(color: Color(0xFF5F0593)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+          ),
+        ),
+        SizedBox(height: h * 0.012),
+      ],
+    );
+  }
+
+  Widget _paymentMethod(IconData icon, String label, IconData trailingIcon, Color trailingColor, double w) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: w * 0.025, vertical: w * 0.02),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: w * 0.045, color: Colors.grey.shade700),
+          SizedBox(width: w * 0.025),
+          Expanded(child: Text(label, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032))),
+          Icon(trailingIcon, size: w * 0.04, color: trailingColor),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHelpContent(double w, double h) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _helpTile(Icons.chat_outlined, 'Live Chat', 'Chat with our support team', w),
+        SizedBox(height: h * 0.008),
+        _helpTile(Icons.email_outlined, 'Email Us', 'support@eventsuganda.com', w),
+        SizedBox(height: h * 0.008),
+        _helpTile(Icons.phone_outlined, 'Call Us', '+256 700 123 456', w),
+        SizedBox(height: h * 0.012),
+      ],
+    );
+  }
+
+  Widget _helpTile(IconData icon, String title, String subtitle, double w) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: w * 0.025, vertical: w * 0.02),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: w * 0.09,
+            height: w * 0.09,
+            decoration: BoxDecoration(
+              color: const Color(0xFFD76005).withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(icon, color: const Color(0xFFD76005), size: w * 0.04),
+          ),
+          SizedBox(width: w * 0.025),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(title, style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.034)),
+                Text(subtitle, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.026, color: Colors.grey.shade600)),
+              ],
+            ),
+          ),
+          Icon(Icons.chevron_right, color: Colors.grey.shade400, size: w * 0.04),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLogoutContent(double w, double h) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.all(w * 0.03),
+          decoration: BoxDecoration(
+            color: Colors.red.shade50,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.red.shade100),
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.logout, color: Colors.red.shade600, size: w * 0.04),
+              SizedBox(width: w * 0.025),
+              Expanded(
+                child: Text(
+                  'You will be signed out of your account.',
+                  style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.028, color: Colors.red.shade800),
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: h * 0.014),
+        SizedBox(
+          width: double.infinity,
+          height: 38,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              AuthService.clearToken();
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (_) => const CustomerHomeScreen()),
+                (route) => false,
+              );
+            },
+            icon: const Icon(Icons.logout, size: 16),
+            label: const Text('Sign Out', style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red.shade600,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              elevation: 0,
+            ),
+          ),
+        ),
+        SizedBox(height: h * 0.012),
+      ],
+    );
+  }
+
+  // ─── Helpers ───────────────────────────────────────────────────────
+
+  Widget _infoRow(IconData icon, String label, String value, double w) {
+    return Row(
+      children: [
+        Icon(icon, size: w * 0.035, color: Colors.grey.shade600),
+        SizedBox(width: w * 0.02),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(label, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.024, color: Colors.grey.shade500)),
+            Text(value, style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.032)),
+          ],
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -331,7 +754,18 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                           builder: (context) => CustomerHomeScreen(),
                         ),
                       );
-                    }
+}
+
+class _SectionData {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final Color bgColor;
+  final Widget content;
+  final bool isLogout;
+
+  const _SectionData(this.icon, this.label, this.color, this.bgColor, this.content, {this.isLogout = false});
+}
                   },
                 ),
               ),
