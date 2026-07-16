@@ -552,12 +552,9 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             child: Column(
               children: List.generate(items.length, (i) {
                 final item = items[i];
-                final menuInterval = 0.55 + (i / items.length) * 0.35;
-                final delay = Duration(milliseconds: (menuInterval * 1400).round());
-
                 return TweenAnimationBuilder<double>(
                   tween: Tween(begin: 0.0, end: 1.0),
-                  duration: const Duration(milliseconds: 500),
+                  duration: Duration(milliseconds: 400 + (i * 100)),
                   curve: Curves.easeOutCubic,
                   builder: (context, value, child) {
                     return Opacity(
@@ -568,7 +565,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                       ),
                     );
                   },
-                  child: _buildMenuItem(w, item, i == items.length - 1),
+                  child: _buildMenuItem(w, item, i, i == items.length - 1),
                 );
               }),
             ),
@@ -578,13 +575,13 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     );
   }
 
-  Widget _buildMenuItem(double w, _MenuItemData item, bool isLast) {
+  Widget _buildMenuItem(double w, _MenuItemData item, int index, bool isLast) {
     return GestureDetector(
       onTap: item.isDestructive
           ? _showLogoutDialog
           : () {},
       child: TweenAnimationBuilder<double>(
-        tween: Tween(begin: 1.0, end: _hoveredIndex == _getItemIndex(item) ? 0.97 : 1.0),
+        tween: Tween(begin: 1.0, end: _hoveredIndex == index ? 0.97 : 1.0),
         duration: const Duration(milliseconds: 150),
         builder: (context, scale, child) {
           return Transform.scale(
@@ -653,18 +650,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     );
   }
 
-  int _getItemIndex(_MenuItemData item) {
-    final items = [
-      _MenuItemData(Icons.person_outline, 'My Profile', const Color(0xFF027AC1), const Color(0xFFCAE8FA)),
-      _MenuItemData(Icons.shopping_bag_outlined, 'My Orders', const Color(0xFFF19124), const Color(0xFFFFE0B2)),
-      _MenuItemData(Icons.attach_money, 'Refund', const Color(0xFFE24B19), const Color(0xFFF7A083)),
-      _MenuItemData(Icons.password_rounded, 'Change Password', const Color(0xFF238E05), const Color(0xFF98EE81)),
-      _MenuItemData(Icons.payment_outlined, 'Payment Methods', const Color(0xFF5F0593), const Color(0xFFC491E2)),
-      _MenuItemData(Icons.help_outline_rounded, 'Help & Support', const Color(0xFFD76005), const Color(0xFFF3D8C4)),
-      _MenuItemData(Icons.logout_rounded, 'Logout', const Color(0xFF009465), const Color(0xFF89E0C4), isDestructive: true),
-    ];
-    return items.indexOf(item);
-  }
 }
 
 class _MenuItemData {
