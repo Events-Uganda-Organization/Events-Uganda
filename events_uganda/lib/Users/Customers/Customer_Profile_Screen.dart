@@ -407,6 +407,20 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
         _orderTile('Birthday Setup', '18 Jun 2026', 'In Progress', w),
         SizedBox(height: h * 0.008),
         _orderTile('Corporate Event', '02 May 2026', 'Completed', w),
+        SizedBox(height: h * 0.014),
+        SizedBox(
+          width: double.infinity,
+          height: 30,
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFF19124),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              elevation: 0,
+            ),
+            child: const Text('View All Orders', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+          ),
+        ),
         SizedBox(height: h * 0.012),
       ],
     );
