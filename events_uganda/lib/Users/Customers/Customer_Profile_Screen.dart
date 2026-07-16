@@ -581,7 +581,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
         SizedBox(height: h * 0.008),
         _paymentMethod(Image.asset('assets/images/mtn.png', width: w * 0.04, height: w * 0.04), 'MTN Mobile Money', Icons.radio_button_unchecked, Colors.grey, w),
         SizedBox(height: h * 0.008),
-        _paymentMethod(Icon(Icons.account_balance_wallet, size: w * 0.04, color: Colors.grey.shade700), 'Airtel Money', Icons.radio_button_unchecked, Colors.grey, w),
+        _paymentMethod(Image.asset('assets/images/airtel.png', width: w * 0.04, height: w * 0.04), 'Airtel Money', Icons.radio_button_unchecked, Colors.grey, w),
         SizedBox(height: h * 0.012),
         SizedBox(
           width: double.infinity,
