@@ -318,23 +318,27 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   }
 
   Widget _passwordField(String hint, double w) {
-    return Container(
-      height: 40,
-      padding: EdgeInsets.symmetric(horizontal: w * 0.025),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade300),
-      ),
+    return SizedBox(
+      width: double.infinity,
       child: TextField(
         obscureText: true,
-        style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032),
+        style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade500),
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.zero,
-          isDense: true,
+          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide(color: const Color(0xFFCB471B), width: 1),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide(color: const Color(0xFFCB471B), width: 2),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(30),
+            borderSide: BorderSide(color: const Color(0xFFCB471B), width: 1),
+          ),
         ),
       ),
     );
