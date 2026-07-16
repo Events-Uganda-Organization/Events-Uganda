@@ -383,7 +383,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
           width: double.infinity,
           height: 30,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: _showEditProfileSheet,
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF027AC1),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
