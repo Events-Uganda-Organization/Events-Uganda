@@ -603,9 +603,11 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.add, size: 18, color: Colors.white),
-                    SizedBox(width: w * 0.015),
-                    const Text('Add Payment Method', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+                    const Icon(Icons.add, size: 16, color: Colors.white),
+                    SizedBox(width: w * 0.01),
+                    Flexible(
+                      child: Text('Add Payment Method', overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.028)),
+                    ),
                   ],
                 ),
               ),
