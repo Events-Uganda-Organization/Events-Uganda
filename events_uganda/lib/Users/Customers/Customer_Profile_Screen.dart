@@ -535,6 +535,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
       listenable: obscure,
       builder: (ctx, _) => SizedBox(
         width: double.infinity,
+        height: 36,
         child: TextField(
           obscureText: obscure.value,
           style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
@@ -545,15 +546,13 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 14),
             suffixIcon: Padding(
               padding: EdgeInsets.only(right: 4),
-              child: IconButton(
-                icon: Icon(
+              child: GestureDetector(
+                onTap: () => obscure.value = !obscure.value,
+                child: Icon(
                   obscure.value ? Icons.visibility_off : Icons.visibility,
                   color: const Color(0xFF238E05),
                   size: w * 0.035,
                 ),
-                onPressed: () => obscure.value = !obscure.value,
-                constraints: BoxConstraints(),
-                padding: EdgeInsets.zero,
               ),
             ),
             border: OutlineInputBorder(
