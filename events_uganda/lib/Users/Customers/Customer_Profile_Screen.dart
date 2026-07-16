@@ -577,23 +577,38 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _paymentMethod(Icons.credit_card, 'Visa ending in 4242', Icons.check_circle, Colors.green, w),
+        _paymentMethod(Icon(Icons.credit_card, size: w * 0.045, color: Colors.grey.shade700), 'Visa ending in 4242', Icons.check_circle, Colors.green, w),
         SizedBox(height: h * 0.008),
-        _paymentMethod(Icons.account_balance_wallet, 'MTN Mobile Money', Icons.radio_button_unchecked, Colors.grey, w),
+        _paymentMethod(Image.asset('assets/images/mtn.png', width: w * 0.045, height: w * 0.045), 'MTN Mobile Money', Icons.radio_button_unchecked, Colors.grey, w),
         SizedBox(height: h * 0.008),
-        _paymentMethod(Icons.account_balance_wallet, 'Airtel Money', Icons.radio_button_unchecked, Colors.grey, w),
+        _paymentMethod(Icon(Icons.account_balance_wallet, size: w * 0.045, color: Colors.grey.shade700), 'Airtel Money', Icons.radio_button_unchecked, Colors.grey, w),
         SizedBox(height: h * 0.012),
         SizedBox(
           width: double.infinity,
           height: 30,
-          child: OutlinedButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.add, size: 18),
-            label: const Text('Add Payment Method', style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: const Color(0xFF5F0593),
-              side: const BorderSide(color: Color(0xFF5F0593)),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(12),
+                onTap: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.add, size: 18, color: Colors.white),
+                    SizedBox(width: w * 0.015),
+                    const Text('Add Payment Method', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
@@ -602,7 +617,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     );
   }
 
-  Widget _paymentMethod(IconData icon, String label, IconData trailingIcon, Color trailingColor, double w) {
+  Widget _paymentMethod(Widget leading, String label, IconData trailingIcon, Color trailingColor, double w) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: w * 0.025, vertical: w * 0.02),
       decoration: BoxDecoration(
@@ -612,7 +627,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
       ),
       child: Row(
         children: [
-          Icon(icon, size: w * 0.045, color: Colors.grey.shade700),
+          leading,
           SizedBox(width: w * 0.025),
           Expanded(child: Text(label, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032))),
           Icon(trailingIcon, size: w * 0.04, color: trailingColor),
