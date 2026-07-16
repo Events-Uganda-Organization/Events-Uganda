@@ -28,7 +28,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   late Animation<double> _avatarScale;
   late Animation<Offset> _avatarSlide;
   late Animation<double> _infoFade;
-  late Animation<double> _infoSlide;
   late Animation<double> _statsSlide;
   late Animation<double> _menuSlide;
 
@@ -62,13 +61,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
       ),
     );
 
-    _infoSlide = Tween<double>(begin: 20.0, end: 0.0).animate(
-      CurvedAnimation(
-        parent: _entranceController,
-        curve: const Interval(0.25, 0.55, curve: Curves.easeOutCubic),
-      ),
-    );
-
     _infoFade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _entranceController,
@@ -76,14 +68,14 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
       ),
     );
 
-    _statsSlide = Tween<double>(begin: 30.0, end: 0.0).animate(
+    _statsSlide = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _entranceController,
         curve: const Interval(0.4, 0.7, curve: Curves.easeOutCubic),
       ),
     );
 
-    _menuSlide = Tween<double>(begin: 50.0, end: 0.0).animate(
+    _menuSlide = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _entranceController,
         curve: const Interval(0.55, 0.95, curve: Curves.easeOutCubic),
@@ -301,9 +293,9 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   AnimatedBuilder(
                     animation: _statsSlide,
                     builder: (context, child) => Transform.translate(
-                      offset: Offset(0, _statsSlide.value),
+                      offset: Offset(0, 30 * (1 - _statsSlide.value)),
                       child: Opacity(
-                        opacity: (_statsSlide.value / 30).clamp(0.0, 1.0),
+                        opacity: _statsSlide.value,
                         child: child,
                       ),
                     ),
@@ -315,7 +307,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   AnimatedBuilder(
                     animation: _menuSlide,
                     builder: (context, child) => Transform.translate(
-                      offset: Offset(0, _menuSlide.value),
+                      offset: Offset(0, 50 * (1 - _menuSlide.value)),
                       child: child,
                     ),
                     child: _buildMenuSection(w, h),
