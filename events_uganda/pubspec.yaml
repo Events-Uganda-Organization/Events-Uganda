@@ -49,6 +49,7 @@ dependencies:
   http:
   # video player
   video_player:
+  url_launcher: ^6.2.6
   web: ^1.1.1
   flutter_map: ^8.3.1
   latlong2: ^0.10.1

@@ -738,8 +738,9 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
           width: double.infinity,
           height: 30,
           child: ElevatedButton.icon(
-            onPressed: () {
-              AuthService.clearToken();
+            onPressed: () async {
+              await AuthService.logout();
+              if (!context.mounted) return;
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (_) => const CustomerHomeScreen()),
                 (route) => false,
