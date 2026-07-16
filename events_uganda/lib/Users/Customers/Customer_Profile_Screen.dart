@@ -530,26 +530,38 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   }
 
   Widget _passwordField(String hint, double w) {
-    return SizedBox(
-      width: double.infinity,
-      child: TextField(
-        obscureText: true,
-        style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade500),
-          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: const Color(0xFFCB471B), width: 1),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: const Color(0xFFCB471B), width: 2),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: const Color(0xFFCB471B), width: 1),
+    final obscure = ValueNotifier<bool>(true);
+    return ListenableBuilder(
+      listenable: obscure,
+      builder: (ctx, _) => SizedBox(
+        width: double.infinity,
+        child: TextField(
+          obscureText: obscure.value,
+          style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade500),
+            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+            suffixIcon: IconButton(
+              icon: Icon(
+                obscure.value ? Icons.visibility_off : Icons.visibility,
+                color: const Color(0xFF238E05),
+                size: w * 0.04,
+              ),
+              onPressed: () => obscure.value = !obscure.value,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(color: const Color(0xFF238E05), width: 1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(color: const Color(0xFF238E05), width: 2),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: BorderSide(color: const Color(0xFF238E05), width: 1),
+            ),
           ),
         ),
       ),
