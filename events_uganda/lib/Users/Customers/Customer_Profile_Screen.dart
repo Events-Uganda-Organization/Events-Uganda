@@ -756,16 +756,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                       );
 }
 
-class _SectionData {
-  final IconData icon;
-  final String label;
-  final Color color;
-  final Color bgColor;
-  final Widget content;
-  final bool isLogout;
-
-  const _SectionData(this.icon, this.label, this.color, this.bgColor, this.content, {this.isLogout = false});
-}
                   },
                 ),
               ),
@@ -775,4 +765,15 @@ class _SectionData {
       ),
     );
   }
+}
+
+class _SectionData {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final Color bgColor;
+  final Widget content;
+  final bool isLogout;
+
+  const _SectionData(this.icon, this.label, this.color, this.bgColor, this.content, {this.isLogout = false});
 }
