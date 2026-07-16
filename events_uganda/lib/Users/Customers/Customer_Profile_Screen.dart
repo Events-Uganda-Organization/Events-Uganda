@@ -15,13 +15,46 @@ class CustomerProfileScreen extends StatefulWidget {
 }
 
 class _CustomerProfileScreenState extends State<CustomerProfileScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   int _currentNavIndex = 3;
   String _userFullName = '';
   String _userEmail = '';
   String? _profilePicUrl;
+  int? _expandedIndex;
 
   final ImagePicker _picker = ImagePicker();
+
+  late AnimationController _arrowController;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUser();
+    _arrowController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 250),
+    );
+  }
+
+  @override
+  void dispose() {
+    _arrowController.dispose();
+    super.dispose();
+  }
+
+  void _toggleSection(int index) {
+    setState(() {
+      if (_expandedIndex == index) {
+        _expandedIndex = null;
+        _arrowController.reverse();
+      } else {
+        if (_expandedIndex == null) {
+          _arrowController.forward();
+        }
+        _expandedIndex = index;
+      }
+    });
+  }
 
   @override
   void initState() {
