@@ -541,14 +541,20 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade500),
-            contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
-            suffixIcon: IconButton(
-              icon: Icon(
-                obscure.value ? Icons.visibility_off : Icons.visibility,
-                color: const Color(0xFF238E05),
-                size: w * 0.04,
+            isDense: true,
+            contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 14),
+            suffixIcon: Padding(
+              padding: EdgeInsets.only(right: 4),
+              child: IconButton(
+                icon: Icon(
+                  obscure.value ? Icons.visibility_off : Icons.visibility,
+                  color: const Color(0xFF238E05),
+                  size: w * 0.035,
+                ),
+                onPressed: () => obscure.value = !obscure.value,
+                constraints: BoxConstraints(),
+                padding: EdgeInsets.zero,
               ),
-              onPressed: () => obscure.value = !obscure.value,
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
