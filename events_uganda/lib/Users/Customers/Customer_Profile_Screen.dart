@@ -151,14 +151,14 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                         ],
                       ),
                     ),
-                    SizedBox(height: h * 0.025),
+                    SizedBox(height: w * 0.045),
                     // Full Name
                     TextField(
                       controller: nameCtrl,
                       style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
                       decoration: _sheetInputDecoration(w, 'Full Name', Icons.person_outline),
                     ),
-                    SizedBox(height: h * 0.016),
+                    SizedBox(height: w * 0.03),
                     // Email
                     TextField(
                       controller: emailCtrl,
@@ -166,7 +166,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                       style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
                       decoration: _sheetInputDecoration(w, 'Email', Icons.email_outlined),
                     ),
-                    SizedBox(height: h * 0.016),
+                    SizedBox(height: w * 0.03),
                     // Phone
                     TextField(
                       controller: phoneCtrl,
@@ -174,7 +174,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                       style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
                       decoration: _sheetInputDecoration(w, 'Phone Number', Icons.phone_outlined),
                     ),
-                    SizedBox(height: h * 0.035),
+                    SizedBox(height: w * 0.05),
                     // Save button
                     SizedBox(
                       width: double.infinity,
