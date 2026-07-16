@@ -188,15 +188,19 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                 final name = nameCtrl.text.trim();
                                 final email = emailCtrl.text.trim();
                                 final phone = phoneCtrl.text.trim();
+                                String? photoUrl = photoPath;
                                 try {
                                   final res = await AuthService.updateProfile(
                                     fullName: name,
                                     email: email,
                                     phone: phone,
                                   );
+                                  if (photoPath != null && !photoPath!.startsWith('http')) {
+                                    photoUrl = await AuthService.uploadProfilePhoto(photoPath!);
+                                  }
                                   if (res.containsKey('user')) {
                                     var user = Map<String, dynamic>.from(res['user']);
-                                    user['photoUrl'] = photoPath;
+                                    user['photoUrl'] = photoUrl;
                                     await AuthService.saveUser(user);
                                   }
                                 } catch (_) {
@@ -204,8 +208,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                     'fullName': name,
                                     'email': email,
                                     'phone': phone,
-                                    if (photoPath != null && !photoPath!.startsWith('http'))
-                                      'photoUrl': photoPath,
+                                    'photoUrl': photoUrl,
                                   };
                                   final existing = await AuthService.getUser();
                                   if (existing != null) {
@@ -219,7 +222,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                   _userFullName = name;
                                   _userEmail = email;
                                   _userPhone = phone;
-                                  _profilePicUrl = photoPath;
+                                  _profilePicUrl = photoUrl;
                                 });
                                 navigator.pop();
                               },

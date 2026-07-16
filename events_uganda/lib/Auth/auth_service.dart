@@ -141,6 +141,35 @@ class AuthService {
     return _handleResponse(response);
   }
 
+  static Future<String> uploadProfilePhoto(String filePath) async {
+    final token = await getToken();
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$_baseUrl/profile/photo'),
+    );
+    if (token != null) {
+      request.headers['Authorization'] = 'Bearer $token';
+    }
+    request.files.add(await http.MultipartFile.fromPath('photo', filePath));
+
+    final streamed = await request.send();
+    final response = await http.Response.fromStream(streamed);
+
+    final body = jsonDecode(response.body) as Map<String, dynamic>;
+    if (response.statusCode == 200) {
+      final photoUrl = body['photoUrl'] as String?;
+      if (photoUrl != null) {
+        final user = await getUser();
+        if (user != null) {
+          user['photoUrl'] = photoUrl;
+          await saveUser(user);
+        }
+      }
+      return photoUrl ?? filePath;
+    }
+    throw Exception(body['message'] ?? 'Photo upload failed');
+  }
+
   // ─── Helpers ───────────────────────────────────────
 
   static Map<String, dynamic> _handleResponse(http.Response response) {
