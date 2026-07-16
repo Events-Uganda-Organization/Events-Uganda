@@ -18,6 +18,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   int _currentNavIndex = 3;
   String _userFullName = '';
   String _userEmail = '';
+  String _userPhone = '';
   String? _profilePicUrl;
   int? _expandedIndex;
 
@@ -41,6 +42,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
       setState(() {
         _userFullName = user['fullName'] as String? ?? 'User';
         _userEmail = user['email'] as String? ?? '';
+        _userPhone = user['phone'] as String? ?? '';
         _profilePicUrl = user['photoUrl'] as String?;
       });
     }
@@ -59,6 +61,201 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
       Icons.person,
       color: Colors.black,
       size: screenWidth * 0.18,
+    );
+  }
+
+  void _showEditProfileSheet() {
+    final w = MediaQuery.of(context).size.width;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      builder: (ctx) {
+        final nameCtrl = TextEditingController(text: _userFullName);
+        final emailCtrl = TextEditingController(text: _userEmail);
+        final phoneCtrl = TextEditingController(text: _userPhone);
+        String? photoPath = _profilePicUrl;
+        bool saving = false;
+
+        return StatefulBuilder(
+          builder: (ctx, setSheetState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                left: w * 0.05,
+                right: w * 0.05,
+                top: 16,
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 24,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Drag handle
+                    Container(
+                      width: 44,
+                      height: 5,
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ),
+                    // Title
+                    Text(
+                      'Edit Profile',
+                      style: TextStyle(
+                        fontFamily: 'PlayfairDisplay',
+                        fontSize: w * 0.06,
+                        fontWeight: FontWeight.bold,
+                        color: const Color(0xFF1A1A2E),
+                      ),
+                    ),
+                    SizedBox(height: w * 0.04),
+                    // Profile Avatar
+                    GestureDetector(
+                      onTap: () async {
+                        final picked = await _picker.pickImage(source: ImageSource.gallery);
+                        if (picked != null) {
+                          setSheetState(() => photoPath = picked.path);
+                        }
+                      },
+                      child: Stack(
+                        children: [
+                          CircleAvatar(
+                            radius: w * 0.1,
+                            backgroundImage: photoPath != null
+                                ? (photoPath!.startsWith('http')
+                                    ? NetworkImage(photoPath!) as ImageProvider
+                                    : FileImage(File(photoPath!)))
+                                : null,
+                            child: photoPath == null
+                                ? Icon(Icons.person, size: w * 0.09, color: Colors.grey.shade400)
+                                : null,
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              padding: EdgeInsets.all(w * 0.015),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFCC471B),
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.white, width: 2),
+                              ),
+                              child: Icon(Icons.camera_alt, size: w * 0.035, color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: h * 0.025),
+                    // Full Name
+                    TextField(
+                      controller: nameCtrl,
+                      style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                      decoration: _sheetInputDecoration(w, 'Full Name', Icons.person_outline),
+                    ),
+                    SizedBox(height: h * 0.016),
+                    // Email
+                    TextField(
+                      controller: emailCtrl,
+                      keyboardType: TextInputType.emailAddress,
+                      style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                      decoration: _sheetInputDecoration(w, 'Email', Icons.email_outlined),
+                    ),
+                    SizedBox(height: h * 0.016),
+                    // Phone
+                    TextField(
+                      controller: phoneCtrl,
+                      keyboardType: TextInputType.phone,
+                      style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                      decoration: _sheetInputDecoration(w, 'Phone Number', Icons.phone_outlined),
+                    ),
+                    SizedBox(height: h * 0.035),
+                    // Save button
+                    SizedBox(
+                      width: double.infinity,
+                      height: 44,
+                      child: ElevatedButton(
+                        onPressed: saving
+                            ? null
+                            : () async {
+                                setSheetState(() => saving = true);
+                                final updated = {
+                                  'fullName': nameCtrl.text.trim(),
+                                  'email': emailCtrl.text.trim(),
+                                  'phone': phoneCtrl.text.trim(),
+                                  if (photoPath != null && !photoPath!.startsWith('http'))
+                                    'photoUrl': photoPath,
+                                };
+                                final existing = await AuthService.getUser();
+                                if (existing != null) {
+                                  existing.addAll(updated);
+                                  await AuthService.saveUser(existing);
+                                } else {
+                                  await AuthService.saveUser(updated);
+                                }
+                                setState(() {
+                                  _userFullName = nameCtrl.text.trim();
+                                  _userEmail = emailCtrl.text.trim();
+                                  _userPhone = phoneCtrl.text.trim();
+                                  _profilePicUrl = photoPath;
+                                });
+                                Navigator.pop(ctx);
+                              },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFCC471B),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                          elevation: 0,
+                        ),
+                        child: saving
+                            ? const SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                              )
+                            : Text(
+                                'Save Changes',
+                                style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: w * 0.04,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  InputDecoration _sheetInputDecoration(double w, String label, IconData icon) {
+    return InputDecoration(
+      labelText: label,
+      labelStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.035, color: Colors.grey.shade600),
+      prefixIcon: Icon(icon, color: const Color(0xFFCC471B), size: w * 0.045),
+      contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: BorderSide(color: const Color(0xFFCC471B), width: 1),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: BorderSide(color: const Color(0xFFCC471B), width: 2),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(30),
+        borderSide: BorderSide(color: const Color(0xFFCC471B), width: 1),
+      ),
     );
   }
 
