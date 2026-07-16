@@ -170,6 +170,42 @@ class AuthService {
     throw Exception(body['message'] ?? 'Photo upload failed');
   }
 
+  static Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    final token = await getToken();
+    final response = await http.post(
+      Uri.parse('$_baseUrl/change-password'),
+      headers: {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'currentPassword': currentPassword,
+        'newPassword': newPassword,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      final body = jsonDecode(response.body) as Map<String, dynamic>;
+      throw Exception(body['message'] ?? 'Change password failed');
+    }
+  }
+
+  static Future<void> logout() async {
+    final token = await getToken();
+    if (token != null) {
+      try {
+        await http.post(
+          Uri.parse('$_baseUrl/logout'),
+          headers: {'Authorization': 'Bearer $token'},
+        );
+      } catch (_) {}
+    }
+    await clearToken();
+  }
+
   // ─── Helpers ───────────────────────────────────────
 
   static Map<String, dynamic> _handleResponse(http.Response response) {

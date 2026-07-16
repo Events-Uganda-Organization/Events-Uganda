@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/Services/user_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomerProfileScreen extends StatefulWidget {
   const CustomerProfileScreen({super.key});
