@@ -184,7 +184,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
         SizedBox(height: h * 0.014),
         SizedBox(
           width: double.infinity,
-          height: 38,
+          height: 30,
           child: ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
@@ -301,7 +301,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
         SizedBox(height: h * 0.014),
         SizedBox(
           width: double.infinity,
-          height: 38,
+          height: 30,
           child: ElevatedButton(
             onPressed: () {},
             style: ElevatedButton.styleFrom(
@@ -356,7 +356,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
         SizedBox(height: h * 0.012),
         SizedBox(
           width: double.infinity,
-          height: 38,
+          height: 30,
           child: OutlinedButton.icon(
             onPressed: () {},
             icon: const Icon(Icons.add, size: 18),
@@ -468,7 +468,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
         SizedBox(height: h * 0.014),
         SizedBox(
           width: double.infinity,
-          height: 38,
+          height: 30,
           child: ElevatedButton.icon(
             onPressed: () {
               AuthService.clearToken();
