@@ -418,9 +418,9 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                       if (_profilePicUrl != null && _profilePicUrl!.isNotEmpty)
                         _profilePicUrl!.startsWith('http')
                             ? Image.network(_profilePicUrl!, width: avatarSize, height: avatarSize, fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => _defaultProfileIcon(w))
+                                errorBuilder: (_, _, _) => _defaultProfileIcon(w))
                             : Image.file(File(_profilePicUrl!), width: avatarSize, height: avatarSize, fit: BoxFit.cover,
-                                errorBuilder: (_, __, ___) => _defaultProfileIcon(w))
+                                errorBuilder: (_, _, _) => _defaultProfileIcon(w))
                       else
                         Container(
                           decoration: const BoxDecoration(
@@ -565,7 +565,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                       ),
                     );
                   },
-                  child: _buildMenuItem(w, item, i, i == items.length - 1),
+                  child: _buildMenuItem(w, h, item, i, i == items.length - 1),
                 );
               }),
             ),
@@ -575,7 +575,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     );
   }
 
-  Widget _buildMenuItem(double w, _MenuItemData item, int index, bool isLast) {
+  Widget _buildMenuItem(double w, double h, _MenuItemData item, int index, bool isLast) {
     return GestureDetector(
       onTap: item.isDestructive
           ? _showLogoutDialog
