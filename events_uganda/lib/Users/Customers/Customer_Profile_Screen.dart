@@ -542,7 +542,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             hintText: hint,
             hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade500),
             isDense: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 14),
+            contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 14),
             suffixIcon: Padding(
               padding: EdgeInsets.only(right: 4),
               child: IconButton(
