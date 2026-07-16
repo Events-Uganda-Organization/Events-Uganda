@@ -185,24 +185,40 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             : () async {
                                 final navigator = Navigator.of(ctx);
                                 setSheetState(() => saving = true);
-                                final updated = {
-                                  'fullName': nameCtrl.text.trim(),
-                                  'email': emailCtrl.text.trim(),
-                                  'phone': phoneCtrl.text.trim(),
-                                  if (photoPath != null && !photoPath!.startsWith('http'))
-                                    'photoUrl': photoPath,
-                                };
-                                final existing = await AuthService.getUser();
-                                if (existing != null) {
-                                  existing.addAll(updated);
-                                  await AuthService.saveUser(existing);
-                                } else {
-                                  await AuthService.saveUser(updated);
+                                final name = nameCtrl.text.trim();
+                                final email = emailCtrl.text.trim();
+                                final phone = phoneCtrl.text.trim();
+                                try {
+                                  final res = await AuthService.updateProfile(
+                                    fullName: name,
+                                    email: email,
+                                    phone: phone,
+                                  );
+                                  if (res.containsKey('user')) {
+                                    var user = Map<String, dynamic>.from(res['user']);
+                                    user['photoUrl'] = photoPath;
+                                    await AuthService.saveUser(user);
+                                  }
+                                } catch (_) {
+                                  final local = {
+                                    'fullName': name,
+                                    'email': email,
+                                    'phone': phone,
+                                    if (photoPath != null && !photoPath!.startsWith('http'))
+                                      'photoUrl': photoPath,
+                                  };
+                                  final existing = await AuthService.getUser();
+                                  if (existing != null) {
+                                    existing.addAll(local);
+                                    await AuthService.saveUser(existing);
+                                  } else {
+                                    await AuthService.saveUser(local);
+                                  }
                                 }
                                 setState(() {
-                                  _userFullName = nameCtrl.text.trim();
-                                  _userEmail = emailCtrl.text.trim();
-                                  _userPhone = phoneCtrl.text.trim();
+                                  _userFullName = name;
+                                  _userEmail = email;
+                                  _userPhone = phone;
                                   _profilePicUrl = photoPath;
                                 });
                                 navigator.pop();

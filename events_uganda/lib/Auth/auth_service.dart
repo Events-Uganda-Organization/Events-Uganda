@@ -117,6 +117,30 @@ class AuthService {
     }
   }
 
+  static Future<Map<String, dynamic>> updateProfile({
+    required String fullName,
+    required String email,
+    String? phone,
+  }) async {
+    final token = await getToken();
+    final body = <String, String>{
+      'fullName': fullName,
+      'email': email,
+    };
+    if (phone != null && phone.isNotEmpty) body['phone'] = phone;
+
+    final response = await http.put(
+      Uri.parse('$_baseUrl/profile'),
+      headers: {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(body),
+    );
+
+    return _handleResponse(response);
+  }
+
   // ─── Helpers ───────────────────────────────────────
 
   static Map<String, dynamic> _handleResponse(http.Response response) {
