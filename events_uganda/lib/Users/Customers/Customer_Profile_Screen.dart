@@ -183,6 +183,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                         onPressed: saving
                             ? null
                             : () async {
+                                final navigator = Navigator.of(ctx);
                                 setSheetState(() => saving = true);
                                 final updated = {
                                   'fullName': nameCtrl.text.trim(),
@@ -204,7 +205,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                   _userPhone = phoneCtrl.text.trim();
                                   _profilePicUrl = photoPath;
                                 });
-                                Navigator.pop(ctx);
+                                navigator.pop();
                               },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFCC471B),
