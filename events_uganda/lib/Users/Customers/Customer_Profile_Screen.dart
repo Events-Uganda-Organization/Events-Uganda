@@ -593,6 +593,9 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   }
 
   Widget _buildRefundContent(double w, double h) {
+    final orderCtrl = TextEditingController();
+    final reasonCtrl = TextEditingController();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -600,25 +603,64 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
           'Refunds are processed within 5-7 business days after approval.',
           style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade700, height: 1.4),
         ),
+        SizedBox(height: h * 0.014),
+        TextField(
+          controller: orderCtrl,
+          style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
+          decoration: _sheetInputDecoration(w, 'Order ID', Icons.receipt_outlined),
+        ),
         SizedBox(height: h * 0.012),
-        Container(
-          padding: EdgeInsets.all(w * 0.03),
-          decoration: BoxDecoration(
-            color: Colors.orange.shade50,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: Colors.orange.shade100),
+        TextField(
+          controller: reasonCtrl,
+          maxLines: 3,
+          style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
+          decoration: InputDecoration(
+            labelText: 'Reason for refund',
+            labelStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.035, color: Colors.grey.shade600),
+            alignLabelWithHint: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: const Color(0xFFE24B19), width: 1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: const Color(0xFFE24B19), width: 2),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide(color: const Color(0xFFE24B19), width: 1),
+            ),
           ),
-          child: Row(
-            children: [
-              Icon(Icons.info_outline, color: Colors.orange.shade700, size: w * 0.04),
-              SizedBox(width: w * 0.025),
-              Expanded(
-                child: Text(
-                  'Contact support to initiate a refund request.',
-                  style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.028, color: Colors.orange.shade800),
-                ),
-              ),
-            ],
+        ),
+        SizedBox(height: h * 0.014),
+        SizedBox(
+          width: double.infinity,
+          height: 30,
+          child: ElevatedButton(
+            onPressed: () async {
+              final orderId = orderCtrl.text.trim();
+              final reason = reasonCtrl.text.trim();
+              if (orderId.isEmpty || reason.isEmpty) {
+                _showSnackBar('Please fill in all fields');
+                return;
+              }
+              try {
+                await UserService.requestRefund(orderId: orderId, reason: reason);
+                orderCtrl.clear();
+                reasonCtrl.clear();
+                if (!context.mounted) return;
+                _showSnackBar('Refund request submitted');
+              } catch (e) {
+                if (!context.mounted) return;
+                _showSnackBar(e.toString().replaceFirst('Exception: ', ''));
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFE24B19),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              elevation: 0,
+            ),
+            child: const Text('Submit Refund Request', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
           ),
         ),
         SizedBox(height: h * 0.012),
