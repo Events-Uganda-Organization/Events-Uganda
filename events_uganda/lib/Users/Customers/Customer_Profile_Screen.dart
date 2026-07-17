@@ -680,7 +680,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: () {},
+                onTap: () => _showAddPaymentSheet(w),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
