@@ -907,6 +907,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
           Icon(Icons.chevron_right, color: Colors.grey.shade400, size: w * 0.04),
         ],
       ),
+    ),
     );
   }
 
