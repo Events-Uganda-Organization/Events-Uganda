@@ -420,30 +420,53 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   }
 
   Widget _buildOrdersContent(double w, double h) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _orderTile('Wedding Catering', '25 Jul 2026', 'Completed', w),
-        SizedBox(height: h * 0.008),
-        _orderTile('Birthday Setup', '18 Jun 2026', 'In Progress', w),
-        SizedBox(height: h * 0.008),
-        _orderTile('Corporate Event', '02 May 2026', 'Completed', w),
-        SizedBox(height: h * 0.014),
-        SizedBox(
-          width: double.infinity,
-          height: 30,
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFF19124),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              elevation: 0,
+    return FutureBuilder<List<Map<String, dynamic>>>(
+      future: UserService.getOrders(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: Padding(padding: EdgeInsets.all(8), child: CircularProgressIndicator(strokeWidth: 2)));
+        }
+        final orders = snapshot.data ?? [];
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (orders.isEmpty)
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: h * 0.01),
+                child: Text('No orders yet', style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey)),
+              )
+            else
+              ...orders.take(3).map((o) => Padding(
+                    padding: EdgeInsets.only(bottom: h * 0.008),
+                    child: _orderTile(
+                      o['serviceName'] as String? ?? 'Event',
+                      o['date'] as String? ?? '',
+                      o['status'] as String? ?? 'Pending',
+                      w,
+                    ),
+                  )),
+            SizedBox(height: h * 0.014),
+            SizedBox(
+              width: double.infinity,
+              height: 30,
+              child: ElevatedButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Orders page coming soon')),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFF19124),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  elevation: 0,
+                ),
+                child: const Text('View All Orders', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+              ),
             ),
-            child: const Text('View All Orders', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
-          ),
-        ),
-        SizedBox(height: h * 0.012),
-      ],
+            SizedBox(height: h * 0.012),
+          ],
+        );
+      },
     );
   }
 
