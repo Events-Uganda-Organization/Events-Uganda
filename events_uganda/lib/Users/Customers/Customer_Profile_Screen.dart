@@ -943,9 +943,10 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
           height: 30,
           child: ElevatedButton.icon(
             onPressed: () async {
+              final nav = Navigator.of(context);
               await AuthService.logout();
-              if (!context.mounted) return;
-              Navigator.of(context).pushAndRemoveUntil(
+              if (!mounted) return;
+              nav.pushAndRemoveUntil(
                 MaterialPageRoute(builder: (_) => const CustomerHomeScreen()),
                 (route) => false,
               );
