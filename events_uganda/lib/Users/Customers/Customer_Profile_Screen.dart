@@ -281,6 +281,87 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     );
   }
 
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message, style: const TextStyle(fontFamily: 'Montserrat'))));
+  }
+
+  void _showAddPaymentSheet(double w) {
+    final typeCtrl = TextEditingController();
+    final phoneCtrl = TextEditingController();
+    final nameCtrl = TextEditingController();
+    bool saving = false;
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (ctx, setSheetState) {
+            return Padding(
+              padding: EdgeInsets.only(
+                left: w * 0.05,
+                right: w * 0.05,
+                top: 16,
+                bottom: MediaQuery.of(ctx).viewInsets.bottom + 24,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(width: 44, height: 5, margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(3))),
+                    Text('Add Payment Method', style: TextStyle(fontFamily: 'PlayfairDisplay', fontSize: w * 0.06, fontWeight: FontWeight.bold, color: const Color(0xFF1A1A2E))),
+                    SizedBox(height: w * 0.04),
+                    TextField(controller: nameCtrl, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                      decoration: _sheetInputDecoration(w, 'Account Name', Icons.person_outline)),
+                    SizedBox(height: w * 0.025),
+                    TextField(controller: typeCtrl, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                      decoration: _sheetInputDecoration(w, 'Type (e.g. MTN, Airtel)', Icons.phone_android_outlined)),
+                    SizedBox(height: w * 0.025),
+                    TextField(controller: phoneCtrl, keyboardType: TextInputType.phone, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                      decoration: _sheetInputDecoration(w, 'Phone Number', Icons.phone_outlined)),
+                    SizedBox(height: w * 0.04),
+                    SizedBox(
+                      width: double.infinity, height: 44,
+                      child: ElevatedButton(
+                        onPressed: saving ? null : () async {
+                          setSheetState(() => saving = true);
+                          try {
+                            await UserService.addPaymentMethod(
+                              type: typeCtrl.text.trim(),
+                              phone: phoneCtrl.text.trim(),
+                              name: nameCtrl.text.trim(),
+                            );
+                            Navigator.pop(ctx);
+                            _showSnackBar('Payment method added');
+                          } catch (e) {
+                            setSheetState(() => saving = false);
+                            _showSnackBar(e.toString().replaceFirst('Exception: ', ''));
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF5F0593),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                          elevation: 0,
+                        ),
+                        child: saving
+                            ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                            : Text('Add', style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.04, fontWeight: FontWeight.w600, color: Colors.white)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   // ─── Menu Sections ────────────────────────────────────────────────
 
   Widget _buildMenuSection(Size screen, double w, double h) {
