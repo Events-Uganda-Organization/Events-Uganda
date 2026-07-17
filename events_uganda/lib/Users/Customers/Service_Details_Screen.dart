@@ -235,7 +235,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.038,
-                      fontSize: screenWidth * 0.038,
                       color: Colors.black,
                     ),
                   ),
@@ -1005,7 +1004,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                         fontFamily: 'Abril Fatface',
                                         fontWeight: FontWeight.w500,
                                         fontSize: screenWidth * 0.034,
-                                        fontSize: screenWidth * 0.034,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -1064,7 +1062,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     fontFamily: 'Abril Fatface',
                                     fontWeight: FontWeight.w500,
                                     fontSize: screenWidth * 0.034,
-                                    fontSize: screenWidth * 0.034,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -1122,7 +1119,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           172,
                                           1,
                                         ),
-                                        fontSize: screenWidth * 0.038,
                                         fontSize: screenWidth * 0.038,
                                         fontWeight: FontWeight.w900,
                                         fontFamily: 'Abril Fatface',
@@ -1506,7 +1502,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   style: TextStyle(
                     color: const Color.fromARGB(255, 228, 172, 1),
                     fontSize: screenWidth * 0.038,
-                    fontSize: screenWidth * 0.038,
                     fontWeight: FontWeight.w900,
                     fontFamily: 'Abril Fatface',
                     shadows: [
@@ -1535,7 +1530,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   'Show less',
                   style: TextStyle(
                     color: const Color.fromARGB(255, 228, 172, 1),
-                    fontSize: screenWidth * 0.038,
                     fontSize: screenWidth * 0.038,
                     fontWeight: FontWeight.w900,
                     fontFamily: 'Abril Fatface',
