@@ -329,6 +329,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                       child: ElevatedButton(
                         onPressed: saving ? null : () async {
                           final messenger = ScaffoldMessenger.of(context);
+                          final navigator = Navigator.of(ctx);
                           setSheetState(() => saving = true);
                           try {
                             await UserService.addPaymentMethod(
@@ -336,7 +337,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                               phone: phoneCtrl.text.trim(),
                               name: nameCtrl.text.trim(),
                             );
-                            Navigator.pop(ctx);
+                            navigator.pop();
                             messenger.showSnackBar(const SnackBar(content: Text('Payment method added', style: TextStyle(fontFamily: 'Montserrat'))));
                           } catch (e) {
                             setSheetState(() => saving = false);
