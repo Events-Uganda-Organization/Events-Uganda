@@ -594,6 +594,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
         width: double.infinity,
         height: 36,
         child: TextField(
+          controller: controller,
           obscureText: obscure.value,
           style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
           decoration: InputDecoration(
