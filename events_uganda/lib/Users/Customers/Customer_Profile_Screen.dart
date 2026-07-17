@@ -523,20 +523,56 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   }
 
   Widget _buildPasswordContent(double w, double h) {
+    final currentCtrl = TextEditingController();
+    final newCtrl = TextEditingController();
+    final confirmCtrl = TextEditingController();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _passwordField('Current Password', w),
+        _passwordField('Current Password', w, controller: currentCtrl),
         SizedBox(height: h * 0.01),
-        _passwordField('New Password', w),
+        _passwordField('New Password', w, controller: newCtrl),
         SizedBox(height: h * 0.01),
-        _passwordField('Confirm Password', w),
+        _passwordField('Confirm Password', w, controller: confirmCtrl),
         SizedBox(height: h * 0.014),
         SizedBox(
           width: double.infinity,
           height: 30,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () async {
+              final current = currentCtrl.text.trim();
+              final newPw = newCtrl.text.trim();
+              final confirm = confirmCtrl.text.trim();
+
+              if (current.isEmpty || newPw.isEmpty || confirm.isEmpty) {
+                _showSnackBar('Please fill in all fields');
+                return;
+              }
+              if (newPw != confirm) {
+                _showSnackBar('New passwords do not match');
+                return;
+              }
+              if (newPw.length < 6) {
+                _showSnackBar('Password must be at least 6 characters');
+                return;
+              }
+
+              try {
+                await AuthService.changePassword(
+                  currentPassword: current,
+                  newPassword: newPw,
+                );
+                currentCtrl.clear();
+                newCtrl.clear();
+                confirmCtrl.clear();
+                if (!context.mounted) return;
+                _showSnackBar('Password updated successfully');
+              } catch (e) {
+                if (!context.mounted) return;
+                _showSnackBar(e.toString().replaceFirst('Exception: ', ''));
+              }
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF238E05),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -550,7 +586,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     );
   }
 
-  Widget _passwordField(String hint, double w) {
+  Widget _passwordField(String hint, double w, {TextEditingController? controller}) {
     final obscure = ValueNotifier<bool>(true);
     return ListenableBuilder(
       listenable: obscure,
