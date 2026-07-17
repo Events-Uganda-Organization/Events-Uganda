@@ -847,25 +847,43 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _helpTile(Icons.chat_outlined, 'Live Chat', 'Chat with our support team', w),
+        _helpTile(Icons.chat_outlined, 'Live Chat', 'Chat with our support team', w, () {
+          _showSnackBar('Live chat opening...');
+        }),
         SizedBox(height: h * 0.008),
-        _helpTile(Icons.email_outlined, 'Email Us', 'support@eventsuganda.com', w),
+        _helpTile(Icons.email_outlined, 'Email Us', 'support@eventsuganda.com', w, () async {
+          final uri = Uri(scheme: 'mailto', path: 'support@eventsuganda.com');
+          if (await canLaunchUrl(uri)) {
+            await launchUrl(uri);
+          } else {
+            _showSnackBar('Email app not available');
+          }
+        }),
         SizedBox(height: h * 0.008),
-        _helpTile(Icons.phone_outlined, 'Call Us', '+256 700 123 456', w),
+        _helpTile(Icons.phone_outlined, 'Call Us', '+256 700 123 456', w, () async {
+          final uri = Uri(scheme: 'tel', path: '+256700123456');
+          if (await canLaunchUrl(uri)) {
+            await launchUrl(uri);
+          } else {
+            _showSnackBar('Phone dialer not available');
+          }
+        }),
         SizedBox(height: h * 0.012),
       ],
     );
   }
 
-  Widget _helpTile(IconData icon, String title, String subtitle, double w) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: w * 0.025, vertical: w * 0.02),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade50,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade200),
-      ),
-      child: Row(
+  Widget _helpTile(IconData icon, String title, String subtitle, double w, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: w * 0.025, vertical: w * 0.02),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade50,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.grey.shade200),
+        ),
+        child: Row(
         children: [
           Container(
             width: w * 0.09,
