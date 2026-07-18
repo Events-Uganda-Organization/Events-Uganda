@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:events_uganda/Auth/ReferralCodeExplanationSheet.dart';
 import 'package:flutter/services.dart';
 import 'package:events_uganda/components/snackbar_helper.dart';
+import 'package:events_uganda/Auth/ReferralShareScreen.dart';
 
 class CustomerProfileScreen extends StatefulWidget {
   const CustomerProfileScreen({super.key});
@@ -950,6 +951,35 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               height: 30,
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ReferralShareScreen(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFE94560),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  elevation: 0,
+                ),
+                child: Text(
+                  'Share Referral Card',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    fontSize: w * 0.03,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: h * 0.006),
+            SizedBox(
+              width: double.infinity,
+              height: 30,
+              child: ElevatedButton(
+                onPressed: () {
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
@@ -958,7 +988,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF9C27B0),
+                  backgroundColor: const Color(0xFF00695C),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   elevation: 0,
                 ),
