@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Auth/Sign_In_Screen.dart';
 import '../Users/FAQsScreen.dart';
 import '../Users/Customers/Chat_Screen.dart';
+import '../Auth/ReferralShareScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SidebarMenu {
@@ -262,10 +263,24 @@ class _SidebarPanel extends StatelessWidget {
                                                         ),
                                                     ],
                                                 ),
-                                            ),
+                                                SizedBox(height: h * 0.006),
+                                                _NavItem(
+                                                    icon: Icons.card_giftcard,
+                                                    label: 'Share Referral Code',
+                                                    w: w,
+                                                    h: h,
+                                                    onTap: () {
+                                                        Navigator.of(context).pop();
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(builder: (ctx) => const ReferralShareScreen()),
+                                                        );
+                                                    },
+                                                ),
+                                            ],
                                         ),
                                     ),
-                                    SizedBox(height: h * 0.025),
+                                    SizedBox(height: h * 0.02),
                                     Padding(
                                         padding: EdgeInsets.symmetric(horizontal: w * 0.046),
                                         child: Row(
