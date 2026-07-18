@@ -8,6 +8,10 @@ import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:events_uganda/Auth/ReferralCodeExplanationSheet.dart';
+import 'package:flutter/services.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
 
 class CustomerProfileScreen extends StatefulWidget {
   const CustomerProfileScreen({super.key});
@@ -374,6 +378,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
       _SectionData(Icons.attach_money, 'Refund', const Color(0xFFE24B19), const Color(0xFFF7A083), _buildRefundContent(w, h)),
       _SectionData(Icons.password_rounded, 'Change Password', const Color(0xFF238E05), const Color(0xFF98EE81), _buildPasswordContent(w, h)),
       _SectionData(Icons.payment_outlined, 'Payment Methods', const Color(0xFF5F0593), const Color(0xFFC491E2), _buildPaymentContent(w, h)),
+      _SectionData(Icons.card_giftcard, 'Referral Code', const Color(0xFF9C27B0), const Color(0xFFE1BEE7), _buildReferralContent(w, h)),
       _SectionData(Icons.help_outline_rounded, 'Help & Support', const Color(0xFFD76005), const Color(0xFFF3D8C4), _buildHelpContent(w, h)),
       _SectionData(Icons.logout_rounded, 'Logout', const Color(0xFF009465), const Color(0xFF89E0C4), _buildLogoutContent(w, h), isLogout: true),
     ];
