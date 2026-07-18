@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS messages (
 
 CREATE INDEX IF NOT EXISTS idx_messages_conversation_id ON messages(conversation_id);
 CREATE INDEX IF NOT EXISTS idx_messages_created_at ON messages(created_at);
-CREATE INDEX IF NOT EXISTS idx_conversations_participants ON conversations USING gin(participant_ids gin_trgm_ops);
 
 CREATE TABLE IF NOT EXISTS referral_rewards (
     id VARCHAR(255) PRIMARY KEY,
