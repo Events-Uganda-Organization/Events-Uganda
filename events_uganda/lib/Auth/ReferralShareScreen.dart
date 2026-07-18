@@ -290,21 +290,21 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
                                 top: screenHeight * 0.0,
                                 child: Transform.rotate(
                                   angle: 0,
-                                  child: _buildGradientCard(cardGradients[0], screenWidth, screenHeight, 0.92, 0.34),
+                                  child: _buildImageCard(cardImages[0], screenWidth, screenHeight, 0.92, 0.34),
                                 ),
                               ),
                               Positioned(
                                 top: screenHeight * 0.02,
                                 child: Transform.rotate(
                                   angle: -0.035,
-                                  child: _buildGradientCard(cardGradients[1], screenWidth, screenHeight, 0.92, 0.36),
+                                  child: _buildImageCard(cardImages[1], screenWidth, screenHeight, 0.92, 0.36),
                                 ),
                               ),
                               Positioned(
                                 top: screenHeight * 0.06,
                                 child: Transform.rotate(
                                   angle: -0.056,
-                                  child: _buildGradientCard(cardGradients[2], screenWidth, screenHeight, 0.92, 0.38),
+                                  child: _buildImageCard(cardImages[2], screenWidth, screenHeight, 0.92, 0.38),
                                 ),
                               ),
                               Positioned(
@@ -339,7 +339,7 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
                                     },
                                     child: Transform.rotate(
                                       angle: -0.088,
-                                      child: _buildGradientCard(cardGradients[3], screenWidth, screenHeight, 0.92, 0.40),
+                                      child: _buildImageCard(cardImages[3], screenWidth, screenHeight, 0.92, 0.40),
                                     ),
                                   ),
                                 ),
@@ -374,8 +374,8 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
     );
   }
 
-  Widget _buildGradientCard(
-    List<Color> gradientColors,
+  Widget _buildImageCard(
+    String imagePath,
     double screenWidth,
     double screenHeight,
     double widthFactor,
@@ -386,14 +386,14 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
       height: screenHeight * (heightFactor ?? 0.25),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        gradient: LinearGradient(
-          colors: gradientColors,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+        image: DecorationImage(
+          image: AssetImage(imagePath),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(Colors.black.withValues(alpha: 0.45), BlendMode.darken),
         ),
         boxShadow: [
           BoxShadow(
-            color: gradientColors.last.withValues(alpha: 0.35),
+            color: Colors.black.withValues(alpha: 0.18),
             blurRadius: 18,
             offset: const Offset(0, 8),
           ),
@@ -405,13 +405,35 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.card_giftcard, color: Colors.white.withValues(alpha: 0.6), size: screenWidth * 0.06),
+            Row(
+              children: [
+                Icon(Icons.card_giftcard, color: Colors.white.withValues(alpha: 0.7), size: screenWidth * 0.05),
+                const Spacer(),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025, vertical: screenWidth * 0.01),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    'REFERRAL',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: screenWidth * 0.022,
+                      color: Colors.white,
+                      letterSpacing: 2,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             const Spacer(),
             Text(
               'YOUR CODE',
               style: TextStyle(
                 fontFamily: 'Montserrat',
-                fontSize: screenWidth * 0.026,
+                fontSize: screenWidth * 0.024,
                 color: Colors.white.withValues(alpha: 0.7),
                 letterSpacing: 2,
                 fontWeight: FontWeight.w500,
@@ -428,15 +450,21 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
                 letterSpacing: 3,
               ),
             ),
-            SizedBox(height: screenHeight * 0.008),
-            Text(
-              'Events Uganda',
-              style: TextStyle(
-                fontFamily: 'PlayfairDisplay',
-                fontSize: screenWidth * 0.032,
-                color: Colors.white.withValues(alpha: 0.5),
-                fontStyle: FontStyle.italic,
-              ),
+            SizedBox(height: screenHeight * 0.006),
+            Row(
+              children: [
+                Text(
+                  'Events Uganda',
+                  style: TextStyle(
+                    fontFamily: 'PlayfairDisplay',
+                    fontSize: screenWidth * 0.03,
+                    color: Colors.white.withValues(alpha: 0.6),
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                const Spacer(),
+                Icon(Icons.arrow_forward_ios, color: Colors.white.withValues(alpha: 0.4), size: screenWidth * 0.035),
+              ],
             ),
           ],
         ),
