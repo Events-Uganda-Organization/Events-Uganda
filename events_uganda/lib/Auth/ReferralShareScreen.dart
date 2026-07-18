@@ -27,7 +27,6 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
   bool _isDragging = false;
   double _dragStart = 0.0;
   double _dragOffset = 0.0;
-  bool _isAnimating = false;
 
   @override
   void initState() {
