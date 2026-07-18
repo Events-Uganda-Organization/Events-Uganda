@@ -550,6 +550,7 @@ class _NavItem extends StatelessWidget {
     final double w;
     final double h;
     final VoidCallback? onTap;
+    final Color? iconColor;
 
     const _NavItem({
         required this.icon,
@@ -558,6 +559,7 @@ class _NavItem extends StatelessWidget {
         required this.w,
         required this.h,
         this.onTap,
+        this.iconColor,
     });
 
     @override
@@ -587,7 +589,7 @@ class _NavItem extends StatelessWidget {
                                         SizedBox(width: w * 0.03),
                                         Icon(
                                             icon,
-                                            color: const Color(0xFFD4A050),
+                                            color: iconColor ?? const Color(0xFFD4A050),
                                             size: w * 0.045,
                                         ),
                                         SizedBox(width: w * 0.03),
@@ -604,7 +606,7 @@ class _NavItem extends StatelessWidget {
                                         const Spacer(),
                                         Icon(
                                             Icons.chevron_right_rounded,
-                                            color: const Color(0xFFD4A050).withValues(alpha: 0.5),
+                                            color: (iconColor ?? const Color(0xFFD4A050)).withValues(alpha: 0.5),
                                             size: w * 0.04,
                                         ),
                                     ],
@@ -627,7 +629,7 @@ class _NavItem extends StatelessWidget {
                             children: [
                                 Icon(
                                     icon,
-                                    color: Colors.black54,
+                                    color: iconColor ?? Colors.black54,
                                     size: w * 0.045,
                                 ),
                                 SizedBox(width: w * 0.03),
@@ -638,13 +640,13 @@ class _NavItem extends StatelessWidget {
                                         fontFamily: 'Montserrat',
                                         fontSize: w * 0.032,
                                         fontWeight: FontWeight.w500,
-                                        color: Colors.black54,
+                                        color: iconColor ?? Colors.black54,
                                     ),
                                 ),
                                 const Spacer(),
                                 Icon(
                                     Icons.chevron_right_rounded,
-                                    color: Colors.grey[300],
+                                    color: (iconColor ?? Colors.grey[300])!.withValues(alpha: 0.5),
                                     size: w * 0.04,
                                 ),
                             ],
