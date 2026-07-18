@@ -243,7 +243,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                                 'Save Changes',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
-                                  fontSize: w * 0.04,
+                                  fontSize: w * 0.03,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white,
                                 ),
@@ -351,7 +351,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                         ),
                         child: saving
                             ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                            : Text('Add', style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.04, fontWeight: FontWeight.w600, color: Colors.white)),
+                            : Text('Add', style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, fontWeight: FontWeight.w600, color: Colors.white)),
                       ),
                     ),
                   ],
@@ -494,7 +494,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               elevation: 0,
             ),
-            child: const Text('Edit Profile', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+            child: Text('Edit Profile', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.03)),
           ),
         ),
         SizedBox(height: h * 0.012),
@@ -543,7 +543,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   elevation: 0,
                 ),
-                child: const Text('View All Orders', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+                child: Text('View All Orders', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.03)),
               ),
             ),
             SizedBox(height: h * 0.012),
@@ -952,7 +952,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               );
             },
             icon: const Icon(Icons.logout, size: 16),
-            label: const Text('Sign Out', style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+            label: Text('Sign Out', style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.03)),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red.shade600,
               foregroundColor: Colors.white,
