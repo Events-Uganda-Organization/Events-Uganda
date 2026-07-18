@@ -263,7 +263,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   InputDecoration _sheetInputDecoration(double w, String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      labelStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.035, color: Colors.grey.shade600),
+            labelStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade600),
       prefixIcon: Icon(icon, color: const Color(0xFFCC471B), size: w * 0.045),
       contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       border: OutlineInputBorder(
@@ -618,7 +618,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
           style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
           decoration: InputDecoration(
             labelText: 'Reason for refund',
-            labelStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.035, color: Colors.grey.shade600),
+      labelStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade600),
             alignLabelWithHint: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
@@ -662,7 +662,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               elevation: 0,
             ),
-            child: const Text('Submit Refund Request', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+            child: Text('Submit Refund Request', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.03)),
           ),
         ),
         SizedBox(height: h * 0.012),
