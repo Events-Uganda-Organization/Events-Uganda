@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
+import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
+import 'package:events_uganda/components/Bottom_Navbar.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -9,6 +12,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  int _currentNavIndex = 2;
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -111,6 +116,37 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            Positioned(
+              bottom: screenHeight * 0.02,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: BottomNavbar(
+                  activeIndex: _currentNavIndex,
+                  onItemSelected: (index) {
+                    setState(() {
+                      _currentNavIndex = index;
+                    });
+                    if (index == 0) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CustomerHomeScreen(),
+                        ),
+                      );
+                    }
+                    if (index == 3) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CustomerProfileScreen(),
+                        ),
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           ],
