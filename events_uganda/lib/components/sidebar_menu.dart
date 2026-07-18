@@ -267,9 +267,11 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                                                         fontSize: w * 0.028,
                                                         color: Colors.black,
                                                     ),
+                                                    textAlignVertical: TextAlignVertical.center,
                                                     decoration: InputDecoration(
                                                         border: InputBorder.none,
-                                                        contentPadding: EdgeInsets.symmetric(horizontal: w * 0.025),
+                                                        isDense: true,
+                                                        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: w * 0.025),
                                                         prefixIcon: Icon(
                                                             Icons.search,
                                                             color: Colors.black,
