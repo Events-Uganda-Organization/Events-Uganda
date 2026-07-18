@@ -68,25 +68,49 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.04,
-              left: MediaQuery.of(context).size.width * 0.04,
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).maybePop(),
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.13,
-                  height: MediaQuery.of(context).size.width * 0.13,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF8C2B0),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.chevron_left,
-                      color: Colors.black,
-                      size: MediaQuery.of(context).size.width * 0.10,
+              top: screenHeight * 0.035,
+              left: screenWidth * 0.04,
+              right: screenWidth * 0.04,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).maybePop(),
+                    child: Container(
+                      width: screenWidth * 0.128,
+                      height: screenWidth * 0.128,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF8C2B0),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.chevron_left,
+                          color: Colors.black,
+                          size: screenWidth * 0.10,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: screenWidth * 0.128,
+                      height: screenWidth * 0.128,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF8C2B0),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.chevron_right,
+                          color: Colors.black,
+                          size: screenWidth * 0.10,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
