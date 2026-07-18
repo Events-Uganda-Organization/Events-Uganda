@@ -327,7 +327,7 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
                                       fontFamily: 'Montserrat',
                                       fontSize: screenWidth * 0.09,
                                       fontWeight: FontWeight.bold,
-                                      color: const Color(0xFFE94560),
+                          color: const Color(0xFFB47A25),
                                       letterSpacing: 4,
                                     ),
                                   ),
