@@ -9,6 +9,7 @@ import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.da
 import 'package:events_uganda/Users/Customers/Service_Listing_CarHiring_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Cakes_Screen.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
+import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:image_picker/image_picker.dart';
@@ -1595,6 +1596,14 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                         setState(() {
                           _currentNavIndex = index;
                         });
+                        if (index == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChatScreen(),
+                            ),
+                          );
+                        }
                         if (index == 3) {
                           Navigator.push(
                             context,

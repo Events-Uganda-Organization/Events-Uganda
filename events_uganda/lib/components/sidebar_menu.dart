@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../Auth/Sign_In_Screen.dart';
 import '../Users/FAQsScreen.dart';
+import '../Users/Customers/Chat_Screen.dart';
 
 class SidebarMenu {
     static void show(BuildContext context) {
@@ -322,6 +323,13 @@ class _SidebarPanel extends StatelessWidget {
                                                     label: 'Messages',
                                                     w: w,
                                                     h: h,
+                                                    onTap: () {
+                                                        Navigator.of(context).pop();
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(builder: (ctx) => const ChatScreen()),
+                                                        );
+                                                    },
                                                 ),
                                             ],
                                         ),
