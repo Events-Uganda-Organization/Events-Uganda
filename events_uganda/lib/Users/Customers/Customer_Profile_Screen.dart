@@ -851,6 +851,140 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
     );
   }
 
+  Widget _buildReferralContent(double w, double h) {
+    return FutureBuilder<String>(
+      future: _getReferralCode(),
+      builder: (context, snapshot) {
+        final code = snapshot.data ?? 'Loading...';
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(w * 0.04),
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  colors: [Color(0xFFE8C7B6), Color(0xFFCC471B)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFFCC471B).withValues(alpha: 0.3),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Your Referral Code',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: w * 0.028,
+                      color: Colors.white70,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: h * 0.006),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          code,
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: w * 0.055,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 2,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      SizedBox(width: w * 0.02),
+                      GestureDetector(
+                        onTap: () {
+                          Clipboard.setData(ClipboardData(text: code));
+                          SnackbarHelper.show(
+                            context,
+                            'Referral code copied!',
+                            icon: Icons.check_circle_rounded,
+                            backgroundColor: const Color(0xFFCC471B),
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(w * 0.02),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Icon(
+                            Icons.copy,
+                            color: Colors.white,
+                            size: w * 0.045,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: h * 0.01),
+            Text(
+              'Share this code with friends to earn rewards!',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: w * 0.026,
+                color: Colors.grey.shade600,
+              ),
+            ),
+            SizedBox(height: h * 0.014),
+            SizedBox(
+              width: double.infinity,
+              height: 30,
+              child: ElevatedButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) => const ReferralCodeExplanationSheet(),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF9C27B0),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  elevation: 0,
+                ),
+                child: Text(
+                  'How It Works',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    fontSize: w * 0.03,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: h * 0.012),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<String> _getReferralCode() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userReferralCode') ?? 'No referral code yet';
+  }
+
   Widget _buildHelpContent(double w, double h) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
