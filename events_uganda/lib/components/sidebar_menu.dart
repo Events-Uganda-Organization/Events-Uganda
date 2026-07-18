@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../Auth/Sign_In_Screen.dart';
 import '../Users/FAQsScreen.dart';
 import '../Users/Customers/Chat_Screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SidebarMenu {
     static void show(BuildContext context) {
@@ -201,14 +202,20 @@ class _SidebarPanel extends StatelessWidget {
                                                             ],
                                                         ),
                                                         SizedBox(height: h * 0.004),
-                                                        Text(
-                                                            'Referral Code',
-                                                            overflow: TextOverflow.ellipsis,
-                                                            style: TextStyle(
-                                                                fontFamily: 'Montserrat',
-                                                                fontSize: w * 0.026,
-                                                                color: const Color(0xFFFC8A07),
-                                                            ),
+                                                        FutureBuilder<String>(
+                                                            future: _getReferralCode(),
+                                                            builder: (context, snapshot) {
+                                                                final code = snapshot.data ?? '';
+                                                                return Text(
+                                                                    code,
+                                                                    overflow: TextOverflow.ellipsis,
+                                                                    style: TextStyle(
+                                                                        fontFamily: 'Montserrat',
+                                                                        fontSize: w * 0.026,
+                                                                        color: const Color(0xFFFC8A07),
+                                                                    ),
+                                                                );
+                                                            },
                                                         ),
                                                     ],
                                                 ),
