@@ -864,14 +864,14 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               padding: EdgeInsets.all(w * 0.04),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Color(0xFFCE93D8), Color(0xFF7B1FA2)],
+                  colors: [Color(0xFF4DD0E1), Color(0xFF00695C)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFF7B1FA2).withValues(alpha: 0.3),
+                    color: const Color(0xFF00695C).withValues(alpha: 0.3),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
