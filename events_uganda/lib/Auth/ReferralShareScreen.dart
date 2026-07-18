@@ -15,15 +15,31 @@ class ReferralShareScreen extends StatefulWidget {
   State<ReferralShareScreen> createState() => _ReferralShareScreenState();
 }
 
-class _ReferralShareScreenState extends State<ReferralShareScreen> {
+class _ReferralShareScreenState extends State<ReferralShareScreen>
+    with TickerProviderStateMixin {
   final GlobalKey _repaintKey = GlobalKey();
   String _referralCode = 'Loading...';
   bool _isLoading = false;
+  late AnimationController _bounceController;
+  late Animation<double> _bounceAnimation;
 
   @override
   void initState() {
     super.initState();
     _loadReferralCode();
+    _bounceController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat(reverse: true);
+    _bounceAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _bounceController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _bounceController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadReferralCode() async {
@@ -153,29 +169,21 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
             ),
             Positioned(
               top: screenHeight * 0.05,
-              right: screenWidth * 0.2,
-              left: screenWidth * 0.2,
-              child: Container(
-                width: screenWidth * 0.3,
-                height: screenWidth * 0.3,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: const Color(0xFF00695C), width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
+              left: 0,
+              right: 0,
+              child: AnimatedBuilder(
+                animation: _bounceAnimation,
+                builder: (context, child) {
+                  return Transform.translate(
+                    offset: Offset(0, -_bounceAnimation.value * 8),
+                    child: child,
+                  );
+                },
                 child: Center(
                   child: Icon(
                     Icons.card_giftcard,
                     color: const Color(0xFFE94560),
-                    size: screenWidth * 0.12,
+                    size: screenWidth * 0.16,
                   ),
                 ),
               ),
@@ -262,67 +270,42 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                   ),
                 ),
                 child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      RepaintBoundary(
-                        key: _repaintKey,
-                        child: Container(
+                  child: RepaintBoundary(
+                    key: _repaintKey,
+                    child: Column(
+                      children: [
+                        SizedBox(height: screenHeight * 0.02),
+                        Container(
                           width: double.infinity,
                           padding: EdgeInsets.all(screenWidth * 0.06),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24),
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF1A1A2E), Color(0xFF16213E), Color(0xFF0F3460)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: const Color(0xFFE94560).withValues(alpha: 0.2),
+                              width: 1,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF0F3460).withValues(alpha: 0.5),
-                                blurRadius: 20,
-                                offset: const Offset(0, 10),
+                                color: Colors.black.withValues(alpha: 0.06),
+                                blurRadius: 16,
+                                offset: const Offset(0, 4),
                               ),
                             ],
                           ),
                           child: Column(
                             children: [
-                              SizedBox(height: screenHeight * 0.015),
-                              Container(
-                                width: screenWidth * 0.15,
-                                height: screenWidth * 0.15,
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.card_giftcard,
-                                    color: const Color(0xFFE94560),
-                                    size: screenWidth * 0.07,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: screenHeight * 0.02),
-                              Text(
-                                'Events Uganda',
-                                style: TextStyle(
-                                  fontFamily: 'PlayfairDisplay',
-                                  fontSize: screenWidth * 0.07,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              SizedBox(height: screenHeight * 0.005),
                               Text(
                                 'Your Referral Code',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
-                                  fontSize: screenWidth * 0.03,
-                                  color: Colors.white70,
+                                  fontSize: screenWidth * 0.028,
+                                  color: Colors.grey.shade600,
+                                  fontWeight: FontWeight.w500,
                                   letterSpacing: 1,
                                 ),
                               ),
-                              SizedBox(height: screenHeight * 0.025),
+                              SizedBox(height: screenHeight * 0.015),
                               Container(
                                 width: double.infinity,
                                 padding: EdgeInsets.symmetric(
@@ -330,10 +313,10 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                                   horizontal: screenWidth * 0.05,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withValues(alpha: 0.08),
+                                  color: const Color(0xFFE94560).withValues(alpha: 0.06),
                                   borderRadius: BorderRadius.circular(16),
                                   border: Border.all(
-                                    color: const Color(0xFFE94560).withValues(alpha: 0.3),
+                                    color: const Color(0xFFE94560).withValues(alpha: 0.25),
                                     width: 1.5,
                                   ),
                                 ),
@@ -350,51 +333,35 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(height: screenHeight * 0.02),
+                              SizedBox(height: screenHeight * 0.015),
                               Text(
-                                'Scan or share this code to invite friends',
+                                'Share this code with friends to earn rewards!',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
-                                  fontSize: screenWidth * 0.026,
-                                  color: Colors.white54,
+                                  fontSize: screenWidth * 0.028,
+                                  color: Colors.grey.shade600,
                                 ),
                               ),
-                              SizedBox(height: screenHeight * 0.015),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: List.generate(3, (index) {
-                                  return Container(
-                                    margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.01),
-                                    width: screenWidth * 0.02,
-                                    height: screenWidth * 0.02,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFE94560).withValues(alpha: 0.5 + index * 0.2),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  );
-                                }),
-                              ),
-                              SizedBox(height: screenHeight * 0.015),
                             ],
                           ),
                         ),
-                      ),
-                      SizedBox(height: screenHeight * 0.03),
-                      _buildActionButton(
-                        icon: Icons.download_rounded,
-                        label: 'Download as PNG',
-                        color: const Color(0xFFE94560),
-                        onTap: _downloadCard,
-                      ),
-                      SizedBox(height: screenHeight * 0.015),
-                      _buildActionButton(
-                        icon: Icons.share_rounded,
-                        label: 'Share to Apps',
-                        color: const Color(0xFF0F3460),
-                        onTap: _captureAndShare,
-                      ),
-                      SizedBox(height: screenHeight * 0.025),
-                    ],
+                        SizedBox(height: screenHeight * 0.03),
+                        _buildActionButton(
+                          icon: Icons.download_rounded,
+                          label: 'Download as PNG',
+                          color: const Color(0xFFE94560),
+                          onTap: _downloadCard,
+                        ),
+                        SizedBox(height: screenHeight * 0.015),
+                        _buildActionButton(
+                          icon: Icons.share_rounded,
+                          label: 'Share to Apps',
+                          color: const Color(0xFF00695C),
+                          onTap: _captureAndShare,
+                        ),
+                        SizedBox(height: screenHeight * 0.025),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -418,11 +385,7 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
         width: double.infinity,
         height: screenWidth * 0.14,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [color, color.withValues(alpha: 0.7)],
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-          ),
+          color: color,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
