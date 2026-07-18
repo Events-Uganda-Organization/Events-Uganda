@@ -726,7 +726,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               elevation: 0,
             ),
-            child: const Text('Update Password', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600)),
+            child: Text('Update Password', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.03)),
           ),
         ),
         SizedBox(height: h * 0.012),
@@ -747,7 +747,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
           style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade500),
+            hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.025, color: Colors.grey.shade500),
             isDense: true,
             contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 14),
             suffixIcon: Padding(
