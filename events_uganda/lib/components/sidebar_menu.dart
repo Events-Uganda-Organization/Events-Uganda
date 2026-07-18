@@ -345,6 +345,7 @@ class _SidebarPanel extends StatelessWidget {
                                                     label: 'Share Referral Code',
                                                     w: w,
                                                     h: h,
+                                                    iconColor: const Color(0xFFE94560),
                                                     onTap: () {
                                                         Navigator.of(context).pop();
                                                         Navigator.push(
