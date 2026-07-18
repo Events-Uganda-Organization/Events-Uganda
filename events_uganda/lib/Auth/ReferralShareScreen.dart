@@ -47,8 +47,8 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         setState(() {
-          final last = cardGradients.removeLast();
-          cardGradients.insert(0, last);
+          final last = cardImages.removeLast();
+          cardImages.insert(0, last);
           _controller.reset();
           _isDragging = false;
         });
@@ -523,9 +523,9 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
   }
 }
 
-List<List<Color>> cardGradients = [
-  [const Color(0xFF00695C), const Color(0xFF004D40)],
-  [const Color(0xFF5C4DB2), const Color(0xFF3E2C85)],
-  [const Color(0xFFD84315), const Color(0xFFBF360C)],
-  [const Color(0xFF1A237E), const Color(0xFF0D1452)],
+List<String> cardImages = [
+  'assets/images/introduction.jpg',
+  'assets/images/introductionbride.jpg',
+  'assets/images/women.jpg',
+  'assets/images/bdgal4.jpg',
 ];
