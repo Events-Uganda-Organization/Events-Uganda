@@ -16,29 +16,50 @@ class ReferralShareScreen extends StatefulWidget {
 }
 
 class _ReferralShareScreenState extends State<ReferralShareScreen>
-    with TickerProviderStateMixin {
+    with SingleTickerProviderStateMixin {
   final GlobalKey _repaintKey = GlobalKey();
   String _referralCode = 'Loading...';
   bool _isLoading = false;
-  late AnimationController _bounceController;
-  late Animation<double> _bounceAnimation;
+
+  late AnimationController _controller;
+  late Animation<double> _offsetAnim;
+  late Animation<double> _opacityAnim;
+  bool _isDragging = false;
+  double _dragStart = 0.0;
+  double _dragOffset = 0.0;
+  bool _isAnimating = false;
 
   @override
   void initState() {
     super.initState();
     _loadReferralCode();
-    _bounceController = AnimationController(
+    _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    )..repeat(reverse: true);
-    _bounceAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(parent: _bounceController, curve: Curves.easeInOut),
+      duration: const Duration(milliseconds: 500),
     );
+    _offsetAnim = Tween<double>(
+      begin: 0,
+      end: 200,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+    _opacityAnim = Tween<double>(
+      begin: 1,
+      end: 0,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          final last = cardGradients.removeLast();
+          cardGradients.insert(0, last);
+          _controller.reset();
+          _isDragging = false;
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
-    _bounceController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -168,23 +189,14 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.05,
+              top: screenHeight * 0.01,
               left: 0,
               right: 0,
-              child: AnimatedBuilder(
-                animation: _bounceAnimation,
-                builder: (context, child) {
-                  return Transform.translate(
-                    offset: Offset(0, -_bounceAnimation.value * 8),
-                    child: child,
-                  );
-                },
-                child: Center(
-                  child: Icon(
-                    Icons.card_giftcard,
-                    color: const Color(0xFFE94560),
-                    size: screenWidth * 0.16,
-                  ),
+              child: Center(
+                child: Icon(
+                  Icons.card_giftcard,
+                  color: const Color(0xFFE94560),
+                  size: screenWidth * 0.14,
                 ),
               ),
             ),
@@ -263,11 +275,6 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
                     topLeft: Radius.circular(36),
                     topRight: Radius.circular(36),
                   ),
-                  border: Border(
-                    top: BorderSide(color: Color(0xFFDE7A07), width: 1),
-                    left: BorderSide(color: Color(0xFFDE7A07), width: 1),
-                    right: BorderSide(color: Color(0xFFDE7A07), width: 1),
-                  ),
                 ),
                 child: SingleChildScrollView(
                   child: RepaintBoundary(
@@ -275,81 +282,77 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
                     child: Column(
                       children: [
                         SizedBox(height: screenHeight * 0.02),
-                        Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.all(screenWidth * 0.06),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(
-                              color: const Color(0xFFE94560).withValues(alpha: 0.2),
-                              width: 1,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.06),
-                                blurRadius: 16,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Column(
+                        SizedBox(
+                          height: screenHeight * 0.38,
+                          child: Stack(
+                            alignment: Alignment.topCenter,
                             children: [
-                              Text(
-                                'Your Referral Code',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: screenWidth * 0.028,
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1,
+                              Positioned(
+                                top: screenHeight * 0.0,
+                                child: Transform.rotate(
+                                  angle: 0,
+                                  child: _buildGradientCard(cardGradients[0], screenWidth, screenHeight, 0.92, 0.34),
                                 ),
                               ),
-                              SizedBox(height: screenHeight * 0.015),
-                              Container(
-                                width: double.infinity,
-                                padding: EdgeInsets.symmetric(
-                                  vertical: screenHeight * 0.025,
-                                  horizontal: screenWidth * 0.05,
+                              Positioned(
+                                top: screenHeight * 0.02,
+                                child: Transform.rotate(
+                                  angle: -0.035,
+                                  child: _buildGradientCard(cardGradients[1], screenWidth, screenHeight, 0.92, 0.36),
                                 ),
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFE94560).withValues(alpha: 0.06),
-                                  borderRadius: BorderRadius.circular(16),
-                                  border: Border.all(
-                                    color: const Color(0xFFE94560).withValues(alpha: 0.25),
-                                    width: 1.5,
-                                  ),
+                              ),
+                              Positioned(
+                                top: screenHeight * 0.06,
+                                child: Transform.rotate(
+                                  angle: -0.056,
+                                  child: _buildGradientCard(cardGradients[2], screenWidth, screenHeight, 0.92, 0.38),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    _referralCode,
-                                    style: TextStyle(
-                                      fontFamily: 'Montserrat',
-                                      fontSize: screenWidth * 0.09,
-                                      fontWeight: FontWeight.bold,
-                          color: const Color(0xFFB47A25),
-                                      letterSpacing: 4,
+                              ),
+                              Positioned(
+                                top: screenHeight * 0.11 + _dragOffset,
+                                child: GestureDetector(
+                                  onVerticalDragStart: (details) {
+                                    _dragStart = details.localPosition.dy;
+                                    _isDragging = true;
+                                  },
+                                  onVerticalDragUpdate: (details) {
+                                    if (_isDragging && details.localPosition.dy - _dragStart > 60) {
+                                      _isDragging = false;
+                                      _controller.forward();
+                                    }
+                                  },
+                                  onVerticalDragEnd: (_) {
+                                    if (_isDragging) {
+                                      _isDragging = false;
+                                      _controller.reverse();
+                                    }
+                                  },
+                                  child: AnimatedBuilder(
+                                    animation: _controller,
+                                    builder: (context, child) {
+                                      return Opacity(
+                                        opacity: _opacityAnim.value,
+                                        child: Transform.translate(
+                                          offset: Offset(0, _offsetAnim.value),
+                                          child: child,
+                                        ),
+                                      );
+                                    },
+                                    child: Transform.rotate(
+                                      angle: -0.088,
+                                      child: _buildGradientCard(cardGradients[3], screenWidth, screenHeight, 0.92, 0.40),
                                     ),
                                   ),
-                                ),
-                              ),
-                              SizedBox(height: screenHeight * 0.015),
-                              Text(
-                                'Share this code with friends to earn rewards!',
-                                style: TextStyle(
-                                  fontFamily: 'Montserrat',
-                                  fontSize: screenWidth * 0.028,
-                                  color: Colors.grey.shade600,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: screenHeight * 0.03),
+                        SizedBox(height: screenHeight * 0.02),
                         _buildActionButton(
                           icon: Icons.download_rounded,
                           label: 'Download as PNG',
-                          color: const Color(0xFFE94560),
+                          color: const Color(0xFFB47A25),
                           onTap: _downloadCard,
                         ),
                         SizedBox(height: screenHeight * 0.015),
@@ -364,6 +367,76 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
                     ),
                   ),
                 ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGradientCard(
+    List<Color> gradientColors,
+    double screenWidth,
+    double screenHeight,
+    double widthFactor,
+    double? heightFactor,
+  ) {
+    return Container(
+      width: screenWidth * widthFactor,
+      height: screenHeight * (heightFactor ?? 0.25),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        gradient: LinearGradient(
+          colors: gradientColors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: gradientColors.last.withValues(alpha: 0.35),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(screenWidth * 0.06),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.card_giftcard, color: Colors.white.withValues(alpha: 0.6), size: screenWidth * 0.06),
+            const Spacer(),
+            Text(
+              'YOUR CODE',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: screenWidth * 0.026,
+                color: Colors.white.withValues(alpha: 0.7),
+                letterSpacing: 2,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.006),
+            Text(
+              _referralCode,
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                fontSize: screenWidth * 0.07,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                letterSpacing: 3,
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.008),
+            Text(
+              'Events Uganda',
+              style: TextStyle(
+                fontFamily: 'PlayfairDisplay',
+                fontSize: screenWidth * 0.032,
+                color: Colors.white.withValues(alpha: 0.5),
+                fontStyle: FontStyle.italic,
               ),
             ),
           ],
@@ -422,3 +495,10 @@ class _ReferralShareScreenState extends State<ReferralShareScreen>
     );
   }
 }
+
+List<List<Color>> cardGradients = [
+  [const Color(0xFF00695C), const Color(0xFF004D40)],
+  [const Color(0xFF5C4DB2), const Color(0xFF3E2C85)],
+  [const Color(0xFFD84315), const Color(0xFFBF360C)],
+  [const Color(0xFF1A237E), const Color(0xFF0D1452)],
+];
