@@ -257,53 +257,56 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                                                     ),
                                                 ],
                                             ),
-                                            child: TextField(
-                                                controller: _searchCtrl,
-                                                focusNode: _searchFocus,
-                                                style: TextStyle(
-                                                    fontFamily: 'Montserrat',
-                                                    fontSize: w * 0.028,
-                                                    color: Colors.black,
-                                                ),
-                                                decoration: InputDecoration(
-                                                    border: InputBorder.none,
-                                                    contentPadding: EdgeInsets.symmetric(horizontal: w * 0.025),
-                                                    prefixIcon: Icon(
-                                                        Icons.search,
-                                                        color: Colors.black,
-                                                        size: w * 0.035,
-                                                    ),
-                                                    hintText: 'Search...',
-                                                    hintStyle: TextStyle(
+                                            child: Material(
+                                                color: Colors.transparent,
+                                                child: TextField(
+                                                    controller: _searchCtrl,
+                                                    focusNode: _searchFocus,
+                                                    style: TextStyle(
                                                         fontFamily: 'Montserrat',
                                                         fontSize: w * 0.028,
-                                                        color: const Color(0xFFCD7C20),
+                                                        color: Colors.black,
                                                     ),
-                                                    suffixIcon: _searchCtrl.text.isNotEmpty
-                                                        ? GestureDetector(
-                                                            onTap: () {
-                                                                _searchCtrl.clear();
-                                                                _searchFocus.unfocus();
-                                                                setState(() {});
-                                                            },
-                                                            child: Icon(
-                                                                Icons.close,
-                                                                color: Colors.black54,
-                                                                size: w * 0.035,
-                                                            ),
-                                                        )
-                                                        : null,
+                                                    decoration: InputDecoration(
+                                                        border: InputBorder.none,
+                                                        contentPadding: EdgeInsets.symmetric(horizontal: w * 0.025),
+                                                        prefixIcon: Icon(
+                                                            Icons.search,
+                                                            color: Colors.black,
+                                                            size: w * 0.035,
+                                                        ),
+                                                        hintText: 'Search...',
+                                                        hintStyle: TextStyle(
+                                                            fontFamily: 'Montserrat',
+                                                            fontSize: w * 0.028,
+                                                            color: const Color(0xFFCD7C20),
+                                                        ),
+                                                        suffixIcon: _searchCtrl.text.isNotEmpty
+                                                            ? GestureDetector(
+                                                                onTap: () {
+                                                                    _searchCtrl.clear();
+                                                                    _searchFocus.unfocus();
+                                                                    setState(() {});
+                                                                },
+                                                                child: Icon(
+                                                                    Icons.close,
+                                                                    color: Colors.black54,
+                                                                    size: w * 0.035,
+                                                                ),
+                                                            )
+                                                            : null,
+                                                    ),
+                                                    onChanged: (_) => setState(() {}),
+                                                    onSubmitted: (value) {
+                                                        if (value.trim().isNotEmpty) {
+                                                            _searchFocus.unfocus();
+                                                            Navigator.of(context).pop();
+                                                            ScaffoldMessenger.of(context).showSnackBar(
+                                                                SnackBar(content: Text('Searching for "$value"...')),
+                                                            );
+                                                        }
+                                                    },
                                                 ),
-                                                onChanged: (_) => setState(() {}),
-                                                onSubmitted: (value) {
-                                                    if (value.trim().isNotEmpty) {
-                                                        _searchFocus.unfocus();
-                                                        Navigator.of(context).pop();
-                                                        ScaffoldMessenger.of(context).showSnackBar(
-                                                            SnackBar(content: Text('Searching for "$value"...')),
-                                                        );
-                                                    }
-                                                },
                                             ),
                                         ),
                                     ),
