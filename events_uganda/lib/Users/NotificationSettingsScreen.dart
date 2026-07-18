@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 
 class NotificationSettingsScreen extends StatefulWidget {
   const NotificationSettingsScreen({super.key});
@@ -661,6 +662,14 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       activeIndex: _currentNavIndex,
                       onItemSelected: (index) {
                         setState(() => _currentNavIndex = index);
+                        if (index == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChatScreen(),
+                            ),
+                          );
+                        }
                       },
                     ),
                   ),

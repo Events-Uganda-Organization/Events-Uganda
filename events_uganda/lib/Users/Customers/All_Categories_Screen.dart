@@ -4,6 +4,7 @@ import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Cakes_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
@@ -1452,7 +1453,14 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                     setState(() {
                       _currentNavIndex = index;
                     });
-                    // Add navigation logic here if needed
+                    if (index == 2) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ChatScreen(),
+                        ),
+                      );
+                    }
                     if (index == 3) {
                       Navigator.push(
                         context,

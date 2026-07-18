@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Booking_Details_Screen.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
@@ -970,6 +971,14 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                         setState(() {
                           _currentNavIndex = index;
                         });
+                        if (index == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChatScreen(),
+                            ),
+                          );
+                        }
                         if (index == 3) {
                           Navigator.push(
                             context,

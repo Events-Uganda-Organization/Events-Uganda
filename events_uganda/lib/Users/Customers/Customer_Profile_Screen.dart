@@ -4,6 +4,7 @@ import 'package:events_uganda/Services/user_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -1229,6 +1230,14 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                         context,
                         MaterialPageRoute(
                           builder: (context) => CustomerHomeScreen(),
+                        ),
+                      );
+                    }
+                    if (index == 2) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ChatScreen(),
                         ),
                       );
 }

@@ -7,6 +7,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
   const BookingDetailsScreen({super.key});
@@ -1760,6 +1761,14 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                         setState(() {
                           _currentNavIndex = index;
                         });
+                        if (index == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChatScreen(),
+                            ),
+                          );
+                        }
                       },
                     ),
                   ),
