@@ -523,6 +523,11 @@ class _SidebarPanel extends StatelessWidget {
     }
 }
 
+Future<String> _getReferralCode() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userReferralCode') ?? '';
+}
+
 class _NavItem extends StatelessWidget {
     final IconData icon;
     final String label;
