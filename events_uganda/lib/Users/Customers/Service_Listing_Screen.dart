@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
@@ -1638,6 +1639,14 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     setState(() {
                       _currentNavIndex = index;
                     });
+                    if (index == 2) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ChatScreen(),
+                        ),
+                      );
+                    }
                     if (index == 3) {
                       Navigator.push(
                         context,
