@@ -263,7 +263,7 @@ class _SidebarPanel extends StatelessWidget {
                                                         ),
                                                     ],
                                                 ),
-                                            ],
+                                            ),
                                         ),
                                     ),
                                     SizedBox(height: h * 0.02),
