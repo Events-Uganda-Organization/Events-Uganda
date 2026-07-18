@@ -353,6 +353,20 @@ class _SidebarPanel extends StatelessWidget {
                                                         );
                                                     },
                                                 ),
+                                                SizedBox(height: h * 0.006),
+                                                _NavItem(
+                                                    icon: Icons.card_giftcard,
+                                                    label: 'Share Referral Code',
+                                                    w: w,
+                                                    h: h,
+                                                    onTap: () {
+                                                        Navigator.of(context).pop();
+                                                        Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(builder: (ctx) => const ReferralShareScreen()),
+                                                        );
+                                                    },
+                                                ),
                                             ],
                                         ),
                                     ),
