@@ -1,6 +1,7 @@
 package com.eventsuganda.otp.config;
 
 import com.eventsuganda.otp.service.JwtService;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,13 +32,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             String token = authHeader.substring(7);
 
-            if (jwtService.validateToken(token)) {
-                String userId = jwtService.extractUserId(token);
-                String email = jwtService.extractEmail(token);
+            try {
+                Claims claims = jwtService.validateToken(token);
+                String userId = claims.getSubject();
+                String email = claims.get("email", String.class);
 
                 UsernamePasswordAuthenticationToken auth =
                     new UsernamePasswordAuthenticationToken(userId, email, Collections.emptyList());
                 SecurityContextHolder.getContext().setAuthentication(auth);
+            } catch (Exception e) {
+                SecurityContextHolder.clearContext();
             }
         }
 
