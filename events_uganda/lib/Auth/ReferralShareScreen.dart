@@ -48,11 +48,9 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
       final file = File('${tempDir.path}/referral_code.png');
       await file.writeAsBytes(pngBytes);
 
-      await SharePlus.instance.share(
-        ShareParams(
-          files: [XFile(file.path)],
-          text: 'Join me on Events Uganda! Use my referral code: $_referralCode',
-        ),
+      await Share.shareXFiles(
+        [XFile(file.path)],
+        text: 'Join me on Events Uganda! Use my referral code: $_referralCode',
       );
     } catch (e) {
       if (mounted) {
