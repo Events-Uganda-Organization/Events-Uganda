@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class SplashVideoPlayer extends StatefulWidget {
-  const SplashVideoPlayer({super.key});
+  final VoidCallback? onVideoEnd;
+  const SplashVideoPlayer({super.key, this.onVideoEnd});
   @override
   State<SplashVideoPlayer> createState() => _SplashVideoPlayerState();
 }
@@ -10,6 +11,7 @@ class SplashVideoPlayer extends StatefulWidget {
 class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
   late VideoPlayerController _controller;
   bool _initialized = false;
+  bool _fired = false;
 
   @override
   void initState() {
@@ -20,6 +22,7 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
     _controller.initialize().then((_) {
       _controller.setLooping(false);
       _controller.setVolume(0);
+      _controller.addListener(_onVideoControllerUpdate);
       _controller.play();
       if (mounted) setState(() => _initialized = true);
     }).catchError((_) {
@@ -27,8 +30,18 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
     });
   }
 
+  void _onVideoControllerUpdate() {
+    if (!_fired &&
+        _controller.value.isInitialized &&
+        _controller.value.position >= _controller.value.duration) {
+      _fired = true;
+      widget.onVideoEnd?.call();
+    }
+  }
+
   @override
   void dispose() {
+    _controller.removeListener(_onVideoControllerUpdate);
     _controller.dispose();
     super.dispose();
   }

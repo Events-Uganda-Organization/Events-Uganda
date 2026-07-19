@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 
@@ -67,6 +69,12 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   bool _canForwardReturn = false;
   final MapController _mapController = MapController();
   LatLng _pinPosition = const LatLng(0.3136, 32.5811);
+  final TextEditingController _venueLocationController = TextEditingController();
+  final FocusNode _venueLocationFocus = FocusNode();
+  Timer? _geocodeDebounce;
+  List<Marker> _locationMarkers = [];
+  List<_PlaceSuggestion> _suggestions = [];
+  bool _showSuggestions = false;
 
   @override
   void initState() {
@@ -81,6 +89,13 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     ).animate(_animationController);
     _startCountdown();
     _searchFocus.addListener(() {});
+    _venueLocationController.addListener(_onLocationChanged);
+    _venueLocationFocus.addListener(() {
+      if (!_venueLocationFocus.hasFocus) {
+        setState(() => _showSuggestions = false);
+      }
+    });
+    _locationMarkers = [_buildLocationMarker(_pinPosition)];
     // Fetch user's display name if available
     AuthService.getUser().then((userData) {
       if (mounted) {
@@ -172,6 +187,126 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     overlay.insert(entry);
   }
 
+  void _onLocationChanged() {
+    final text = _venueLocationController.text;
+    if (text.trim().isEmpty) {
+      setState(() {
+        _suggestions = [];
+        _showSuggestions = false;
+      });
+      return;
+    }
+    _geocodeDebounce?.cancel();
+    _geocodeDebounce = Timer(const Duration(milliseconds: 400), () {
+      _fetchSuggestions(text);
+    });
+  }
+
+  Future<void> _fetchSuggestions(String query) async {
+    try {
+      final url = Uri.parse(
+        'https://nominatim.openstreetmap.org/search'
+        '?q=${Uri.encodeComponent(query)}'
+        '&format=json'
+        '&limit=5'
+        '&addressdetails=1',
+      );
+      final response = await http.get(
+        url,
+        headers: {'User-Agent': 'EventsUgandaApp/1.0'},
+      );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as List;
+        if (mounted) {
+          setState(() {
+            _suggestions = data.map((item) {
+              return _PlaceSuggestion(
+                displayName: item['display_name'] as String,
+                lat: double.parse(item['lat'] as String),
+                lon: double.parse(item['lon'] as String),
+              );
+            }).toList();
+            _showSuggestions = _suggestions.isNotEmpty;
+          });
+        }
+      }
+    } catch (_) {}
+  }
+
+  void _selectSuggestion(_PlaceSuggestion suggestion) {
+    _venueLocationController.text = suggestion.displayName;
+    _venueLocationController.selection = TextSelection.fromPosition(
+      TextPosition(offset: suggestion.displayName.length),
+    );
+    setState(() {
+      _showSuggestions = false;
+      _suggestions = [];
+      _pinPosition = LatLng(suggestion.lat, suggestion.lon);
+      _locationMarkers = [_buildLocationMarker(_pinPosition)];
+    });
+    _mapController.move(_pinPosition, 15);
+  }
+
+  Marker _buildLocationMarker(LatLng point) {
+    return Marker(
+      point: point,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              color: const Color(0xFFCB471B),
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 3),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 2,
+            height: 12,
+            color: const Color(0xFFCB471B),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _geocodeAddress(String address) async {
+    if (address.trim().isEmpty) return;
+    try {
+      final url = Uri.parse(
+        'https://nominatim.openstreetmap.org/search?q=${Uri.encodeComponent(address)}&format=json&limit=1',
+      );
+      final response = await http.get(
+        url,
+        headers: {'User-Agent': 'EventsUgandaApp/1.0'},
+      );
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as List;
+        if (data.isNotEmpty) {
+          final lat = double.parse(data[0]['lat'] as String);
+          final lon = double.parse(data[0]['lon'] as String);
+          final position = LatLng(lat, lon);
+          if (mounted) {
+            setState(() {
+              _pinPosition = position;
+              _locationMarkers = [_buildLocationMarker(position)];
+            });
+            _mapController.move(position, 15);
+          }
+        }
+      }
+    } catch (_) {}
+  }
+
   @override
   void dispose() {
     _animationController.dispose();
@@ -180,6 +315,10 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     _reviewController.dispose();
     _venueTypeController.dispose();
     _venueTypeFocus.dispose();
+    _venueLocationController.removeListener(_onLocationChanged);
+    _venueLocationController.dispose();
+    _venueLocationFocus.dispose();
+    _geocodeDebounce?.cancel();
     super.dispose();
   }
 
@@ -538,7 +677,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                             left: (screenWidth - screenWidth * 0.95) / 2,
                             child: Container(
                               width: screenWidth * 0.95,
-                              height: screenWidth * 0.95 * (336 / 350) * 0.7 + screenWidth * 0.58,
+                              height: screenWidth * 0.95 * (336 / 350) * 0.7 + screenWidth * 0.65,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
@@ -704,6 +843,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     ),
                                     SizedBox(height: screenWidth * 0.05),
                                     TextFormField(
+                                      controller: _venueLocationController,
+                                      focusNode: _venueLocationFocus,
                                       cursorColor: const Color(0xFFCB471B),
                                       decoration: InputDecoration(
                                         prefixIcon: Icon(
@@ -768,6 +909,92 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
+                                    if (_showSuggestions)
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                          top: screenWidth * 0.01,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(
+                                            16,
+                                          ),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black
+                                                  .withValues(alpha: 0.12),
+                                              blurRadius: 8,
+                                              offset: const Offset(0, 4),
+                                            ),
+                                          ],
+                                        ),
+                                        constraints: BoxConstraints(
+                                          maxHeight: screenWidth * 0.6,
+                                        ),
+                                        child: ListView.separated(
+                                          shrinkWrap: true,
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: screenWidth * 0.02,
+                                          ),
+                                          itemCount: _suggestions.length,
+                                          separatorBuilder: (context, index) =>
+                                              Divider(
+                                            height: 1,
+                                            color: Colors.grey[200],
+                                          ),
+                                          itemBuilder: (context, index) {
+                                            final suggestion =
+                                                _suggestions[index];
+                                            return InkWell(
+                                              onTap: () =>
+                                                  _selectSuggestion(suggestion),
+                                              child: Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      screenWidth * 0.04,
+                                                  vertical:
+                                                      screenWidth * 0.03,
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.location_on,
+                                                      size:
+                                                          screenWidth * 0.04,
+                                                      color: const Color(
+                                                          0xFFCB471B,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width:
+                                                          screenWidth * 0.02,
+                                                    ),
+                                                    Expanded(
+                                                      child: Text(
+                                                        suggestion
+                                                            .displayName,
+                                                        maxLines: 2,
+                                                        overflow:
+                                                            TextOverflow
+                                                                .ellipsis,
+                                                        style: TextStyle(
+                                                          fontFamily:
+                                                              'Montserrat',
+                                                          fontSize:
+                                                              screenWidth *
+                                                                  0.03,
+                                                          color: Colors
+                                                              .black87,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
                                     SizedBox(height: screenWidth * 0.025),
                                     Text(
                                       'Drag the location pin to your location',
@@ -780,7 +1007,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                     ),
                                     SizedBox(height: screenWidth * 0.025),
                                     Container(
-                                      height: screenWidth * 0.55,
+                                      height: (screenWidth < 380) ? screenWidth * 0.45 : screenWidth * 0.50,
                                       decoration: BoxDecoration(
                                         color: Colors.grey[100],
                                         borderRadius: BorderRadius.circular(30),
@@ -790,58 +1017,34 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         ),
                                       ),
                                       clipBehavior: Clip.antiAlias,
-                                      child: Stack(
+                                      child: FlutterMap(
+                                        options: MapOptions(
+                                          initialCenter: _pinPosition,
+                                          initialZoom: 15,
+                                          onMapEvent: (event) {
+                                            if (event is MapEventMoveEnd) {
+                                              setState(() {
+                                                _pinPosition = event
+                                                    .camera
+                                                    .center;
+                                                _locationMarkers = [
+                                                  _buildLocationMarker(
+                                                      _pinPosition),
+                                                ];
+                                              });
+                                            }
+                                          },
+                                        ),
+                                        mapController: _mapController,
                                         children: [
-                                          FlutterMap(
-                                            options: MapOptions(
-                                              initialCenter: _pinPosition,
-                                              initialZoom: 15,
-                                              onMapEvent: (event) {
-                                                if (event is MapEventMoveEnd) {
-                                                  setState(() {
-                                                    _pinPosition = event
-                                                        .camera
-                                                        .center;
-                                                  });
-                                                }
-                                              },
-                                            ),
-                                            mapController: _mapController,
-                                            children: [
-                                              TileLayer(
-                                                urlTemplate:
-                                                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                                userAgentPackageName:
-                                                    'com.events_uganda.app',
-                                              ),
-                                            ],
+                                          TileLayer(
+                                            urlTemplate:
+                                                'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                            userAgentPackageName:
+                                                'com.events_uganda.app',
                                           ),
-                                          Center(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Icon(
-                                                  Icons.location_on,
-                                                  color:
-                                                      const Color(0xFFCB471B),
-                                                  size: screenWidth * 0.1,
-                                                ),
-                                                Container(
-                                                  width: 14,
-                                                  height: 14,
-                                                  decoration: BoxDecoration(
-                                                    color: const Color(
-                                                      0xFFCB471B,
-                                                    ),
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: Colors.white,
-                                                      width: 2.5,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                          MarkerLayer(
+                                            markers: _locationMarkers,
                                           ),
                                         ],
                                       ),
@@ -1699,4 +1902,16 @@ class _DottedLinePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _PlaceSuggestion {
+  final String displayName;
+  final double lat;
+  final double lon;
+
+  const _PlaceSuggestion({
+    required this.displayName,
+    required this.lat,
+    required this.lon,
+  });
 }

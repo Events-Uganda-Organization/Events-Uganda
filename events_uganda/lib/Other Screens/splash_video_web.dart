@@ -1,9 +1,11 @@
+import 'dart:js_interop';
 import 'dart:ui_web' as ui_web;
 import 'package:flutter/material.dart';
 import 'package:web/web.dart' as web;
 
 class SplashVideoPlayer extends StatefulWidget {
-  const SplashVideoPlayer({super.key});
+  final VoidCallback? onVideoEnd;
+  const SplashVideoPlayer({super.key, this.onVideoEnd});
   @override
   State<SplashVideoPlayer> createState() => _SplashVideoPlayerState();
 }
@@ -11,6 +13,7 @@ class SplashVideoPlayer extends StatefulWidget {
 class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
   static bool _registered = false;
   web.HTMLVideoElement? _videoElement;
+  JSFunction? _endedListener;
 
   @override
   void initState() {
@@ -33,6 +36,10 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
             ..width = '100%'
             ..height = '100%'
             ..objectFit = 'cover';
+          _endedListener = ((web.Event _) {
+            widget.onVideoEnd?.call();
+          }).toJS;
+          _videoElement!.addEventListener('ended', _endedListener);
           return _videoElement!;
         },
       );
@@ -41,6 +48,9 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
 
   @override
   void dispose() {
+    if (_videoElement != null && _endedListener != null) {
+      _videoElement!.removeEventListener('ended', _endedListener);
+    }
     _videoElement?.pause();
     _videoElement?.removeAttribute('src');
     super.dispose();

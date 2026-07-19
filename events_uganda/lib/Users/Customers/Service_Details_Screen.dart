@@ -381,22 +381,26 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "Provider's Name",
-                                                    style: TextStyle(
-                                                      fontFamily: 'Montserrat',
-                                                      fontWeight:
-                                                          FontWeight.w900,
-                                                      fontSize:
-                                                          screenWidth * 0.048,
-                                                      color: Colors.black,
+                                              Flexible(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "Provider's Name",
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        fontFamily: 'Montserrat',
+                                                        fontWeight:
+                                                            FontWeight.w900,
+                                                        fontSize:
+                                                            screenWidth * 0.048,
+                                                        color: Colors.black,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                               SizedBox(
                                                 width: screenWidth * 0.016,

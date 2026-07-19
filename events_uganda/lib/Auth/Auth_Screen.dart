@@ -197,25 +197,29 @@ class _AuthScreenState extends State<AuthScreen>
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/vectors/apple.png',
-                                  width: screenWidth * 0.07,
-                                  height: screenWidth * 0.07,
-                                ),
-                                SizedBox(width: screenWidth * 0.03),
-                                Text(
-                                  'Continue with Apple',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: screenWidth * 0.045,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'PlayfairDisplay',
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    'assets/vectors/apple.png',
+                                    width: screenWidth * 0.07,
+                                    height: screenWidth * 0.07,
                                   ),
-                                ),
-                              ],
+                                  SizedBox(width: screenWidth * 0.03),
+                                  Text(
+                                    'Continue with Apple',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: screenWidth * 0.045,
+                                      fontWeight: FontWeight.w600,
+                                      fontFamily: 'PlayfairDisplay',
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           SizedBox(height: screenHeight * 0.03),
@@ -228,25 +232,29 @@ class _AuthScreenState extends State<AuthScreen>
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/vectors/google.png',
-                                    width: screenWidth * 0.07,
-                                    height: screenWidth * 0.07,
-                                  ),
-                                  SizedBox(width: screenWidth * 0.03),
-                                  Text(
-                                    'Continue with Google',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: screenWidth * 0.045,
-                                      fontWeight: FontWeight.w600,
-                                      fontFamily: 'PlayfairDisplay',
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/vectors/google.png',
+                                      width: screenWidth * 0.07,
+                                      height: screenWidth * 0.07,
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(width: screenWidth * 0.03),
+                                    Text(
+                                      'Continue with Google',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: screenWidth * 0.045,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'PlayfairDisplay',
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -284,25 +292,29 @@ class _AuthScreenState extends State<AuthScreen>
                                       width: 1.5,
                                     ),
                                   ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.mail,
-                                        color: Colors.white,
-                                        size: screenWidth * 0.07,
-                                      ),
-                                      SizedBox(width: screenWidth * 0.03),
-                                      Text(
-                                        'Continue with Email',
-                                        style: TextStyle(
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.mail,
                                           color: Colors.white,
-                                          fontSize: screenWidth * 0.045,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'PlayfairDisplay',
+                                          size: screenWidth * 0.07,
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(width: screenWidth * 0.03),
+                                        Text(
+                                          'Continue with Email',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: screenWidth * 0.045,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'PlayfairDisplay',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

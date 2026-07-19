@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math' as math;
 import 'package:events_uganda/Intro/Onboarding_Screen1.dart';
 import 'package:events_uganda/Other Screens/splash_video.dart';
@@ -12,7 +11,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  Timer? _navTimer;
   late AnimationController _animController;
   late Animation<double> _fadeIn;
 
@@ -25,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen>
     );
     _fadeIn = CurvedAnimation(parent: _animController, curve: Curves.easeOutCubic);
     _animController.forward();
-    _navTimer = Timer(const Duration(seconds: 20), _navigate);
   }
 
   void _navigate() {
@@ -39,7 +36,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    _navTimer?.cancel();
     _animController.dispose();
     super.dispose();
   }
@@ -54,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: SizedBox.expand(
         child: Stack(
           children: [
-            const SizedBox.expand(child: SplashVideoPlayer()),
+            SizedBox.expand(child: SplashVideoPlayer(onVideoEnd: _navigate)),
             SizedBox.expand(
               child: Container(color: Colors.black.withValues(alpha: 0.25)),
             ),
