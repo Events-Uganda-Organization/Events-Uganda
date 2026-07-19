@@ -2,11 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
+import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:http/http.dart' as http;
 import 'package:latlong2/latlong.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 
 class BookingDetailsScreen extends StatefulWidget {
   const BookingDetailsScreen({super.key});
@@ -16,11 +19,14 @@ class BookingDetailsScreen extends StatefulWidget {
 }
 
 class _BookingDetailsScreenState extends State<BookingDetailsScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final TextEditingController _reviewController = TextEditingController();
   final TextEditingController _venueTypeController = TextEditingController();
   final FocusNode _venueTypeFocus = FocusNode();
   final GlobalKey _venueTypeKey = GlobalKey();
+  final TextEditingController _specialRequestsController = TextEditingController();
+  final FocusNode _specialRequestsFocus = FocusNode();
+  final GlobalKey _specialRequestsKey = GlobalKey();
   final bool _hasText = false;
   final List<ReviewModel> _reviews = [];
   final ScrollController _galleryScrollController = ScrollController();
@@ -67,6 +73,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   final bool _showReviewSection = false;
   bool _showAllReviews = false;
   bool _canForwardReturn = false;
+  bool _agreeToPolicy = false;
   final MapController _mapController = MapController();
   LatLng _pinPosition = const LatLng(0.3136, 32.5811);
   final TextEditingController _venueLocationController = TextEditingController();
@@ -75,6 +82,10 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
   List<Marker> _locationMarkers = [];
   List<_PlaceSuggestion> _suggestions = [];
   bool _showSuggestions = false;
+  int _currentNavIndex = 0;
+  bool _isNavbarVisible = true;
+  late AnimationController _navbarSlideController;
+  late Animation<Offset> _navbarSlideAnimation;
 
   @override
   void initState() {
@@ -87,6 +98,16 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
       begin: 1.0,
       end: 1.2,
     ).animate(_animationController);
+    _navbarSlideController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _navbarSlideAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0, 3),
+    ).animate(
+      CurvedAnimation(parent: _navbarSlideController, curve: Curves.easeInOut),
+    );
     _startCountdown();
     _searchFocus.addListener(() {});
     _venueLocationController.addListener(_onLocationChanged);
@@ -168,7 +189,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                           _venueTypes[index],
                           style: TextStyle(
                             fontFamily: 'Montserrat',
-                            fontSize: MediaQuery.of(context).size.width * 0.035,
+                            fontSize: MediaQuery.of(context).size.width * 0.032,
                             color: Colors.black87,
                             fontWeight: FontWeight.w500,
                           ),
@@ -307,9 +328,20 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     } catch (_) {}
   }
 
+  void _hideNavbar() {
+    _navbarSlideController.forward();
+    setState(() => _isNavbarVisible = false);
+  }
+
+  void _showNavbar() {
+    _navbarSlideController.reverse();
+    setState(() => _isNavbarVisible = true);
+  }
+
   @override
   void dispose() {
     _animationController.dispose();
+    _navbarSlideController.dispose();
     _countdownTimer?.cancel();
     _galleryScrollController.dispose();
     _reviewController.dispose();
@@ -319,6 +351,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
     _venueLocationController.dispose();
     _venueLocationFocus.dispose();
     _geocodeDebounce?.cancel();
+    _specialRequestsController.dispose();
+    _specialRequestsFocus.dispose();
     super.dispose();
   }
 
@@ -439,7 +473,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
             Positioned(
               top: screenHeight * 0.03 + screenWidth * 0.015,
               left:
-                  screenWidth * 0.04 + screenWidth * 0.128 + screenWidth * 0.03,
+                  screenWidth * 0.04 + screenWidth * 0.128 + screenWidth * 0.025,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -448,7 +482,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
-                      fontSize: screenWidth * 0.045,
+                      fontSize: screenWidth * 0.027,
                       color: Colors.black,
                     ),
                   ),
@@ -458,7 +492,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                     style: TextStyle(
                       fontFamily: 'Abril Fatface',
                       fontWeight: FontWeight.w600,
-                      fontSize: screenWidth * 0.038,
+                      fontSize: screenWidth * 0.022,
                       color: Colors.black,
                     ),
                   ),
@@ -516,29 +550,39 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 10,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.notifications_none_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
-                  ),
-                ),
-              ),
+  child: GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const NotificationScreen(),
+        ),
+      );
+    },
+    child: Container(
+      width: screenWidth * 0.128,
+      height: screenWidth * 0.128,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 3),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 10,
+            offset: const Offset(0, 7),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Icon(
+          Icons.notifications_none_rounded,
+          color: Colors.black,
+          size: screenWidth * 0.07,
+        ),
+      ),
+    ),
+  ),
             ),
             Positioned(
               top: offset,
@@ -560,7 +604,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                             style: TextStyle(
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
-                              fontSize: screenWidth * 0.045,
+                              fontSize: screenWidth * 0.027,
                               color: Colors.black,
                             ),
                           ),
@@ -656,28 +700,129 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                           Positioned(
                             top: 0,
                             left: (screenWidth - screenWidth * 0.95) / 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(30),
-                                  child: Image.asset(
-                                    _galleryImages[_selectedGalleryIndex],
-                                    width: screenWidth * 0.95,
-                                    height: screenWidth * 0.95 * (336 / 350),
-                                    fit: BoxFit.cover,
+                              child: Stack(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(30),
+                                    child: Image.asset(
+                                      _galleryImages[_selectedGalleryIndex],
+                                      width: screenWidth * 0.95,
+                                      height: screenWidth * 0.95 * (336 / 350),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
+                                  Positioned(
+                                    bottom: 12,
+                                    left: 12,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                          sigmaX: 8.0,
+                                          sigmaY: 8.0,
+                                        ),
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 14,
+                                            vertical: 10,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: Colors.white.withValues(
+                                              alpha: 0.2,
+                                            ),
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            border: Border.all(
+                                              color: Colors.white.withValues(
+                                                alpha: 0.4,
+                                              ),
+                                              width: 1.5,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Icon(
+                                                    Icons.business,
+                                                    color: Colors.white,
+                                                    size: screenWidth * 0.04,
+                                                  ),
+                                                  SizedBox(width: 6),
+                                                  Text(
+                                                    "Provider's Name",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize:
+                                                          screenWidth * 0.0255,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontFamily: 'Montserrat',
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  vertical: 6,
+                                                ),
+                                                child: Container(
+                                                  height: 1,
+                                                  color: Colors.white
+                                                      .withValues(alpha: 0.4),
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Icon(
+                                                    Icons.star_rounded,
+                                                    color: Colors.white,
+                                                    size: screenWidth * 0.04,
+                                                  ),
+                                                  SizedBox(width: 6),
+                                                  Text(
+                                                    'Reviews',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize:
+                                                          screenWidth * 0.0255,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontFamily: 'Montserrat',
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      width: screenWidth *
+                                                          0.04),
+                                                  Icon(
+                                                    Icons.chevron_right,
+                                                    color: Colors.white,
+                                                    size: screenWidth * 0.05,
+                                                  ),
+                                                ],
+                                              ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
-                          // White card below image
+                              ),
+                             ),
+                                   ),
+                                   ),
+                                 ],
+                               ),
+                           ),
+                           // White card below image
                           Positioned(
                             top: screenWidth * 0.95 * (336 / 350) + 8,
                             left: (screenWidth - screenWidth * 0.95) / 2,
                             child: Container(
                               width: screenWidth * 0.95,
-                              height: screenWidth * 0.95 * (336 / 350) * 0.7 + screenWidth * 0.65,
+                              height: screenWidth * 0.95 * (336 / 350) * 0.7 + screenWidth * 0.78,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
@@ -693,8 +838,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                 horizontal: screenWidth * 0.05,
                                 vertical: screenWidth * 0.04,
                               ),
-                              child: SingleChildScrollView(
-                                child: Column(
+                              child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Center(
@@ -702,7 +846,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         'Events Details',
                                         style: TextStyle(
                                           fontFamily: 'Abril Fatface',
-                                          fontSize: screenWidth * 0.05,
+                                          fontSize: screenWidth * 0.027,
                                           fontWeight: FontWeight.bold,
                                           color: const Color(0xFFCB471B),
                                         ),
@@ -772,7 +916,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                     'Enter Your Venue Type',
                                                 labelStyle: TextStyle(
                                                   fontFamily: 'Montserrat',
-                                                  fontSize: screenWidth * 0.035,
+                                                  fontSize: screenWidth * 0.022,
                                                   color: Colors.grey[500],
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -780,7 +924,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                     'Enter Your Venue Type',
                                                 hintStyle: TextStyle(
                                                   fontFamily: 'Montserrat',
-                                                  fontSize: screenWidth * 0.035,
+                                                  fontSize: screenWidth * 0.022,
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w600,
                                                 ),
@@ -827,12 +971,13 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                 contentPadding:
                                                     EdgeInsets.symmetric(
                                                       horizontal: 16,
-                                                      vertical: 8,
+                                                      vertical: 2,
                                                     ),
+                                                isDense: true,
                                               ),
                                               style: TextStyle(
                                                 fontFamily: 'Montserrat',
-                                                fontSize: screenWidth * 0.035,
+                                                fontSize: screenWidth * 0.022,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -855,19 +1000,19 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         labelText: 'Venue Location',
                                         labelStyle: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
+                                          fontSize: screenWidth * 0.022,
                                           color: Colors.grey[500],
                                           fontWeight: FontWeight.w600,
                                         ),
                                         hintText: 'Enter Venue Location',
                                         hintStyle: TextStyle(
                                           fontFamily: 'Montserrat',
-                                          fontSize: screenWidth * 0.035,
+                                          fontSize: screenWidth * 0.022,
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600,
                                         ),
                                         floatingLabelBehavior:
-                                            FloatingLabelBehavior.auto,
+                                            FloatingLabelBehavior.never,
                                         filled: true,
                                         fillColor: Colors.grey[100],
                                         border: OutlineInputBorder(
@@ -899,12 +1044,13 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                         ),
                                         contentPadding: EdgeInsets.symmetric(
                                           horizontal: 16,
-                                          vertical: 8,
+                                          vertical: 2,
                                         ),
+                                        isDense: true,
                                       ),
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
-                                        fontSize: screenWidth * 0.035,
+                                        fontSize: screenWidth * 0.022,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -1000,7 +1146,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                       'Drag the location pin to your location',
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
-                                        fontSize: screenWidth * 0.03,
+                                        fontSize: screenWidth * 0.021,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -1048,23 +1194,168 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                           ),
                                         ],
                                       ),
+                                     ),
+                                  SizedBox(height: screenWidth * 0.05),
+                                  ],
+                                ),
+                              ),
+                             ),
+                             // Middle white rectangle
+                            Positioned(
+                              top:
+                                  screenWidth * 0.95 * (336 / 350) +
+                                  8 +
+                                  screenWidth * 0.95 * (336 / 350) * 0.7 +
+                                  screenWidth * 0.78 +
+                                  6,
+                              left: (screenWidth - screenWidth * 0.95) / 2,
+                              child: Container(
+                                width: screenWidth * 0.95,
+                                height: screenWidth * 0.7,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(alpha: 0.08),
+                                      blurRadius: 12,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.05,
+                                  vertical: screenWidth * 0.04,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Center(
+                                      child: Text(
+                                        'Customer Requirements',
+                                        style: TextStyle(
+                                          fontFamily: 'Abril Fatface',
+                                          fontSize: screenWidth * 0.027,
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color(0xFFCB471B),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: screenWidth * 0.025),
+                                    Divider(
+                                      color: Colors.grey[200],
+                                      thickness: 1,
+                                    ),
+                                    SizedBox(height: screenWidth * 0.02),
+                                    Focus(
+                                      key: _specialRequestsKey,
+                                      child: Builder(
+                                        builder: (context) {
+                                          final isFocused = Focus.of(
+                                            context,
+                                          ).hasFocus;
+                                          return AnimatedContainer(
+                                            duration: const Duration(
+                                              milliseconds: 200,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              boxShadow: isFocused
+                                                  ? [
+                                                      BoxShadow(
+                                                        color: const Color(
+                                                          0xFFCB471B,
+                                                        ).withValues(
+                                                          alpha: 0.4,
+                                                        ),
+                                                        blurRadius: 12,
+                                                        spreadRadius: 1,
+                                                      ),
+                                                    ]
+                                                  : [],
+                                            ),
+                                            child: TextFormField(
+                                              controller:
+                                                  _specialRequestsController,
+                                              focusNode:
+                                                  _specialRequestsFocus,
+                                              maxLines: 5,
+                                              maxLength: 500,
+                                              cursorColor:
+                                                  const Color(0xFFCB471B),
+                                              decoration: InputDecoration(
+                                                hintText:
+                                                    'Any special requests?',
+                                                hintStyle: TextStyle(
+                                                  fontFamily: 'Montserrat',
+                                                  fontSize:
+                                                      screenWidth * 0.0255,
+                                                  color: Colors.grey[400],
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.grey[100],
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0xFFCB471B),
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0xFFCB471B),
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0xFFCB471B),
+                                                    width: 2,
+                                                  ),
+                                                ),
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                  horizontal: 16,
+                                                  vertical: 14,
+                                                ),
+                                              ),
+                                              style: TextStyle(
+                                                fontFamily: 'Montserrat',
+                                                fontSize:
+                                                    screenWidth * 0.0255,
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
-                          ),
-                          Positioned(
-                            top:
-                                screenWidth * 0.95 * (336 / 350) +
-                                8 +
-                                screenWidth * 0.95 * (336 / 350) * 0.7 +
-                                screenWidth * 0.58 +
-                                12,
-                            left: (screenWidth - screenWidth * 0.95) / 2,
-                            child: Container(
-                              width: screenWidth * 0.95,
-                              height: screenWidth * 0.95 * (336 / 350) * 0.4,
+                            Positioned(
+                              top:
+                                  screenWidth * 0.95 * (336 / 350) +
+                                  8 +
+                                  screenWidth * 0.95 * (336 / 350) * 0.7 +
+                                  screenWidth * 0.78 +
+                                   6 +
+                                   screenWidth * 0.7 +
+                                   6,
+                             left: (screenWidth - screenWidth * 0.95) / 2,
+                             child: Container(
+                               width: screenWidth * 0.95,
+                                height: screenWidth * 0.95 * (336 / 350) * 0.65,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(30),
@@ -1080,14 +1371,278 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                 horizontal: screenWidth * 0.05,
                                 vertical: screenWidth * 0.04,
                               ),
+                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      'Price Breakdown',
+                                      style: TextStyle(
+                                        fontFamily: 'Abril Fatface',
+                                        fontSize: screenWidth * 0.027,
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color(0xFFCB471B),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: screenWidth * 0.025),
+                                  Divider(
+                                    color: Colors.grey[200],
+                                    thickness: 1,
+                                  ),
+                                  SizedBox(height: screenWidth * 0.02),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Base Price',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.022,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      Text(
+                                        '800,000 UGX',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.022,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: screenWidth * 0.012),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Transport Fee',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.022,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      Text(
+                                        '50,000 UGX',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.022,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: screenWidth * 0.012),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Service Fee',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.022,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      Text(
+                                        '20,000 UGX',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.022,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                     ],
+                                   ),
+                                  SizedBox(height: screenWidth * 0.025),
+                                  Divider(
+                                    color: Colors.grey[200],
+                                    thickness: 1,
+                                  ),
+                                  SizedBox(height: screenWidth * 0.015),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Total',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.027,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      Text(
+                                        '870,000 UGX',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: screenWidth * 0.027,
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color(0xFFCB471B),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                 ],
+                               ),
+                             ),
+                           ),
+                            // Customer payment summary rectangle
+                            Positioned(
+                               top:
+                                   screenWidth * 0.95 * (336 / 350) +
+                                   8 +
+                                    screenWidth * 0.95 * (336 / 350) * 0.7 +
+                                    screenWidth * 0.78 +
+                                    6 +
+                                      screenWidth * 0.7 +
+                                     6 +
+                                     screenWidth * 0.95 * (336 / 350) * 0.65 +
+                                     8,
+                               left: (screenWidth - screenWidth * 0.95) / 2,
+                               child: Container(
+                                 width: screenWidth * 0.95,
+                                 height: screenWidth * 0.18,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(alpha: 0.08),
+                                      blurRadius: 12,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.05,
+                                  vertical: screenWidth * 0.04,
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _agreeToPolicy = !_agreeToPolicy;
+                                        });
+                                      },
+                                      child: Container(
+                                        width: screenWidth * 0.05,
+                                        height: screenWidth * 0.05,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(6),
+                                          border: Border.all(
+                                            color: Colors.black,
+                                            width: 2,
+                                          ),
+                                          color: _agreeToPolicy
+                                              ? const Color(0xFFCB471B)
+                                              : Colors.transparent,
+                                        ),
+                                        child: _agreeToPolicy
+                                            ? Icon(
+                                                Icons.check,
+                                                size: screenWidth * 0.0255,
+                                                color: Colors.white,
+                                              )
+                                            : null,
+                                      ),
+                                    ),
+                                    SizedBox(width: screenWidth * 0.025),
+                                    Expanded(
+                                      child: RichText(
+                                        text: TextSpan(
+                                          style: TextStyle(
+                                            fontFamily: 'Montserrat',
+                                            fontSize: screenWidth * 0.022,
+                                            color: Colors.black87,
+                                          ),
+                                          children: [
+                                            TextSpan(
+                                              text: 'I agree to the cancellation and refund policy ',
+                                            ),
+                                            TextSpan(
+                                              text: 'View Policy',
+                                              style: TextStyle(
+                                                color: const Color(0xFFCB471B),
+                                                fontWeight: FontWeight.bold,
+                                                decoration: TextDecoration.underline,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                          Positioned(
-                            top:
-                                screenHeight * 0.59 -
-                                offset, // Provider name sits above
-                            left: screenWidth * 0.03,
-                            right: screenWidth * 0.03,
+                            Positioned(
+                              top:
+                                  screenWidth * 0.95 * (336 / 350) +
+                                  8 +
+                                  screenWidth * 0.95 * (336 / 350) * 0.7 +
+                                  screenWidth * 0.78 +
+                                  6 +
+                                  screenWidth * 0.7 +
+                                  6 +
+                                  screenWidth * 0.95 * (336 / 350) * 0.65 +
+                                  8 +
+                                  screenWidth * 0.18 +
+                                  8,
+                              left: (screenWidth - screenWidth * 0.95) / 2,
+                              child: SizedBox(
+                                width: screenWidth * 0.95,
+                                height: screenHeight * 0.055,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        Color(0xFFE0E7FF),
+                                        Color(0xFFCD7C20),
+                                      ],
+                                      stops: [0.0, 0.47],
+                                    ),
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.transparent,
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(30),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'Confirm Booking',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: screenWidth * 0.022,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top:
+                                  screenHeight * 0.59 -
+                                  offset, // Provider name sits above
+                             left: screenWidth * 0.025,
+                             right: screenWidth * 0.025,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -1112,7 +1667,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                   'Available',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: screenWidth * 0.03,
+                                    fontSize: screenWidth * 0.021,
                                     fontWeight: FontWeight.bold,
                                     fontFamily: 'Abril Fatface',
                                   ),
@@ -1325,76 +1880,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                               ],
                             ),
                           ),
-                          // Reviews and Ratings card removed
 
-                          // ===== Reviews & Ratings Section in nested cards =====
-                          Positioned(
-                            top: _showReviewSection
-                                ? screenHeight * 1.85 - offset
-                                : screenHeight * 1.65 - offset,
-                            left: screenWidth * 0.022,
-                            right: screenWidth * 0.022,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Rating and some reviews are verified and are\nfrom people who use the same type of device that you use.',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: screenWidth * 0.038,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'Abril Fatface',
-                                  ),
-                                ),
-                                SizedBox(height: screenHeight * 0.025),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // LEFT: Rating column
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '4.8',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: screenWidth * 0.15,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Abril Fatface',
-                                          ),
-                                        ),
-                                        const SizedBox(height: 8),
-                                        _buildStarRating(4.8, starSize: 24),
-                                      ],
-                                    ),
-                                    SizedBox(width: screenWidth * 0.03),
-                                    // CENTER: Vertical separator
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        top: screenHeight * 0.02,
-                                      ),
-                                      child: Container(
-                                        width: screenWidth * 0.012,
-                                        height: screenHeight * 0.16,
-                                        decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius: BorderRadius.circular(
-                                            screenWidth * 0.01,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: screenWidth * 0.03),
-                                    // RIGHT: Rating distribution bars
-                                    _buildRatingBars(screenWidth),
-                                  ],
-                                ),
-                                SizedBox(height: screenHeight * 0.025),
-                                _buildReviewsList(screenWidth),
-                              ],
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -1434,12 +1920,12 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                 'Book Now',
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat',
-                                ),
-                              ),
-                              SizedBox(width: 8),
+                fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat',
+                ),
+              ),
+              SizedBox(width: 8),
                               Transform.rotate(
                                 angle: -40 * 3.14159 / 180,
                                 child: Icon(
@@ -1457,6 +1943,69 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                 ),
               ),
             ),
+            // Bottom Navbar - swipe down to hide
+            Positioned(
+              bottom: screenHeight * 0.02,
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onVerticalDragEnd: (details) {
+                  if (details.primaryVelocity != null &&
+                      details.primaryVelocity! > 300) {
+                    _hideNavbar();
+                  }
+                },
+                child: SlideTransition(
+                  position: _navbarSlideAnimation,
+                  child: Center(
+                    child: BottomNavbar(
+                      activeIndex: _currentNavIndex,
+                      onItemSelected: (index) {
+                        setState(() {
+                          _currentNavIndex = index;
+                        });
+                        if (index == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChatScreen(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // Green circle to show navbar when hidden
+            if (!_isNavbarVisible)
+              Positioned(
+                bottom: screenHeight * 0.06,
+                right: screenWidth * 0.06,
+                child: GestureDetector(
+                  onTap: _showNavbar,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF7EED27),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.arrow_upward,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
@@ -1493,7 +2042,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                   'See more',
                   style: TextStyle(
                     color: const Color.fromARGB(255, 228, 172, 1),
-                    fontSize: screenWidth * 0.045,
+                    fontSize: screenWidth * 0.027,
                     fontWeight: FontWeight.w900,
                     fontFamily: 'Abril Fatface',
                     shadows: [
@@ -1522,7 +2071,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                   'Show less',
                   style: TextStyle(
                     color: const Color.fromARGB(255, 228, 172, 1),
-                    fontSize: screenWidth * 0.045,
+                    fontSize: screenWidth * 0.027,
                     fontWeight: FontWeight.w900,
                     fontFamily: 'Abril Fatface',
                     shadows: [
@@ -1653,8 +2202,8 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: screenWidth * 0.035,
-          height: screenWidth * 0.035,
+          width: screenWidth * 0.0255,
+          height: screenWidth * 0.0255,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: isActive ? const Color(0xFFCB471B) : Colors.grey.shade300,
@@ -1664,7 +2213,7 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
         Text(
           label,
           style: TextStyle(
-            fontSize: screenWidth * 0.028,
+            fontSize: screenWidth * 0.02,
             fontFamily: 'Montserrat',
             fontWeight: FontWeight.w500,
             color: isActive ? const Color(0xFFCB471B) : Colors.grey,

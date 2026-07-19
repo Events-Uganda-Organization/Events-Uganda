@@ -3,6 +3,9 @@ import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/Users/NotificationScreen.dart';
+import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 
 class ServiceDetailsScreen extends StatefulWidget {
   const ServiceDetailsScreen({super.key});
@@ -12,7 +15,7 @@ class ServiceDetailsScreen extends StatefulWidget {
 }
 
 class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final TextEditingController _reviewController = TextEditingController();
   bool _hasText = false;
   final List<ReviewModel> _reviews = [];
@@ -45,8 +48,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   bool _showReviewSection = false;
   bool _showAllReviews = false;
   bool _canForwardReturn = false;
-
-
+  int _currentNavIndex = 0;
+  bool _isNavbarVisible = true;
+  late AnimationController _navbarSlideController;
+  late Animation<Offset> _navbarSlideAnimation;
 
   @override
   void initState() {
@@ -59,6 +64,16 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
       begin: 1.0,
       end: 1.2,
     ).animate(_animationController);
+    _navbarSlideController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _navbarSlideAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0, 3),
+    ).animate(
+      CurvedAnimation(parent: _navbarSlideController, curve: Curves.easeInOut),
+    );
     _startCountdown();
     _searchFocus.addListener(() {});
     // Fetch user's display name if available
@@ -78,9 +93,20 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     return 'Good Evening';
   }
 
+  void _hideNavbar() {
+    _navbarSlideController.forward();
+    setState(() => _isNavbarVisible = false);
+  }
+
+  void _showNavbar() {
+    _navbarSlideController.reverse();
+    setState(() => _isNavbarVisible = true);
+  }
+
   @override
   void dispose() {
     _animationController.dispose();
+    _navbarSlideController.dispose();
     _countdownTimer?.cancel();
     _galleryScrollController.dispose();
     _reviewController.dispose();
@@ -114,12 +140,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final orientation = MediaQuery.of(context).orientation;
 
     final offset = screenHeight * 0.13;
-    final verticalMultiplier = orientation == Orientation.portrait
-        ? 1.0
-        : 1.5; // Increase spacing in landscape
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -213,7 +235,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     style: TextStyle(
                       fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
-                      fontSize: screenWidth * 0.045,
+                      fontSize: screenWidth * 0.038,
                       color: Colors.black,
                     ),
                   ),
@@ -223,7 +245,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     style: TextStyle(
                       fontFamily: 'Abril Fatface',
                       fontWeight: FontWeight.w600,
-                      fontSize: screenWidth * 0.038,
+                      fontSize: screenWidth * 0.032,
                       color: Colors.black,
                     ),
                   ),
@@ -281,29 +303,39 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 10,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.notifications_none_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
-                  ),
-                ),
-              ),
+  child: GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const NotificationScreen(),
+        ),
+      );
+    },
+    child: Container(
+      width: screenWidth * 0.128,
+      height: screenWidth * 0.128,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 3),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 10,
+            offset: const Offset(0, 7),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Icon(
+          Icons.notifications_none_rounded,
+          color: Colors.black,
+          size: screenWidth * 0.07,
+        ),
+      ),
+    ),
+  ),
             ),
             Positioned(
               top: offset,
@@ -311,629 +343,331 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               right: 0,
               bottom: 0,
               child: SingleChildScrollView(
-                child: SizedBox(
-                  height:
-                      screenHeight *
-                      2.5 *
-                      verticalMultiplier, // Adjust height for landscape
-                  child: Stack(
-                    children: [
-                      // Introduction image
-                      Positioned(
-                        top: 0,
-                        left: (screenWidth - screenWidth * 0.95) / 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child: Image.asset(
-                                _galleryImages[_selectedGalleryIndex],
-                                width: screenWidth * 0.95,
-                                height: screenWidth * 0.95 * (336 / 350),
-                                fit: BoxFit.cover,
-                              ),
+                child: Column(
+                  children: [
+                    // ===== IMAGE + BADGE + GALLERY OVERLAY =====
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: Image.asset(
+                              _galleryImages[_selectedGalleryIndex],
+                              width: screenWidth * 0.95,
+                              height: screenWidth * 0.95 * (336 / 350),
+                              fit: BoxFit.cover,
                             ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        top:
-                            screenHeight * 0.59 -
-                            offset, // Provider name sits above
-                        left: screenWidth * 0.03,
-                        right: screenWidth * 0.03,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // ===== Provider Name + Verified (nested rounded cards) =====
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: screenWidth * 0.02,
-                                vertical: screenHeight * 0.006,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFF3F3F3), // outer fill
-                                borderRadius: BorderRadius.circular(
-                                  32 * (screenWidth / 412),
-                                ),
-                              ),
+                          ),
+                          // Available badge
+                          Positioned(
+                            top: 10,
+                            left: 0,
+                            right: 0,
+                            child: Center(
                               child: Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth * 0.04,
-                                  vertical: screenHeight * 0.008,
-                                ),
+                                width: 80,
+                                height: 30,
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(
-                                    24 * (screenWidth / 412),
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Available',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: screenWidth * 0.025,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Abril Fatface',
+                                    ),
                                   ),
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Flexible(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "Provider's Name",
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        fontFamily: 'Montserrat',
-                                                        fontWeight:
-                                                            FontWeight.w900,
-                                                        fontSize:
-                                                            screenWidth * 0.048,
-                                                        color: Colors.black,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: screenWidth * 0.016,
-                                              ),
-                                              Icon(
-                                                Icons.verified,
-                                                color: Colors.blue,
-                                                size: screenWidth * 0.055,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-
-                                        // Heart + Share buttons placed to the right
-                                        Row(
-                                          children: [
-                                            GestureDetector(
-                                              onTap: () {
-                                                setState(() {
-                                                  _isFavorite = !_isFavorite;
-                                                });
-                                                _animationController
-                                                    .forward()
-                                                    .then(
-                                                      (_) =>
-                                                          _animationController
-                                                              .reverse(),
-                                                    );
-                                              },
-                                              child: Container(
-                                                width: 43,
-                                                height: 43,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  shape: BoxShape.circle,
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black
-                                                          .withValues(alpha: 0.2),
-                                                      blurRadius: 8,
-                                                      offset: const Offset(
-                                                        0,
-                                                        6,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                child: Center(
-                                                  child: ScaleTransition(
-                                                    scale: _scaleAnimation,
-                                                    child: Icon(
-                                                      _isFavorite
-                                                          ? Icons.favorite
-                                                          : Icons
-                                                                .favorite_border,
-                                                      color: _isFavorite
-                                                          ? Colors.red
-                                                          : const Color.fromARGB(
-                                                              255,
-                                                              182,
-                                                              113,
-                                                              34,
-                                                            ),
-                                                      size: 31,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-
-                                            SizedBox(width: 12),
-
-                                            GestureDetector(
-                                              onTap: () {
-                                                // share handler (keep existing placeholder)
-                                              },
-                                              child: Container(
-                                                width: 45,
-                                                height: 45,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  shape: BoxShape.circle,
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.black
-                                                          .withValues(alpha: 0.2),
-                                                      blurRadius: 8,
-                                                      offset: const Offset(
-                                                        0,
-                                                        6,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                child: const Center(
-                                                  child: Icon(
-                                                    Icons.share,
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      182,
-                                                      113,
-                                                      34,
-                                                    ),
-                                                    size: 31,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-
-                                    SizedBox(height: screenHeight * 0.02),
-
-                                    // ===== Ratings / Location / Experience Row =====
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        // ===== Rating =====
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Text(
-                                                  "4.8",
-                                                  style: TextStyle(
-                                                    fontFamily: 'Abril Fatface',
-                                                    fontWeight: FontWeight.w900,
-                                                    fontSize:
-                                                        screenWidth * 0.035,
-                                                    color: Colors.black,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: screenWidth * 0.008,
-                                                ),
-                                                Icon(
-                                                  Icons.star,
-                                                  color: Colors.black,
-                                                  size: screenWidth * 0.03,
-                                                ),
-                                                SizedBox(
-                                                  width: screenWidth * 0.006,
-                                                ),
-                                                Icon(
-                                                  Icons.chevron_right,
-                                                  color: Colors.black,
-                                                  size: screenWidth * 0.04,
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: screenHeight * 0.004,
-                                            ),
-                                            Text(
-                                              "(120 Reviews)",
-                                              style: TextStyle(
-                                                fontFamily: 'Abril Fatface',
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: screenWidth * 0.03,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        // ===== Divider =====
-                                        Container(
-                                          width: 5,
-                                          height: 45,
-                                          decoration: BoxDecoration(
-                                            color: Colors.black,
-                                            borderRadius: BorderRadius.circular(
-                                              5,
-                                            ),
-                                          ),
-                                        ),
-
-                                        // ===== Location =====
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "Kampala",
-                                              style: TextStyle(
-                                                fontFamily: 'Abril Fatface',
-                                                fontWeight: FontWeight.w900,
-                                                fontSize: screenWidth * 0.035,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: screenHeight * 0.004,
-                                            ),
-                                            Text(
-                                              "2.8 km away",
-                                              style: TextStyle(
-                                                fontFamily: 'Abril Fatface',
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: screenWidth * 0.03,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        // ===== Divider =====
-                                        Container(
-                                          width: 5,
-                                          height: 45,
-                                          decoration: BoxDecoration(
-                                            color: Colors.black,
-                                            borderRadius: BorderRadius.circular(
-                                              5,
-                                            ),
-                                          ),
-                                        ),
-
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "5+",
-                                              style: TextStyle(
-                                                fontFamily: 'Abril Fatface',
-                                                fontWeight: FontWeight.w900,
-                                                fontSize: screenWidth * 0.04,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: screenHeight * 0.004,
-                                            ),
-                                            Text(
-                                              "Years of Experience",
-                                              style: TextStyle(
-                                                fontFamily: 'Abril Fatface',
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: screenWidth * 0.03,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: screenHeight * 0.018),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          width:
-                                              screenWidth *
-                                              0.38, // ~150 on 390px width
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFFFC107),
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.call,
-                                                color: Color(0xFF5A5A00),
-                                                size: 20,
-                                              ),
-                                              SizedBox(width: 8),
-                                              Text(
-                                                'Call Now',
-                                                style: TextStyle(
-                                                  color: Color(0xFF5A5A00),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: screenWidth * 0.04,
-                                                  fontFamily: 'Montserrat',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          width: screenWidth * 0.38,
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFFFC107),
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.message,
-                                                color: Color(0xFF5A5A00),
-                                                size: 20,
-                                              ),
-                                              SizedBox(width: 8),
-                                              Text(
-                                                'Message',
-                                                style: TextStyle(
-                                                  color: Color(0xFF5A5A00),
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: screenWidth * 0.04,
-                                                  fontFamily: 'Montserrat',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Available badge
-                      Positioned(
-                        top: screenHeight * 0.14 - offset,
-                        left: screenWidth * 0.35,
-                        right: screenWidth * 0.35,
-                        child: Container(
-                          width: 80,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Available',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: screenWidth * 0.03,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Abril Fatface',
+                                  ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      // Glassy UI Rectangle at bottom of image
-                      Positioned(
-                        top:
-                            screenHeight * 0.12 +
-                            (screenWidth * 0.95 * (336 / 350)) -
-                            55 -
-                            offset,
-                        left: (screenWidth - 315) / 2,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 10.0,
-                              sigmaY: 10.0,
-                            ),
-                            child: Container(
-                              width: 315,
-                              height: 55,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withValues(alpha: 0.25),
+                          // Glassy gallery
+                          Positioned(
+                            bottom: 10,
+                            left: 0,
+                            right: 0,
+                            child: Center(
+                              child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: Colors.white.withValues(alpha: 0.5),
-                                  width: 1.5,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.1),
-                                    blurRadius: 10,
-                                    spreadRadius: 2,
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                children: [
-                                  SizedBox(width: 6),
-                                  if (_galleryScrollIndex > 0)
-                                    GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _galleryScrollIndex =
-                                              (_galleryScrollIndex - 1).clamp(
-                                                0,
-                                                _galleryImages.length - 1,
-                                              );
-                                        });
-                                        _galleryScrollController.animateTo(
-                                          (_galleryScrollIndex) * 50.0,
-                                          duration: const Duration(
-                                            milliseconds: 300,
-                                          ),
-                                          curve: Curves.ease,
-                                        );
-                                      },
-                                      child: Container(
-                                        width: 36,
-                                        height: 36,
-                                        alignment: Alignment.center,
-                                        child: Transform.rotate(
-                                          angle: 3.1416, // 180° → face left
-                                          child: const Icon(
-                                            Icons.play_arrow,
-                                            color: Colors.white,
-                                            size: 28,
-                                          ),
-                                        ),
+                                child: BackdropFilter(
+                                  filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                                  child: Container(
+                                    width: 315,
+                                    height: 55,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withValues(alpha: 0.25),
+                                      borderRadius: BorderRadius.circular(20),
+                                      border: Border.all(
+                                        color: Colors.white.withValues(alpha: 0.5),
+                                        width: 1.5,
                                       ),
-                                    ),
-                                  SizedBox(width: 6),
-                                  Expanded(
-                                    child: ListView.builder(
-                                      shrinkWrap: true,
-                                      controller: _galleryScrollController,
-                                      scrollDirection: Axis.horizontal,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      itemCount: _galleryImages.length,
-                                      itemBuilder: (context, i) => Padding(
-                                        padding: const EdgeInsets.only(
-                                          right: 8.0,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withValues(alpha: 0.1),
+                                          blurRadius: 10,
+                                          spreadRadius: 2,
                                         ),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _selectedGalleryIndex = i;
-                                            });
-                                          },
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                              10,
-                                            ),
+                                      ],
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(width: 6),
+                                        if (_galleryScrollIndex > 0)
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                _galleryScrollIndex = (_galleryScrollIndex - 1).clamp(0, _galleryImages.length - 1);
+                                              });
+                                              _galleryScrollController.animateTo(
+                                                (_galleryScrollIndex) * 50.0,
+                                                duration: const Duration(milliseconds: 300),
+                                                curve: Curves.ease,
+                                              );
+                                            },
                                             child: Container(
-                                              decoration: BoxDecoration(
-                                                border:
-                                                    _selectedGalleryIndex == i
-                                                    ? Border.all(
-                                                        color: Colors.white,
-                                                        width: 2,
-                                                      )
-                                                    : null,
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+                                              width: 36,
+                                              height: 36,
+                                              alignment: Alignment.center,
+                                              child: Transform.rotate(
+                                                angle: 3.1416,
+                                                child: const Icon(Icons.play_arrow, color: Colors.white, size: 28),
                                               ),
-                                              child: Image.asset(
-                                                _galleryImages[i],
-                                                width: 42,
-                                                height: 42,
-                                                fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        SizedBox(width: 6),
+                                        Expanded(
+                                          child: ListView.builder(
+                                            shrinkWrap: true,
+                                            controller: _galleryScrollController,
+                                            scrollDirection: Axis.horizontal,
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            itemCount: _galleryImages.length,
+                                            itemBuilder: (context, i) => Padding(
+                                              padding: const EdgeInsets.only(right: 8.0),
+                                              child: GestureDetector(
+                                                onTap: () { setState(() { _selectedGalleryIndex = i; }); },
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      border: _selectedGalleryIndex == i ? Border.all(color: Colors.white, width: 2) : null,
+                                                      borderRadius: BorderRadius.circular(10),
+                                                    ),
+                                                    child: Image.asset(_galleryImages[i], width: 42, height: 42, fit: BoxFit.cover),
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
+                                        SizedBox(width: 6),
+                                        if (_galleryScrollIndex < _galleryImages.length - 5)
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                _galleryScrollIndex = (_galleryScrollIndex + 1).clamp(0, (_galleryImages.length - 5).clamp(0, _galleryImages.length));
+                                              });
+                                              _galleryScrollController.animateTo(
+                                                (_galleryScrollIndex) * 50.0,
+                                                duration: const Duration(milliseconds: 300),
+                                                curve: Curves.ease,
+                                              );
+                                            },
+                                            child: SizedBox(
+                                              width: 36,
+                                              height: 36,
+                                              child: const Icon(Icons.play_arrow, color: Colors.white, size: 28),
+                                            ),
+                                          ),
+                                        SizedBox(width: 6),
+                                      ],
                                     ),
                                   ),
-                                  SizedBox(width: 6),
-                                  if (_galleryScrollIndex <
-                                      _galleryImages.length - 5)
-                                    GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          _galleryScrollIndex =
-                                              (_galleryScrollIndex + 1).clamp(
-                                                0,
-                                                (_galleryImages.length - 5)
-                                                    .clamp(
-                                                      0,
-                                                      _galleryImages.length,
-                                                    ),
-                                              );
-                                        });
-                                        _galleryScrollController.animateTo(
-                                          (_galleryScrollIndex) * 50.0,
-                                          duration: const Duration(
-                                            milliseconds: 300,
-                                          ),
-                                          curve: Curves.ease,
-                                        );
-                                      },
-                                      child: SizedBox(
-                                        width: 36,
-                                        height: 36,
-                                        child: const Icon(
-                                          Icons.play_arrow,
-                                          color: Colors.white,
-                                          size: 28,
-                                        ),
-                                      ),
-                                    ),
-                                  SizedBox(width: 6),
-                                ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                      Positioned(
-                        top: screenHeight * 0.85 - offset,
-                        left: screenWidth * 0.02,
-                        right: screenWidth * 0.02,
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
+                    // ===== PROVIDER NAME + INFO =====
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.02,
+                          vertical: screenHeight * 0.006,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF3F3F3),
+                          borderRadius: BorderRadius.circular(32 * (screenWidth / 412)),
+                        ),
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.02,
-                            vertical: screenHeight * 0.006,
+                            horizontal: screenWidth * 0.04,
+                            vertical: screenHeight * 0.008,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF3F3F3),
-                            borderRadius: BorderRadius.circular(
-                              32 * (screenWidth / 412),
-                            ),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(24 * (screenWidth / 412)),
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              // ===== WHITE CARD 1: PRICE + AVAILABILITY =====
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Provider's Name", style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w900, fontSize: screenWidth * 0.041, color: Colors.black)),
+                                          ],
+                                        ),
+                                        SizedBox(width: screenWidth * 0.016),
+                                        Icon(Icons.verified, color: Colors.blue, size: screenWidth * 0.055),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () { setState(() { _isFavorite = !_isFavorite; }); _animationController.forward().then((_) => _animationController.reverse()); },
+                                        child: Container(
+                                          width: 43,
+                                          height: 43,
+                                          decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 8, offset: const Offset(0, 6))]),
+                                          child: Center(
+                                            child: ScaleTransition(
+                                              scale: _scaleAnimation,
+                                              child: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border, color: _isFavorite ? Colors.red : const Color.fromARGB(255, 182, 113, 34), size: 31),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 12),
+                                      GestureDetector(
+                                        onTap: () {},
+                                        child: Container(
+                                          width: 45,
+                                          height: 45,
+                                          decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle, boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 8, offset: const Offset(0, 6))]),
+                                          child: const Center(child: Icon(Icons.share, color: Color.fromARGB(255, 182, 113, 34), size: 31)),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: screenHeight * 0.02),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Text("4.8", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w900, fontSize: screenWidth * 0.03, color: Colors.black)),
+                                          SizedBox(width: screenWidth * 0.008),
+                                          Icon(Icons.star, color: Colors.black, size: screenWidth * 0.03),
+                                          SizedBox(width: screenWidth * 0.006),
+                                          Icon(Icons.chevron_right, color: Colors.black, size: screenWidth * 0.04),
+                                        ],
+                                      ),
+                                      SizedBox(height: screenHeight * 0.004),
+                                      Text("(120 Reviews)", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w500, fontSize: screenWidth * 0.025, color: Colors.black)),
+                                    ],
+                                  ),
+                                  Container(width: 5, height: 45, decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(5))),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text("Kampala", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w900, fontSize: screenWidth * 0.03, color: Colors.black)),
+                                      SizedBox(height: screenHeight * 0.004),
+                                      Text("2.8 km away", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w500, fontSize: screenWidth * 0.025, color: Colors.black)),
+                                    ],
+                                  ),
+                                  Container(width: 5, height: 45, decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(5))),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text("5+", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w900, fontSize: screenWidth * 0.034, color: Colors.black)),
+                                      Text("5+", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w900, fontSize: screenWidth * 0.034, color: Colors.black)),
+                                      SizedBox(height: screenHeight * 0.004),
+                                      Text("Years of Experience", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w500, fontSize: screenWidth * 0.025, color: Colors.black)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: screenHeight * 0.018),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: screenWidth * 0.38,
+                                    height: 30,
+                                    decoration: BoxDecoration(color: Color(0xFFFFC107), borderRadius: BorderRadius.circular(20)),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.call, color: Color(0xFF5A5A00), size: 20),
+                                        SizedBox(width: 8),
+                                        Text('Call Now', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034, fontFamily: 'Montserrat')),
+                                        Text('Call Now', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034, fontFamily: 'Montserrat')),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    width: screenWidth * 0.38,
+                                    height: 30,
+                                    decoration: BoxDecoration(color: Color(0xFFFFC107), borderRadius: BorderRadius.circular(20)),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.message, color: Color(0xFF5A5A00), size: 20),
+                                        SizedBox(width: 8),
+                                        Text('Message', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034, fontFamily: 'Montserrat')),
+                                        Text('Message', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034, fontFamily: 'Montserrat')),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.02,
+                          vertical: screenHeight * 0.006,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF3F3F3),
+                          borderRadius: BorderRadius.circular(
+                            32 * (screenWidth / 412),
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // ===== WHITE CARD 1: PRICE + AVAILABILITY =====
                               Container(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: screenWidth * 0.04,
@@ -959,7 +693,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           style: TextStyle(
                                             fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w900,
-                                            fontSize: screenWidth * 0.048,
+                                            fontSize: screenWidth * 0.041,
                                             color: Colors.black,
                                           ),
                                         ),
@@ -978,7 +712,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           style: TextStyle(
                                             fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w900,
-                                            fontSize: screenWidth * 0.048,
+                                            fontSize: screenWidth * 0.041,
                                             color: Colors.black,
                                           ),
                                         ),
@@ -1012,7 +746,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.w900,
-                                        fontSize: screenWidth * 0.048,
+                                        fontSize: screenWidth * 0.041,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -1215,18 +949,17 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 ),
                               ),
                             ],
-                          ),
                         ),
                       ),
-                      Positioned(
-                        top: screenHeight * 1.19 - offset,
-                        left: screenWidth * 0.02,
-                        right: screenWidth * 0.02,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // ===== ABOUT PROVIDER TITLE CARD =====
-                            Container(
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // ===== ABOUT PROVIDER TITLE CARD =====
+                          Container(
                               padding: EdgeInsets.symmetric(
                                 horizontal: screenWidth * 0.02,
                                 vertical: screenHeight * 0.006,
@@ -1258,7 +991,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       style: TextStyle(
                                         fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.w900,
-                                        fontSize: screenWidth * 0.048,
+                                        fontSize: screenWidth * 0.041,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -1271,7 +1004,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       style: TextStyle(
                                         fontFamily: 'Abril Fatface',
                                         fontWeight: FontWeight.w500,
-                                        fontSize: screenWidth * 0.04,
+                                        fontSize: screenWidth * 0.034,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -1282,42 +1015,41 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ],
                         ),
                       ),
-                      Positioned(
-                        top: screenHeight * 1.36 - offset,
-                        left: screenWidth * 0.02,
-                        right: screenWidth * 0.02,
+                    SizedBox(height: screenHeight * 0.03),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.02,
+                          vertical: screenHeight * 0.006,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF3F3F3),
+                          borderRadius: BorderRadius.circular(
+                            32 * (screenWidth / 412),
+                          ),
+                        ),
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.02,
-                            vertical: screenHeight * 0.006,
+                            horizontal: screenWidth * 0.04,
+                            vertical: screenHeight * 0.02,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF3F3F3),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(
-                              32 * (screenWidth / 412),
+                              24 * (screenWidth / 412),
                             ),
                           ),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.04,
-                              vertical: screenHeight * 0.02,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(
-                                24 * (screenWidth / 412),
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // ===== TITLE =====
-                                Text(
-                                  "Reviews and Ratings",
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // ===== TITLE =====
+                              Text(
+                                "Reviews and Ratings",
                                   style: TextStyle(
                                     fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w900,
-                                    fontSize: screenWidth * 0.048,
+                                    fontSize: screenWidth * 0.041,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -1330,7 +1062,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   style: TextStyle(
                                     fontFamily: 'Abril Fatface',
                                     fontWeight: FontWeight.w500,
-                                    fontSize: screenWidth * 0.04,
+                                    fontSize: screenWidth * 0.034,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -1388,7 +1120,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           172,
                                           1,
                                         ),
-                                        fontSize: screenWidth * 0.045,
+                                        fontSize: screenWidth * 0.038,
                                         fontWeight: FontWeight.w900,
                                         fontFamily: 'Abril Fatface',
                                         shadows: [
@@ -1528,24 +1260,19 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 ],
                               ],
                             ),
-                          ),
                         ),
                       ),
-
-                      // ===== Reviews & Ratings Section in nested cards =====
-                      Positioned(
-                        top: _showReviewSection
-                            ? screenHeight * 1.85 - offset
-                            : screenHeight * 1.65 - offset,
-                        left: screenWidth * 0.022,
-                        right: screenWidth * 0.022,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.02,
-                            vertical: screenHeight * 0.006,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFF3F3F3),
+                    ),
+                    SizedBox(height: screenHeight * 0.03),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.02,
+                          vertical: screenHeight * 0.006,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF3F3F3),
                             borderRadius: BorderRadius.circular(
                               32 * (screenWidth / 412),
                             ),
@@ -1568,7 +1295,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   'Rating and some reviews are verified and are\nfrom people who use the same type of device that you use.',
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: screenWidth * 0.038,
+                                    fontSize: screenWidth * 0.032,
                                     fontWeight: FontWeight.w500,
                                     fontFamily: 'Abril Fatface',
                                   ),
@@ -1586,7 +1313,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           '4.8',
                                           style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: screenWidth * 0.15,
+                                            fontSize: screenWidth * 0.128,
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'Abril Fatface',
                                           ),
@@ -1624,8 +1351,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    SizedBox(height: screenHeight * 0.03),
+                  ],
                 ),
               ),
             ),
@@ -1634,7 +1361,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               left: (screenWidth - 270) / 2,
               child: Container(
                 width: 270,
-                height: 62,
+                height: 45,
                 decoration: BoxDecoration(
                   color: const Color(0xFFF3CA9B),
                   borderRadius: BorderRadius.circular(30),
@@ -1684,6 +1411,69 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
             ),
+            // Bottom Navbar - swipe down to hide
+            Positioned(
+              bottom: screenHeight * 0.02,
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onVerticalDragEnd: (details) {
+                  if (details.primaryVelocity != null &&
+                      details.primaryVelocity! > 300) {
+                    _hideNavbar();
+                  }
+                },
+                child: SlideTransition(
+                  position: _navbarSlideAnimation,
+                  child: Center(
+                    child: BottomNavbar(
+                      activeIndex: _currentNavIndex,
+                      onItemSelected: (index) {
+                        setState(() {
+                          _currentNavIndex = index;
+                        });
+                        if (index == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChatScreen(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // Green circle to show navbar when hidden
+            if (!_isNavbarVisible)
+              Positioned(
+                bottom: screenHeight * 0.06,
+                right: screenWidth * 0.06,
+                child: GestureDetector(
+                  onTap: _showNavbar,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF7EED27),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.arrow_upward,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
@@ -1720,7 +1510,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   'See more',
                   style: TextStyle(
                     color: const Color.fromARGB(255, 228, 172, 1),
-                    fontSize: screenWidth * 0.045,
+                    fontSize: screenWidth * 0.038,
                     fontWeight: FontWeight.w900,
                     fontFamily: 'Abril Fatface',
                     shadows: [
@@ -1749,7 +1539,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   'Show less',
                   style: TextStyle(
                     color: const Color.fromARGB(255, 228, 172, 1),
-                    fontSize: screenWidth * 0.045,
+                    fontSize: screenWidth * 0.038,
                     fontWeight: FontWeight.w900,
                     fontFamily: 'Abril Fatface',
                     shadows: [

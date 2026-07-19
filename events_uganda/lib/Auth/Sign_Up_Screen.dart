@@ -1,6 +1,9 @@
 import 'package:events_uganda/Auth/Sign_In_Screen.dart';
+import 'package:events_uganda/Auth/ReferralCodeScreen.dart';
+import 'package:events_uganda/Auth/ReferralCodeBottomSheet.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -55,11 +58,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String message, {
     bool isSuccess = false,
   }) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message, style: TextStyle(color: Colors.white)),
-        backgroundColor: const Color(0xFF8715C9),
-      ),
+    SnackbarHelper.show(
+      context,
+      message,
+      icon: isSuccess ? Icons.check_circle_rounded : Icons.error_outline_rounded,
+      backgroundColor: const Color(0xFF8715C9),
     );
   }
 
@@ -92,11 +95,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() => _isLoading = true);
 
     try {
+      final prefs = await SharedPreferences.getInstance();
+      final savedReferralCode = prefs.getString('savedReferralCode') ?? '';
+
       await AuthService.register(
         fullName: _fullNameController.text.trim(),
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
         phone: _phoneController.text.trim(),
+        referralCode: savedReferralCode.isNotEmpty ? savedReferralCode : null,
       );
 
       await _saveSignUpData();
@@ -396,6 +403,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ReferralCodeScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Use Referral Code',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: MediaQuery.of(context).size.width * 0.035,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.05,
+                              ),
+                              GestureDetector(
+                                onTap: () => ReferralCodeBottomSheet.show(context),
+                                child: Text(
+                                  'See Referral Code',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: MediaQuery.of(context).size.width * 0.035,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
                           ),
                           Container(
                             width: screenWidth * 0.8,

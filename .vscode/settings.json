@@ -1,3 +1,5 @@
 {
-  "cmake.sourceDirectory": "C:/Users/ALVIN/Events-Uganda/events_uganda/linux"
+  "cmake.sourceDirectory": "C:/Users/ALVIN/Events-Uganda/events_uganda/linux",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.configuration.updateBuildConfiguration": "automatic"
 }

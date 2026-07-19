@@ -18,7 +18,7 @@ public class SmsService {
 
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
-    @Value("${sms.api.url}")
+    @Value("${sms.api.url:}")
     private String smsApiUrl;
 
     public void sendOtp(String phone, String otp) {

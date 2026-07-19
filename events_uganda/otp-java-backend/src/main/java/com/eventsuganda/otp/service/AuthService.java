@@ -29,11 +29,11 @@ public class AuthService {
         this.emailService = emailService;
     }
 
-    public AuthResponse register(String email, String password, String fullName, String phone) {
+    public AuthResponse register(String email, String password, String fullName, String phone, String referralCode) {
         String hashed = encoder.encode(password);
-        User user = userService.createUser(email, hashed, fullName, phone, "email");
+        User user = userService.createUser(email, hashed, fullName, phone, "email", referralCode);
         String token = jwtService.generateToken(user.getId(), user.getEmail());
-        emailService.sendWelcomeEmail(user.getEmail(), user.getFullName());
+        emailService.sendWelcomeEmail(user.getEmail(), user.getFullName(), user.getReferralCode());
         return new AuthResponse(token, user);
     }
 
@@ -110,6 +110,7 @@ public class AuthService {
             newUser.setPhotoUrl(picture);
 
             String token = jwtService.generateToken(newUser.getId(), newUser.getEmail());
+            emailService.sendWelcomeEmail(newUser.getEmail(), newUser.getFullName(), newUser.getReferralCode());
             return new AuthResponse(token, newUser);
         } catch (OtpException e) {
             throw e;

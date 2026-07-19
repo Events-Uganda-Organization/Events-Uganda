@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class SplashVideoPlayer extends StatefulWidget {
-  final VoidCallback? onVideoEnd;
-  const SplashVideoPlayer({super.key, this.onVideoEnd});
+  final double screenWidth;
+  final VoidCallback? onVideoEnded;
+  const SplashVideoPlayer({super.key, required this.screenWidth, this.onVideoEnded});
   @override
   State<SplashVideoPlayer> createState() => _SplashVideoPlayerState();
 }
@@ -11,18 +12,28 @@ class SplashVideoPlayer extends StatefulWidget {
 class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
   late VideoPlayerController _controller;
   bool _initialized = false;
-  bool _fired = false;
+
+  String _selectVideoAsset(double width) {
+    if (width < 600) {
+      return 'assets/videos/splash_medium.mp4';
+    }
+    return 'assets/videos/splash_large.mp4';
+  }
 
   @override
   void initState() {
     super.initState();
     _controller = VideoPlayerController.asset(
-      'assets/videos/Bride_and_groom_merge_light_202606290000.mp4',
+      _selectVideoAsset(widget.screenWidth),
     );
     _controller.initialize().then((_) {
       _controller.setLooping(false);
       _controller.setVolume(0);
-      _controller.addListener(_onVideoControllerUpdate);
+      _controller.addListener(() {
+        if (_controller.value.isCompleted) {
+          widget.onVideoEnded?.call();
+        }
+      });
       _controller.play();
       if (mounted) setState(() => _initialized = true);
     }).catchError((_) {
@@ -30,18 +41,8 @@ class _SplashVideoPlayerState extends State<SplashVideoPlayer> {
     });
   }
 
-  void _onVideoControllerUpdate() {
-    if (!_fired &&
-        _controller.value.isInitialized &&
-        _controller.value.position >= _controller.value.duration) {
-      _fired = true;
-      widget.onVideoEnd?.call();
-    }
-  }
-
   @override
   void dispose() {
-    _controller.removeListener(_onVideoControllerUpdate);
     _controller.dispose();
     super.dispose();
   }

@@ -8,10 +8,13 @@ import 'package:events_uganda/Users/Customers/Service_Listing_Decoration_Screen.
 import 'package:events_uganda/Users/Customers/Service_Listing_Catering_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_CarHiring_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Listing_Cakes_Screen.dart';
+import 'package:events_uganda/Users/NotificationScreen.dart';
+import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:events_uganda/components/sidebar_menu.dart';
 import 'package:flutter/material.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
@@ -22,7 +25,7 @@ class CustomerHomeScreen extends StatefulWidget {
 }
 
 class _CustomerHomeScreenState extends State<CustomerHomeScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final FocusNode _searchFocus = FocusNode();
   bool _isSearchFocused = false;
   Timer? _countdownTimer;
@@ -44,6 +47,9 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
   final Set<int> _likedImages = {};
   final Set<int> _cartedImages = {};
   int _currentNavIndex = 0;
+  bool _isNavbarVisible = true;
+  late AnimationController _navbarSlideController;
+  late Animation<Offset> _navbarSlideAnimation;
   String _userFullName = '';
   String? _profilePicUrl;
 
@@ -102,6 +108,16 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     _circleScrollController.addListener(_onCircleScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
     _forYouScrollController.addListener(_onForYouScroll);
+    _navbarSlideController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _navbarSlideAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0, 3),
+    ).animate(
+      CurvedAnimation(parent: _navbarSlideController, curve: Curves.easeInOut),
+    );
     _startCountdown();
     _searchFocus.addListener(() {
       setState(() {
@@ -231,8 +247,19 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     }
   }
 
+  void _hideNavbar() {
+    _navbarSlideController.forward();
+    setState(() => _isNavbarVisible = false);
+  }
+
+  void _showNavbar() {
+    _navbarSlideController.reverse();
+    setState(() => _isNavbarVisible = true);
+  }
+
   @override
   void dispose() {
+    _navbarSlideController.dispose();
     _countdownTimer?.cancel();
     _searchFocus.dispose();
     _circleScrollController.dispose();
@@ -877,7 +904,9 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
             Positioned(
               top: screenHeight * 0.03,
               left: screenWidth * 0.04,
-              child: Container(
+              child: GestureDetector(
+                onTap: () => SidebarMenu.show(context),
+                child: Container(
                 width: screenWidth * 0.128,
                 height: screenWidth * 0.128,
                 decoration: BoxDecoration(
@@ -900,6 +929,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     fit: BoxFit.contain,
                   ),
                 ),
+              ),
               ),
             ),
             // Greeting and user name to the right of the menu circle
@@ -997,29 +1027,39 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 10,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.notifications_none_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
-                  ),
-                ),
-              ),
+  child: GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const NotificationScreen(),
+        ),
+      );
+    },
+    child: Container(
+      width: screenWidth * 0.128,
+      height: screenWidth * 0.128,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 3),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 10,
+            offset: const Offset(0, 7),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Icon(
+          Icons.notifications_none_rounded,
+          color: Colors.black,
+          size: screenWidth * 0.07,
+        ),
+      ),
+    ),
+  ),
             ),
             Positioned(
               top: screenHeight * 0.122,
@@ -1535,30 +1575,77 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                 ),
               ),
             ),
-            // Bottom Navigation Bar - Floating
+            // Bottom Navbar - swipe down to hide
             Positioned(
               bottom: screenHeight * 0.02,
               left: 0,
               right: 0,
-              child: Center(
-                child: BottomNavbar(
-                  activeIndex: _currentNavIndex,
-                  onItemSelected: (index) {
-                    setState(() {
-                      _currentNavIndex = index;
-                    });
-                    if (index == 3) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CustomerProfileScreen(),
-                        ),
-                      );
-                    }
-                  },
+              child: GestureDetector(
+                onVerticalDragEnd: (details) {
+                  if (details.primaryVelocity != null &&
+                      details.primaryVelocity! > 300) {
+                    _hideNavbar();
+                  }
+                },
+                child: SlideTransition(
+                  position: _navbarSlideAnimation,
+                  child: Center(
+                    child: BottomNavbar(
+                      activeIndex: _currentNavIndex,
+                      onItemSelected: (index) {
+                        setState(() {
+                          _currentNavIndex = index;
+                        });
+                        if (index == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChatScreen(),
+                            ),
+                          );
+                        }
+                        if (index == 3) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CustomerProfileScreen(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
                 ),
               ),
             ),
+            // Green circle to show navbar when hidden
+            if (!_isNavbarVisible)
+              Positioned(
+                bottom: screenHeight * 0.06,
+                right: screenWidth * 0.06,
+                child: GestureDetector(
+                  onTap: _showNavbar,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF7EED27),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.arrow_upward,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),

@@ -1,7 +1,9 @@
 import 'package:events_uganda/Auth/Forgot_Password_Screen.dart';
 import 'package:events_uganda/Auth/Sign_Up_Screen.dart';
+import 'package:events_uganda/Auth/ReferralCodeBottomSheet.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -86,11 +88,12 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   void _showCustomSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: const Color(0xFFCC471B),
-      ),
+    final isSuccess = message == 'Sign in successful!' || message == 'Signed up with Google!';
+    SnackbarHelper.show(
+      context,
+      message,
+      icon: isSuccess ? Icons.check_circle_rounded : Icons.error_outline_rounded,
+      backgroundColor: const Color(0xFFCC471B),
     );
   }
 
@@ -338,31 +341,45 @@ class _SignInScreenState extends State<SignInScreen> {
                           onToggleObscure: () => setState(() => _obscurePassword = !_obscurePassword),
                         ),
                         SizedBox(height: screen.height * 0.016),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ForgotPasswordScreen(),
-                              ),
-                            );
-                          },
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                right: screen.width * 0.02,
-                              ),
-                              child: Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screen.width * 0.038,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.w700,
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screen.width * 0.02,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () => ReferralCodeBottomSheet.show(context),
+                                child: Text(
+                                  'See Referral Code',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screen.width * 0.035,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
-                            ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ForgotPasswordScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Forgot Password?',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screen.width * 0.035,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(height: screen.height * 0.028),

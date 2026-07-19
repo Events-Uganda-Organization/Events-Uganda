@@ -2,8 +2,11 @@ import 'dart:ui';
 import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Booking_Details_Screen.dart';
+import 'package:events_uganda/Users/NotificationScreen.dart';
+import 'package:events_uganda/components/sidebar_menu.dart';
 
 class DateOfBookingScreen extends StatefulWidget {
   final int? categoryIndex;
@@ -14,10 +17,13 @@ class DateOfBookingScreen extends StatefulWidget {
 }
 
 class _DateOfBookingScreenState extends State<DateOfBookingScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   int _currentNavIndex = 0;
   String _userFullName = '';
   bool _canForwardReturn = false;
+  bool _isNavbarVisible = true;
+  late AnimationController _navbarSlideController;
+  late Animation<Offset> _navbarSlideAnimation;
   late DateTime _currentMonth;
   Set<DateTime> _unavailableDates = {};
   TimeOfDay? _fromTime;
@@ -44,6 +50,16 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
       DateTime(today.year, today.month, today.day + 10),
       DateTime(today.year, today.month, today.day + 12),
     };
+    _navbarSlideController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _navbarSlideAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(0, 3),
+    ).animate(
+      CurvedAnimation(parent: _navbarSlideController, curve: Curves.easeInOut),
+    );
     AuthService.getUser().then((userData) {
       if (mounted) {
         setState(() {
@@ -327,7 +343,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
             ],
           ),
         ),
-        SizedBox(height: screenHeight * 0.015),
+        SizedBox(height: screenHeight * 0.008),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
           child: Row(
@@ -349,16 +365,16 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
             }).toList(),
           ),
         ),
-        SizedBox(height: screenHeight * 0.008),
+        SizedBox(height: screenHeight * 0.004),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
           child: Wrap(
             spacing: 0,
-            runSpacing: screenHeight * 0.004,
+            runSpacing: screenHeight * 0.002,
             children: dayWidgets,
           ),
         ),
-        SizedBox(height: screenHeight * 0.01),
+        SizedBox(height: screenHeight * 0.006),
         _buildLegend(screenWidth),
       ],
     );
@@ -432,6 +448,22 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     );
   }
 
+  void _hideNavbar() {
+    _navbarSlideController.forward();
+    setState(() => _isNavbarVisible = false);
+  }
+
+  void _showNavbar() {
+    _navbarSlideController.reverse();
+    setState(() => _isNavbarVisible = true);
+  }
+
+  @override
+  void dispose() {
+    _navbarSlideController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -439,7 +471,9 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 1.45,
@@ -462,7 +496,9 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
             Positioned(
               top: screenHeight * 0.03,
               left: screenWidth * 0.04,
-              child: Container(
+              child: GestureDetector(
+                onTap: () => SidebarMenu.show(context),
+                child: Container(
                 width: screenWidth * 0.128,
                 height: screenWidth * 0.128,
                 decoration: BoxDecoration(
@@ -484,6 +520,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                     height: screenWidth * 0.07,
                     fit: BoxFit.contain,
                   ),
+                ),
                 ),
               ),
             ),
@@ -548,29 +585,39 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 10,
-                      offset: const Offset(0, 7),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.notifications_none_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
-                  ),
-                ),
-              ),
+  child: GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const NotificationScreen(),
+        ),
+      );
+    },
+    child: Container(
+      width: screenWidth * 0.128,
+      height: screenWidth * 0.128,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        border: Border.all(color: Colors.white, width: 3),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.15),
+            blurRadius: 10,
+            offset: const Offset(0, 7),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Icon(
+          Icons.notifications_none_rounded,
+          color: Colors.black,
+          size: screenWidth * 0.07,
+        ),
+      ),
+    ),
+  ),
             ),
             Positioned(
               top: screenHeight * 0.11,
@@ -723,13 +770,13 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.31,
+              top: screenHeight * 0.32,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               child: SizedBox(
-                height: screenHeight * 0.46,
+                height: screenHeight * 0.45,
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.008),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
@@ -746,7 +793,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.72,
+              top: screenHeight * 0.77,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               child: SizedBox(
@@ -790,7 +837,7 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
               ),
             ),
             Positioned(
-              top: screenHeight * 0.78,
+              top: screenHeight * 0.83,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               child: SizedBox(
@@ -899,32 +946,82 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+      ),
+            // Bottom Navbar - fixed at bottom of screen
             Positioned(
               bottom: screenHeight * 0.02,
               left: 0,
               right: 0,
-              child: Center(
-                child: BottomNavbar(
-                  activeIndex: _currentNavIndex,
-                  onItemSelected: (index) {
-                    setState(() {
-                      _currentNavIndex = index;
-                    });
-                    if (index == 3) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CustomerProfileScreen(),
-                        ),
-                      );
-                    }
-                  },
+              child: GestureDetector(
+                onVerticalDragEnd: (details) {
+                  if (details.primaryVelocity != null &&
+                      details.primaryVelocity! > 300) {
+                    _hideNavbar();
+                  }
+                },
+                child: SlideTransition(
+                  position: _navbarSlideAnimation,
+                  child: Center(
+                    child: BottomNavbar(
+                      activeIndex: _currentNavIndex,
+                      onItemSelected: (index) {
+                        setState(() {
+                          _currentNavIndex = index;
+                        });
+                        if (index == 2) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChatScreen(),
+                            ),
+                          );
+                        }
+                        if (index == 3) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CustomerProfileScreen(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
                 ),
               ),
             ),
+            // Green circle to show navbar when hidden
+            if (!_isNavbarVisible)
+              Positioned(
+                bottom: screenHeight * 0.06,
+                right: screenWidth * 0.06,
+                child: GestureDetector(
+                  onTap: _showNavbar,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF7EED27),
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.arrow_upward,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ),
           ],
-        ),
-      ),
         ),
       ),
     );

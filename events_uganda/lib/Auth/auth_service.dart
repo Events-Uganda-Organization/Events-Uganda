@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  static const String _baseUrl = 'http://localhost:8080/api/auth';
+  static const String _baseUrl = 'https://eventsuganda-backend-production.up.railway.app/api/auth';
   static const String _tokenKey = 'auth_token';
   static const String _userKey = 'auth_user';
 
@@ -35,6 +35,9 @@ class AuthService {
   static Future<void> saveUser(Map<String, dynamic> user) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_userKey, jsonEncode(user));
+    if (user.containsKey('referralCode')) {
+      await prefs.setString('userReferralCode', user['referralCode'] as String);
+    }
   }
 
   // ─── API Calls ─────────────────────────────────────
@@ -44,6 +47,7 @@ class AuthService {
     required String email,
     required String password,
     String? phone,
+    String? referralCode,
   }) async {
     final body = <String, String>{
       'fullName': fullName,
@@ -51,6 +55,7 @@ class AuthService {
       'password': password,
     };
     if (phone != null && phone.isNotEmpty) body['phone'] = phone;
+    if (referralCode != null && referralCode.isNotEmpty) body['referralCode'] = referralCode;
 
     final response = await http.post(
       Uri.parse('$_baseUrl/register'),
@@ -110,6 +115,95 @@ class AuthService {
       final body = jsonDecode(response.body);
       throw Exception(body['message'] ?? 'Reset password failed');
     }
+  }
+
+  static Future<Map<String, dynamic>> updateProfile({
+    required String fullName,
+    required String email,
+    String? phone,
+  }) async {
+    final token = await getToken();
+    final body = <String, String>{
+      'fullName': fullName,
+      'email': email,
+    };
+    if (phone != null && phone.isNotEmpty) body['phone'] = phone;
+
+    final response = await http.put(
+      Uri.parse('$_baseUrl/profile'),
+      headers: {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(body),
+    );
+
+    return _handleResponse(response);
+  }
+
+  static Future<String> uploadProfilePhoto(String filePath) async {
+    final token = await getToken();
+    final request = http.MultipartRequest(
+      'POST',
+      Uri.parse('$_baseUrl/profile/photo'),
+    );
+    if (token != null) {
+      request.headers['Authorization'] = 'Bearer $token';
+    }
+    request.files.add(await http.MultipartFile.fromPath('photo', filePath));
+
+    final streamed = await request.send();
+    final response = await http.Response.fromStream(streamed);
+
+    final body = jsonDecode(response.body) as Map<String, dynamic>;
+    if (response.statusCode == 200) {
+      final photoUrl = body['photoUrl'] as String?;
+      if (photoUrl != null) {
+        final user = await getUser();
+        if (user != null) {
+          user['photoUrl'] = photoUrl;
+          await saveUser(user);
+        }
+      }
+      return photoUrl ?? filePath;
+    }
+    throw Exception(body['message'] ?? 'Photo upload failed');
+  }
+
+  static Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    final token = await getToken();
+    final response = await http.post(
+      Uri.parse('$_baseUrl/change-password'),
+      headers: {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode({
+        'currentPassword': currentPassword,
+        'newPassword': newPassword,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      final body = jsonDecode(response.body) as Map<String, dynamic>;
+      throw Exception(body['message'] ?? 'Change password failed');
+    }
+  }
+
+  static Future<void> logout() async {
+    final token = await getToken();
+    if (token != null) {
+      try {
+        await http.post(
+          Uri.parse('$_baseUrl/logout'),
+          headers: {'Authorization': 'Bearer $token'},
+        );
+      } catch (_) {}
+    }
+    await clearToken();
   }
 
   // ─── Helpers ───────────────────────────────────────
