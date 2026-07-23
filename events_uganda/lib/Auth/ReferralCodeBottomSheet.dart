@@ -71,7 +71,7 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFFCC471B).withOpacity(0.3),
+                      color: Color(0xFFCC471B).withValues(alpha: 0.3),
                       blurRadius: 15,
                       offset: Offset(0, 5),
                     ),
@@ -107,7 +107,7 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Icon(

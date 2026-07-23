@@ -1,12 +1,8 @@
-import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:events_uganda/Auth/Sign_Up_Screen.dart';
 import 'package:events_uganda/Auth/ReferralCodeExplanationSheet.dart';
-import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:events_uganda/components/snackbar_helper.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ReferralCodeScreen extends StatefulWidget {

@@ -40,7 +40,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   final bool _hasText = false;
   final List<ReviewModel> _reviews = [];
   final ScrollController _galleryScrollController = ScrollController();
-  int _galleryScrollIndex = 0;
+  final int _galleryScrollIndex = 0;
 
   final List<String> _venueTypes = [
     'Hotel',
@@ -70,7 +70,7 @@ class _NotificationScreenState extends State<NotificationScreen>
     'assets/images/blacknwhitemen.jpg',
     'assets/images/deco2.jpg',
   ];
-  int _selectedGalleryIndex = 0;
+  final int _selectedGalleryIndex = 0;
   final FocusNode _searchFocus = FocusNode();
   Timer? _countdownTimer;
   bool _isSearchFocused = false;
@@ -83,10 +83,10 @@ class _NotificationScreenState extends State<NotificationScreen>
   final int _rating = 0;
   final bool _showReviewSection = false;
   bool _showAllReviews = false;
-  bool _canForwardReturn = false;
+  final bool _canForwardReturn = false;
   String _selectedFilter = 'All';
   final MapController _mapController = MapController();
-  LatLng _pinPosition = const LatLng(0.3136, 32.5811);
+  final LatLng _pinPosition = const LatLng(0.3136, 32.5811);
   int _currentNavIndex = 0;
   bool _showArchived = false;
   bool _isNavbarVisible = true;
