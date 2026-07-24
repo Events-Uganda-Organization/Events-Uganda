@@ -74,6 +74,21 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
             Positioned(
               top: screenHeight * 0.035,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Text(
+                  'Messages',
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.055,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.035,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               child: Row(
