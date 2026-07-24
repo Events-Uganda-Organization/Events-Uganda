@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:events_uganda/Users/NotificationDetailsScreen.dart';
 import 'package:events_uganda/Users/NotificationSettingsScreen.dart';
