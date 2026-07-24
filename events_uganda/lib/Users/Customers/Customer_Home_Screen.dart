@@ -13,7 +13,6 @@ import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:events_uganda/components/sidebar_menu.dart';
 import 'package:flutter/material.dart';
 

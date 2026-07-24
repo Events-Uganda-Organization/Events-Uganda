@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/Auth/auth_service.dart';

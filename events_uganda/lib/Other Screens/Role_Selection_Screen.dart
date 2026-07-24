@@ -1,12 +1,5 @@
-import 'package:events_uganda/Auth/Forgot_Password_Screen.dart';
-import 'package:events_uganda/Auth/Otp_Code_Screen.dart';
-import 'package:events_uganda/Auth/Reset_Password_Screen.dart';
-import 'package:events_uganda/Auth/Sign_In_Screen.dart';
 import 'package:events_uganda/Other%20Screens/Personal_Interest_Screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
-import 'package:events_uganda/Auth/auth_service.dart';
-import 'dart:math';
 
 class RoleSelectionScreen extends StatefulWidget {
   const RoleSelectionScreen({super.key});
