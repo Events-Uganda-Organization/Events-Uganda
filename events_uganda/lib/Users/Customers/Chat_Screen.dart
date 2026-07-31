@@ -108,47 +108,23 @@ class _ChatScreenState extends State<ChatScreen> {
             Positioned(
               top: screenHeight * 0.035,
               left: screenWidth * 0.04,
-              right: screenWidth * 0.04,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).maybePop(),
-                    child: Container(
-                      width: screenWidth * 0.128,
-                      height: screenWidth * 0.128,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF8C2B0),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.chevron_left,
-                          color: Colors.black,
-                          size: screenWidth * 0.10,
-                        ),
-                      ),
+              child: GestureDetector(
+                onTap: () => Navigator.of(context).maybePop(),
+                child: Container(
+                  width: screenWidth * 0.128,
+                  height: screenWidth * 0.128,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF8C2B0),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.chevron_left,
+                      color: Colors.black,
+                      size: screenWidth * 0.10,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: screenWidth * 0.128,
-                      height: screenWidth * 0.128,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF8C2B0),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: Icon(
-                          Icons.chevron_right,
-                          color: Colors.black,
-                          size: screenWidth * 0.10,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
             Positioned(
@@ -222,6 +198,28 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                   ],
+                ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.13 + screenWidth * 0.12 + screenHeight * 0.015,
+              right: screenWidth * 0.04,
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  width: screenWidth * 0.128,
+                  height: screenWidth * 0.128,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF8C2B0),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      Icons.chevron_right,
+                      color: Colors.black,
+                      size: screenWidth * 0.10,
+                    ),
+                  ),
                 ),
               ),
             ),
