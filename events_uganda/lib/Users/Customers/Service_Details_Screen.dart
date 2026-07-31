@@ -604,7 +604,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Text("5+", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w900, fontSize: screenWidth * 0.034, color: Colors.black)),
-                                      Text("5+", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w900, fontSize: screenWidth * 0.034, color: Colors.black)),
                                       SizedBox(height: screenHeight * 0.004),
                                       Text("Years of Experience", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w500, fontSize: screenWidth * 0.025, color: Colors.black)),
                                     ],
@@ -625,7 +624,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                         Icon(Icons.call, color: Color(0xFF5A5A00), size: 20),
                                         SizedBox(width: 8),
                                         Text('Call Now', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034, fontFamily: 'Montserrat')),
-                                        Text('Call Now', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034, fontFamily: 'Montserrat')),
                                       ],
                                     ),
                                   ),
@@ -638,7 +636,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       children: [
                                         Icon(Icons.message, color: Color(0xFF5A5A00), size: 20),
                                         SizedBox(width: 8),
-                                        Text('Message', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034, fontFamily: 'Montserrat')),
                                         Text('Message', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034, fontFamily: 'Montserrat')),
                                       ],
                                     ),
