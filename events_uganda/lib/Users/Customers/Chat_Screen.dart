@@ -82,7 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   child: Center(
                     child: Icon(
-                      Icons.notifications_none_rounded,
+                      Icons.more_vert,
                       color: Colors.black,
                       size: screenWidth * 0.07,
                     ),
