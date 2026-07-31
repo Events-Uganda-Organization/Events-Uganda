@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class MessageScreen extends StatefulWidget {
-  const MessageScreen({super.key, this.name, this.color});
+  const MessageScreen({super.key, this.name, this.color, this.status});
 
   final String? name;
   final Color? color;
+  final String? status;
 
   @override
   State<MessageScreen> createState() => _MessageScreenState();
