@@ -324,9 +324,21 @@ class _ChatScreenState extends State<ChatScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Container(
-                              width: screenWidth * 0.146,
-                              height: screenWidth * 0.146,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MessageScreen(
+                                      name: _names[index],
+                                      color: _circleColors[index],
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                width: screenWidth * 0.146,
+                                height: screenWidth * 0.146,
                               decoration: BoxDecoration(
                                 color: _circleColors[index],
                                 shape: BoxShape.circle,
