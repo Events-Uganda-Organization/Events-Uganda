@@ -347,7 +347,7 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.175 + screenWidth * 0.394,
+              top: screenHeight * 0.215 + screenWidth * 0.394,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
               bottom: screenHeight * 0.20,
