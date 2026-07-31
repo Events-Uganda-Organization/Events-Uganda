@@ -94,6 +94,50 @@ class _MessageScreenState extends State<MessageScreen> {
                 ),
               ),
             ),
+            Positioned(
+              top: screenHeight * 0.035 +
+                  (screenWidth * 0.128 - screenWidth * 0.146) / 2,
+              left:
+                  screenWidth * 0.04 +
+                  screenWidth * 0.128 +
+                  screenWidth * 0.03 +
+                  screenWidth * 0.146 +
+                  screenWidth * 0.03,
+              right: screenWidth * 0.04,
+              height: screenWidth * 0.146,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.name ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: screenWidth * 0.04,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.003),
+                  Text(
+                    widget.status ?? 'Online',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: (widget.status ?? 'Online')
+                              .toLowerCase()
+                              .contains('online')
+                          ? const Color(0xFF4CAF50)
+                          : Colors.black.withValues(alpha: 0.5),
+                      fontSize: screenWidth * 0.028,
+                      fontFamily: 'Montserrat',
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

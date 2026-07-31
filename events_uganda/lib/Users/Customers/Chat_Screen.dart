@@ -47,47 +47,61 @@ class _ChatScreenState extends State<ChatScreen> {
       'name': 'Gregory',
       'message': 'You  Hey, mate please add me to the group...',
       'time': '10:32 AM',
+      'status': 'Online',
     },
     {
       'name': 'Sarah',
       'message': 'You  Sounds good, see you there!',
       'time': 'Yesterday',
+      'status': 'Last seen today at 9:15 AM',
     },
     {
       'name': 'Brian',
       'message': 'You  Can we reschedule the meeting?',
       'time': 'Mon',
+      'status': 'Offline',
     },
-    {'name': 'Aisha', 'message': 'You  Thanks for the invite', 'time': 'Sun'},
+    {
+      'name': 'Aisha',
+      'message': 'You  Thanks for the invite',
+      'time': 'Sun',
+      'status': 'Online',
+    },
     {
       'name': 'David',
       'message': 'You  I\'ll send the photos soon',
       'time': '2:15 PM',
+      'status': 'Last seen yesterday',
     },
     {
       'name': 'Emma',
       'message': 'You  Are you free this weekend?',
       'time': 'Sat',
+      'status': 'Online',
     },
     {
       'name': 'Grace',
       'message': 'You  The event starts at 6pm sharp',
       'time': '3:00 PM',
+      'status': 'Last seen at 2:40 PM',
     },
     {
       'name': 'Hassan',
       'message': 'You  Let me know when you arrive',
       'time': 'Yesterday',
+      'status': 'Offline',
     },
     {
       'name': 'Cathy',
       'message': 'You  I loved the photos from the wedding',
       'time': 'Mon',
+      'status': 'Online',
     },
     {
       'name': 'Brian',
       'message': 'You  See you at the meeting tomorrow',
       'time': '11:47 AM',
+      'status': 'Last seen today at 8:05 AM',
     },
   ];
 
