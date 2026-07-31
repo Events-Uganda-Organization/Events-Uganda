@@ -15,6 +15,15 @@ class _ChatScreenState extends State<ChatScreen> {
   int _currentNavIndex = 2;
   final FocusNode _searchFocus = FocusNode();
   bool _isSearchFocused = false;
+  static const List<String> _names = [
+    'Aisha',
+    'Brian',
+    'Cathy',
+    'David',
+    'Emma',
+    'Grace',
+    'Hassan',
+  ];
 
   @override
   void initState() {
@@ -232,55 +241,71 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Row(
                   children: List.generate(
                     7,
-                    (index) => Container(
-                      margin: EdgeInsets.only(
-                        right: screenWidth * 0.06,
-                      ),
-                      width: screenWidth * 0.146,
-                      height: screenWidth * 0.146,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.black.withValues(alpha: 0.08),
-                          width: 1,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.08),
-                            blurRadius: 6,
-                            offset: const Offset(0, 3),
+                    (index) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            right: screenWidth * 0.06,
                           ),
-                        ],
-                      ),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          Center(
-                            child: Icon(
-                              Icons.person,
-                              color: Colors.grey,
-                              size: screenWidth * 0.07,
+                          width: screenWidth * 0.146,
+                          height: screenWidth * 0.146,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.black.withValues(alpha: 0.08),
+                              width: 1,
                             ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: 0.08),
+                                blurRadius: 6,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
                           ),
-                          Positioned(
-                            right: 0,
-                            bottom: 0,
-                            child: Container(
-                              width: screenWidth * 0.04,
-                              height: screenWidth * 0.04,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF4CAF50),
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 2,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Center(
+                                child: Icon(
+                                  Icons.person,
+                                  color: Colors.grey,
+                                  size: screenWidth * 0.07,
                                 ),
                               ),
-                            ),
+                              Positioned(
+                                right: 0,
+                                bottom: 0,
+                                child: Container(
+                                  width: screenWidth * 0.04,
+                                  height: screenWidth * 0.04,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF4CAF50),
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(height: screenHeight * 0.006),
+                        Text(
+                          _names[index],
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: screenWidth * 0.028,
+                            fontFamily: 'Montserrat',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
