@@ -227,33 +227,38 @@ class _ChatScreenState extends State<ChatScreen> {
               top: screenHeight * 0.16 + screenWidth * 0.248,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(
-                  7,
-                  (index) => Container(
-                    width: screenWidth * 0.12,
-                    height: screenWidth * 0.12,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.black.withValues(alpha: 0.08),
-                        width: 1,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(
+                    7,
+                    (index) => Container(
+                      margin: EdgeInsets.only(
+                        right: screenWidth * 0.06,
                       ),
-                      boxShadow: [
-                        BoxShadow(
+                      width: screenWidth * 0.12,
+                      height: screenWidth * 0.12,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(
                           color: Colors.black.withValues(alpha: 0.08),
-                          blurRadius: 6,
-                          offset: const Offset(0, 3),
+                          width: 1,
                         ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.person,
-                        color: Colors.grey,
-                        size: screenWidth * 0.07,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.08),
+                            blurRadius: 6,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.grey,
+                          size: screenWidth * 0.07,
+                        ),
                       ),
                     ),
                   ),
