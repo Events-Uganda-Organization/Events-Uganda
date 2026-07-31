@@ -46,6 +46,31 @@ class _ChatScreenState extends State<ChatScreen> {
       'message': 'You  I\'ll send the photos soon',
       'time': '2:15 PM',
     },
+    {
+      'name': 'Emma',
+      'message': 'You  Are you free this weekend?',
+      'time': 'Sat',
+    },
+    {
+      'name': 'Grace',
+      'message': 'You  The event starts at 6pm sharp',
+      'time': '3:00 PM',
+    },
+    {
+      'name': 'Hassan',
+      'message': 'You  Let me know when you arrive',
+      'time': 'Yesterday',
+    },
+    {
+      'name': 'Cathy',
+      'message': 'You  I loved the photos from the wedding',
+      'time': 'Mon',
+    },
+    {
+      'name': 'Brian',
+      'message': 'You  See you at the meeting tomorrow',
+      'time': '11:47 AM',
+    },
   ];
 
   @override
@@ -350,7 +375,10 @@ class _ChatScreenState extends State<ChatScreen> {
               top: screenHeight * 0.215 + screenWidth * 0.394,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
-              bottom: screenHeight * 0.20,
+              bottom:
+                  screenHeight * 0.02 +
+                  screenWidth * 0.168 +
+                  screenHeight * 0.01,
               child: ListView.builder(
                 padding: EdgeInsets.zero,
                 itemCount: _conversations.length,
