@@ -95,7 +95,8 @@ class _MessageScreenState extends State<MessageScreen> {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.035 +
+              top:
+                  screenHeight * 0.035 +
                   (screenWidth * 0.128 - screenWidth * 0.146) / 2,
               left:
                   screenWidth * 0.04 +
@@ -126,9 +127,10 @@ class _MessageScreenState extends State<MessageScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      color: (widget.status ?? 'Online')
-                              .toLowerCase()
-                              .contains('online')
+                      color:
+                          (widget.status ?? 'Online').toLowerCase().contains(
+                            'online',
+                          )
                           ? const Color(0xFF4CAF50)
                           : Colors.black.withValues(alpha: 0.5),
                       fontSize: screenWidth * 0.028,
