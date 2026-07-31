@@ -24,6 +24,29 @@ class _ChatScreenState extends State<ChatScreen> {
     'Grace',
     'Hassan',
   ];
+  static const List<Map<String, String>> _conversations = [
+    {
+      'name': 'Gregory',
+      'message': 'You  Hey, mate please add me to the group...',
+      'time': '10:32 AM',
+    },
+    {
+      'name': 'Sarah',
+      'message': 'You  Sounds good, see you there!',
+      'time': 'Yesterday',
+    },
+    {
+      'name': 'Brian',
+      'message': 'You  Can we reschedule the meeting?',
+      'time': 'Mon',
+    },
+    {'name': 'Aisha', 'message': 'You  Thanks for the invite', 'time': 'Sun'},
+    {
+      'name': 'David',
+      'message': 'You  I\'ll send the photos soon',
+      'time': '2:15 PM',
+    },
+  ];
 
   @override
   void initState() {
@@ -321,6 +344,127 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 ),
+              ),
+            ),
+            Positioned(
+              top: screenHeight * 0.175 + screenWidth * 0.394,
+              left: screenWidth * 0.04,
+              right: screenWidth * 0.04,
+              bottom: screenHeight * 0.20,
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                itemCount: _conversations.length,
+                itemBuilder: (context, index) {
+                  final conv = _conversations[index];
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: screenWidth * 0.13,
+                            height: screenWidth * 0.13,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.black.withValues(alpha: 0.08),
+                                width: 1,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.08),
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: Stack(
+                              clipBehavior: Clip.none,
+                              children: [
+                                Center(
+                                  child: Icon(
+                                    Icons.person,
+                                    color: Colors.black,
+                                    size: screenWidth * 0.07,
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  bottom: 0,
+                                  child: Container(
+                                    width: screenWidth * 0.036,
+                                    height: screenWidth * 0.036,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF4CAF50),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 2,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: screenWidth * 0.03),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  conv['name']!,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: screenWidth * 0.038,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat',
+                                  ),
+                                ),
+                                SizedBox(height: screenHeight * 0.004),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        conv['message']!,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: Colors.black.withValues(
+                                            alpha: 0.55,
+                                          ),
+                                          fontSize: screenWidth * 0.03,
+                                          fontFamily: 'Montserrat',
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: screenWidth * 0.02),
+                                    Text(
+                                      conv['time']!,
+                                      style: TextStyle(
+                                        color: Colors.black.withValues(
+                                          alpha: 0.4,
+                                        ),
+                                        fontSize: screenWidth * 0.026,
+                                        fontFamily: 'Montserrat',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (index != _conversations.length - 1)
+                        Divider(
+                          color: Colors.black.withValues(alpha: 0.08),
+                          height: screenHeight * 0.03,
+                          thickness: 1,
+                        ),
+                    ],
+                  );
+                },
               ),
             ),
             Positioned(
