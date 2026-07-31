@@ -410,10 +410,14 @@ class _ChatScreenState extends State<ChatScreen> {
                               clipBehavior: Clip.none,
                               children: [
                                 Center(
-                                  child: Icon(
-                                    Icons.person,
-                                    color: Colors.black,
-                                    size: screenWidth * 0.07,
+                                  child: Text(
+                                    conv['name']![0],
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: screenWidth * 0.055,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'Montserrat',
+                                    ),
                                   ),
                                 ),
                                 Positioned(
