@@ -236,8 +236,8 @@ class _ChatScreenState extends State<ChatScreen> {
                       margin: EdgeInsets.only(
                         right: screenWidth * 0.06,
                       ),
-                      width: screenWidth * 0.12,
-                      height: screenWidth * 0.12,
+                      width: screenWidth * 0.146,
+                      height: screenWidth * 0.146,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
