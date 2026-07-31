@@ -54,6 +54,45 @@ class _MessageScreenState extends State<MessageScreen> {
                 ),
               ),
             ),
+            Positioned(
+              top:
+                  screenHeight * 0.035 +
+                  (screenWidth * 0.128 - screenWidth * 0.146) / 2,
+              left:
+                  screenWidth * 0.04 + screenWidth * 0.128 + screenWidth * 0.03,
+              child: Container(
+                width: screenWidth * 0.146,
+                height: screenWidth * 0.146,
+                decoration: BoxDecoration(
+                  color: widget.color ?? const Color(0xFF7EED27),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.black.withValues(alpha: 0.08),
+                    width: 1,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.08),
+                      blurRadius: 6,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Text(
+                    widget.name != null && widget.name!.isNotEmpty
+                        ? widget.name![0]
+                        : '?',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: screenWidth * 0.06,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
