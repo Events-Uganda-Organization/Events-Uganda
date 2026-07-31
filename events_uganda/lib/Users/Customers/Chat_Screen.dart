@@ -24,6 +24,15 @@ class _ChatScreenState extends State<ChatScreen> {
     'Grace',
     'Hassan',
   ];
+  static const List<Color> _circleColors = [
+    Color(0xFF7EED27),
+    Color(0xFFFF6B6B),
+    Color(0xFF4D96FF),
+    Color(0xFFFFA94D),
+    Color(0xFFB197FC),
+    Color(0xFF63E6BE),
+    Color(0xFFF783AC),
+  ];
   static const List<Map<String, String>> _conversations = [
     {
       'name': 'Gregory',
@@ -310,7 +319,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               width: screenWidth * 0.146,
                               height: screenWidth * 0.146,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: _circleColors[index],
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: Colors.black.withValues(alpha: 0.08),
@@ -331,7 +340,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     child: Text(
                                       _names[index][0],
                                       style: TextStyle(
-                                        color: Colors.grey,
+                                        color: Colors.white,
                                         fontSize: screenWidth * 0.06,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: 'Montserrat',
