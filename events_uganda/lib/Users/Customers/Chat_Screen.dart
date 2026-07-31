@@ -534,8 +534,9 @@ class _ChatScreenState extends State<ChatScreen> {
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                          ],
+                        ),
+                        ),
                       if (index != _conversations.length - 1)
                         Divider(
                           color: Colors.black.withValues(alpha: 0.08),
