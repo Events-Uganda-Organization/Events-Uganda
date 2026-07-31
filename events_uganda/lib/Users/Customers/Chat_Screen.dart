@@ -445,6 +445,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               builder: (context) => MessageScreen(
                                 name: conv['name'],
                                 color: _colorFor(conv['name']!),
+                                status: conv['status'],
                               ),
                             ),
                           );
