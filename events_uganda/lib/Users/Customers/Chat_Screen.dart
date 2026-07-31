@@ -253,12 +253,33 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                         ],
                       ),
-                      child: Center(
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.grey,
-                          size: screenWidth * 0.07,
-                        ),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Center(
+                            child: Icon(
+                              Icons.person,
+                              color: Colors.grey,
+                              size: screenWidth * 0.07,
+                            ),
+                          ),
+                          Positioned(
+                            right: 0,
+                            bottom: 0,
+                            child: Container(
+                              width: screenWidth * 0.04,
+                              height: screenWidth * 0.04,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF4CAF50),
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
