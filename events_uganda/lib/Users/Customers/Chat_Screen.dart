@@ -339,52 +339,55 @@ class _ChatScreenState extends State<ChatScreen> {
                               child: Container(
                                 width: screenWidth * 0.146,
                                 height: screenWidth * 0.146,
-                              decoration: BoxDecoration(
-                                color: _circleColors[index],
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.black.withValues(alpha: 0.08),
-                                  width: 1,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
+                                decoration: BoxDecoration(
+                                  color: _circleColors[index],
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
                                     color: Colors.black.withValues(alpha: 0.08),
-                                    blurRadius: 6,
-                                    offset: const Offset(0, 3),
+                                    width: 1,
                                   ),
-                                ],
-                              ),
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      _names[index][0],
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: screenWidth * 0.06,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat',
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withValues(
+                                        alpha: 0.08,
                                       ),
+                                      blurRadius: 6,
+                                      offset: const Offset(0, 3),
                                     ),
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    bottom: 0,
-                                    child: Container(
-                                      width: screenWidth * 0.04,
-                                      height: screenWidth * 0.04,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFF4CAF50),
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
+                                  ],
+                                ),
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    Center(
+                                      child: Text(
+                                        _names[index][0],
+                                        style: TextStyle(
                                           color: Colors.white,
-                                          width: 2,
+                                          fontSize: screenWidth * 0.06,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Montserrat',
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Positioned(
+                                      right: 0,
+                                      bottom: 0,
+                                      child: Container(
+                                        width: screenWidth * 0.04,
+                                        height: screenWidth * 0.04,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFF4CAF50),
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: Colors.white,
+                                            width: 2,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(height: screenHeight * 0.006),
@@ -434,107 +437,107 @@ class _ChatScreenState extends State<ChatScreen> {
                         },
                         child: Row(
                           children: [
-                          Container(
-                            width: screenWidth * 0.13,
-                            height: screenWidth * 0.13,
-                            decoration: BoxDecoration(
-                              color: _colorFor(conv['name']!),
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.black.withValues(alpha: 0.08),
-                                width: 1,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
+                            Container(
+                              width: screenWidth * 0.13,
+                              height: screenWidth * 0.13,
+                              decoration: BoxDecoration(
+                                color: _colorFor(conv['name']!),
+                                shape: BoxShape.circle,
+                                border: Border.all(
                                   color: Colors.black.withValues(alpha: 0.08),
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 3),
+                                  width: 1,
                                 ),
-                              ],
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.08),
+                                    blurRadius: 6,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      conv['name']![0],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: screenWidth * 0.055,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: 0,
+                                    bottom: 0,
+                                    child: Container(
+                                      width: screenWidth * 0.036,
+                                      height: screenWidth * 0.036,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF4CAF50),
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 2,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                            child: Stack(
-                              clipBehavior: Clip.none,
-                              children: [
-                                Center(
-                                  child: Text(
-                                    conv['name']![0],
+                            SizedBox(width: screenWidth * 0.03),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    conv['name']!,
                                     style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: screenWidth * 0.055,
+                                      color: Colors.black,
+                                      fontSize: screenWidth * 0.038,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'Montserrat',
                                     ),
                                   ),
-                                ),
-                                Positioned(
-                                  right: 0,
-                                  bottom: 0,
-                                  child: Container(
-                                    width: screenWidth * 0.036,
-                                    height: screenWidth * 0.036,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFF4CAF50),
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: Colors.white,
-                                        width: 2,
+                                  SizedBox(height: screenHeight * 0.004),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          conv['message']!,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: Colors.black.withValues(
+                                              alpha: 0.55,
+                                            ),
+                                            fontSize: screenWidth * 0.03,
+                                            fontFamily: 'Montserrat',
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: screenWidth * 0.03),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  conv['name']!,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: screenWidth * 0.038,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                  ),
-                                ),
-                                SizedBox(height: screenHeight * 0.004),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        conv['message']!,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+                                      SizedBox(width: screenWidth * 0.02),
+                                      Text(
+                                        conv['time']!,
                                         style: TextStyle(
                                           color: Colors.black.withValues(
-                                            alpha: 0.55,
+                                            alpha: 0.4,
                                           ),
-                                          fontSize: screenWidth * 0.03,
+                                          fontSize: screenWidth * 0.026,
                                           fontFamily: 'Montserrat',
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(width: screenWidth * 0.02),
-                                    Text(
-                                      conv['time']!,
-                                      style: TextStyle(
-                                        color: Colors.black.withValues(
-                                          alpha: 0.4,
-                                        ),
-                                        fontSize: screenWidth * 0.026,
-                                        fontFamily: 'Montserrat',
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
                           ],
                         ),
-                        ),
+                      ),
                       if (index != _conversations.length - 1)
                         Divider(
                           color: Colors.black.withValues(alpha: 0.08),
