@@ -385,6 +385,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                     ),
                                   ),
                                 ],
+                                    ),
+                                  ),
                               ),
                             ),
                             SizedBox(height: screenHeight * 0.006),
@@ -420,8 +422,20 @@ class _ChatScreenState extends State<ChatScreen> {
                   final conv = _conversations[index];
                   return Column(
                     children: [
-                      Row(
-                        children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MessageScreen(
+                                name: conv['name'],
+                                color: _colorFor(conv['name']!),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Row(
+                          children: [
                           Container(
                             width: screenWidth * 0.13,
                             height: screenWidth * 0.13,
