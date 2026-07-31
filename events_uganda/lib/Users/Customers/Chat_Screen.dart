@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
+import 'package:events_uganda/Users/Customers/Message_Screen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 
 class ChatScreen extends StatefulWidget {
