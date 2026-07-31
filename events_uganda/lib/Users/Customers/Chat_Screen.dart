@@ -236,12 +236,16 @@ class _ChatScreenState extends State<ChatScreen> {
               top: screenHeight * 0.16 + screenWidth * 0.248,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(
-                    7,
-                    (index) => Column(
+              child: SizedBox(
+                height: screenWidth * 0.146 + screenHeight * 0.04,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                      7,
+                      (index) => SizedBox(
+                        width: screenWidth * 0.2,
+                        child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
