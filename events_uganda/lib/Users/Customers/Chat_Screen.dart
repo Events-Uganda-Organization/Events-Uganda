@@ -251,11 +251,9 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Row(
                     children: List.generate(
                       7,
-                      (index) => SizedBox(
+                      (index) => Container(
                         width: screenWidth * 0.2,
-                        margin: EdgeInsets.only(
-                          right: screenWidth * 0.06,
-                        ),
+                        margin: EdgeInsets.only(right: screenWidth * 0.06),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
