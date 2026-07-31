@@ -35,14 +35,12 @@ class _ChatScreenState extends State<ChatScreen> {
   ];
 
   static Color _colorFor(String name) {
-    const colors = {
-      'Gregory': Color(0xFF20C997),
-      'Sarah': Color(0xFFFFD43B),
-    };
+    const colors = {'Gregory': Color(0xFF20C997), 'Sarah': Color(0xFFFFD43B)};
     final index = _names.indexOf(name);
     if (index != -1) return _circleColors[index];
     return colors[name] ?? const Color(0xFF7EED27);
   }
+
   static const List<Map<String, String>> _conversations = [
     {
       'name': 'Gregory',
