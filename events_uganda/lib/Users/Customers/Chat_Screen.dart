@@ -571,8 +571,14 @@ class _ChatEmptyStateState extends State<_ChatEmptyState>
     duration: const Duration(milliseconds: 2200),
   )..repeat(reverse: true);
 
+  late final AnimationController _entrance = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1400),
+  )..forward();
+
   @override
   void dispose() {
+    _entrance.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -581,13 +587,25 @@ class _ChatEmptyStateState extends State<_ChatEmptyState>
   Widget build(BuildContext context) {
     final double sw = widget.screenWidth;
     final double sh = widget.screenHeight;
+    final Animation<double> fadeIn = CurvedAnimation(
+      parent: _entrance,
+      curve: const Interval(0, 0.55, curve: Curves.easeOut),
+    );
     return Center(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: sw * 0.06),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _ChatEmptyScene(sw: sw, controller: _controller),
+      child: FadeTransition(
+        opacity: fadeIn,
+        child: Transform.translate(
+          offset: Offset(0, sw * 0.02 * (1 - fadeIn.value)),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: sw * 0.06),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _ChatEmptyScene(
+                  sw: sw,
+                  controller: _controller,
+                  entrance: _entrance,
+                ),
             SizedBox(height: sh * 0.015),
             Text(
               'No conversations yet',
@@ -649,16 +667,22 @@ class _ChatEmptyStateState extends State<_ChatEmptyState>
             ),
           ],
         ),
+        ),
       ),
     );
   }
 }
 
 class _ChatEmptyScene extends StatelessWidget {
-  const _ChatEmptyScene({required this.sw, required this.controller});
+  const _ChatEmptyScene({
+    required this.sw,
+    required this.controller,
+    required this.entrance,
+  });
 
   final double sw;
   final Animation<double> controller;
+  final Animation<double> entrance;
 
   @override
   Widget build(BuildContext context) {
