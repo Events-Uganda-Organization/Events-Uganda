@@ -450,20 +450,23 @@ class _ChatScreenState extends State<ChatScreen> {
                       itemCount: _conversations.length,
                       itemBuilder: (context, index) {
                   final conv = _conversations[index];
+                  final String name = _conversationNames[conv.id] ?? 'Vendor';
                   return Column(
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
+                        onTap: () async {
+                          await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => MessageScreen(
-                                name: conv['name'],
-                                color: _colorFor(conv['name']!),
-                                status: conv['status'],
+                                conversationId: conv.id,
+                                name: name,
+                                color: _colorFor(name),
+                                status: 'Online',
                               ),
                             ),
                           );
+                          _loadConversations();
                         },
                         child: Row(
                           children: [
