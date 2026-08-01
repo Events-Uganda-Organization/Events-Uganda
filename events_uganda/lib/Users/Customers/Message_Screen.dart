@@ -8,6 +8,8 @@ import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
+import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
+
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key, this.name, this.color, this.status});
 
@@ -45,21 +47,6 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   void initState() {
     super.initState();
-    final DateTime yesterday = DateTime.now().subtract(const Duration(days: 1));
-    _messages.addAll([
-      {
-        'text': 'Welcome! How can we help you today?',
-        'time': '9:00 AM',
-        'mine': false,
-        'date': yesterday,
-      },
-      {
-        'text': 'Feel free to type a message below.',
-        'time': '9:00 AM',
-        'mine': false,
-        'date': yesterday,
-      },
-    ]);
     _playerStateSub = _audioPlayer.playerStateStream.listen((state) {
       if (state.processingState == ProcessingState.completed) {
         _voiceProgress.value = 1;
@@ -1211,11 +1198,16 @@ class _MessageScreenState extends State<MessageScreen> {
                   screenHeight * 0.015 +
                   previewHeight +
                   recordingBarHeight,
-              child: ListView(
-                controller: _messagesScroll,
-                padding: EdgeInsets.zero,
-                children: chatItems,
-              ),
+              child: _messages.isEmpty
+                  ? _MessageEmptyState(
+                      screenWidth: screenWidth,
+                      screenHeight: screenHeight,
+                    )
+                  : ListView(
+                      controller: _messagesScroll,
+                      padding: EdgeInsets.zero,
+                      children: chatItems,
+                    ),
             ),
             Positioned(
               bottom: screenHeight * 0.02,
