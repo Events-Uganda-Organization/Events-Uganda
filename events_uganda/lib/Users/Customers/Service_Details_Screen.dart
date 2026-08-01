@@ -529,7 +529,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text("Provider's Name", style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w900, fontSize: screenWidth * 0.041, color: Colors.black)),
+                                            Text("Provider's Name", style: TextStyle(fontWeight: FontWeight.w900, fontSize: screenWidth * 0.041, color: Colors.black)),
                                           ],
                                         ),
                                         SizedBox(width: screenWidth * 0.016),

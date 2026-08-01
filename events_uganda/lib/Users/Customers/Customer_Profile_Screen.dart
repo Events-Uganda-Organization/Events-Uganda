@@ -163,7 +163,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     // Full Name
                     TextField(
                       controller: nameCtrl,
-                      style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                      style: TextStyle(fontSize: w * 0.038, color: Colors.black),
                       decoration: _sheetInputDecoration(w, 'Full Name', Icons.person_outline),
                     ),
                     SizedBox(height: w * 0.03),
@@ -171,7 +171,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     TextField(
                       controller: emailCtrl,
                       keyboardType: TextInputType.emailAddress,
-                      style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                      style: TextStyle(fontSize: w * 0.038, color: Colors.black),
                       decoration: _sheetInputDecoration(w, 'Email', Icons.email_outlined),
                     ),
                     SizedBox(height: w * 0.03),
@@ -179,7 +179,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     TextField(
                       controller: phoneCtrl,
                       keyboardType: TextInputType.phone,
-                      style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                      style: TextStyle(fontSize: w * 0.038, color: Colors.black),
                       decoration: _sheetInputDecoration(w, 'Phone Number', Icons.phone_outlined),
                     ),
                     SizedBox(height: w * 0.05),
@@ -268,7 +268,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   InputDecoration _sheetInputDecoration(double w, String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-            labelStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade600),
+            labelStyle: TextStyle(fontSize: w * 0.03, color: Colors.grey.shade600),
       prefixIcon: Icon(icon, color: const Color(0xFFCC471B), size: w * 0.045),
       contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       border: OutlineInputBorder(
@@ -287,7 +287,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
   }
 
   void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message, style: const TextStyle(fontFamily: 'Montserrat'))));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message, style: const TextStyle())));
   }
 
   void _showAddPaymentSheet(double w) {
@@ -320,13 +320,13 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                       decoration: BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(3))),
                     Text('Add Payment Method', style: TextStyle(fontFamily: 'PlayfairDisplay', fontSize: w * 0.06, fontWeight: FontWeight.bold, color: const Color(0xFF1A1A2E))),
                     SizedBox(height: w * 0.04),
-                    TextField(controller: nameCtrl, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                    TextField(controller: nameCtrl, style: TextStyle(fontSize: w * 0.038, color: Colors.black),
                       decoration: _sheetInputDecoration(w, 'Account Name', Icons.person_outline)),
                     SizedBox(height: w * 0.025),
-                    TextField(controller: typeCtrl, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                    TextField(controller: typeCtrl, style: TextStyle(fontSize: w * 0.038, color: Colors.black),
                       decoration: _sheetInputDecoration(w, 'Type (e.g. MTN, Airtel)', Icons.phone_android_outlined)),
                     SizedBox(height: w * 0.025),
-                    TextField(controller: phoneCtrl, keyboardType: TextInputType.phone, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.038, color: Colors.black),
+                    TextField(controller: phoneCtrl, keyboardType: TextInputType.phone, style: TextStyle(fontSize: w * 0.038, color: Colors.black),
                       decoration: _sheetInputDecoration(w, 'Phone Number', Icons.phone_outlined)),
                     SizedBox(height: w * 0.04),
                     SizedBox(
@@ -343,7 +343,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                               name: nameCtrl.text.trim(),
                             );
                             navigator.pop();
-                            messenger.showSnackBar(const SnackBar(content: Text('Payment method added', style: TextStyle(fontFamily: 'Montserrat'))));
+                            messenger.showSnackBar(const SnackBar(content: Text('Payment method added', style: TextStyle())));
                           } catch (e) {
                             setSheetState(() => saving = false);
                             _showSnackBar(e.toString().replaceFirst('Exception: ', ''));
@@ -356,7 +356,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                         ),
                         child: saving
                             ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                            : Text('Add', style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, fontWeight: FontWeight.w600, color: Colors.white)),
+                            : Text('Add', style: TextStyle(fontSize: w * 0.03, fontWeight: FontWeight.w600, color: Colors.white)),
                       ),
                     ),
                   ],
@@ -521,7 +521,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             if (orders.isEmpty)
               Padding(
                 padding: EdgeInsets.symmetric(vertical: h * 0.01),
-                child: Text('No orders yet', style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey)),
+                child: Text('No orders yet', style: TextStyle(fontSize: w * 0.03, color: Colors.grey)),
               )
             else
               ...orders.take(3).map((o) => Padding(
@@ -573,9 +573,9 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w700, fontSize: w * 0.036)),
+                Text(title, style: TextStyle(fontWeight: FontWeight.w700, fontSize: w * 0.036)),
                 SizedBox(height: 2),
-                Text(date, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.028, color: Colors.grey.shade600)),
+                Text(date, style: TextStyle(fontSize: w * 0.028, color: Colors.grey.shade600)),
               ],
             ),
           ),
@@ -607,22 +607,22 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
       children: [
         Text(
           'Refunds are processed within 5-7 business days after approval.',
-          style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade700, height: 1.4),
+          style: TextStyle(fontSize: w * 0.03, color: Colors.grey.shade700, height: 1.4),
         ),
         SizedBox(height: h * 0.014),
         TextField(
           controller: orderCtrl,
-          style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
+          style: TextStyle(fontSize: w * 0.032, color: Colors.black),
           decoration: _sheetInputDecoration(w, 'Order ID', Icons.receipt_outlined),
         ),
         SizedBox(height: h * 0.012),
         TextField(
           controller: reasonCtrl,
           maxLines: 3,
-          style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
+          style: TextStyle(fontSize: w * 0.032, color: Colors.black),
           decoration: InputDecoration(
             labelText: 'Reason for refund',
-      labelStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.03, color: Colors.grey.shade600),
+      labelStyle: TextStyle(fontSize: w * 0.03, color: Colors.grey.shade600),
             alignLabelWithHint: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(16),
@@ -748,10 +748,10 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
         child: TextField(
           controller: controller,
           obscureText: obscure.value,
-          style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.032, color: Colors.black),
+          style: TextStyle(fontSize: w * 0.032, color: Colors.black),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.025, color: Colors.grey.shade500),
+            hintStyle: TextStyle(fontSize: w * 0.025, color: Colors.grey.shade500),
             isDense: true,
             contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 14),
             suffixIcon: Padding(
@@ -841,7 +841,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
         children: [
           SizedBox(width: w * 0.035, child: leading),
           SizedBox(width: w * 0.01),
-          Expanded(child: Text(label, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.028))),
+          Expanded(child: Text(label, style: TextStyle(fontSize: w * 0.028))),
           SizedBox(width: w * 0.015),
           Icon(trailingIcon, size: w * 0.03, color: trailingColor),
         ],
@@ -1063,8 +1063,8 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.034)),
-                Text(subtitle, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.026, color: Colors.grey.shade600)),
+                Text(title, style: TextStyle(fontWeight: FontWeight.w600, fontSize: w * 0.034)),
+                Text(subtitle, style: TextStyle(fontSize: w * 0.026, color: Colors.grey.shade600)),
               ],
             ),
           ),
@@ -1093,7 +1093,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               Expanded(
                 child: Text(
                   'You will be signed out of your account.',
-                  style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.028, color: Colors.red.shade800),
+                  style: TextStyle(fontSize: w * 0.028, color: Colors.red.shade800),
                 ),
               ),
             ],
@@ -1114,7 +1114,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               );
             },
             icon: const Icon(Icons.logout, size: 16),
-            label: Text('Sign Out', style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.03)),
+            label: Text('Sign Out', style: TextStyle(fontWeight: FontWeight.w600, fontSize: w * 0.03)),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red.shade600,
               foregroundColor: Colors.white,
@@ -1138,8 +1138,8 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label, style: TextStyle(fontFamily: 'Montserrat', fontSize: w * 0.024, color: Colors.grey.shade500)),
-            Text(value, style: TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.032)),
+            Text(label, style: TextStyle(fontSize: w * 0.024, color: Colors.grey.shade500)),
+            Text(value, style: TextStyle(fontWeight: FontWeight.w600, fontSize: w * 0.032)),
           ],
         ),
       ],

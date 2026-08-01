@@ -1113,8 +1113,6 @@ class _BookingDetailsScreenState extends State<BookingDetailsScreen>
                                                             TextOverflow
                                                                 .ellipsis,
                                                         style: TextStyle(
-                                                          fontFamily:
-                                                              'Montserrat',
                                                           fontSize:
                                                               screenWidth *
                                                                   0.03,
