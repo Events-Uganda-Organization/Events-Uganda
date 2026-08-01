@@ -3,6 +3,7 @@ package com.eventsuganda.otp.service;
 import com.eventsuganda.otp.dto.response.ConversationResponse;
 import com.eventsuganda.otp.exception.OtpException;
 import com.eventsuganda.otp.model.Conversation;
+import com.eventsuganda.otp.model.Message;
 import com.eventsuganda.otp.repository.ConversationRepository;
 import com.eventsuganda.otp.repository.MessageRepository;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ public class ConversationService {
         this.messageRepository = messageRepository;
     }
 
+    @Transactional
     public ConversationResponse createConversation(Set<String> participantIds, String currentUserId, String initialMessage) {
         participantIds.add(currentUserId);
 
@@ -41,6 +43,19 @@ public class ConversationService {
         String id = UUID.randomUUID().toString();
         Conversation conversation = new Conversation(id, participantIds);
         conversationRepository.save(conversation);
+
+        if (initialMessage != null && !initialMessage.trim().isEmpty()) {
+            String text = initialMessage.trim();
+            Message message = new Message(UUID.randomUUID().toString(), id, currentUserId, text);
+            messageRepository.save(message);
+
+            long now = message.getCreatedAt();
+            conversation.setLastMessage(text);
+            conversation.setLastMessageSenderId(currentUserId);
+            conversation.setLastMessageAt(now);
+            conversation.setUpdatedAt(now);
+            conversationRepository.save(conversation);
+        }
 
         return toResponse(conversation, currentUserId);
     }
