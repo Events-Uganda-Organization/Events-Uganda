@@ -21,16 +21,19 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   void initState() {
     super.initState();
+    final DateTime yesterday = DateTime.now().subtract(const Duration(days: 1));
     _messages.addAll([
       {
         'text': 'Welcome! How can we help you today?',
         'time': '9:00 AM',
         'mine': false,
+        'date': yesterday,
       },
       {
         'text': 'Feel free to type a message below.',
         'time': '9:00 AM',
         'mine': false,
+        'date': yesterday,
       },
     ]);
   }
