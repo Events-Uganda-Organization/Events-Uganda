@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Services/chat_service.dart';
-import 'package:stomp_dart_client/stomp_dart_client.dart';
+import 'package:stomp_dart_client/stomp.dart';
 
 /// Singleton STOMP client for real-time chat messaging.
 ///
@@ -25,15 +25,11 @@ class ChatSocketService {
       StreamController<ChatMessage>.broadcast();
 
   StompClient? _client;
-  bool _active = false;
-  bool _connecting = false;
   String? _myUserId;
-  int _reconnectAttempts = 0;
-  Timer? _reconnectTimer;
 
   Stream<ChatMessage> get messages => _messages.stream;
 
-  bool get isActive => _active;
+  bool get isActive => _client?.connected ?? false;
 
   Future<String?> _myId() async {
     if (_myUserId != null && _myUserId!.isNotEmpty) return _myUserId;
@@ -44,46 +40,37 @@ class ChatSocketService {
 
   /// Ensures the socket is connected, (re)connecting if needed.
   Future<void> ensureConnected() async {
-    if (_active || _connecting) return;
+    if (isActive) return;
     final token = await AuthService.getToken();
     if (token == null || token.isEmpty) return;
-
-    _connecting = true;
     await _myId();
+
+    if (_client != null) {
+      _client!.activate();
+      return;
+    }
 
     _client = StompClient(
       config: StompConfig(
         url: _wsUrl,
-        connectHeaders: {'Authorization': 'Bearer $token'},
-        onConnect: (frame) {
-          _connecting = false;
-          _active = true;
-          _reconnectAttempts = 0;
+        reconnectDelay: const Duration(seconds: 5),
+        heartbeatIncoming: const Duration(seconds: 0),
+        heartbeatOutgoing: const Duration(seconds: 0),
+        stompConnectHeaders: {'Authorization': 'Bearer $token'},
+        onConnect: (_) {
           _subscribeUserQueue();
         },
-        onStompError: (frame) {
-          _connecting = false;
-          _active = false;
-        },
-        onError: (error) {
-          _connecting = false;
-          _active = false;
-          _scheduleReconnect();
-        },
-        onWebSocketError: (error) {
-          _connecting = false;
-          _active = false;
-          _scheduleReconnect();
-        },
+        onStompError: (_) {},
+        onWebSocketError: (_) {},
       ),
     );
-
     _client!.activate();
   }
 
   void _subscribeUserQueue() {
-    if (_client == null || !_active) return;
-    _client!.subscribe(
+    final client = _client;
+    if (client == null || !client.connected) return;
+    client.subscribe(
       destination: _userQueue,
       callback: (frame) {
         final body = frame.body;
@@ -115,30 +102,16 @@ class ChatSocketService {
   /// Sends a text message over STOMP. Returns true if queued, false if the
   /// socket is not connected (caller should fall back to REST).
   bool sendMessage(String conversationId, String text) {
-    if (!_active || _client == null) return false;
-    _client!.send(
+    final client = _client;
+    if (client == null || !client.connected) return false;
+    client.send(
       destination: _sendDestination,
       body: jsonEncode({'conversationId': conversationId, 'text': text}),
     );
     return true;
   }
 
-  void _scheduleReconnect() {
-    if (_reconnectTimer?.isActive ?? false) return;
-    if (_reconnectAttempts >= 5) return;
-    _reconnectAttempts++;
-    final delay = Duration(seconds: 2 * _reconnectAttempts);
-    _reconnectTimer = Timer(delay, () {
-      _connecting = false;
-      ensureConnected();
-    });
-  }
-
   void disconnect() {
-    _reconnectTimer?.cancel();
-    _reconnectAttempts = 0;
-    _active = false;
-    _connecting = false;
     _client?.deactivate();
     _client = null;
   }
