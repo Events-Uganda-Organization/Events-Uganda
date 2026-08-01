@@ -18,6 +18,8 @@ class MessageScreen extends StatefulWidget {
 class _MessageScreenState extends State<MessageScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _messagesScroll = ScrollController();
+  final ImagePicker _imagePicker = ImagePicker();
+  final List<Uint8List> _selectedImages = [];
   final List<Map<String, Object>> _messages = [];
 
   @override
@@ -57,16 +59,22 @@ class _MessageScreenState extends State<MessageScreen> {
 
   void _sendMessage() {
     final text = _messageController.text.trim();
-    if (text.isEmpty) return;
+    if (text.isEmpty && _selectedImages.isEmpty) return;
     setState(() {
       _messages.add({
-        'text': text,
+        if (text.isNotEmpty) 'text': text,
         'time': _currentTime(),
         'mine': true,
         'date': DateTime.now(),
+        if (_selectedImages.isNotEmpty) 'images': List<Uint8List>.of(_selectedImages),
       });
+      _selectedImages.clear();
     });
     _messageController.clear();
+    _scrollToBottom();
+  }
+
+  void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_messagesScroll.hasClients) {
         _messagesScroll.animateTo(
@@ -77,6 +85,125 @@ class _MessageScreenState extends State<MessageScreen> {
       }
     });
   }
+
+  Future<void> _showImageSourceSheet() async {
+    final ImageSource? source = await showModalBottomSheet<ImageSource>(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      builder: (context) => SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: screenHeightUnit(context) * 0.02),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Attach Photos',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: screenWidthUnit(context) * 0.05,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: screenHeightUnit(context) * 0.015),
+              _sheetOption(
+                context,
+                Icons.photo_camera,
+                'Use Camera',
+                ImageSource.camera,
+              ),
+              _sheetOption(
+                context,
+                Icons.photo_library,
+                'Select from Gallery',
+                ImageSource.gallery,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    if (source == ImageSource.camera) {
+      await _takePhoto();
+    } else if (source == ImageSource.gallery) {
+      await _pickFromGallery();
+    }
+  }
+
+  Widget _sheetOption(
+    BuildContext context,
+    IconData icon,
+    String label,
+    ImageSource source,
+  ) {
+    return ListTile(
+      leading: Icon(icon, color: const Color(0xFFCD7C20), size: 30),
+      title: Text(
+        label,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: screenWidthUnit(context) * 0.04,
+        ),
+      ),
+      onTap: () => Navigator.of(context).pop(source),
+    );
+  }
+
+  Future<void> _takePhoto() async {
+    final XFile? file = await _imagePicker.pickImage(
+      source: ImageSource.camera,
+      maxWidth: 1600,
+      imageQuality: 85,
+    );
+    if (file == null) return;
+    final Uint8List bytes = await file.readAsBytes();
+    if (!mounted) return;
+    setState(() {
+      _selectedImages.add(bytes);
+    });
+  }
+
+  Future<void> _pickFromGallery() async {
+    final List<XFile> files = await _imagePicker.pickMultiImage(
+      maxWidth: 1600,
+      imageQuality: 85,
+    );
+    if (files.isEmpty) return;
+    final List<Uint8List> bytes = <Uint8List>[];
+    for (final XFile file in files) {
+      bytes.add(await file.readAsBytes());
+    }
+    if (!mounted) return;
+    setState(() {
+      _selectedImages.addAll(bytes);
+    });
+  }
+
+  void _clearSelectedImages() {
+    setState(() {
+      _selectedImages.clear();
+    });
+  }
+
+  void _openImageViewer(int initialIndex, List<Uint8List> images) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => _ImageViewerScreen(
+          initialIndex: initialIndex,
+          images: images,
+        ),
+      ),
+    );
+  }
+
+  double screenWidthUnit(BuildContext context) =>
+      MediaQuery.of(context).size.width;
+
+  double screenHeightUnit(BuildContext context) =>
+      MediaQuery.of(context).size.height;
 
   bool _isSameDay(DateTime a, DateTime b) {
     return a.year == b.year && a.month == b.month && a.day == b.day;
