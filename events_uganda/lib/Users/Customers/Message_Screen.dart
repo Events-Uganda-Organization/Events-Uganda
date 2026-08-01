@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
 import 'package:events_uganda/Services/chat_service.dart';
+import 'package:events_uganda/Services/chat_socket_service.dart';
 import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -44,6 +45,7 @@ class _MessageScreenState extends State<MessageScreen> {
   StreamSubscription<Amplitude>? _amplitudeSub;
   StreamSubscription<Duration>? _positionSub;
   StreamSubscription<PlayerState>? _playerStateSub;
+  StreamSubscription<ChatMessage>? _socketSub;
   String? _recordingPath;
   bool _isRecording = false;
   bool _recordingLocked = false;
@@ -77,7 +79,30 @@ class _MessageScreenState extends State<MessageScreen> {
     });
     if (widget.conversationId != null) {
       _loadMessages();
+      _initSocket();
     }
+  }
+
+  void _initSocket() {
+    final socket = ChatSocketService.instance;
+    socket.ensureConnected();
+    _socketSub = socket.messages.listen((message) {
+      if (message.conversationId != widget.conversationId) return;
+      if (!mounted) return;
+      final exists =
+          _messages.any((m) => m['id'] == message.id && m['id'] != null);
+      if (exists) return;
+      setState(() {
+        _messages.add({
+          'id': message.id,
+          'text': message.text ?? '',
+          'time': _formatTimeFromEpoch(message.createdAt),
+          'mine': message.isMine,
+          'date': message.createdAt,
+        });
+      });
+      _scrollToBottom();
+    });
   }
 
   Future<void> _loadMessages() async {

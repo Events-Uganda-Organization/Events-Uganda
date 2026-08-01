@@ -49,7 +49,7 @@ class ChatSocketService {
     if (token == null || token.isEmpty) return;
 
     _connecting = true;
-    final myId = await _myId();
+    await _myId();
 
     _client = StompClient(
       config: StompConfig(
@@ -79,7 +79,6 @@ class ChatSocketService {
     );
 
     _client!.activate();
-    myId;
   }
 
   void _subscribeUserQueue() {
