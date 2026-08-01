@@ -548,3 +548,335 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
+
+class _ChatEmptyState extends StatefulWidget {
+  const _ChatEmptyState({
+    required this.screenWidth,
+    required this.screenHeight,
+    required this.onBrowseServices,
+  });
+
+  final double screenWidth;
+  final double screenHeight;
+  final VoidCallback onBrowseServices;
+
+  @override
+  State<_ChatEmptyState> createState() => _ChatEmptyStateState();
+}
+
+class _ChatEmptyStateState extends State<_ChatEmptyState>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 2200),
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double sw = widget.screenWidth;
+    final double sh = widget.screenHeight;
+    return Center(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: sw * 0.06),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _ChatEmptyScene(sw: sw, controller: _controller),
+            SizedBox(height: sh * 0.015),
+            Text(
+              'No conversations yet',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: sw * 0.05,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: sh * 0.008),
+            Text(
+              'Tap the yellow Message button on a service\u2019s details page '
+              'to start a chat with a vendor.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black.withValues(alpha: 0.55),
+                fontSize: sw * 0.032,
+              ),
+            ),
+            SizedBox(height: sh * 0.018),
+            GestureDetector(
+              onTap: widget.onBrowseServices,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: sw * 0.05,
+                  vertical: sw * 0.028,
+                ),
+                decoration: BoxDecoration(
+                  color: kEmptyAccent,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: kEmptyAccent.withValues(alpha: 0.4),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.storefront_outlined,
+                      color: Colors.white,
+                      size: sw * 0.045,
+                    ),
+                    SizedBox(width: sw * 0.02),
+                    Text(
+                      'Browse services',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: sw * 0.035,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ChatEmptyScene extends StatelessWidget {
+  const _ChatEmptyScene({required this.sw, required this.controller});
+
+  final double sw;
+  final Animation<double> controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: sw * 0.64,
+      height: sw * 0.62,
+      child: AnimatedBuilder(
+        animation: controller,
+        builder: (context, _) {
+          final double t = controller.value;
+          final double bob = math.sin(t * math.pi * 2) * sw * 0.015;
+          final bool blinking = (t > 0.42 && t < 0.5) || (t > 0.9 && t < 0.98);
+          return Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              Positioned(
+                left: 0,
+                top: sw * 0.02 + bob,
+                child: TypingDotsBubble(sw: sw, t: t, phase: 0.2),
+              ),
+              Positioned(
+                right: sw * 0.02,
+                top: sw * 0.18 - bob,
+                child: TypingDotsBubble(sw: sw, t: t, phase: 0.7),
+              ),
+              Transform.translate(
+                offset: Offset(0, bob),
+                child: ChatCharacterBubble(
+                  sw: sw,
+                  blinking: blinking,
+                  lookDown: true,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                child: Transform.translate(
+                  offset: Offset(0, -bob * 0.5),
+                  child: _PhoneCard(sw: sw, pulse: t),
+                ),
+              ),
+              Positioned(
+                bottom: sw * 0.08,
+                right: 0,
+                child: _PointingFinger(sw: sw, t: t),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _PhoneCard extends StatelessWidget {
+  const _PhoneCard({required this.sw, required this.pulse});
+
+  final double sw;
+  final double pulse;
+
+  @override
+  Widget build(BuildContext context) {
+    final double ripple = 0.06 * sw + 0.09 * sw * pulse;
+    return Container(
+      width: sw * 0.22,
+      height: sw * 0.36,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(sw * 0.05),
+        border: Border.all(
+          color: Colors.black.withValues(alpha: 0.08),
+          width: 2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 14,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          SizedBox(height: sw * 0.03),
+          Container(
+            width: sw * 0.08,
+            height: sw * 0.012,
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          SizedBox(height: sw * 0.02),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: sw * 0.03),
+            height: sw * 0.03,
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          SizedBox(height: sw * 0.008),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: sw * 0.05),
+            height: sw * 0.022,
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+          SizedBox(height: sw * 0.02),
+          Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                width: ripple,
+                height: ripple,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: kEmptyYellow.withValues(alpha: 1 - pulse),
+                    width: 2,
+                  ),
+                ),
+              ),
+              Container(
+                width: sw * 0.16,
+                height: sw * 0.05,
+                decoration: BoxDecoration(
+                  color: kEmptyYellow,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.message,
+                      color: kEmptyYellowText,
+                      size: sw * 0.026,
+                    ),
+                    SizedBox(width: 3),
+                    Text(
+                      'Message',
+                      style: TextStyle(
+                        color: kEmptyYellowText,
+                        fontWeight: FontWeight.bold,
+                        fontSize: sw * 0.023,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+        ],
+      ),
+    );
+  }
+}
+
+class _PointingFinger extends StatelessWidget {
+  const _PointingFinger({required this.sw, required this.t});
+
+  final double sw;
+  final double t;
+
+  @override
+  Widget build(BuildContext context) {
+    final double press = math.sin(t * math.pi * 2);
+    final double dy = press * sw * 0.02;
+    final Color skin = kEmptyCream;
+    final Color outline = Colors.black.withValues(alpha: 0.15);
+    return Transform.translate(
+      offset: Offset(0, dy),
+      child: Transform.rotate(
+        angle: -0.62,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: sw * 0.05,
+              height: sw * 0.05,
+              decoration: BoxDecoration(
+                color: skin,
+                shape: BoxShape.circle,
+                border: Border.all(color: outline, width: 2),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.1),
+                    blurRadius: 6,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: sw * 0.045,
+              height: sw * 0.1,
+              decoration: BoxDecoration(
+                color: skin,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: outline, width: 2),
+              ),
+            ),
+            Container(
+              width: sw * 0.09,
+              height: sw * 0.08,
+              decoration: BoxDecoration(
+                color: skin,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: outline, width: 2),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
