@@ -24,6 +24,7 @@ com\eventsuganda\otp\service\ConversationService.class
 com\eventsuganda\otp\dto\response\ConversationResponse.class
 com\eventsuganda\otp\exception\OtpException.class
 com\eventsuganda\otp\dto\request\GoogleAuthRequest.class
+com\eventsuganda\otp\controller\UserController.class
 com\eventsuganda\otp\dto\response\ApiResponse.class
 com\eventsuganda\otp\service\JwtService.class
 com\eventsuganda\otp\repository\OtpRepository.class
@@ -40,6 +41,7 @@ com\eventsuganda\otp\service\ReferralCodeService.class
 com\eventsuganda\otp\controller\ConversationController.class
 com\eventsuganda\otp\dto\request\SendOtpRequest.class
 com\eventsuganda\otp\model\User.class
+com\eventsuganda\otp\dto\response\UserProfileResponse.class
 com\eventsuganda\otp\dto\request\CreateConversationRequest.class
 com\eventsuganda\otp\repository\MessageRepository.class
 com\eventsuganda\otp\repository\UserRepository.class

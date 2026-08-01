@@ -6,6 +6,7 @@ C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eve
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\controller\MessageController.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\controller\OtpController.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\controller\ReferralController.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\controller\UserController.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\request\CreateConversationRequest.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\request\GoogleAuthRequest.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\request\LoginRequest.java
@@ -19,6 +20,7 @@ C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eve
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\ConversationResponse.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\MessageResponse.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\ReferralStatsResponse.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\UserProfileResponse.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\exception\GlobalExceptionHandler.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\exception\OtpException.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\model\Conversation.java
