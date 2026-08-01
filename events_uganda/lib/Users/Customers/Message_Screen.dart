@@ -223,7 +223,6 @@ class _MessageScreenState extends State<MessageScreen> {
                             fontFamily: 'Montserrat',
                           ),
                           border: InputBorder.none,
-                          isDense: true,
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: screenWidth * 0.04,
                             vertical: 0,
