@@ -629,17 +629,50 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const MessageScreen(
-                                            name: "Provider's Name",
-                                            status: 'Online',
-                                            color: Color(0xFFCD7C20),
+                                    onTap: () async {
+                                      final token = await AuthService.getToken();
+                                      if (token == null || token.isEmpty) {
+                                        if (!context.mounted) return;
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Please log in to message this vendor',
+                                            ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                        return;
+                                      }
+                                      try {
+                                        final conversation = await ChatService
+                                            .createConversation(
+                                          {ChatService.kDefaultVendorId},
+                                          otherName: "Provider's Name",
+                                        );
+                                        if (!context.mounted) return;
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MessageScreen(
+                                              conversationId:
+                                                  conversation.id,
+                                              name: "Provider's Name",
+                                              status: 'Online',
+                                              color: const Color(0xFFCD7C20),
+                                            ),
+                                          ),
+                                        );
+                                      } catch (_) {
+                                        if (!context.mounted) return;
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Could not start a chat. Please try again.',
+                                            ),
+                                          ),
+                                        );
+                                      }
                                     },
                                     child: Container(
                                       width: screenWidth * 0.38,
