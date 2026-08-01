@@ -51,6 +51,7 @@ class _MessageScreenState extends State<MessageScreen> {
   double _lastAmplitude = 0.5;
   int? _playingVoiceIndex;
   bool _isPlayingVoice = false;
+  bool _isLoadingMessages = false;
 
   @override
   void initState() {
@@ -74,6 +75,48 @@ class _MessageScreenState extends State<MessageScreen> {
             (position.inMilliseconds / total.inMilliseconds).clamp(0.0, 1.0);
       }
     });
+    if (widget.conversationId != null) {
+      _loadMessages();
+    }
+  }
+
+  Future<void> _loadMessages() async {
+    final conversationId = widget.conversationId;
+    if (conversationId == null) return;
+    setState(() {
+      _isLoadingMessages = true;
+    });
+    try {
+      final messages = await ChatService.getMessages(conversationId);
+      if (!mounted) return;
+      setState(() {
+        _messages.clear();
+        for (final m in messages.reversed) {
+          _messages.add({
+            'text': m.text ?? '',
+            'time': _formatTimeFromEpoch(m.createdAt),
+            'mine': m.isMine,
+            'date': m.createdAt,
+          });
+        }
+        _isLoadingMessages = false;
+      });
+      ChatService.markRead(conversationId);
+      _scrollToBottom();
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _isLoadingMessages = false;
+      });
+    }
+  }
+
+  String _formatTimeFromEpoch(DateTime time) {
+    final TimeOfDay t = TimeOfDay.fromDateTime(time);
+    final hour = t.hourOfPeriod == 0 ? 12 : t.hourOfPeriod;
+    final minute = t.minute.toString().padLeft(2, '0');
+    final period = t.period == DayPeriod.am ? 'AM' : 'PM';
+    return '$hour:$minute $period';
   }
 
   @override
@@ -98,9 +141,34 @@ class _MessageScreenState extends State<MessageScreen> {
     return '$hour:$minute $period';
   }
 
-  void _sendMessage() {
+  Future<void> _sendMessage() async {
     final text = _messageController.text.trim();
     if (text.isEmpty && _selectedImages.isEmpty) return;
+
+    final conversationId = widget.conversationId;
+    if (conversationId != null && text.isNotEmpty) {
+      try {
+        final sent = await ChatService.sendMessage(conversationId, text);
+        if (!mounted) return;
+        setState(() {
+          _messages.add({
+            'text': sent.text ?? text,
+            'time': _formatTimeFromEpoch(sent.createdAt),
+            'mine': true,
+            'date': sent.createdAt,
+          });
+        });
+        _messageController.clear();
+        _scrollToBottom();
+      } catch (_) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Message failed to send. Try again.')),
+        );
+      }
+      return;
+    }
+
     setState(() {
       _messages.add({
         if (text.isNotEmpty) 'text': text,
@@ -1206,8 +1274,14 @@ class _MessageScreenState extends State<MessageScreen> {
                   screenHeight * 0.015 +
                   previewHeight +
                   recordingBarHeight,
-              child: _messages.isEmpty
-                  ? _MessageEmptyState(
+              child: _isLoadingMessages && _messages.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0xFFCD7C20),
+                      ),
+                    )
+                  : _messages.isEmpty
+                      ? _MessageEmptyState(
                       screenWidth: screenWidth,
                       screenHeight: screenHeight,
                     )
