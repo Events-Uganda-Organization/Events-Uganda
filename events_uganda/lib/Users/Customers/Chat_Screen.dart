@@ -672,6 +672,7 @@ class _ChatEmptyStateState extends State<_ChatEmptyState>
     ),
   );
 }
+}
 
 class _ChatEmptyScene extends StatelessWidget {
   const _ChatEmptyScene({
