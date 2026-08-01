@@ -160,6 +160,79 @@ class _MessageScreenState extends State<MessageScreen> {
                 ],
               ),
             ),
+            Positioned(
+              bottom: screenHeight * 0.02,
+              left: screenWidth * 0.04,
+              right: screenWidth * 0.04,
+              child: Row(
+                children: [
+                  Container(
+                    width: screenWidth * 0.128,
+                    height: screenWidth * 0.128,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.white,
+                        width: 3,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.15),
+                          blurRadius: 10,
+                          offset: const Offset(0, 7),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.black,
+                        size: screenWidth * 0.07,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: screenWidth * 0.03),
+                  Expanded(
+                    child: Container(
+                      height: screenWidth * 0.128,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.1),
+                            blurRadius: 12,
+                            spreadRadius: 2,
+                            offset: const Offset(2, 7),
+                          ),
+                        ],
+                      ),
+                      child: TextField(
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: screenWidth * 0.035,
+                          fontFamily: 'Montserrat',
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Type Message Here...',
+                          hintStyle: TextStyle(
+                            color: Colors.black.withValues(alpha: 0.5),
+                            fontSize: screenWidth * 0.032,
+                            fontFamily: 'Montserrat',
+                          ),
+                          border: InputBorder.none,
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.04,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
