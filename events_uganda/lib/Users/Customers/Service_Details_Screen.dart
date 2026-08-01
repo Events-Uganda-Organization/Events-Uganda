@@ -6,6 +6,7 @@ import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
+import 'package:events_uganda/Users/Customers/Message_Screen.dart';
 
 class ServiceDetailsScreen extends StatefulWidget {
   const ServiceDetailsScreen({super.key});
@@ -631,7 +632,11 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => const ChatScreen(),
+                                          builder: (context) => const MessageScreen(
+                                            name: "Provider's Name",
+                                            status: 'Online',
+                                            color: Color(0xFFCD7C20),
+                                          ),
                                         ),
                                       );
                                     },
