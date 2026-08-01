@@ -271,10 +271,6 @@ class _MessageScreenState extends State<MessageScreen> {
                         stops: [0.0, 0.13, 0.19, 0.83],
                       ),
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.white,
-                        width: 3,
-                      ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withValues(alpha: 0.15),
