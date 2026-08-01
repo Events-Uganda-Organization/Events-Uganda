@@ -1338,33 +1338,41 @@ class _MessageScreenState extends State<MessageScreen> {
                     ),
                   ),
                   SizedBox(width: screenWidth * 0.03),
-                  Container(
-                    width: screenWidth * 0.128,
-                    height: screenWidth * 0.128,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color(0xFFCD7C20),
-                          Color(0xFFF4F4F4),
-                          Color(0xFFF5F5F5),
-                          Color(0xFFCD7C20),
-                        ],
-                        stops: [0.0, 0.13, 0.19, 0.83],
-                      ),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.15),
-                          blurRadius: 10,
-                          offset: const Offset(0, 7),
+                  GestureDetector(
+                    onTap: _onMicTapped,
+                    onLongPress: _onMicLongPress,
+                    onLongPressMoveUpdate: _onMicLongPressMove,
+                    onLongPressEnd: _onMicLongPressEnd,
+                    child: Container(
+                      width: screenWidth * 0.128,
+                      height: screenWidth * 0.128,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color(0xFFCD7C20),
+                            Color(0xFFF4F4F4),
+                            Color(0xFFF5F5F5),
+                            Color(0xFFCD7C20),
+                          ],
+                          stops: [0.0, 0.13, 0.19, 0.83],
                         ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.mic,
-                        color: Colors.black,
-                        size: screenWidth * 0.07,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.15),
+                            blurRadius: 10,
+                            offset: const Offset(0, 7),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Icon(
+                          _isRecording ? Icons.stop : Icons.mic,
+                          color: _isRecording
+                              ? const Color(0xFFE53935)
+                              : Colors.black,
+                          size: screenWidth * 0.07,
+                        ),
                       ),
                     ),
                   ),
@@ -1377,6 +1385,45 @@ class _MessageScreenState extends State<MessageScreen> {
         ),
       ),
     );
+  }
+}
+
+class _WaveformPainter extends CustomPainter {
+  _WaveformPainter({
+    required this.levels,
+    required this.color,
+    required this.playedLevels,
+  });
+
+  final List<double> levels;
+  final Color color;
+  final int playedLevels;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (levels.isEmpty || size.width <= 0 || size.height <= 0) return;
+    final double count = levels.length.toDouble();
+    final double gap = size.width * 0.03;
+    final double barWidth = (size.width - gap * (count - 1)) / count;
+    if (barWidth <= 0) return;
+    final Paint paint = Paint();
+    for (int i = 0; i < levels.length; i++) {
+      final double height = levels[i].clamp(0.06, 1.0) * size.height;
+      final double x = i * (barWidth + gap);
+      paint.color = i < playedLevels ? color : color.withValues(alpha: 0.4);
+      final RRect rect = RRect.fromRectAndRadius(
+        Rect.fromLTWH(x, (size.height - height) / 2, barWidth, height),
+        Radius.circular(barWidth / 2),
+      );
+      canvas.drawRRect(rect, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_WaveformPainter oldDelegate) {
+    return oldDelegate.levels != levels ||
+        oldDelegate.playedLevels != playedLevels ||
+        oldDelegate.color != color;
   }
 }
 
