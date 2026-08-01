@@ -254,14 +254,190 @@ class _MessageScreenState extends State<MessageScreen> {
     );
   }
 
+  Widget _buildImageFan(
+    List<Uint8List> images,
+    double screenWidth, {
+    double cardFactor = 0.5,
+  }) {
+    final int shown = math.min(images.length, 4);
+    final double cardWidth = screenWidth * cardFactor;
+    final double cardHeight = screenWidth * cardFactor;
+    final double step = cardHeight * 0.055;
+    final double fanHeight = cardHeight + step * (shown - 1) + screenWidth * 0.08;
+    return GestureDetector(
+      onTap: () => _openImageViewer(0, images),
+      child: SizedBox(
+        width: cardWidth + screenWidth * 0.1,
+        height: fanHeight,
+        child: Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.topCenter,
+          children: [
+            for (int i = shown - 1; i >= 0; i--)
+              Positioned(
+                top: (shown - 1 - i) * step,
+                child: Transform.rotate(
+                  angle: -0.04 - (shown - 1 - i) * 0.025,
+                  child: Container(
+                    width: cardWidth,
+                    height: cardHeight,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.18),
+                          blurRadius: 18,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(24),
+                      child: Image.memory(
+                        images[i],
+                        fit: BoxFit.cover,
+                        width: cardWidth,
+                        height: cardHeight,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            if (images.length > shown)
+              Positioned(
+                right: screenWidth * 0.02,
+                top: step * (shown - 1),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.03,
+                    vertical: screenWidth * 0.012,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.6),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Text(
+                    '+${images.length - shown}',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: screenWidth * 0.035,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPreviewStrip(double screenWidth, double screenHeight) {
+    return Container(
+      height: screenWidth * 0.34,
+      padding: EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.02,
+        vertical: screenWidth * 0.015,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 12,
+            spreadRadius: 2,
+            offset: const Offset(2, 7),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: _buildImageFan(
+                _selectedImages,
+                screenWidth,
+                cardFactor: 0.22,
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: _clearSelectedImages,
+            child: Container(
+              width: screenWidth * 0.09,
+              height: screenWidth * 0.09,
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.6),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.close,
+                color: Colors.white,
+                size: screenWidth * 0.05,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildBubble(
     Map<String, Object> message,
     double screenWidth,
     double screenHeight,
   ) {
     final bool mine = message['mine'] as bool;
-    final String text = message['text'] as String;
     final String time = message['time'] as String;
+    final String text = message['text'] as String? ?? '';
+    final List<Uint8List> images = message['images'] as List<Uint8List>? ?? const [];
+    final bool hasImages = images.isNotEmpty;
+
+    if (hasImages) {
+      return Align(
+        alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
+        child: Container(
+          margin: EdgeInsets.only(
+            top: screenHeight * 0.006,
+            bottom: screenHeight * 0.006,
+            left: mine ? screenWidth * 0.15 : 0,
+            right: mine ? 0 : screenWidth * 0.15,
+          ),
+          padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.01,
+            vertical: screenHeight * 0.008,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _buildImageFan(images, screenWidth),
+              if (text.isNotEmpty) ...[
+                SizedBox(height: screenHeight * 0.006),
+                Text(
+                  text,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: screenWidth * 0.035,
+                  ),
+                ),
+              ],
+              SizedBox(height: screenHeight * 0.003),
+              Text(
+                time,
+                style: TextStyle(
+                  color: Colors.black.withValues(alpha: 0.5),
+                  fontSize: screenWidth * 0.024,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Align(
       alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
