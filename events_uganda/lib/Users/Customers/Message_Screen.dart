@@ -334,7 +334,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
   Widget _buildPreviewStrip(double screenWidth, double screenHeight) {
     return Container(
-      height: screenWidth * 0.34,
+      height: screenWidth * 0.36,
       padding: EdgeInsets.symmetric(
         horizontal: screenWidth * 0.02,
         vertical: screenWidth * 0.015,
@@ -359,7 +359,7 @@ class _MessageScreenState extends State<MessageScreen> {
               child: _buildImageFan(
                 _selectedImages,
                 screenWidth,
-                cardFactor: 0.22,
+                cardFactor: 0.2,
               ),
             ),
           ),
@@ -520,7 +520,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
     final bool hasPreview = _selectedImages.isNotEmpty;
     final double previewHeight =
-        hasPreview ? screenWidth * 0.34 + screenHeight * 0.01 : 0;
+        hasPreview ? screenWidth * 0.36 + screenHeight * 0.01 : 0;
 
     return Scaffold(
       backgroundColor: Colors.white,
