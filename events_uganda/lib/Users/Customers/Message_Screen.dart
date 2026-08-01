@@ -1,6 +1,8 @@
 import 'dart:math' as math;
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key, this.name, this.color, this.status});
