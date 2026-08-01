@@ -3,6 +3,7 @@ package com.eventsuganda.otp.controller;
 import com.eventsuganda.otp.dto.request.ChatMessageRequest;
 import com.eventsuganda.otp.dto.response.MessageResponse;
 import com.eventsuganda.otp.model.Conversation;
+import com.eventsuganda.otp.repository.ConversationRepository;
 import com.eventsuganda.otp.service.MessageService;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -15,10 +16,14 @@ import java.security.Principal;
 public class ChatWebSocketController {
 
     private final MessageService messageService;
+    private final ConversationRepository conversationRepository;
     private final SimpMessagingTemplate messagingTemplate;
 
-    public ChatWebSocketController(MessageService messageService, SimpMessagingTemplate messagingTemplate) {
+    public ChatWebSocketController(MessageService messageService,
+                                   ConversationRepository conversationRepository,
+                                   SimpMessagingTemplate messagingTemplate) {
         this.messageService = messageService;
+        this.conversationRepository = conversationRepository;
         this.messagingTemplate = messagingTemplate;
     }
 
@@ -32,5 +37,12 @@ public class ChatWebSocketController {
             request.getConversationId(), senderId, request.getText());
 
         messagingTemplate.convertAndSend("/topic/chat/" + request.getConversationId(), response);
+
+        conversationRepository.findById(request.getConversationId())
+            .map(Conversation::getParticipantIdSet)
+            .ifPresent(participants -> participants.stream()
+                .filter(p -> !p.equals(senderId))
+                .forEach(recipient ->
+                    messagingTemplate.convertAndSendToUser(recipient, "/queue/messages", response)));
     }
 }
