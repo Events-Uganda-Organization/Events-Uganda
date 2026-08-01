@@ -565,7 +565,7 @@ class _ChatEmptyState extends StatefulWidget {
 }
 
 class _ChatEmptyStateState extends State<_ChatEmptyState>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 2200),
