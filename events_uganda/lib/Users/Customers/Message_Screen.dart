@@ -149,13 +149,13 @@ class _MessageScreenState extends State<MessageScreen> {
                   Icon(
                     Icons.phone_outlined,
                     color: const Color(0xFFCD7C20),
-                    size: screenWidth * 0.06,
+                    size: screenWidth * 0.08,
                   ),
-                  SizedBox(width: screenWidth * 0.03),
+                  SizedBox(width: screenWidth * 0.02),
                   Icon(
                     Icons.more_vert,
                     color: Colors.black,
-                    size: screenWidth * 0.06,
+                    size: screenWidth * 0.08,
                   ),
                 ],
               ),
