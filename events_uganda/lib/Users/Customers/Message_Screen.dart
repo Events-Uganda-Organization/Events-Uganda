@@ -1674,30 +1674,35 @@ class _BounceArrow extends StatelessWidget {
   const _BounceArrow({required this.sw, required this.t});
 
   final double sw;
-  final double t;
+  final Animation<double> t;
 
   @override
   Widget build(BuildContext context) {
-    final double dy = math.sin(t * math.pi * 2) * sw * 0.012;
-    return Transform.translate(
-      offset: Offset(0, dy),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.arrow_downward_rounded,
-            color: kEmptyAccent,
-            size: sw * 0.05,
+    return AnimatedBuilder(
+      animation: t,
+      builder: (context, _) {
+        final double dy = math.sin(t.value * math.pi * 2) * sw * 0.012;
+        return Transform.translate(
+          offset: Offset(0, dy),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.arrow_downward_rounded,
+                color: kEmptyAccent,
+                size: sw * 0.05,
+              ),
+              Text(
+                'Type your message below',
+                style: TextStyle(
+                  color: Colors.black.withValues(alpha: 0.5),
+                  fontSize: sw * 0.026,
+                ),
+              ),
+            ],
           ),
-          Text(
-            'Type your message below',
-            style: TextStyle(
-              color: Colors.black.withValues(alpha: 0.5),
-              fontSize: sw * 0.026,
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
