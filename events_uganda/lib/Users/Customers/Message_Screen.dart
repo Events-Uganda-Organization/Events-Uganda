@@ -14,6 +14,132 @@ class MessageScreen extends StatefulWidget {
 }
 
 class _MessageScreenState extends State<MessageScreen> {
+  final TextEditingController _messageController = TextEditingController();
+  final ScrollController _messagesScroll = ScrollController();
+  final List<Map<String, Object>> _messages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _messages.addAll([
+      {
+        'text': 'Welcome! How can we help you today?',
+        'time': '9:00 AM',
+        'mine': false,
+      },
+      {
+        'text': 'Feel free to type a message below.',
+        'time': '9:00 AM',
+        'mine': false,
+      },
+    ]);
+  }
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    _messagesScroll.dispose();
+    super.dispose();
+  }
+
+  String _currentTime() {
+    final now = TimeOfDay.now();
+    final hour = now.hourOfPeriod == 0 ? 12 : now.hourOfPeriod;
+    final minute = now.minute.toString().padLeft(2, '0');
+    final period = now.period == DayPeriod.am ? 'AM' : 'PM';
+    return '$hour:$minute $period';
+  }
+
+  void _sendMessage() {
+    final text = _messageController.text.trim();
+    if (text.isEmpty) return;
+    setState(() {
+      _messages.add({'text': text, 'time': _currentTime(), 'mine': true});
+    });
+    _messageController.clear();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_messagesScroll.hasClients) {
+        _messagesScroll.animateTo(
+          _messagesScroll.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+
+  Widget _buildBubble(
+    Map<String, Object> message,
+    double screenWidth,
+    double screenHeight,
+  ) {
+    final bool mine = message['mine'] as bool;
+    final String text = message['text'] as String;
+    final String time = message['time'] as String;
+    return Align(
+      alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        constraints: BoxConstraints(maxWidth: screenWidth * 0.7),
+        margin: EdgeInsets.only(
+          top: screenHeight * 0.006,
+          bottom: screenHeight * 0.006,
+          left: mine ? screenWidth * 0.15 : 0,
+          right: mine ? 0 : screenWidth * 0.15,
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.03,
+          vertical: screenHeight * 0.012,
+        ),
+        decoration: BoxDecoration(
+          color: mine ? const Color(0xFFCD7C20) : Colors.white,
+          borderRadius: mine
+              ? const BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(0),
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25),
+                )
+              : const BorderRadius.only(
+                  topLeft: Radius.circular(0),
+                  topRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25),
+                ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 6,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              text,
+              style: TextStyle(
+                color: mine ? Colors.white : Colors.black,
+                fontSize: screenWidth * 0.035,
+              ),
+            ),
+            SizedBox(height: screenHeight * 0.003),
+            Text(
+              time,
+              style: TextStyle(
+                color: mine
+                    ? Colors.white.withValues(alpha: 0.8)
+                    : Colors.black.withValues(alpha: 0.5),
+                fontSize: screenWidth * 0.024,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -160,6 +286,25 @@ class _MessageScreenState extends State<MessageScreen> {
               ),
             ),
             Positioned(
+              top:
+                  screenHeight * 0.035 +
+                  screenWidth * 0.146 +
+                  screenHeight * 0.01,
+              left: screenWidth * 0.04,
+              right: screenWidth * 0.04,
+              bottom:
+                  screenHeight * 0.02 +
+                  screenWidth * 0.128 +
+                  screenHeight * 0.015,
+              child: ListView.builder(
+                controller: _messagesScroll,
+                padding: EdgeInsets.zero,
+                itemCount: _messages.length,
+                itemBuilder: (context, index) =>
+                    _buildBubble(_messages[index], screenWidth, screenHeight),
+              ),
+            ),
+            Positioned(
               bottom: screenHeight * 0.02,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
@@ -213,6 +358,8 @@ class _MessageScreenState extends State<MessageScreen> {
                         children: [
                           Expanded(
                             child: TextField(
+                              controller: _messageController,
+                              onSubmitted: (_) => _sendMessage(),
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
                                 color: Colors.black,
