@@ -143,7 +143,7 @@ class _MessageScreenState extends State<MessageScreen> {
     if (kIsWeb) {
       return 'voice_${DateTime.now().millisecondsSinceEpoch}.webm';
     }
-    final Directory dir = await getTemporaryDirectory();
+    final dir = await getTemporaryDirectory();
     return '${dir.path}/voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
   }
 
