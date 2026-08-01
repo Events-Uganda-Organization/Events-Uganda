@@ -243,7 +243,7 @@ class _MessageScreenState extends State<MessageScreen> {
                               shape: BoxShape.circle,
                             ),
                             child: Transform.rotate(
-                              angle: math.pi * -130 / 180,
+                              angle: math.pi * 200 / 180,
                               child: Icon(
                                 Icons.send,
                                 color: Colors.white,
