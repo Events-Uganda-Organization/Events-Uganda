@@ -132,7 +132,6 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                   Text(
                     title,
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w600,
                       fontSize: screenWidth * 0.035,
                       color: Colors.black,
@@ -320,7 +319,6 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                   Text(
                     _greetingText,
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -413,7 +411,6 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                   Text(
                     'Notification Settings',
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -462,7 +459,6 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       child: Text(
                         'CHANNELS',
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700,
                           fontSize: screenWidth * 0.028,
                           color: const Color(0xFFCB471B),
@@ -506,7 +502,6 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       child: Text(
                         'NOTIFICATION TYPES',
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700,
                           fontSize: screenWidth * 0.028,
                           color: const Color(0xFFCB471B),
@@ -559,7 +554,6 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       child: Text(
                         'ALERT STYLE',
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700,
                           fontSize: screenWidth * 0.028,
                           color: const Color(0xFFCB471B),
@@ -590,7 +584,6 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       child: Text(
                         'Changes are saved automatically',
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w400,
                           fontSize: screenWidth * 0.028,
                           color: Colors.grey,
@@ -629,7 +622,6 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                               'Restore Default Settings',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w700,
                                 fontSize: screenWidth * 0.03,
                               ),

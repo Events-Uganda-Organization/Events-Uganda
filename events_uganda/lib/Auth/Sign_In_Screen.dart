@@ -243,7 +243,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontFamily: 'Montserrat',
                       fontSize: screen.width * 0.08,
                       fontWeight: FontWeight.w800,
                     ),
@@ -253,7 +252,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontFamily: 'Montserrat',
                       fontSize: screen.width * 0.08,
                       fontWeight: FontWeight.w800,
                     ),
@@ -296,7 +294,6 @@ class _SignInScreenState extends State<SignInScreen> {
                           "Sign In",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w800,
                             color: Colors.black,
                             fontSize: screen.width * 0.05,
@@ -355,7 +352,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: screen.width * 0.035,
-                                    fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
@@ -374,7 +370,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: screen.width * 0.035,
-                                    fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
@@ -434,7 +429,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                         color: Colors.black,
                                         fontSize: screen.width * 0.045,
                                         fontWeight: FontWeight.w800,
-                                        fontFamily: 'Montserrat',
                                       ),
                                     ),
                             ),
@@ -504,7 +498,6 @@ class _SignInScreenState extends State<SignInScreen> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: screen.width * 0.037,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -522,7 +515,6 @@ class _SignInScreenState extends State<SignInScreen> {
                                 style: TextStyle(
                                   color: accent,
                                   fontSize: screen.width * 0.040,
-                                  fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),

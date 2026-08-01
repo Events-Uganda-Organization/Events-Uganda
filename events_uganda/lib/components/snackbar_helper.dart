@@ -37,7 +37,6 @@ class SnackbarHelper {
               child: Text(
                 message,
                 style: TextStyle(
-                  fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w500,
                   fontSize: screenWidth * 0.035,
                   color: Colors.white,

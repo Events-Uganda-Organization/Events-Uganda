@@ -80,7 +80,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
           label,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: 'Montserrat',
             fontWeight: FontWeight.w600,
             fontSize: screenWidth * 0.032,
             color: Colors.black,
@@ -339,7 +338,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                       color: Colors.black,
                       fontSize: screenWidth * 0.028,
                       fontWeight: FontWeight.w700,
-                      fontFamily: 'Montserrat',
                     ),
                   ),
                 ],
@@ -462,7 +460,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth * 0.04,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
                 SizedBox(height: screenWidth * 0.008),
@@ -472,7 +469,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: screenWidth * 0.035,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
               ],
@@ -562,7 +558,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                       color: Colors.white,
                       fontSize: screenWidth * 0.028,
                       fontWeight: FontWeight.w700,
-                      fontFamily: 'Montserrat',
                     ),
                   ),
                 ],
@@ -685,7 +680,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth * 0.04,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
                 SizedBox(height: screenWidth * 0.008),
@@ -695,7 +689,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: screenWidth * 0.035,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
               ],
@@ -839,7 +832,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                         color: Colors.white,
                         fontSize: screenWidth * 0.028,
                         fontWeight: FontWeight.w700,
-                        fontFamily: 'Montserrat',
                       ),
                     ),
                   ],
@@ -930,7 +922,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: screenWidth * 0.035,
-                          fontFamily: 'Montserrat',
                         ),
                       ),
                       SizedBox(height: screenWidth * 0.008),
@@ -940,7 +931,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                           fontSize: screenWidth * 0.025,
-                          fontFamily: 'Montserrat',
                         ),
                       ),
                     ],
@@ -1072,7 +1062,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                   Text(
                     _greetingText,
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -1259,14 +1248,12 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.04,
-                          fontFamily: 'Montserrat',
                         ),
                         decoration: InputDecoration(
                           hintText: 'Search for services, vendors',
                           hintStyle: TextStyle(
                             color: Colors.black.withValues(alpha: 0.5),
                             fontSize: screenWidth * 0.035,
-                            fontFamily: 'Montserrat',
                           ),
                           border: InputBorder.none,
                           isDense: true, // Add this
@@ -1349,7 +1336,6 @@ class _AllCategoriesScreenState extends State<AllCategoriesScreen>
                           Text(
                             'All Categories',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
                               fontSize: screenWidth * 0.045,
                               color: Colors.black,

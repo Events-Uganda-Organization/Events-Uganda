@@ -233,7 +233,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   Text(
                     _greetingText,
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.038,
                       color: Colors.black,
@@ -623,7 +622,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       children: [
                                         Icon(Icons.call, color: Color(0xFF5A5A00), size: 20),
                                         SizedBox(width: 8),
-                                        Text('Call Now', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034, fontFamily: 'Montserrat')),
+                                        Text('Call Now', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034)),
                                       ],
                                     ),
                                   ),
@@ -645,7 +644,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                         children: [
                                           Icon(Icons.message, color: Color(0xFF5A5A00), size: 20),
                                           SizedBox(width: 8),
-                                          Text('Message', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034, fontFamily: 'Montserrat')),
+                                          Text('Message', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034)),
                                         ],
                                       ),
                                     ),
@@ -698,7 +697,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                         Text(
                                           "Starting Price",
                                           style: TextStyle(
-                                            fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w900,
                                             fontSize: screenWidth * 0.041,
                                             color: Colors.black,
@@ -717,7 +715,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                         Text(
                                           "Availability",
                                           style: TextStyle(
-                                            fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w900,
                                             fontSize: screenWidth * 0.041,
                                             color: Colors.black,
@@ -751,7 +748,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     Text(
                                       "Services Offered",
                                       style: TextStyle(
-                                        fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.w900,
                                         fontSize: screenWidth * 0.041,
                                         color: Colors.black,
@@ -996,7 +992,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     Text(
                                       "About Provider Name",
                                       style: TextStyle(
-                                        fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.w900,
                                         fontSize: screenWidth * 0.041,
                                         color: Colors.black,
@@ -1054,7 +1049,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               Text(
                                 "Reviews and Ratings",
                                   style: TextStyle(
-                                    fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.w900,
                                     fontSize: screenWidth * 0.041,
                                     color: Colors.black,
@@ -1401,7 +1395,6 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                           color: Colors.black,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
                         ),
                       ),
                       SizedBox(width: 8),

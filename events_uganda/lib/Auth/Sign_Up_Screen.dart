@@ -266,7 +266,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontFamily: 'Montserrat',
                     fontSize: MediaQuery.of(context).size.width * 0.075,
                     fontWeight: FontWeight.w800,
                   ),
@@ -310,7 +309,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             "Sign Up",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                               fontSize:
@@ -421,7 +419,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: MediaQuery.of(context).size.width * 0.035,
-                                    fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -436,7 +433,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: MediaQuery.of(context).size.width * 0.035,
-                                    fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -483,7 +479,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             color: Colors.black,
                                             fontSize: screenWidth * 0.045,
                                             fontWeight: FontWeight.w800,
-                                            fontFamily: 'Montserrat',
                                           ),
                                         ),
                                 ),
@@ -575,7 +570,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   color: Colors.black,
                                   fontSize:
                                       MediaQuery.of(context).size.width * 0.038,
-                                  fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -595,7 +589,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     fontSize:
                                         MediaQuery.of(context).size.width *
                                         0.040,
-                                    fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

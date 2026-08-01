@@ -78,7 +78,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
           label,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: 'Montserrat',
             fontWeight: FontWeight.w600,
             fontSize: screenWidth * 0.032,
             color: Colors.black,
@@ -311,7 +310,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       color: Colors.black,
                       fontSize: screenWidth * 0.028,  
                       fontWeight: FontWeight.w700, 
-                      fontFamily: 'Montserrat', 
                     ),  
                   ),  
                 ], 
@@ -430,7 +428,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth * 0.04,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
                 SizedBox(height: screenWidth * 0.008),
@@ -440,7 +437,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: screenWidth * 0.035,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
               ],
@@ -530,7 +526,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                       color: Colors.white,
                       fontSize: screenWidth * 0.028,
                       fontWeight: FontWeight.w700,
-                      fontFamily: 'Montserrat',
                     ),
                   ),
                 ],
@@ -649,7 +644,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth * 0.04,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
                 SizedBox(height: screenWidth * 0.008),
@@ -659,7 +653,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: screenWidth * 0.035,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
               ],
@@ -750,7 +743,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         color: Colors.white,
                         fontSize: screenWidth * 0.028,
                         fontWeight: FontWeight.w700,
-                        fontFamily: 'Montserrat',
                       ),
                     ),
                   ],
@@ -837,7 +829,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: screenWidth * 0.035,
-                          fontFamily: 'Montserrat',
                         ),
                       ),
                       SizedBox(height: screenWidth * 0.008),
@@ -847,7 +838,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                           fontSize: screenWidth * 0.025,
-                          fontFamily: 'Montserrat',
                         ),
                       ),
                       SizedBox(height: screenWidth * 0.008),
@@ -857,7 +847,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                           fontSize: screenWidth * 0.025,
-                          fontFamily: 'Montserrat',
                         ),
                       ),
                     ],
@@ -913,7 +902,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                                 'Book',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w600,
                                   fontSize: screenWidth * 0.028,
                                 ),
@@ -1020,7 +1008,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   Text(
                     _greetingText,
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -1173,14 +1160,12 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.04,
-                          fontFamily: 'Montserrat',
                         ),
                         decoration: InputDecoration(
                           hintText: 'Search for services, vendors',
                           hintStyle: TextStyle(
                             color: Colors.black.withValues(alpha: 0.5),
                             fontSize: screenWidth * 0.035,
-                            fontFamily: 'Montserrat',
                           ),
                           border: InputBorder.none,
                           isDense: true, // Add this
@@ -1275,7 +1260,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                               'Nearest',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth * 0.03,
                               ),
@@ -1334,7 +1318,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                               'Rating',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth * 0.03,
                               ),
@@ -1393,7 +1376,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                               'Price',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth * 0.03,
                               ),
@@ -1451,7 +1433,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                               'Popular',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth * 0.03,
                               ),
@@ -1475,7 +1456,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                   Text(
                     'Catering & Food',
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -1528,7 +1508,6 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
                               Text(
                                 'Featured Providers',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w700,
                                   fontSize: screenWidth * 0.045,
                                   color: Colors.black,

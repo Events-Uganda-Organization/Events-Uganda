@@ -57,7 +57,6 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                     Text(
                       'Share Your Code',
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w900,
                         fontSize: screenWidth * 0.048,
                         color: Colors.black,
@@ -67,7 +66,6 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                     Text(
                       'Invite friends & earn rewards',
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w500,
                         fontSize: screenWidth * 0.035,
                         color: Colors.black,
@@ -172,7 +170,6 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                       Text(
                         'Your Referral Code',
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontSize: screenWidth * 0.03,
                           color: Colors.grey.shade600,
                           letterSpacing: 1,
@@ -182,7 +179,6 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                       Text(
                         _referralCode,
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontSize: screenWidth * 0.14,
                           fontWeight: FontWeight.bold,
                           color: const Color(0xFFE94560),

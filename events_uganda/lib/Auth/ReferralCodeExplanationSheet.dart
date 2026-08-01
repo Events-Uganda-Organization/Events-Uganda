@@ -54,7 +54,6 @@ class ReferralCodeExplanationSheet extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
                         color: Colors.black,
                       ),
                     ),
@@ -105,7 +104,6 @@ class ReferralCodeExplanationSheet extends StatelessWidget {
                       'Codes are unique and can be used multiple times!',
                       style: TextStyle(
                         fontSize: 11,
-                        fontFamily: 'Montserrat',
                         color: Colors.grey[700],
                       ),
                     ),
@@ -130,7 +128,6 @@ class ReferralCodeExplanationSheet extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Montserrat',
                     color: Colors.white,
                   ),
                 ),
@@ -182,7 +179,6 @@ class ReferralCodeExplanationSheet extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    fontFamily: 'Montserrat',
                     color: Colors.black,
                   ),
                 ),
@@ -191,7 +187,6 @@ class ReferralCodeExplanationSheet extends StatelessWidget {
                   description,
                   style: TextStyle(
                     fontSize: 11,
-                    fontFamily: 'Montserrat',
                     color: Colors.grey[600],
                   ),
                 ),

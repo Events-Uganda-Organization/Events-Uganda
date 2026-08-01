@@ -218,7 +218,6 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontFamily: 'Montserrat',
                     fontSize: 30,
                     fontWeight: FontWeight.w800,
                   ),
@@ -375,7 +374,6 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                           fontSize: screenWidth * 0.04,
                                           fontWeight: FontWeight.normal,
                                           color: Colors.black,
-                                          fontFamily: 'Montserrat',
                                         ),
                                       ),
                                       TextSpan(
@@ -384,7 +382,6 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                           fontSize: screenWidth * 0.042,
                                           fontWeight: FontWeight.bold,
                                           color: Color(0XFF825E34),
-                                          fontFamily: 'Montserrat',
                                         ),
                                       ),
                                     ],
@@ -556,7 +553,6 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: screenWidth * 0.038,
-                                      fontFamily: 'Montserrat',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -574,7 +570,6 @@ class _OTPCodeScreenState extends State<OTPCodeScreen> {
                                       style: TextStyle(
                                         color: const Color(0xFFD59A00),
                                         fontSize: screenWidth * 0.040,
-                                        fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),

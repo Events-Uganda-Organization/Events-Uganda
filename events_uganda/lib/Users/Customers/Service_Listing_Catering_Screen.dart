@@ -85,7 +85,6 @@ class _ServiceListingCateringScreenState
           label,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: 'Montserrat',
             fontWeight: FontWeight.w600,
             fontSize: screenWidth * 0.032,
             color: Colors.black,
@@ -344,7 +343,6 @@ class _ServiceListingCateringScreenState
                       color: Colors.black,
                       fontSize: screenWidth * 0.028,
                       fontWeight: FontWeight.w700,
-                      fontFamily: 'Montserrat',
                     ),
                   ),
                 ],
@@ -463,7 +461,6 @@ class _ServiceListingCateringScreenState
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth * 0.04,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
                 SizedBox(height: screenWidth * 0.008),
@@ -473,7 +470,6 @@ class _ServiceListingCateringScreenState
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: screenWidth * 0.035,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
               ],
@@ -563,7 +559,6 @@ class _ServiceListingCateringScreenState
                       color: Colors.white,
                       fontSize: screenWidth * 0.028,
                       fontWeight: FontWeight.w700,
-                      fontFamily: 'Montserrat',
                     ),
                   ),
                 ],
@@ -682,7 +677,6 @@ class _ServiceListingCateringScreenState
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth * 0.04,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
                 SizedBox(height: screenWidth * 0.008),
@@ -692,7 +686,6 @@ class _ServiceListingCateringScreenState
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: screenWidth * 0.035,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
               ],
@@ -784,7 +777,6 @@ class _ServiceListingCateringScreenState
                         color: Colors.white,
                         fontSize: screenWidth * 0.028,
                         fontWeight: FontWeight.w700,
-                        fontFamily: 'Montserrat',
                       ),
                     ),
                   ],
@@ -881,7 +873,6 @@ class _ServiceListingCateringScreenState
                           color: Colors.white,
                           fontWeight: FontWeight.w700,
                           fontSize: screenWidth * 0.035,
-                          fontFamily: 'Montserrat',
                         ),
                       ),
                       SizedBox(height: screenWidth * 0.008),
@@ -891,7 +882,6 @@ class _ServiceListingCateringScreenState
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                           fontSize: screenWidth * 0.025,
-                          fontFamily: 'Montserrat',
                         ),
                       ),
                       SizedBox(height: screenWidth * 0.008),
@@ -901,7 +891,6 @@ class _ServiceListingCateringScreenState
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                           fontSize: screenWidth * 0.025,
-                          fontFamily: 'Montserrat',
                         ),
                       ),
                     ],
@@ -957,7 +946,6 @@ class _ServiceListingCateringScreenState
                                 'Book',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w600,
                                   fontSize: screenWidth * 0.028,
                                 ),
@@ -1064,7 +1052,6 @@ class _ServiceListingCateringScreenState
                   Text(
                     _greetingText,
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -1251,14 +1238,12 @@ class _ServiceListingCateringScreenState
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.04,
-                          fontFamily: 'Montserrat',
                         ),
                         decoration: InputDecoration(
                           hintText: 'Search for services, vendors',
                           hintStyle: TextStyle(
                             color: Colors.black.withValues(alpha: 0.5),
                             fontSize: screenWidth * 0.035,
-                            fontFamily: 'Montserrat',
                           ),
                           border: InputBorder.none,
                           isDense: true, // Add this
@@ -1353,7 +1338,6 @@ class _ServiceListingCateringScreenState
                               'Nearest',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth * 0.03,
                               ),
@@ -1412,7 +1396,6 @@ class _ServiceListingCateringScreenState
                               'Rating',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth * 0.03,
                               ),
@@ -1471,7 +1454,6 @@ class _ServiceListingCateringScreenState
                               'Price',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth * 0.03,
                               ),
@@ -1529,7 +1511,6 @@ class _ServiceListingCateringScreenState
                               'Popular',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth * 0.03,
                               ),
@@ -1553,7 +1534,6 @@ class _ServiceListingCateringScreenState
                   Text(
                     'Catering & Food',
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -1606,7 +1586,6 @@ class _ServiceListingCateringScreenState
                               Text(
                                 'Featured Providers',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.w700,
                                   fontSize: screenWidth * 0.045,
                                   color: Colors.black,
@@ -1711,7 +1690,6 @@ class _ServiceListingCateringScreenState
                           Text(
                             'All Providers',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
                               fontSize: screenWidth * 0.045,
                               color: Colors.black,

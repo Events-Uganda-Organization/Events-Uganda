@@ -44,7 +44,6 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'Montserrat',
                   color: Colors.black,
                 ),
               ),
@@ -54,7 +53,6 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 12,
-                  fontFamily: 'Montserrat',
                   color: Colors.grey[600],
                 ),
               ),
@@ -86,7 +84,6 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
                           color: Colors.white,
                           letterSpacing: 1.5,
                         ),
@@ -137,7 +134,6 @@ class ReferralCodeBottomSheet extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'Montserrat',
                       color: Colors.white,
                     ),
                   ),

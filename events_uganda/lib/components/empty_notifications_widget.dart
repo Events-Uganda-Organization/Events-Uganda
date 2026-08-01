@@ -117,7 +117,6 @@ class _EmptyNotificationsWidgetState extends State<EmptyNotificationsWidget>
               'No notifications yet',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w700,
                 fontSize: screenWidth * 0.055,
                 color: Colors.black87,
@@ -128,7 +127,6 @@ class _EmptyNotificationsWidgetState extends State<EmptyNotificationsWidget>
               'You\'re all caught up!\nWhen you get notifications, they\'ll show up here.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w400,
                 fontSize: screenWidth * 0.035,
                 color: Colors.black45,
@@ -155,7 +153,6 @@ class _EmptyNotificationsWidgetState extends State<EmptyNotificationsWidget>
               child: Text(
                 'Z',
                 style: TextStyle(
-                  fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w700,
                   fontSize: screenWidth * (0.035 + anim.value.abs() * 0.01),
                   color: const Color(0xFFF4A261).withValues(alpha: (1 + anim.value).clamp(0, 1)),

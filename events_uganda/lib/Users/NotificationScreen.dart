@@ -246,7 +246,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                         child: Text(
                           _venueTypes[index],
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
                             fontSize: MediaQuery.of(context).size.width * 0.035,
                             color: Colors.black87,
                             fontWeight: FontWeight.w500,
@@ -413,7 +412,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                   Text(
                     _greetingText,
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -524,7 +522,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                           Text(
                             'Notifications',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
                               fontSize: screenWidth * 0.045,
                               color: Colors.black,
@@ -616,7 +613,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: screenWidth * 0.04,
-                                      fontFamily: 'Montserrat',
                                     ),
                                     decoration: InputDecoration(
                                       hintText:
@@ -626,7 +622,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                                           alpha: 0.5,
                                         ),
                                         fontSize: screenWidth * 0.035,
-                                        fontFamily: 'Montserrat',
                                       ),
                                       border: InputBorder.none,
                                       isDense: true,
@@ -1056,7 +1051,6 @@ class _NotificationScreenState extends State<NotificationScreen>
           label,
           style: TextStyle(
             fontSize: screenWidth * 0.028,
-            fontFamily: 'Montserrat',
             fontWeight: FontWeight.w500,
             color: isActive ? const Color(0xFFCB471B) : Colors.grey,
           ),
@@ -1082,7 +1076,6 @@ class _NotificationScreenState extends State<NotificationScreen>
             child: Text(
               label,
               style: TextStyle(
-                fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w600,
                 fontSize: screenWidth * 0.03,
                 color: isActive ? Colors.white : Colors.black54,
@@ -1103,7 +1096,6 @@ class _NotificationScreenState extends State<NotificationScreen>
           child: Text(
             'Today',
             style: TextStyle(
-              fontFamily: 'Montserrat',
               fontWeight: FontWeight.w600,
               fontSize: screenWidth * 0.04,
               color: Colors.black,
@@ -1133,7 +1125,6 @@ class _NotificationScreenState extends State<NotificationScreen>
           child: Text(
             'Yesterday',
             style: TextStyle(
-              fontFamily: 'Montserrat',
               fontWeight: FontWeight.w600,
               fontSize: screenWidth * 0.04,
               color: Colors.black,
@@ -1189,7 +1180,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                       Text(
                         'Active Notifications',
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w600,
                           fontSize: screenWidth * 0.03,
                           color: const Color(0xFFCB471B),
@@ -1203,7 +1193,6 @@ class _NotificationScreenState extends State<NotificationScreen>
               Text(
                 '${_archivedNotifications.length} archived',
                 style: TextStyle(
-                  fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w400,
                   fontSize: screenWidth * 0.028,
                   color: Colors.black45,
@@ -1449,7 +1438,6 @@ class _NotificationScreenState extends State<NotificationScreen>
               child: Text(
                 item.timestamp,
                 style: TextStyle(
-                  fontFamily: 'Montserrat',
                   fontSize: screenWidth * 0.025,
                   color: Colors.grey,
                   fontWeight: FontWeight.w400,
@@ -1468,7 +1456,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                     Text(
                       item.title,
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
                         fontSize: screenWidth * 0.035,
                         color: Colors.black,
@@ -1537,7 +1524,6 @@ class _NotificationScreenState extends State<NotificationScreen>
             child: Text(
               label,
               style: TextStyle(
-                fontFamily: 'Montserrat',
                 fontSize: screenWidth * 0.035,
                 fontWeight: FontWeight.w500,
                 color: isDestructive ? dotColor : Colors.white,
@@ -1581,7 +1567,6 @@ class _NotificationScreenState extends State<NotificationScreen>
             Text(
               'Help & Support',
               style: TextStyle(
-                fontFamily: 'Montserrat',
                 fontWeight: FontWeight.w700,
                 fontSize: w * 0.05,
                 color: Colors.white,
@@ -1661,7 +1646,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                     Text(
                       label,
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w600,
                         fontSize: screenWidth * 0.038,
                         color: Colors.white,
@@ -1671,7 +1655,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                     Text(
                       subtitle,
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w400,
                         fontSize: screenWidth * 0.028,
                         color: Colors.white54,
@@ -1738,7 +1721,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                 Text(
                   'Delete All Read',
                   style: TextStyle(
-                    fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w700,
                     fontSize: w * 0.045,
                     color: Colors.white,
@@ -1749,7 +1731,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                   'This will permanently remove all read notifications. This action cannot be undone.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w400,
                     fontSize: w * 0.03,
                     color: Colors.white70,
@@ -1773,7 +1754,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                           child: Text(
                             'Cancel',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w600,
                               fontSize: w * 0.035,
                               color: Colors.white,
@@ -1798,7 +1778,6 @@ class _NotificationScreenState extends State<NotificationScreen>
                           child: Text(
                             'Delete',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w600,
                               fontSize: w * 0.035,
                               color: Colors.white,

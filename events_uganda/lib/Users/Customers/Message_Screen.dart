@@ -88,7 +88,6 @@ class _MessageScreenState extends State<MessageScreen> {
                       color: Colors.white,
                       fontSize: screenWidth * 0.06,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'Montserrat',
                     ),
                   ),
                 ),
@@ -123,7 +122,6 @@ class _MessageScreenState extends State<MessageScreen> {
                             color: Colors.black,
                             fontSize: screenWidth * 0.04,
                             fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
                           ),
                         ),
                         SizedBox(height: screenHeight * 0.003),
@@ -139,7 +137,6 @@ class _MessageScreenState extends State<MessageScreen> {
                                 ? const Color(0xFF4CAF50)
                                 : Colors.black.withValues(alpha: 0.5),
                             fontSize: screenWidth * 0.028,
-                            fontFamily: 'Montserrat',
                           ),
                         ),
                       ],

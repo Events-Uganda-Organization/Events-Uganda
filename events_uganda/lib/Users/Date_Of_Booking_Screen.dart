@@ -98,7 +98,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
           label,
           style: TextStyle(
             color: Colors.black,
-            fontFamily: 'Montserrat',
             fontWeight: FontWeight.w600,
             fontSize: screenWidth * 0.03,
           ),
@@ -125,7 +124,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                   style: TextStyle(
                     color: Colors.black87,
                     fontSize: screenWidth * 0.035,
-                    fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -293,7 +291,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                 fontWeight: fontWeight,
                 color: textColor,
                 fontSize: screenWidth * 0.032,
-                fontFamily: 'Montserrat',
               ),
             ),
           ),
@@ -324,7 +321,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: screenWidth * 0.04,
-                  fontFamily: 'Montserrat',
                   color: Colors.black87,
                 ),
               ),
@@ -356,7 +352,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: screenWidth * 0.028,
-                    fontFamily: 'Montserrat',
                     color: Colors.grey.shade600,
                   ),
                 ),
@@ -412,7 +407,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
           label,
           style: TextStyle(
             fontSize: screenWidth * 0.028,
-            fontFamily: 'Montserrat',
             color: Colors.grey.shade600,
           ),
         ),
@@ -438,7 +432,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
           label,
           style: TextStyle(
             fontSize: screenWidth * 0.028,
-            fontFamily: 'Montserrat',
             fontWeight: FontWeight.w500,
             color: isActive ? const Color(0xFFCB471B) : Colors.grey,
           ),
@@ -534,7 +527,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                   Text(
                     _greetingText,
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -651,7 +643,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                   Text(
                     'Choose Date',
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -758,7 +749,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.032,
-                            fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -825,7 +815,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.032,
-                            fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -864,7 +853,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.038,
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -880,7 +868,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                               'To',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth * 0.032,
                               ),
@@ -932,7 +919,6 @@ class _DateOfBookingScreenState extends State<DateOfBookingScreen>
                               'Continue',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w700,
                                 fontSize: screenWidth * 0.035,
                               ),

@@ -168,7 +168,6 @@ class _OnboardingScreen1State extends State<OnboardingScreen1>
                   color: Colors.black,
                   fontSize: screenWidth * 0.065,
                   fontWeight: FontWeight.w700,
-                  fontFamily: 'Montserrat',
                 ),
               ),
             ),

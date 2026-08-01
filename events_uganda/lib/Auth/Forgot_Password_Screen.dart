@@ -189,7 +189,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontFamily: 'Montserrat',
                     fontSize: 30,
                     fontWeight: FontWeight.w800,
                   ),
@@ -319,7 +318,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 "Forgot Your Password?",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize: screenWidth * 0.06,
@@ -403,7 +401,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                                 color: Colors.black,
                                                 fontSize: screenWidth * 0.045,
                                                 fontWeight: FontWeight.w800,
-                                                fontFamily: 'Montserrat',
                                               ),
                                             ),
                                     ),
@@ -421,7 +418,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: screenWidth * 0.038,
-                                      fontFamily: 'Montserrat',
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -439,7 +435,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                       style: TextStyle(
                                         color: const Color(0xFF1BCC94),
                                         fontSize: screenWidth * 0.040,
-                                        fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),

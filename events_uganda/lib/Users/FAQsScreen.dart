@@ -331,7 +331,6 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
                                     Text(
                                         _greetingText,
                                         style: TextStyle(
-                                            fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w700,
                                             fontSize: w * 0.04,
                                             color: Colors.black,
@@ -369,7 +368,6 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
                                             Text(
                                                 'Frequently Asked Questions',
                                                 style: TextStyle(
-                                                    fontFamily: 'Montserrat',
                                                     fontSize: w * 0.045,
                                                     fontWeight: FontWeight.bold,
                                                     color: const Color(0xFF1A1A2E),
@@ -381,7 +379,6 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
                                     Text(
                                         'Everything you need to know about Events Uganda',
                                         style: TextStyle(
-                                            fontFamily: 'Montserrat',
                                             fontSize: w * 0.028,
                                             color: Colors.black54,
                                         ),
@@ -440,7 +437,6 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
                                                                                                 child: Text(
                                                                                                     '${index + 1}',
                                                                                                     style: TextStyle(
-                                                                                                        fontFamily: 'Montserrat',
                                                                                                         fontSize: w * 0.032,
                                                                                                         fontWeight: FontWeight.bold,
                                                                                                         color: isExpanded
@@ -456,7 +452,6 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
                                                                                                 faq['q']!,
                                                                                                 overflow: TextOverflow.ellipsis,
                                                                                                 style: TextStyle(
-                                                                                                    fontFamily: 'Montserrat',
                                                                                                     fontSize: w * 0.03,
                                                                                                     fontWeight: FontWeight.w600,
                                                                                                     color: const Color(0xFF1A1A2E),
@@ -501,7 +496,6 @@ class _FAQsScreenState extends State<FAQsScreen> with TickerProviderStateMixin {
                                                                                         Text(
                                                                                             faq['a']!,
                                                                                             style: TextStyle(
-                                                                                                fontFamily: 'Montserrat',
                                                                                                 fontSize: w * 0.026,
                                                                                                 color: Colors.black87,
                                                                                                 height: 1.5,

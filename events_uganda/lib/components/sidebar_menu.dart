@@ -203,7 +203,6 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                                                                     'Events Uganda',
                                                                     overflow: TextOverflow.ellipsis,
                                                                     style: TextStyle(
-                                                                        fontFamily: 'Montserrat',
                                                                         fontSize: w * 0.038,
                                                                         fontWeight: FontWeight.bold,
                                                                         color: Colors.black,
@@ -226,7 +225,6 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                                                                     code,
                                                                     overflow: TextOverflow.ellipsis,
                                                                     style: TextStyle(
-                                                                        fontFamily: 'Montserrat',
                                                                         fontSize: w * 0.026,
                                                                         color: const Color(0xFFFC8A07),
                                                                     ),
@@ -263,7 +261,6 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                                                     controller: _searchCtrl,
                                                     focusNode: _searchFocus,
                                                     style: TextStyle(
-                                                        fontFamily: 'Montserrat',
                                                         fontSize: w * 0.028,
                                                         color: Colors.black,
                                                     ),
@@ -279,7 +276,6 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                                                         ),
                                                         hintText: 'Search...',
                                                         hintStyle: TextStyle(
-                                                            fontFamily: 'Montserrat',
                                                             fontSize: w * 0.028,
                                                             color: const Color(0xFFCD7C20),
                                                         ),
@@ -559,7 +555,6 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                                                                             'Log Out',
                                                                             overflow: TextOverflow.ellipsis,
                                                                             style: TextStyle(
-                                                                                fontFamily: 'Montserrat',
                                                                                 fontSize: w * 0.034,
                                                                                 fontWeight: FontWeight.w600,
                                                                                 color: const Color(0xFFFF5F5F),
@@ -644,7 +639,6 @@ class _NavItem extends StatelessWidget {
                                             label,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
-                                                fontFamily: 'Montserrat',
                                                 fontSize: w * 0.032,
                                                 fontWeight: FontWeight.w600,
                                                 color: const Color(0xFF1A1A2E),
@@ -684,7 +678,6 @@ class _NavItem extends StatelessWidget {
                                     label,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                        fontFamily: 'Montserrat',
                                         fontSize: w * 0.032,
                                         fontWeight: FontWeight.w500,
                                         color: iconColor ?? Colors.black54,
@@ -821,7 +814,6 @@ class _AnimatedInviteCardState extends State<_AnimatedInviteCard> with SingleTic
                                                         textAlign: TextAlign.center,
                                                         overflow: TextOverflow.ellipsis,
                                                         style: TextStyle(
-                                                            fontFamily: 'Montserrat',
                                                             fontSize: w * 0.032,
                                                             fontWeight: FontWeight.bold,
                                                             color: Colors.white,
@@ -833,7 +825,6 @@ class _AnimatedInviteCardState extends State<_AnimatedInviteCard> with SingleTic
                                                         textAlign: TextAlign.center,
                                                         overflow: TextOverflow.ellipsis,
                                                         style: TextStyle(
-                                                            fontFamily: 'Montserrat',
                                                             fontSize: w * 0.022,
                                                             color: Colors.white,
                                                         ),
@@ -857,7 +848,6 @@ class _AnimatedInviteCardState extends State<_AnimatedInviteCard> with SingleTic
                                                                     textAlign: TextAlign.center,
                                                                     overflow: TextOverflow.ellipsis,
                                                                     style: TextStyle(
-                                                                        fontFamily: 'Montserrat',
                                                                         fontSize: w * 0.028,
                                                                         fontWeight: FontWeight.w600,
                                                                         color: const Color(0xFFCD7C20),

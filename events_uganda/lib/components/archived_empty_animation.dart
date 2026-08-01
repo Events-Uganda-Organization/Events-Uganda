@@ -144,7 +144,6 @@ class _ArchivedEmptyAnimationState extends State<ArchivedEmptyAnimation>
           'No archived notifications',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: 'Montserrat',
             fontWeight: FontWeight.w700,
             fontSize: screenWidth * 0.05,
             color: Colors.black87,
@@ -155,7 +154,6 @@ class _ArchivedEmptyAnimationState extends State<ArchivedEmptyAnimation>
           'Your archived notifications will\nrest peacefully here',
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontFamily: 'Montserrat',
             fontWeight: FontWeight.w400,
             fontSize: screenWidth * 0.035,
             color: Colors.black45,

@@ -121,7 +121,6 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontFamily: 'Montserrat',
                     fontSize: 30,
                     fontWeight: FontWeight.w800,
                   ),
@@ -201,7 +200,6 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                 "Please tell us a little bit about\nyourself",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize: screenWidth * 0.06,
@@ -300,7 +298,6 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                     color: Colors.black,
-                                                    fontFamily: 'Montserrat',
                                                     fontWeight: FontWeight.w700,
                                                     fontSize:
                                                         screenWidth * 0.042,
@@ -383,7 +380,6 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                     color: Colors.black,
-                                                    fontFamily: 'Montserrat',
                                                     fontWeight: FontWeight.w700,
                                                     fontSize:
                                                         screenWidth * 0.040,
@@ -460,7 +456,6 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                                           color: Colors.black,
                                           fontSize: screenWidth * 0.045,
                                           fontWeight: FontWeight.w800,
-                                          fontFamily: 'Montserrat',
                                         ),
                                       ),
                                     ),

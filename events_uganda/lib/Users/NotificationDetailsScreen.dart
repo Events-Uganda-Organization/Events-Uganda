@@ -149,7 +149,6 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                   Text(
                     _greetingText,
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -289,7 +288,6 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                       widget.title,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w700,
                         fontSize: screenWidth * 0.055,
                         color: Colors.black87,
@@ -311,7 +309,6 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                       Text(
                         widget.timestamp,
                         style: TextStyle(
-                          fontFamily: 'Montserrat',
                           fontWeight: FontWeight.w400,
                           fontSize: screenWidth * 0.03,
                           color: Colors.grey,
@@ -349,7 +346,6 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                             Text(
                               _isRead ? 'Read' : 'New',
                               style: TextStyle(
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth * 0.025,
                                 color: _isRead ? Colors.grey : const Color(0xFFCC471B),
@@ -384,7 +380,6 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                           Text(
                             'Details',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w600,
                               fontSize: screenWidth * 0.04,
                               color: Colors.black54,
@@ -394,7 +389,6 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                           Text(
                             widget.subtitle,
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w400,
                               fontSize: screenWidth * 0.038,
                               color: Colors.black87,
@@ -451,7 +445,6 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                                         Text(
                                           _isRead ? 'Mark as Unread' : 'Mark as Read',
                                           style: TextStyle(
-                                            fontFamily: 'Montserrat',
                                             fontWeight: FontWeight.w600,
                                             fontSize: screenWidth * 0.032,
                                             color: _isRead ? const Color(0xFFCC471B) : Colors.white,

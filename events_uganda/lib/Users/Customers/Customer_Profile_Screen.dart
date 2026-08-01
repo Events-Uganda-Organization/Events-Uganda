@@ -248,7 +248,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                             : Text(
                                 'Save Changes',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
                                   fontSize: w * 0.03,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white,
@@ -392,7 +391,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
           child: Text(
             'Account Overview',
             style: TextStyle(
-              fontFamily: 'Montserrat',
               fontWeight: FontWeight.w800,
               color: Colors.black,
               fontSize: w * 0.045,
@@ -501,7 +499,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               elevation: 0,
             ),
-            child: Text('Edit Profile', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.03)),
+            child: Text('Edit Profile', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: w * 0.03)),
           ),
         ),
         SizedBox(height: h * 0.012),
@@ -550,7 +548,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   elevation: 0,
                 ),
-                child: Text('View All Orders', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.03)),
+                child: Text('View All Orders', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: w * 0.03)),
               ),
             ),
             SizedBox(height: h * 0.012),
@@ -589,8 +587,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             ),
             child: Text(
               status,
-              style: TextStyle(
-                fontFamily: 'Montserrat', fontSize: w * 0.026,
+              style: TextStyle(, fontSize: w * 0.026,
                 color: isCompleted ? Colors.green.shade700 : Colors.orange.shade700,
                 fontWeight: FontWeight.w600,
               ),
@@ -669,7 +666,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               elevation: 0,
             ),
-            child: Text('Submit Refund Request', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.03)),
+            child: Text('Submit Refund Request', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: w * 0.03)),
           ),
         ),
         SizedBox(height: h * 0.012),
@@ -733,7 +730,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               elevation: 0,
             ),
-            child: Text('Update Password', style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.03)),
+            child: Text('Update Password', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: w * 0.03)),
           ),
         ),
         SizedBox(height: h * 0.012),
@@ -819,7 +816,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     const Icon(Icons.add, size: 16, color: Colors.white),
                     SizedBox(width: w * 0.01),
                     Flexible(
-                      child: Text('Add Payment Method', overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.white, fontFamily: 'Montserrat', fontWeight: FontWeight.w600, fontSize: w * 0.028)),
+                      child: Text('Add Payment Method', overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: w * 0.028)),
                     ),
                   ],
                 ),
@@ -884,7 +881,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   Text(
                     'Your Referral Code',
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontSize: w * 0.028,
                       color: Colors.white70,
                       fontWeight: FontWeight.w500,
@@ -898,7 +894,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                         child: Text(
                           code,
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
                             fontSize: w * 0.055,
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
@@ -940,7 +935,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             Text(
               'Share this code with friends to earn rewards!',
               style: TextStyle(
-                fontFamily: 'Montserrat',
                 fontSize: w * 0.026,
                 color: Colors.grey.shade600,
               ),
@@ -967,7 +961,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   'Share Referral Card',
                   style: TextStyle(
                     color: Colors.white,
-                    fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w600,
                     fontSize: w * 0.03,
                   ),
@@ -996,7 +989,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                   'How It Works',
                   style: TextStyle(
                     color: Colors.white,
-                    fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w600,
                     fontSize: w * 0.03,
                   ),
@@ -1189,7 +1181,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     Text(
                       _userFullName,
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w900,
                         fontSize: screenWidth * 0.048,
                         color: Colors.black,
@@ -1199,7 +1190,6 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
                     Text(
                       _userEmail,
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w500,
                         fontSize: screenWidth * 0.035,
                         color: Colors.black,

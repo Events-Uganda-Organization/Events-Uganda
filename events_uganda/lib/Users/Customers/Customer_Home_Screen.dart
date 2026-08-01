@@ -88,7 +88,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
             label,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontFamily: 'Montserrat',
               fontWeight: FontWeight.w600,
               fontSize: screenWidth * 0.032,
               color: Colors.black,
@@ -370,7 +369,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                       color: Colors.white,
                       fontSize: screenWidth * 0.028,
                       fontWeight: FontWeight.w700,
-                      fontFamily: 'Montserrat',
                     ),
                   ),
                 ],
@@ -493,7 +491,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth * 0.04,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
                 SizedBox(height: screenWidth * 0.008),
@@ -503,7 +500,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: screenWidth * 0.035,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
               ],
@@ -595,7 +591,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                       color: Colors.white,
                       fontSize: screenWidth * 0.028,
                       fontWeight: FontWeight.w700,
-                      fontFamily: 'Montserrat',
                     ),
                   ),
                 ],
@@ -718,7 +713,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: screenWidth * 0.04,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
                 SizedBox(height: screenWidth * 0.008),
@@ -728,7 +722,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: screenWidth * 0.035,
-                    fontFamily: 'Montserrat',
                   ),
                 ),
               ],
@@ -785,7 +778,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               color: Colors.white,
                               fontSize: screenWidth * 0.035,
                               fontWeight: FontWeight.w700,
-                              fontFamily: 'Montserrat',
                             ),
                             children: [
                               TextSpan(text: mainText),
@@ -820,7 +812,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                                 color: const Color.fromARGB(255, 210, 141, 38),
                                 fontSize: screenWidth * 0.033,
                                 fontWeight: FontWeight.w800,
-                                fontFamily: 'Montserrat',
                                 letterSpacing: 1.2,
                               ),
                             ),
@@ -837,7 +828,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               child: Text(
                                 'BOOK NOW',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
                                   color: Colors.white,
                                   fontSize: screenWidth * 0.026,
                                   fontWeight: FontWeight.w700,
@@ -942,7 +932,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                   Text(
                     _greetingText,
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w700,
                       fontSize: screenWidth * 0.045,
                       color: Colors.black,
@@ -1129,14 +1118,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.04,
-                          fontFamily: 'Montserrat',
                         ),
                         decoration: InputDecoration(
                           hintText: 'Search for services, vendors',
                           hintStyle: TextStyle(
                             color: Colors.black.withValues(alpha: 0.5),
                             fontSize: screenWidth * 0.035,
-                            fontFamily: 'Montserrat',
                           ),
                           border: InputBorder.none,
                           isDense: true, // Add this
@@ -1250,7 +1237,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                           Text(
                             'Categories Quick Access',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
                               fontSize: screenWidth * 0.045,
                               color: Colors.black,
@@ -1268,7 +1254,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                             child: Text(
                               'View All',
                               style: TextStyle(
-                                fontFamily: 'Montserrat',
                                 fontWeight: FontWeight.w600,
                                 fontSize: screenWidth * 0.030,
                                 color: const Color(0xFFB47A25),
@@ -1407,7 +1392,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                           Text(
                             'For You',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
                               fontSize: screenWidth * 0.045,
                               color: Colors.black,
@@ -1416,7 +1400,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                           Text(
                             'View All',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w600,
                               fontSize: screenWidth * 0.030,
                               color: const Color(0xFFB47A25),
@@ -1506,7 +1489,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                           Text(
                             'Popular Now',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w700,
                               fontSize: screenWidth * 0.045,
                               color: Colors.black,
@@ -1515,7 +1497,6 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                           Text(
                             'View All',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontWeight: FontWeight.w600,
                               fontSize: screenWidth * 0.030,
                               color: const Color(0xFFB47A25),

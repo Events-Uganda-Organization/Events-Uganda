@@ -65,7 +65,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                       label,
                       style: TextStyle(
                         color: isSelected ? Colors.white : Colors.black,
-                        fontFamily: 'Montserrat',
                         fontSize: 10,
                         fontWeight: FontWeight.w700,
                       ),
@@ -169,7 +168,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontFamily: 'Montserrat',
                       fontSize: screen.width * 0.08,
                       fontWeight: FontWeight.w800,
                     ),
@@ -179,7 +177,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontFamily: 'Montserrat',
                       fontSize: screen.width * 0.08,
                       fontWeight: FontWeight.w800,
                     ),
@@ -225,7 +222,6 @@ class _PersonalInterestScreenState extends State<PersonalInterestScreen> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black,
-                              fontFamily: 'Montserrat',
                               fontSize: size.width * 0.04,
                               fontWeight: FontWeight.w600,
                             ),
