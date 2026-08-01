@@ -587,7 +587,7 @@ class _CustomerProfileScreenState extends State<CustomerProfileScreen>
             ),
             child: Text(
               status,
-              style: TextStyle(, fontSize: w * 0.026,
+              style: TextStyle(fontSize: w * 0.026,
                 color: isCompleted ? Colors.green.shade700 : Colors.orange.shade700,
                 fontWeight: FontWeight.w600,
               ),
