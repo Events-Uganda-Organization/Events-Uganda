@@ -381,20 +381,25 @@ class _MessageScreenState extends State<MessageScreen> {
                             ),
                           ),
                           SizedBox(width: screenWidth * 0.02),
-                          Container(
-                            width: screenWidth * 0.095,
-                            height: screenWidth * 0.095,
-                            margin: EdgeInsets.only(right: screenWidth * 0.02),
-                            decoration: const BoxDecoration(
-                              color: Color(0xFFCD7C20),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Transform.rotate(
-                              angle: math.pi * -45 / 180,
-                              child: Icon(
-                                Icons.send,
-                                color: Colors.white,
-                                size: screenWidth * 0.045,
+                          GestureDetector(
+                            onTap: _sendMessage,
+                            child: Container(
+                              width: screenWidth * 0.095,
+                              height: screenWidth * 0.095,
+                              margin: EdgeInsets.only(
+                                right: screenWidth * 0.02,
+                              ),
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFCD7C20),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Transform.rotate(
+                                angle: math.pi * -45 / 180,
+                                child: Icon(
+                                  Icons.send,
+                                  color: Colors.white,
+                                  size: screenWidth * 0.045,
+                                ),
                               ),
                             ),
                           ),
