@@ -474,7 +474,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               width: screenWidth * 0.13,
                               height: screenWidth * 0.13,
                               decoration: BoxDecoration(
-                                color: _colorFor(conv['name']!),
+                                color: _colorFor(name),
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: Colors.black.withValues(alpha: 0.08),
@@ -493,7 +493,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 children: [
                                   Center(
                                     child: Text(
-                                      conv['name']![0],
+                                      name.isNotEmpty ? name[0] : '?',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: screenWidth * 0.055,
@@ -526,7 +526,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    conv['name']!,
+                                    name,
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: screenWidth * 0.038,
@@ -538,7 +538,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          conv['message']!,
+                                          conv.lastMessage ?? 'No messages yet',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -549,9 +549,28 @@ class _ChatScreenState extends State<ChatScreen> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: screenWidth * 0.02),
+                                      if (conv.unreadCount > 0) ...[
+                                        Container(
+                                          width: screenWidth * 0.05,
+                                          height: screenWidth * 0.05,
+                                          decoration: const BoxDecoration(
+                                            color: Color(0xFFCD7C20),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            '${conv.unreadCount}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: screenWidth * 0.024,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(width: screenWidth * 0.02),
+                                      ],
                                       Text(
-                                        conv['time']!,
+                                        _conversationTime(conv.lastMessageAt),
                                         style: TextStyle(
                                           color: Colors.black.withValues(
                                             alpha: 0.4,
