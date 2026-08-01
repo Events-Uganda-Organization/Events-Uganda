@@ -52,6 +52,10 @@ dependencies:
   url_launcher: ^6.2.6
   share_plus: ^10.1.4
   path_provider: ^2.1.5
+  # audio recording
+  record:
+  # audio playback
+  just_audio:
   web: ^1.1.1
   flutter_map: ^8.3.1
   latlong2: ^0.10.1
