@@ -209,27 +209,33 @@ class _MessageScreenState extends State<MessageScreen> {
                         ],
                       ),
                       child: SizedBox.expand(
-                        child: Center(
-                          child: TextField(
-                            textAlignVertical: TextAlignVertical.center,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: screenWidth * 0.035,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'Type Message Here...',
-                              hintStyle: TextStyle(
-                                color: Colors.black.withValues(alpha: 0.5),
-                                fontSize: screenWidth * 0.032,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              textAlignVertical: TextAlignVertical.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.035,
                               ),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: screenWidth * 0.04,
-                                vertical: 0,
+                              decoration: InputDecoration(
+                                hintText: 'Type Message Here...',
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withValues(alpha: 0.5),
+                                  fontSize: screenWidth * 0.032,
+                                ),
+                                border: InputBorder.none,
+                                isDense: true,
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.04,
+                                  vertical: 0,
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
+                      ),
                       ),
                     ),
                   ),
