@@ -1,6 +1,9 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
+import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/Users/Customers/Message_Screen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
@@ -42,68 +45,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return colors[name] ?? const Color(0xFF7EED27);
   }
 
-  static const List<Map<String, String>> _conversations = [
-    {
-      'name': 'Gregory',
-      'message': 'You  Hey, mate please add me to the group...',
-      'time': '10:32 AM',
-      'status': 'Online',
-    },
-    {
-      'name': 'Sarah',
-      'message': 'You  Sounds good, see you there!',
-      'time': 'Yesterday',
-      'status': 'Last seen today at 9:15 AM',
-    },
-    {
-      'name': 'Brian',
-      'message': 'You  Can we reschedule the meeting?',
-      'time': 'Mon',
-      'status': 'Offline',
-    },
-    {
-      'name': 'Aisha',
-      'message': 'You  Thanks for the invite',
-      'time': 'Sun',
-      'status': 'Online',
-    },
-    {
-      'name': 'David',
-      'message': 'You  I\'ll send the photos soon',
-      'time': '2:15 PM',
-      'status': 'Last seen yesterday',
-    },
-    {
-      'name': 'Emma',
-      'message': 'You  Are you free this weekend?',
-      'time': 'Sat',
-      'status': 'Online',
-    },
-    {
-      'name': 'Grace',
-      'message': 'You  The event starts at 6pm sharp',
-      'time': '3:00 PM',
-      'status': 'Last seen at 2:40 PM',
-    },
-    {
-      'name': 'Hassan',
-      'message': 'You  Let me know when you arrive',
-      'time': 'Yesterday',
-      'status': 'Offline',
-    },
-    {
-      'name': 'Cathy',
-      'message': 'You  I loved the photos from the wedding',
-      'time': 'Mon',
-      'status': 'Online',
-    },
-    {
-      'name': 'Brian',
-      'message': 'You  See you at the meeting tomorrow',
-      'time': '11:47 AM',
-      'status': 'Last seen today at 8:05 AM',
-    },
-  ];
+  final List<Map<String, String>> _conversations = [];
 
   @override
   void initState() {
@@ -426,10 +368,23 @@ class _ChatScreenState extends State<ChatScreen> {
                   screenHeight * 0.02 +
                   screenWidth * 0.168 +
                   screenHeight * 0.01,
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: _conversations.length,
-                itemBuilder: (context, index) {
+              child: _conversations.isEmpty
+                  ? _ChatEmptyState(
+                      screenWidth: screenWidth,
+                      screenHeight: screenHeight,
+                      onBrowseServices: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CustomerHomeScreen(),
+                          ),
+                        );
+                      },
+                    )
+                  : ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: _conversations.length,
+                      itemBuilder: (context, index) {
                   final conv = _conversations[index];
                   return Column(
                     children: [
