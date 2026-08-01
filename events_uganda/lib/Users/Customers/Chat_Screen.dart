@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Services/chat_service.dart';
+import 'package:events_uganda/Services/chat_socket_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';

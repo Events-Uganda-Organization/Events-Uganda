@@ -151,6 +151,7 @@ class _MessageScreenState extends State<MessageScreen> {
     _amplitudeSub?.cancel();
     _positionSub?.cancel();
     _playerStateSub?.cancel();
+    _socketSub?.cancel();
     _messageController.dispose();
     _messagesScroll.dispose();
     _voiceProgress.dispose();
@@ -173,11 +174,18 @@ class _MessageScreenState extends State<MessageScreen> {
 
     final conversationId = widget.conversationId;
     if (conversationId != null && text.isNotEmpty) {
+      final socket = ChatSocketService.instance;
+      if (socket.isActive && socket.sendMessage(conversationId, text)) {
+        _messageController.clear();
+        _scrollToBottom();
+        return;
+      }
       try {
         final sent = await ChatService.sendMessage(conversationId, text);
         if (!mounted) return;
         setState(() {
           _messages.add({
+            'id': sent.id,
             'text': sent.text ?? text,
             'time': _formatTimeFromEpoch(sent.createdAt),
             'mine': true,
