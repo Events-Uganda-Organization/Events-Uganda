@@ -683,8 +683,236 @@ class _MessageScreenState extends State<MessageScreen> {
     );
   }
 
+  Widget _buildVoiceBubble(
+    Map<String, Object> message,
+    int index,
+    double screenWidth,
+    double screenHeight,
+  ) {
+    final bool mine = message['mine'] as bool;
+    final String time = message['time'] as String;
+    final Duration duration = message['duration'] as Duration;
+    final bool playing = _isPlayingVoice && _playingVoiceIndex == index;
+    final Color accent = mine ? Colors.white : const Color(0xFFCD7C20);
+    final List<double> bars = _voiceBars(index, duration);
+
+    return Align(
+      alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        constraints: BoxConstraints(maxWidth: screenWidth * 0.7),
+        margin: EdgeInsets.only(
+          top: screenHeight * 0.006,
+          bottom: screenHeight * 0.006,
+          left: mine ? screenWidth * 0.15 : 0,
+          right: mine ? 0 : screenWidth * 0.15,
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.03,
+          vertical: screenHeight * 0.012,
+        ),
+        decoration: BoxDecoration(
+          color: mine ? const Color(0xFFCD7C20) : Colors.white,
+          borderRadius: mine
+              ? const BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(0),
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25),
+                )
+              : const BorderRadius.only(
+                  topLeft: Radius.circular(0),
+                  topRight: Radius.circular(25),
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25),
+                ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 6,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: () => _playVoiceMessage(index),
+              child: Container(
+                width: screenWidth * 0.11,
+                height: screenWidth * 0.11,
+                decoration: BoxDecoration(
+                  color: mine ? Colors.white : const Color(0xFFCD7C20),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  playing ? Icons.stop : Icons.play_arrow,
+                  color: mine ? const Color(0xFFCD7C20) : Colors.white,
+                  size: screenWidth * 0.06,
+                ),
+              ),
+            ),
+            SizedBox(width: screenWidth * 0.02),
+            Expanded(
+              child: ValueListenableBuilder<double>(
+                valueListenable: _voiceProgress,
+                builder: (context, progress, _) {
+                  final int played =
+                      playing ? (progress * bars.length).round() : 0;
+                  return SizedBox(
+                    height: screenWidth * 0.06,
+                    child: CustomPaint(
+                      painter: _WaveformPainter(
+                        levels: bars,
+                        color: accent,
+                        playedLevels: played,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(width: screenWidth * 0.02),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  _formatDuration(duration),
+                  style: TextStyle(
+                    color: mine ? Colors.white : Colors.black,
+                    fontSize: screenWidth * 0.03,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.003),
+                Text(
+                  time,
+                  style: TextStyle(
+                    color: mine
+                        ? Colors.white.withValues(alpha: 0.8)
+                        : Colors.black.withValues(alpha: 0.5),
+                    fontSize: screenWidth * 0.024,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRecordingPanel(double screenWidth, double screenHeight) {
+    final bool cancelling = _cancelDragOffset < -screenWidth * 0.35;
+    return GestureDetector(
+      onPanUpdate: (details) => _onPanelPanUpdate(details, screenWidth),
+      onPanEnd: _onPanelPanEnd,
+      child: Transform.translate(
+        offset: Offset(_cancelDragOffset, 0),
+        child: Container(
+          height: screenWidth * 0.128,
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 12,
+                spreadRadius: 2,
+                offset: const Offset(2, 7),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: _toggleRecordingLock,
+                child: Container(
+                  width: screenWidth * 0.09,
+                  height: screenWidth * 0.09,
+                  decoration: BoxDecoration(
+                    color: _recordingLocked
+                        ? const Color(0xFFCD7C20)
+                        : Colors.black.withValues(alpha: 0.05),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    _recordingLocked ? Icons.lock : Icons.lock_open,
+                    color: _recordingLocked ? Colors.white : Colors.black,
+                    size: screenWidth * 0.05,
+                  ),
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.015),
+              Container(
+                width: screenWidth * 0.09,
+                height: screenWidth * 0.09,
+                decoration: BoxDecoration(
+                  color: cancelling
+                      ? const Color(0xFFE53935)
+                      : Colors.red.shade100,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.delete,
+                  color: cancelling ? Colors.white : const Color(0xFFE53935),
+                  size: screenWidth * 0.05,
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.02),
+              Expanded(
+                child: SizedBox(
+                  height: screenWidth * 0.05,
+                  child: CustomPaint(
+                    painter: _WaveformPainter(
+                      levels: _recordingLevels(),
+                      color: const Color(0xFFCD7C20),
+                      playedLevels: 0,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.02),
+              Text(
+                _formatDuration(_recordingStopwatch.elapsed),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: screenWidth * 0.032,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.02),
+              GestureDetector(
+                onTap: _sendVoiceMessage,
+                child: Container(
+                  width: screenWidth * 0.095,
+                  height: screenWidth * 0.095,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFCD7C20),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Transform.rotate(
+                    angle: math.pi * -45 / 180,
+                    child: Icon(
+                      Icons.send,
+                      color: Colors.white,
+                      size: screenWidth * 0.045,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildBubble(
     Map<String, Object> message,
+    int index,
     double screenWidth,
     double screenHeight,
   ) {
@@ -693,6 +921,12 @@ class _MessageScreenState extends State<MessageScreen> {
     final String text = message['text'] as String? ?? '';
     final List<Uint8List> images = message['images'] as List<Uint8List>? ?? const [];
     final bool hasImages = images.isNotEmpty;
+    final String? voice = message['voice'] as String?;
+    final bool hasVoice = voice != null && voice.isNotEmpty;
+
+    if (hasVoice) {
+      return _buildVoiceBubble(message, index, screenWidth, screenHeight);
+    }
 
     if (hasImages) {
       return Align(
@@ -808,18 +1042,22 @@ class _MessageScreenState extends State<MessageScreen> {
 
     final List<Widget> chatItems = <Widget>[];
     DateTime? previousDate;
-    for (final message in _messages) {
+    for (int i = 0; i < _messages.length; i++) {
+      final message = _messages[i];
       final DateTime date = message['date'] as DateTime;
       if (previousDate == null || !_isSameDay(previousDate, date)) {
         chatItems.add(_buildDateSeparator(_dateLabel(date), screenWidth));
       }
-      chatItems.add(_buildBubble(message, screenWidth, screenHeight));
+      chatItems.add(_buildBubble(message, i, screenWidth, screenHeight));
       previousDate = date;
     }
 
     final bool hasPreview = _selectedImages.isNotEmpty;
     final double previewHeight =
         hasPreview ? screenWidth * 0.36 + screenHeight * 0.01 : 0;
+    final double recordingBarHeight = _recordingPath != null
+        ? screenWidth * 0.128 + screenHeight * 0.01
+        : 0;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -972,7 +1210,8 @@ class _MessageScreenState extends State<MessageScreen> {
                   screenHeight * 0.02 +
                   screenWidth * 0.128 +
                   screenHeight * 0.015 +
-                  previewHeight,
+                  previewHeight +
+                  recordingBarHeight,
               child: ListView(
                 controller: _messagesScroll,
                 padding: EdgeInsets.zero,
@@ -989,6 +1228,10 @@ class _MessageScreenState extends State<MessageScreen> {
                 children: [
                   if (hasPreview) ...[
                     _buildPreviewStrip(screenWidth, screenHeight),
+                    SizedBox(height: screenHeight * 0.01),
+                  ],
+                  if (_recordingPath != null) ...[
+                    _buildRecordingPanel(screenWidth, screenHeight),
                     SizedBox(height: screenHeight * 0.01),
                   ],
                   Row(
