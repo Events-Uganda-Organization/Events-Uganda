@@ -43,6 +43,10 @@
 	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Events Uganda uses the camera so you can take photos to send in chat.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Events Uganda accesses your photo library so you can select and send photos in chat.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>
