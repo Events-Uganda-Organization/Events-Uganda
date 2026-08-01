@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:stomp_dart_client/stomp.dart';
+import 'package:stomp_dart_client/stomp_config.dart';
 
 /// Singleton STOMP client for real-time chat messaging.
 ///
