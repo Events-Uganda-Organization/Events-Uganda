@@ -57,7 +57,12 @@ class _MessageScreenState extends State<MessageScreen> {
     final text = _messageController.text.trim();
     if (text.isEmpty) return;
     setState(() {
-      _messages.add({'text': text, 'time': _currentTime(), 'mine': true});
+      _messages.add({
+        'text': text,
+        'time': _currentTime(),
+        'mine': true,
+        'date': DateTime.now(),
+      });
     });
     _messageController.clear();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -69,6 +74,55 @@ class _MessageScreenState extends State<MessageScreen> {
         );
       }
     });
+  }
+
+  bool _isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  String _dateLabel(DateTime date) {
+    final DateTime now = DateTime.now();
+    final DateTime today = DateTime(now.year, now.month, now.day);
+    final DateTime day = DateTime(date.year, date.month, date.day);
+    final int difference = today.difference(day).inDays;
+    if (difference == 0) return 'Today';
+    if (difference == 1) return 'Yesterday';
+    final String dd = date.day.toString().padLeft(2, '0');
+    final String mm = date.month.toString().padLeft(2, '0');
+    return '$dd/$mm/${date.year}';
+  }
+
+  Widget _buildDateSeparator(String label, double screenWidth) {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          vertical: screenWidth * 0.02,
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.03,
+          vertical: screenWidth * 0.01,
+        ),
+        decoration: BoxDecoration(
+          color: const Color(0xFFF4F4F4),
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: Colors.black.withValues(alpha: 0.7),
+            fontSize: screenWidth * 0.028,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildBubble(
@@ -147,6 +201,17 @@ class _MessageScreenState extends State<MessageScreen> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
+    final List<Widget> chatItems = <Widget>[];
+    DateTime? previousDate;
+    for (final message in _messages) {
+      final DateTime date = message['date'] as DateTime;
+      if (previousDate == null || !_isSameDay(previousDate, date)) {
+        chatItems.add(_buildDateSeparator(_dateLabel(date), screenWidth));
+      }
+      chatItems.add(_buildBubble(message, screenWidth, screenHeight));
+      previousDate = date;
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -299,12 +364,10 @@ class _MessageScreenState extends State<MessageScreen> {
                   screenHeight * 0.02 +
                   screenWidth * 0.128 +
                   screenHeight * 0.015,
-              child: ListView.builder(
+              child: ListView(
                 controller: _messagesScroll,
                 padding: EdgeInsets.zero,
-                itemCount: _messages.length,
-                itemBuilder: (context, index) =>
-                    _buildBubble(_messages[index], screenWidth, screenHeight),
+                children: chatItems,
               ),
             ),
             Positioned(
