@@ -1,6 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
@@ -45,7 +47,9 @@ class _ChatScreenState extends State<ChatScreen> {
     return colors[name] ?? const Color(0xFF7EED27);
   }
 
-  final List<Map<String, String>> _conversations = [];
+  final List<ChatConversation> _conversations = [];
+  final Map<String, String> _conversationNames = {};
+  bool _isLoadingConversations = false;
 
   @override
   void initState() {
@@ -55,6 +59,60 @@ class _ChatScreenState extends State<ChatScreen> {
         _isSearchFocused = _searchFocus.hasFocus;
       });
     });
+    _loadConversations();
+  }
+
+  Future<void> _loadConversations() async {
+    final token = await AuthService.getToken();
+    if (token == null) {
+      if (mounted) {
+        setState(() {
+          _conversations.clear();
+          _conversationNames.clear();
+          _isLoadingConversations = false;
+        });
+      }
+      return;
+    }
+    setState(() {
+      _isLoadingConversations = true;
+    });
+    try {
+      final myId = await ChatService.myUserId();
+      final List<ChatConversation> list =
+          await ChatService.getConversations();
+      final names = <String, String>{};
+      for (final conversation in list) {
+        final otherId = conversation.otherParticipantId(myId);
+        String name = otherId == null ? '' : await ChatService.nameFor(otherId);
+        if (name.isEmpty) name = 'Vendor';
+        names[conversation.id] = name;
+      }
+      if (!mounted) return;
+      setState(() {
+        _conversations
+          ..clear()
+          ..addAll(list);
+        _conversationNames
+          ..clear()
+          ..addAll(names);
+        _isLoadingConversations = false;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _isLoadingConversations = false;
+      });
+    }
+  }
+
+  String _conversationTime(DateTime? time) {
+    if (time == null) return '';
+    final TimeOfDay t = TimeOfDay.fromDateTime(time);
+    final hour = t.hourOfPeriod == 0 ? 12 : t.hourOfPeriod;
+    final minute = t.minute.toString().padLeft(2, '0');
+    final period = t.period == DayPeriod.am ? 'AM' : 'PM';
+    return '$hour:$minute $period';
   }
 
   @override
@@ -242,7 +300,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   screenHeight * 0.015,
               right: screenWidth * 0.04,
               child: GestureDetector(
-                onTap: () {},
+                onTap: _loadConversations,
                 child: Container(
                   width: screenWidth * 0.128,
                   height: screenWidth * 0.128,
@@ -368,8 +426,14 @@ class _ChatScreenState extends State<ChatScreen> {
                   screenHeight * 0.02 +
                   screenWidth * 0.168 +
                   screenHeight * 0.01,
-              child: _conversations.isEmpty
-                  ? _ChatEmptyState(
+              child: _isLoadingConversations && _conversations.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: Color(0xFFCD7C20),
+                      ),
+                    )
+                  : _conversations.isEmpty
+                      ? _ChatEmptyState(
                       screenWidth: screenWidth,
                       screenHeight: screenHeight,
                       onBrowseServices: () {
