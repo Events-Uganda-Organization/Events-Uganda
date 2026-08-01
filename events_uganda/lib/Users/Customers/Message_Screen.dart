@@ -261,7 +261,15 @@ class _MessageScreenState extends State<MessageScreen> {
                     width: screenWidth * 0.128,
                     height: screenWidth * 0.128,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xFFCD7C20),
+                          Color(0xFFF4F4F4),
+                          Color(0xFFF5F5F5),
+                          Color(0xFFCD7C20),
+                        ],
+                        stops: [0.0, 0.13, 0.19, 0.83],
+                      ),
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: Colors.white,
