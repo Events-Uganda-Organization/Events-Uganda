@@ -242,10 +242,13 @@ class _MessageScreenState extends State<MessageScreen> {
                               color: Color(0xFFCD7C20),
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(
-                              Icons.send,
-                              color: Colors.white,
-                              size: screenWidth * 0.045,
+                            child: Transform.rotate(
+                              angle: math.pi,
+                              child: Icon(
+                                Icons.send,
+                                color: Colors.white,
+                                size: screenWidth * 0.045,
+                              ),
                             ),
                           ),
                         ],
