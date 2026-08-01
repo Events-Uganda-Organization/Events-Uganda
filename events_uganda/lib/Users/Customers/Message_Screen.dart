@@ -518,6 +518,10 @@ class _MessageScreenState extends State<MessageScreen> {
       previousDate = date;
     }
 
+    final bool hasPreview = _selectedImages.isNotEmpty;
+    final double previewHeight =
+        hasPreview ? screenWidth * 0.34 + screenHeight * 0.01 : 0;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -668,7 +672,8 @@ class _MessageScreenState extends State<MessageScreen> {
               bottom:
                   screenHeight * 0.02 +
                   screenWidth * 0.128 +
-                  screenHeight * 0.015,
+                  screenHeight * 0.015 +
+                  previewHeight,
               child: ListView(
                 controller: _messagesScroll,
                 padding: EdgeInsets.zero,
@@ -679,31 +684,42 @@ class _MessageScreenState extends State<MessageScreen> {
               bottom: screenHeight * 0.02,
               left: screenWidth * 0.04,
               right: screenWidth * 0.04,
-              child: Row(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Container(
-                    width: screenWidth * 0.128,
-                    height: screenWidth * 0.128,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      border: Border.all(
+                  if (hasPreview) ...[
+                    _buildPreviewStrip(screenWidth, screenHeight),
+                    SizedBox(height: screenHeight * 0.01),
+                  ],
+                  Row(
+                children: [
+                  GestureDetector(
+                    onTap: _showImageSourceSheet,
+                    child: Container(
+                      width: screenWidth * 0.128,
+                      height: screenWidth * 0.128,
+                      decoration: BoxDecoration(
                         color: Colors.white,
-                        width: 3,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.15),
-                          blurRadius: 10,
-                          offset: const Offset(0, 7),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 3,
                         ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.black,
-                        size: screenWidth * 0.07,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.15),
+                            blurRadius: 10,
+                            offset: const Offset(0, 7),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.black,
+                          size: screenWidth * 0.07,
+                        ),
                       ),
                     ),
                   ),
@@ -810,6 +826,8 @@ class _MessageScreenState extends State<MessageScreen> {
                       ),
                     ),
                   ),
+                ],
+              ),
                 ],
               ),
             ),
