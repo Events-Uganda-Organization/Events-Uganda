@@ -118,6 +118,7 @@ class _MessageScreenState extends State<MessageScreen> {
         _messages.clear();
         for (final m in messages.reversed) {
           _messages.add({
+            'id': m.id,
             'text': m.text ?? '',
             'time': _formatTimeFromEpoch(m.createdAt),
             'mine': m.isMine,
