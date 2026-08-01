@@ -209,6 +209,7 @@ class _MessageScreenState extends State<MessageScreen> {
                         ],
                       ),
                       child: TextField(
+                        textAlignVertical: TextAlignVertical.center,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.035,
@@ -225,6 +226,7 @@ class _MessageScreenState extends State<MessageScreen> {
                           isDense: true,
                           contentPadding: EdgeInsets.symmetric(
                             horizontal: screenWidth * 0.04,
+                            vertical: 0,
                           ),
                         ),
                       ),
