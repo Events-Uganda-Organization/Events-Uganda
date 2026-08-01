@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -51,6 +52,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<ChatConversation> _conversations = [];
   final Map<String, String> _conversationNames = {};
   bool _isLoadingConversations = false;
+  StreamSubscription<ChatMessage>? _socketSub;
 
   @override
   void initState() {
@@ -61,6 +63,15 @@ class _ChatScreenState extends State<ChatScreen> {
       });
     });
     _loadConversations();
+    _initSocket();
+  }
+
+  void _initSocket() {
+    final socket = ChatSocketService.instance;
+    socket.ensureConnected();
+    _socketSub = socket.messages.listen((_) {
+      _loadConversations();
+    });
   }
 
   Future<void> _loadConversations() async {
@@ -118,6 +129,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void dispose() {
+    _socketSub?.cancel();
     _searchFocus.dispose();
     super.dispose();
   }
