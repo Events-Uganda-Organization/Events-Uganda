@@ -2,8 +2,10 @@ com\eventsuganda\otp\dto\response\AuthResponse.class
 com\eventsuganda\otp\service\UserService.class
 com\eventsuganda\otp\service\MessageService.class
 com\eventsuganda\otp\controller\OtpController.class
+com\eventsuganda\otp\controller\ChatWebSocketController.class
 com\eventsuganda\otp\config\WebConfig.class
 com\eventsuganda\otp\config\JwtAuthFilter.class
+com\eventsuganda\otp\config\StompAuthChannelInterceptor.class
 com\eventsuganda\otp\controller\ReferralController.class
 com\eventsuganda\otp\config\WebConfig$1.class
 com\eventsuganda\otp\model\ReferralReward.class
@@ -22,7 +24,9 @@ com\eventsuganda\otp\dto\request\SendMessageRequest.class
 com\eventsuganda\otp\model\Otp.class
 com\eventsuganda\otp\service\ConversationService.class
 com\eventsuganda\otp\dto\response\ConversationResponse.class
+com\eventsuganda\otp\config\WebSocketConfig.class
 com\eventsuganda\otp\exception\OtpException.class
+com\eventsuganda\otp\dto\request\ChatMessageRequest.class
 com\eventsuganda\otp\dto\request\GoogleAuthRequest.class
 com\eventsuganda\otp\controller\UserController.class
 com\eventsuganda\otp\dto\response\ApiResponse.class
