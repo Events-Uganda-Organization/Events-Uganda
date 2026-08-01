@@ -690,48 +690,186 @@ class _ChatEmptyScene extends StatelessWidget {
       width: sw * 0.64,
       height: sw * 0.62,
       child: AnimatedBuilder(
-        animation: controller,
+        animation: Listenable.merge([controller, entrance]),
         builder: (context, _) {
           final double t = controller.value;
-          final double bob = math.sin(t * math.pi * 2) * sw * 0.015;
+          final double et = entrance.value;
+          final double bob = math.sin(t * math.pi * 2) * sw * 0.011 +
+              math.sin(t * math.pi * 4) * sw * 0.004;
           final bool blinking = (t > 0.42 && t < 0.5) || (t > 0.9 && t < 0.98);
+          final double tilt = math.sin(t * math.pi * 2 * 0.5) * 0.035;
+
+          final double charScale =
+              Curves.elasticOut.transform(Interval(0.02, 0.7).transform(et));
+          final double phoneScale =
+              Curves.easeOutBack.transform(Interval(0.22, 0.82).transform(et));
+          final double phoneFade = Interval(0.22, 0.5).transform(et);
+          final double dotsFade = Interval(0.4, 0.65).transform(et);
+          final double fingerScale =
+              Curves.elasticOut.transform(Interval(0.55, 0.95).transform(et));
+          final double fingerFade = Interval(0.55, 0.75).transform(et);
+          final double glow =
+              (0.6 + 0.4 * math.sin(t * math.pi * 2)) * Interval(0, 0.4).transform(et);
+
           return Stack(
             alignment: Alignment.center,
             clipBehavior: Clip.none,
             children: [
+              Positioned.fill(
+                child: Opacity(
+                  opacity: glow,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: RadialGradient(
+                        colors: [
+                          kEmptyYellow.withValues(alpha: 0.2),
+                          Colors.transparent,
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              _TwinkleStar(
+                sw: sw,
+                t: t,
+                phase: 0.1,
+                size: sw * 0.035,
+                left: sw * 0.015,
+                top: sw * 0.015,
+              ),
+              _TwinkleStar(
+                sw: sw,
+                t: t,
+                phase: 0.45,
+                size: sw * 0.045,
+                left: sw * 0.56,
+                top: sw * 0.04,
+              ),
+              _TwinkleStar(
+                sw: sw,
+                t: t,
+                phase: 0.7,
+                size: sw * 0.028,
+                left: sw * 0.02,
+                top: sw * 0.47,
+              ),
+              _TwinkleStar(
+                sw: sw,
+                t: t,
+                phase: 0.3,
+                size: sw * 0.038,
+                left: sw * 0.57,
+                top: sw * 0.42,
+              ),
+              _TwinkleStar(
+                sw: sw,
+                t: t,
+                phase: 0.85,
+                size: sw * 0.04,
+                left: sw * 0.28,
+                top: 0,
+              ),
               Positioned(
                 left: 0,
                 top: sw * 0.02 + bob,
-                child: TypingDotsBubble(sw: sw, t: t, phase: 0.2),
+                child: Opacity(
+                  opacity: dotsFade,
+                  child: TypingDotsBubble(sw: sw, t: t, phase: 0.2),
+                ),
               ),
               Positioned(
                 right: sw * 0.02,
                 top: sw * 0.18 - bob,
-                child: TypingDotsBubble(sw: sw, t: t, phase: 0.7),
+                child: Opacity(
+                  opacity: dotsFade,
+                  child: TypingDotsBubble(sw: sw, t: t, phase: 0.7),
+                ),
               ),
-              Transform.translate(
-                offset: Offset(0, bob),
-                child: ChatCharacterBubble(
-                  sw: sw,
-                  blinking: blinking,
-                  lookDown: true,
+              Transform.scale(
+                scale: charScale,
+                child: Transform.translate(
+                  offset: Offset(0, bob + (1 - charScale) * sw * 0.03),
+                  child: Transform.rotate(
+                    angle: tilt,
+                    child: ChatCharacterBubble(
+                      sw: sw,
+                      blinking: blinking,
+                      lookDown: true,
+                    ),
+                  ),
                 ),
               ),
               Positioned(
                 bottom: 0,
-                child: Transform.translate(
-                  offset: Offset(0, -bob * 0.5),
-                  child: _PhoneCard(sw: sw, pulse: t),
+                child: Opacity(
+                  opacity: phoneFade,
+                  child: Transform.translate(
+                    offset: Offset(0, (1 - phoneScale) * sw * 0.06),
+                    child: Transform.scale(
+                      scale: phoneScale,
+                      child: Transform.translate(
+                        offset: Offset(0, -bob * 0.5),
+                        child: _PhoneCard(sw: sw, pulse: t),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Positioned(
                 bottom: sw * 0.08,
                 right: 0,
-                child: _PointingFinger(sw: sw, t: t),
+                child: Opacity(
+                  opacity: fingerFade,
+                  child: Transform.scale(
+                    scale: fingerScale,
+                    child: _PointingFinger(sw: sw, t: t),
+                  ),
+                ),
               ),
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class _TwinkleStar extends StatelessWidget {
+  const _TwinkleStar({
+    required this.sw,
+    required this.t,
+    required this.phase,
+    required this.size,
+    required this.left,
+    required this.top,
+  });
+
+  final double sw;
+  final double t;
+  final double phase;
+  final double size;
+  final double left;
+  final double top;
+
+  @override
+  Widget build(BuildContext context) {
+    final double float = math.sin((t + phase) * math.pi * 2) * sw * 0.01;
+    final double twinkle =
+        0.3 + 0.7 * (0.5 + 0.5 * math.sin((t * 2 + phase) * math.pi * 2));
+    return Positioned(
+      left: left,
+      top: top + float,
+      child: Opacity(
+        opacity: twinkle,
+        child: Transform.rotate(
+          angle: (t + phase) * math.pi * 0.5,
+          child: CustomPaint(
+            size: Size(size, size),
+            painter: StarPainter(color: const Color(0xFFF6B93B)),
+          ),
+        ),
       ),
     );
   }
