@@ -84,7 +84,7 @@ class ChatConversation {
 
 class ChatService {
   static const String _baseUrl =
-      'https://eventsuganda-backend-production.up.railway.app/api';
+      'https://eventsuganda-backend-production-8c3a.up.railway.app/api';
 
   static const String kDefaultVendorId = 'vendor-1';
   static const String _namesKey = 'chat_user_names';
