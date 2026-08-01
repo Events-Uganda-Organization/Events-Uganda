@@ -40,9 +40,7 @@ public class ChatWebSocketController {
 
         conversationRepository.findById(request.getConversationId())
             .map(Conversation::getParticipantIdSet)
-            .ifPresent(participants -> participants.stream()
-                .filter(p -> !p.equals(senderId))
-                .forEach(recipient ->
-                    messagingTemplate.convertAndSendToUser(recipient, "/queue/messages", response)));
+            .ifPresent(participants -> participants.forEach(participant ->
+                messagingTemplate.convertAndSendToUser(participant, "/queue/messages", response)));
     }
 }
