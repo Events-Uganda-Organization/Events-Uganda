@@ -8,14 +8,22 @@ import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
+import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
 
 class MessageScreen extends StatefulWidget {
-  const MessageScreen({super.key, this.name, this.color, this.status});
+  const MessageScreen({
+    super.key,
+    this.name,
+    this.color,
+    this.status,
+    this.conversationId,
+  });
 
   final String? name;
   final Color? color;
   final String? status;
+  final String? conversationId;
 
   @override
   State<MessageScreen> createState() => _MessageScreenState();
