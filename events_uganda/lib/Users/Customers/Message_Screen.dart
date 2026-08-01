@@ -1,8 +1,13 @@
+import 'dart:async';
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:record/record.dart';
 
 class MessageScreen extends StatefulWidget {
   const MessageScreen({super.key, this.name, this.color, this.status});
@@ -21,6 +26,22 @@ class _MessageScreenState extends State<MessageScreen> {
   final ImagePicker _imagePicker = ImagePicker();
   final List<Uint8List> _selectedImages = [];
   final List<Map<String, Object>> _messages = [];
+  final AudioRecorder _audioRecorder = AudioRecorder();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  final Stopwatch _recordingStopwatch = Stopwatch();
+  final List<double> _waveSamples = [];
+  final ValueNotifier<double> _voiceProgress = ValueNotifier<double>(0);
+  Timer? _recordingTicker;
+  StreamSubscription<Amplitude>? _amplitudeSub;
+  StreamSubscription<Duration>? _positionSub;
+  StreamSubscription<PlayerState>? _playerStateSub;
+  String? _recordingPath;
+  bool _isRecording = false;
+  bool _recordingLocked = false;
+  double _cancelDragOffset = 0;
+  double _lastAmplitude = 0.5;
+  int? _playingVoiceIndex;
+  bool _isPlayingVoice = false;
 
   @override
   void initState() {
@@ -40,12 +61,38 @@ class _MessageScreenState extends State<MessageScreen> {
         'date': yesterday,
       },
     ]);
+    _playerStateSub = _audioPlayer.playerStateStream.listen((state) {
+      if (state.processingState == ProcessingState.completed) {
+        _voiceProgress.value = 1;
+        if (mounted) {
+          setState(() {
+            _isPlayingVoice = false;
+            _playingVoiceIndex = null;
+          });
+        }
+      }
+    });
+    _positionSub = _audioPlayer.positionStream.listen((position) {
+      if (!_isPlayingVoice) return;
+      final Duration? total = _audioPlayer.duration;
+      if (total != null && total.inMilliseconds > 0) {
+        _voiceProgress.value =
+            (position.inMilliseconds / total.inMilliseconds).clamp(0.0, 1.0);
+      }
+    });
   }
 
   @override
   void dispose() {
+    _recordingTicker?.cancel();
+    _amplitudeSub?.cancel();
+    _positionSub?.cancel();
+    _playerStateSub?.cancel();
     _messageController.dispose();
     _messagesScroll.dispose();
+    _voiceProgress.dispose();
+    _audioPlayer.dispose();
+    _audioRecorder.dispose();
     super.dispose();
   }
 
@@ -84,6 +131,258 @@ class _MessageScreenState extends State<MessageScreen> {
         );
       }
     });
+  }
+
+  String _formatDuration(Duration duration) {
+    final int minutes = duration.inMinutes;
+    final int seconds = duration.inSeconds % 60;
+    return '$minutes:${seconds.toString().padLeft(2, '0')}';
+  }
+
+  Future<String> _buildRecordingPath() async {
+    if (kIsWeb) {
+      return 'voice_${DateTime.now().millisecondsSinceEpoch}.webm';
+    }
+    final Directory dir = await getTemporaryDirectory();
+    return '${dir.path}/voice_${DateTime.now().millisecondsSinceEpoch}.m4a';
+  }
+
+  void _onAmplitude(Amplitude amplitude) {
+    _lastAmplitude = ((amplitude.current + 60) / 60).clamp(0.0, 1.0);
+  }
+
+  void _startRecordingTicker() {
+    _recordingStopwatch..reset()..start();
+    final math.Random random = math.Random();
+    _recordingTicker = Timer.periodic(const Duration(milliseconds: 120), (_) {
+      if (!mounted || !_isRecording) return;
+      setState(() {
+        final double base = _lastAmplitude + (random.nextDouble() - 0.5) * 0.12;
+        _waveSamples.add(base.clamp(0.08, 1.0));
+        if (_waveSamples.length > 44) _waveSamples.removeAt(0);
+      });
+    });
+  }
+
+  List<double> _recordingLevels() {
+    const int count = 44;
+    if (_waveSamples.length >= count) return _waveSamples;
+    return [
+      ...List<double>.filled(count - _waveSamples.length, 0.15),
+      ..._waveSamples,
+    ];
+  }
+
+  Future<bool> _startRecording() async {
+    try {
+      final bool permission = await _audioRecorder.hasPermission();
+      if (!permission) {
+        _showMicPermissionMessage();
+        return false;
+      }
+      final String path = await _buildRecordingPath();
+      final RecordConfig config = kIsWeb
+          ? const RecordConfig(encoder: AudioEncoder.opus, bitRate: 64000)
+          : const RecordConfig(encoder: AudioEncoder.aacLc, bitRate: 64000);
+      await _audioRecorder.start(config, path: path);
+      _amplitudeSub = _audioRecorder
+          .onAmplitudeChanged(const Duration(milliseconds: 120))
+          .listen(_onAmplitude);
+      if (!mounted) return false;
+      setState(() {
+        _isRecording = true;
+        _recordingPath = path;
+        _recordingLocked = false;
+        _cancelDragOffset = 0;
+        _waveSamples.clear();
+      });
+      _startRecordingTicker();
+      return true;
+    } catch (_) {
+      if (mounted) _showMicPermissionMessage();
+      return false;
+    }
+  }
+
+  Future<void> _stopRecording() async {
+    _recordingTicker?.cancel();
+    _recordingTicker = null;
+    _recordingStopwatch.stop();
+    await _amplitudeSub?.cancel();
+    _amplitudeSub = null;
+    try {
+      final bool recording = await _audioRecorder.isRecording();
+      if (recording) {
+        final String? saved = await _audioRecorder.stop();
+        if (saved != null && saved.isNotEmpty) _recordingPath = saved;
+      }
+    } catch (_) {}
+    if (!mounted) return;
+    setState(() {
+      _isRecording = false;
+      _recordingLocked = false;
+      _cancelDragOffset = 0;
+    });
+  }
+
+  Future<void> _cancelRecording() async {
+    _recordingTicker?.cancel();
+    _recordingTicker = null;
+    _recordingStopwatch.stop();
+    await _amplitudeSub?.cancel();
+    _amplitudeSub = null;
+    try {
+      await _audioRecorder.cancel();
+    } catch (_) {}
+    if (!mounted) return;
+    setState(() {
+      _recordingPath = null;
+      _recordingLocked = false;
+      _cancelDragOffset = 0;
+      _waveSamples.clear();
+    });
+  }
+
+  Future<void> _sendVoiceMessage() async {
+    final Duration duration = _recordingStopwatch.elapsed;
+    await _stopRecording();
+    final String? path = _recordingPath;
+    if (path == null || path.isEmpty || duration.inMilliseconds < 300) {
+      await _cancelRecording();
+      return;
+    }
+    if (!mounted) return;
+    setState(() {
+      _messages.add({
+        'voice': path,
+        'duration': duration,
+        'time': _currentTime(),
+        'mine': true,
+        'date': DateTime.now(),
+      });
+      _recordingPath = null;
+      _waveSamples.clear();
+    });
+    _scrollToBottom();
+  }
+
+  void _showMicPermissionMessage() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Microphone permission is required to record voice messages.',
+        ),
+      ),
+    );
+  }
+
+  Future<void> _onMicTapped() async {
+    if (_isRecording || _recordingPath != null) return;
+    await _startRecording();
+  }
+
+  Future<void> _onMicLongPress() async {
+    if (_isRecording || _recordingPath != null) return;
+    await _startRecording();
+  }
+
+  void _onMicLongPressMove(LongPressMoveUpdateDetails details) {
+    if (!_isRecording) return;
+    final double dx = details.offsetFromOrigin.dx;
+    final double dy = details.offsetFromOrigin.dy;
+    setState(() {
+      if (dy < -screenHeightUnit(context) * 0.08) {
+        _recordingLocked = true;
+        _cancelDragOffset = 0;
+      } else {
+        _cancelDragOffset = dx < -screenWidthUnit(context) * 0.25 ? dx : 0;
+      }
+    });
+  }
+
+  Future<void> _onMicLongPressEnd(LongPressEndDetails details) async {
+    if (!_isRecording) return;
+    if (_cancelDragOffset < -screenWidthUnit(context) * 0.25) {
+      await _cancelRecording();
+      return;
+    }
+    if (_recordingLocked) {
+      setState(() => _cancelDragOffset = 0);
+      return;
+    }
+    await _stopRecording();
+  }
+
+  void _onPanelPanUpdate(DragUpdateDetails details, double screenWidth) {
+    if (!_isRecording) return;
+    setState(() {
+      if (_recordingLocked) {
+        if (details.delta.dy > 0) {
+          _cancelDragOffset += details.delta.dy;
+          if (_cancelDragOffset > screenHeightUnit(context) * 0.03) {
+            _recordingLocked = false;
+            _cancelDragOffset = 0;
+          }
+        }
+      } else {
+        _cancelDragOffset = math.max(
+          -screenWidth * 0.5,
+          _cancelDragOffset + details.delta.dx,
+        );
+        if (details.delta.dy < -screenHeightUnit(context) * 0.04) {
+          _recordingLocked = true;
+          _cancelDragOffset = 0;
+        }
+      }
+    });
+  }
+
+  Future<void> _onPanelPanEnd(DragEndDetails details) async {
+    if (_cancelDragOffset < -screenWidthUnit(context) * 0.35) {
+      await _cancelRecording();
+    } else {
+      setState(() => _cancelDragOffset = 0);
+    }
+  }
+
+  void _toggleRecordingLock() {
+    setState(() => _recordingLocked = !_recordingLocked);
+  }
+
+  Future<void> _playVoiceMessage(int index) async {
+    final Map<String, Object> message = _messages[index];
+    final String path = message['voice'] as String;
+    try {
+      if (_isPlayingVoice && _playingVoiceIndex == index) {
+        await _audioPlayer.stop();
+        if (!mounted) return;
+        setState(() {
+          _isPlayingVoice = false;
+          _playingVoiceIndex = null;
+        });
+        _voiceProgress.value = 0;
+        return;
+      }
+      await _audioPlayer.stop();
+      if (kIsWeb) {
+        await _audioPlayer.setUrl(path);
+      } else {
+        await _audioPlayer.setFilePath(path);
+      }
+      if (!mounted) return;
+      setState(() {
+        _isPlayingVoice = true;
+        _playingVoiceIndex = index;
+      });
+      _voiceProgress.value = 0;
+      await _audioPlayer.play();
+    } catch (_) {}
+  }
+
+  List<double> _voiceBars(int index, Duration duration) {
+    final math.Random random =
+        math.Random(duration.inMilliseconds + index * 1000);
+    return List<double>.generate(38, (_) => 0.25 + random.nextDouble() * 0.75);
   }
 
   Future<void> _showImageSourceSheet() async {
