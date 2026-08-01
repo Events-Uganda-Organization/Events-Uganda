@@ -1510,3 +1510,194 @@ class _ImageViewerScreenState extends State<_ImageViewerScreen> {
     );
   }
 }
+
+class _MessageEmptyState extends StatefulWidget {
+  const _MessageEmptyState({
+    required this.screenWidth,
+    required this.screenHeight,
+  });
+
+  final double screenWidth;
+  final double screenHeight;
+
+  @override
+  State<_MessageEmptyState> createState() => _MessageEmptyStateState();
+}
+
+class _MessageEmptyStateState extends State<_MessageEmptyState>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 2200),
+  )..repeat(reverse: true);
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double sw = widget.screenWidth;
+    final double sh = widget.screenHeight;
+    return Center(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: sw * 0.08),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _MessageEmptyScene(sw: sw, controller: _controller),
+            SizedBox(height: sh * 0.015),
+            Text(
+              'Say hello!',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: sw * 0.05,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: sh * 0.008),
+            Text(
+              'This is the start of your conversation. '
+              'Send your first message below.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black.withValues(alpha: 0.55),
+                fontSize: sw * 0.032,
+              ),
+            ),
+            SizedBox(height: sh * 0.015),
+            _BounceArrow(sw: sw, t: _controller),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MessageEmptyScene extends StatelessWidget {
+  const _MessageEmptyScene({required this.sw, required this.controller});
+
+  final double sw;
+  final Animation<double> controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: sw * 0.6,
+      height: sw * 0.6,
+      child: AnimatedBuilder(
+        animation: controller,
+        builder: (context, _) {
+          final double t = controller.value;
+          final double bob = math.sin(t * math.pi * 2) * sw * 0.015;
+          final bool blinking = (t > 0.4 && t < 0.48) || (t > 0.88 && t < 0.96);
+          return Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              Positioned(
+                left: sw * 0.04,
+                top: sw * 0.1 + bob * 0.5,
+                child: _Sparkle(
+                  sw: sw,
+                  color: kEmptyAccent,
+                  t: t,
+                ),
+              ),
+              Positioned(
+                right: sw * 0.05,
+                top: sw * 0.05 - bob,
+                child: _Sparkle(
+                  sw: sw,
+                  color: kEmptyYellow,
+                  t: (t + 0.3) % 1,
+                ),
+              ),
+              Positioned(
+                left: sw * 0.14,
+                bottom: sw * 0.12 - bob * 0.4,
+                child: _Sparkle(
+                  sw: sw,
+                  color: const Color(0xFFFFB3C1),
+                  t: (t + 0.6) % 1,
+                ),
+              ),
+              Positioned(
+                right: 0,
+                top: sw * 0.15 - bob,
+                child: TypingDotsBubble(sw: sw, t: t),
+              ),
+              Transform.translate(
+                offset: Offset(0, bob),
+                child: ChatCharacterBubble(
+                  sw: sw,
+                  blinking: blinking,
+                  lookDown: false,
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _Sparkle extends StatelessWidget {
+  const _Sparkle({
+    required this.sw,
+    required this.color,
+    required this.t,
+  });
+
+  final double sw;
+  final Color color;
+  final double t;
+
+  @override
+  Widget build(BuildContext context) {
+    final double scale = 0.7 + 0.3 * math.sin(t * math.pi * 2);
+    final double opacity = 0.5 + 0.5 * math.sin((t + 0.25) * math.pi * 2);
+    return Transform.scale(
+      scale: scale,
+      child: CustomPaint(
+        size: Size(sw * 0.05, sw * 0.05),
+        painter: StarPainter(color: color.withValues(alpha: opacity)),
+      ),
+    );
+  }
+}
+
+class _BounceArrow extends StatelessWidget {
+  const _BounceArrow({required this.sw, required this.t});
+
+  final double sw;
+  final double t;
+
+  @override
+  Widget build(BuildContext context) {
+    final double dy = math.sin(t * math.pi * 2) * sw * 0.012;
+    return Transform.translate(
+      offset: Offset(0, dy),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.arrow_downward_rounded,
+            color: kEmptyAccent,
+            size: sw * 0.05,
+          ),
+          Text(
+            'Type your message below',
+            style: TextStyle(
+              color: Colors.black.withValues(alpha: 0.5),
+              fontSize: sw * 0.026,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
