@@ -26,6 +26,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/ws", "/ws/**").permitAll()
                 .requestMatchers("/api/chat/**").authenticated()
                 .requestMatchers("/api/messages/**").authenticated()
                 .requestMatchers("/api/referral/**").authenticated()
