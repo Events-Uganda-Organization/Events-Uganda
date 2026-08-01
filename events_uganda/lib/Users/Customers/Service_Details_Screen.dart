@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:events_uganda/Users/Customers/Message_Screen.dart';
 
