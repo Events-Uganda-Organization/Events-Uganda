@@ -44,8 +44,7 @@ class SpeechService {
     final bool started = await _speech.listen(
       listenFor: listenFor,
       localeId: 'en_US',
-      partialResults: true,
-      listenOptions: const SpeechListenOptions(
+      listenOptions: SpeechListenOptions(
         cancelOnError: true,
         partialResults: true,
       ),
