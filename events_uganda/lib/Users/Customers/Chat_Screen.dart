@@ -684,7 +684,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     SizedBox(width: screenWidth * 0.03),
                     Expanded(
                       child: TextField(
+                        controller: _searchController,
                         focusNode: _searchFocus,
+                        onChanged: _onSearchChanged,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.04,
@@ -698,6 +700,16 @@ class _ChatScreenState extends State<ChatScreen> {
                           border: InputBorder.none,
                           isDense: true,
                           contentPadding: EdgeInsets.symmetric(vertical: 0),
+                          suffixIcon: _searchController.text.isEmpty
+                              ? null
+                              : GestureDetector(
+                                  onTap: _clearSearch,
+                                  child: Icon(
+                                    Icons.close,
+                                    color: Colors.black.withValues(alpha: 0.5),
+                                    size: screenWidth * 0.05,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
@@ -853,176 +865,48 @@ class _ChatScreenState extends State<ChatScreen> {
                   screenHeight * 0.02 +
                   screenWidth * 0.168 +
                   screenHeight * 0.01,
-              child: _isLoadingConversations && _conversations.isEmpty
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: Color(0xFFCD7C20),
-                      ),
-                    )
-                  : _conversations.isEmpty
-                      ? _ChatEmptyState(
-                      screenWidth: screenWidth,
-                      screenHeight: screenHeight,
-                      onBrowseServices: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const CustomerHomeScreen(),
+              child: _searchQuery.isNotEmpty
+                  ? _buildSearchResults(screenWidth, screenHeight)
+                  : _isLoadingConversations && _conversations.isEmpty
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFFCD7C20),
                           ),
-                        );
-                      },
-                    )
-                  : ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: _conversations.length,
-                      itemBuilder: (context, index) {
-                  final conv = _conversations[index];
-                  final String name = _conversationNames[conv.id] ?? 'Vendor';
-                  return Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MessageScreen(
-                                conversationId: conv.id,
-                                name: name,
-                                color: _colorFor(name),
-                                status: 'Online',
+                        )
+                      : _conversations.isEmpty
+                          ? _ChatEmptyState(
+                          screenWidth: screenWidth,
+                          screenHeight: screenHeight,
+                          onBrowseServices: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CustomerHomeScreen(),
                               ),
-                            ),
-                          );
-                          _loadConversations();
-                        },
-                        child: Row(
-                          children: [
-                            Container(
-                              width: screenWidth * 0.13,
-                              height: screenWidth * 0.13,
-                              decoration: BoxDecoration(
-                                color: _colorFor(name),
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.black.withValues(alpha: 0.08),
-                                  width: 1,
+                            );
+                          },
+                        )
+                      : ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: _conversations.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                _conversationTile(
+                                  _conversations[index],
+                                  screenWidth,
+                                  screenHeight,
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
+                                if (index != _conversations.length - 1)
+                                  Divider(
                                     color: Colors.black.withValues(alpha: 0.08),
-                                    blurRadius: 6,
-                                    offset: const Offset(0, 3),
+                                    height: screenHeight * 0.03,
+                                    thickness: 1,
                                   ),
-                                ],
-                              ),
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Center(
-                                    child: Text(
-                                      name.isNotEmpty ? name[0] : '?',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: screenWidth * 0.055,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    bottom: 0,
-                                    child: Container(
-                                      width: screenWidth * 0.036,
-                                      height: screenWidth * 0.036,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xFF4CAF50),
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 2,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: screenWidth * 0.03),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    name,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: screenWidth * 0.038,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: screenHeight * 0.004),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          conv.lastMessage ?? 'No messages yet',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: Colors.black.withValues(
-                                              alpha: 0.55,
-                                            ),
-                                            fontSize: screenWidth * 0.03,
-                                          ),
-                                        ),
-                                      ),
-                                      if (conv.unreadCount > 0) ...[
-                                        Container(
-                                          width: screenWidth * 0.05,
-                                          height: screenWidth * 0.05,
-                                          decoration: const BoxDecoration(
-                                            color: Color(0xFFCD7C20),
-                                            shape: BoxShape.circle,
-                                          ),
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            '${conv.unreadCount}',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: screenWidth * 0.024,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: screenWidth * 0.02),
-                                      ],
-                                      Text(
-                                        _conversationTime(conv.lastMessageAt),
-                                        style: TextStyle(
-                                          color: Colors.black.withValues(
-                                            alpha: 0.4,
-                                          ),
-                                          fontSize: screenWidth * 0.026,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                              ],
+                            );
+                          },
                         ),
-                      ),
-                      if (index != _conversations.length - 1)
-                        Divider(
-                          color: Colors.black.withValues(alpha: 0.08),
-                          height: screenHeight * 0.03,
-                          thickness: 1,
-                        ),
-                    ],
-                  );
-                },
-              ),
             ),
             Positioned(
               bottom: screenHeight * 0.02,
