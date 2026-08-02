@@ -1,10 +1,12 @@
 com\eventsuganda\otp\dto\response\AuthResponse.class
 com\eventsuganda\otp\service\UserService.class
+com\eventsuganda\otp\service\NotificationPreferenceService.class
 com\eventsuganda\otp\service\MessageService.class
 com\eventsuganda\otp\controller\OtpController.class
 com\eventsuganda\otp\dto\request\CreateNotificationRequest.class
 com\eventsuganda\otp\controller\ChatWebSocketController.class
 com\eventsuganda\otp\config\WebConfig.class
+com\eventsuganda\otp\dto\response\NotificationPreferenceResponse.class
 com\eventsuganda\otp\config\JwtAuthFilter.class
 com\eventsuganda\otp\config\StompAuthChannelInterceptor.class
 com\eventsuganda\otp\controller\ReferralController.class
@@ -28,6 +30,7 @@ com\eventsuganda\otp\model\Otp.class
 com\eventsuganda\otp\service\ConversationService.class
 com\eventsuganda\otp\dto\response\ConversationResponse.class
 com\eventsuganda\otp\config\WebSocketConfig.class
+com\eventsuganda\otp\model\NotificationPreference.class
 com\eventsuganda\otp\exception\OtpException.class
 com\eventsuganda\otp\dto\response\NotificationResponse.class
 com\eventsuganda\otp\dto\request\ChatMessageRequest.class
@@ -41,8 +44,10 @@ com\eventsuganda\otp\dto\response\ReferralStatsResponse$ReferralDetail.class
 com\eventsuganda\otp\model\Notification.class
 com\eventsuganda\otp\dto\response\AuthResponse$UserProfile.class
 com\eventsuganda\otp\repository\ConversationRepository.class
+com\eventsuganda\otp\dto\request\UpdateNotificationPreferenceRequest.class
 com\eventsuganda\otp\controller\AuthController.class
 com\eventsuganda\otp\controller\MessageController.class
+com\eventsuganda\otp\controller\NotificationPreferenceController.class
 com\eventsuganda\otp\service\OtpService.class
 com\eventsuganda\otp\dto\response\ReferralStatsResponse.class
 com\eventsuganda\otp\config\SecurityConfig.class
@@ -50,6 +55,7 @@ com\eventsuganda\otp\controller\NotificationController.class
 com\eventsuganda\otp\service\ReferralCodeService.class
 com\eventsuganda\otp\controller\ConversationController.class
 com\eventsuganda\otp\dto\request\SendOtpRequest.class
+com\eventsuganda\otp\repository\NotificationPreferenceRepository.class
 com\eventsuganda\otp\model\User.class
 com\eventsuganda\otp\service\NotificationService.class
 com\eventsuganda\otp\dto\response\UserProfileResponse.class
