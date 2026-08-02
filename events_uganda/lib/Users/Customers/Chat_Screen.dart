@@ -194,6 +194,173 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  void _openBrowseServices() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CustomerHomeScreen(),
+      ),
+    );
+  }
+
+  Future<void> _markAllAsRead() async {
+    final unread =
+        _conversations.where((c) => c.unreadCount > 0).toList();
+    if (unread.isEmpty) {
+      SnackbarHelper.show(
+        context,
+        'You have no unread messages',
+        icon: Icons.check_circle_outline,
+      );
+      return;
+    }
+    await Future.wait(unread.map((c) => ChatService.markRead(c.id)));
+    if (!mounted) return;
+    _loadConversations();
+    SnackbarHelper.show(
+      context,
+      'All messages marked as read',
+      icon: Icons.check_circle_outline,
+    );
+  }
+
+  void _showChatHelpSheet() {
+    final w = MediaQuery.of(context).size.width;
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (ctx) => Container(
+        decoration: const BoxDecoration(
+          color: Color(0xFF1A1A2E),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+        padding: EdgeInsets.fromLTRB(w * 0.06, w * 0.04, w * 0.06, w * 0.08),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: w * 0.12,
+              height: w * 0.012,
+              margin: EdgeInsets.only(bottom: w * 0.03),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            Text(
+              'Messages help',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: w * 0.045,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: w * 0.02),
+            _chatHelpRow(
+              Icons.search,
+              'Use the search bar to find conversations or messages.',
+            ),
+            _chatHelpRow(
+              Icons.message_outlined,
+              'Tap any conversation to open it and send a message.',
+            ),
+            _chatHelpRow(
+              Icons.check_circle_outline_rounded,
+              'Mark all as read clears every unread badge at once.',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _chatHelpRow(IconData icon, String text) {
+    final w = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: EdgeInsets.only(bottom: w * 0.018),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: w * 0.09,
+            height: w * 0.09,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: const Color(0xFFF3CA9B), size: w * 0.048),
+          ),
+          SizedBox(width: w * 0.035),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                color: Colors.white.withValues(alpha: 0.85),
+                fontSize: w * 0.033,
+                height: 1.4,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  PopupMenuItem<_ChatMenuAction> _buildChatMenuItem({
+    required IconData icon,
+    required String label,
+    required Color dotColor,
+    required _ChatMenuAction value,
+    required double screenWidth,
+  }) {
+    return PopupMenuItem<_ChatMenuAction>(
+      value: value,
+      height: screenWidth * 0.14,
+      child: Row(
+        children: [
+          Container(
+            width: screenWidth * 0.028,
+            height: screenWidth * 0.028,
+            decoration: BoxDecoration(
+              color: dotColor,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: dotColor.withValues(alpha: 0.4),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: screenWidth * 0.04),
+          Container(
+            width: screenWidth * 0.09,
+            height: screenWidth * 0.09,
+            decoration: BoxDecoration(
+              color: dotColor.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: dotColor, size: screenWidth * 0.048),
+          ),
+          SizedBox(width: screenWidth * 0.035),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: screenWidth * 0.035,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _conversationTile(ChatConversation conv, double sw, double sh) {
     final String name = _conversationNames[conv.id] ?? 'Vendor';
     return GestureDetector(
@@ -679,15 +846,61 @@ class _ChatScreenState extends State<ChatScreen> {
             Positioned(
               top: screenHeight * 0.03,
               right: screenWidth * 0.04,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const NotificationScreen(),
-                    ),
-                  );
+              child: PopupMenuButton<_ChatMenuAction>(
+                onSelected: (action) {
+                  switch (action) {
+                    case _ChatMenuAction.newMessage:
+                      _openBrowseServices();
+                    case _ChatMenuAction.markAllRead:
+                      _markAllAsRead();
+                    case _ChatMenuAction.notifications:
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const NotificationScreen(),
+                        ),
+                      );
+                    case _ChatMenuAction.help:
+                      _showChatHelpSheet();
+                  }
                 },
+                offset: const Offset(0, 8),
+                elevation: 16,
+                color: const Color(0xFF1A1A2E),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                itemBuilder: (ctx) => [
+                  _buildChatMenuItem(
+                    icon: Icons.edit_outlined,
+                    label: 'New message',
+                    dotColor: const Color(0xFF42A5F5),
+                    value: _ChatMenuAction.newMessage,
+                    screenWidth: screenWidth,
+                  ),
+                  _buildChatMenuItem(
+                    icon: Icons.check_circle_outline_rounded,
+                    label: 'Mark all as read',
+                    dotColor: const Color(0xFF4CAF50),
+                    value: _ChatMenuAction.markAllRead,
+                    screenWidth: screenWidth,
+                  ),
+                  const PopupMenuDivider(height: 1),
+                  _buildChatMenuItem(
+                    icon: Icons.notifications_outlined,
+                    label: 'Notifications',
+                    dotColor: const Color(0xFFF3CA9B),
+                    value: _ChatMenuAction.notifications,
+                    screenWidth: screenWidth,
+                  ),
+                  _buildChatMenuItem(
+                    icon: Icons.help_outline_rounded,
+                    label: 'Help',
+                    dotColor: const Color(0xFF90A4AE),
+                    value: _ChatMenuAction.help,
+                    screenWidth: screenWidth,
+                  ),
+                ],
                 child: Container(
                   width: screenWidth * 0.128,
                   height: screenWidth * 0.128,
