@@ -239,6 +239,35 @@ class _MessageScreenState extends State<MessageScreen> {
     });
   }
 
+  void _scrollToHighlighted() {
+    final String? id = widget.highlightMessageId;
+    if (id == null || id.isEmpty) return;
+    final GlobalKey? key = _messageKeys[id];
+    if (key == null) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final BuildContext? ctx = key.currentContext;
+      if (ctx == null) return;
+      Scrollable.ensureVisible(
+        ctx,
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeOut,
+        alignment: 0.3,
+      );
+      setState(() {
+        _highlightedMessageId = id;
+      });
+      _highlightTimer?.cancel();
+      _highlightTimer = Timer(const Duration(seconds: 3), () {
+        if (mounted) {
+          setState(() {
+            _highlightedMessageId = null;
+          });
+        }
+      });
+    });
+  }
+
   String _formatDuration(Duration duration) {
     final int minutes = duration.inMinutes;
     final int seconds = duration.inSeconds % 60;
@@ -1154,7 +1183,33 @@ class _MessageScreenState extends State<MessageScreen> {
       if (previousDate == null || !_isSameDay(previousDate, date)) {
         chatItems.add(_buildDateSeparator(_dateLabel(date), screenWidth));
       }
-      chatItems.add(_buildBubble(message, i, screenWidth, screenHeight));
+      final String? messageId = message['id'] as String?;
+      Widget bubble = _buildBubble(message, i, screenWidth, screenHeight);
+      if (messageId != null && messageId.isNotEmpty) {
+        if (messageId == _highlightedMessageId) {
+          bubble = Container(
+            margin: EdgeInsets.symmetric(vertical: screenHeight * 0.004),
+            padding: EdgeInsets.all(screenWidth * 0.012),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFF3E0),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: const Color(0xFFCC471B),
+                width: 1.5,
+              ),
+            ),
+            child: bubble,
+          );
+        }
+        chatItems.add(
+          KeyedSubtree(
+            key: _messageKeys.putIfAbsent(messageId, () => GlobalKey()),
+            child: bubble,
+          ),
+        );
+      } else {
+        chatItems.add(bubble);
+      }
       previousDate = date;
     }
 
