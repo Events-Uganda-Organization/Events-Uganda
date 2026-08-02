@@ -20,6 +20,8 @@ enum _MenuAction {
   help,
 }
 
+enum _NotificationCategory { members, bookings, reminders }
+
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
 
@@ -71,8 +73,10 @@ class _NotificationScreenState extends State<NotificationScreen>
   ];
   final int _selectedGalleryIndex = 0;
   final FocusNode _searchFocus = FocusNode();
+  final TextEditingController _searchController = TextEditingController();
   Timer? _countdownTimer;
   bool _isSearchFocused = false;
+  String _searchQuery = '';
   final bool _isFavorite = false;
   Duration _remaining = const Duration(hours: 0, minutes: 0, seconds: 0);
   String _userFullName = '';
@@ -94,6 +98,39 @@ class _NotificationScreenState extends State<NotificationScreen>
 
   List<_NotificationItem> get _sortedToday => _sortedNotifications(_todayNotifications);
   List<_NotificationItem> get _sortedYesterday => _sortedNotifications(_yesterdayNotifications);
+
+  bool get _isFiltering =>
+      _searchQuery.trim().isNotEmpty || _selectedFilter != 'All';
+
+  bool _matchesSegment(_NotificationItem item) {
+    switch (_selectedFilter) {
+      case 'Members':
+        return item.category == _NotificationCategory.members;
+      case 'Bookings':
+        return item.category == _NotificationCategory.bookings;
+      case 'Reminders':
+        return item.category == _NotificationCategory.reminders;
+      default:
+        return true;
+    }
+  }
+
+  bool _matchesQuery(_NotificationItem item) {
+    final query = _searchQuery.trim().toLowerCase();
+    if (query.isEmpty) return true;
+    return item.title.toLowerCase().contains(query) ||
+        item.subtitle.toLowerCase().contains(query);
+  }
+
+  bool _matchesFilter(_NotificationItem item) =>
+      _matchesSegment(item) && _matchesQuery(item);
+
+  List<_NotificationItem> get _filteredToday =>
+      _sortedToday.where(_matchesFilter).toList();
+  List<_NotificationItem> get _filteredYesterday =>
+      _sortedYesterday.where(_matchesFilter).toList();
+  List<_NotificationItem> get _filteredArchived =>
+      _archivedNotifications.where(_matchesFilter).toList();
 
   final List<_NotificationItem> _todayNotifications = [
     _NotificationItem(
