@@ -19,12 +19,14 @@ class MessageScreen extends StatefulWidget {
     this.color,
     this.status,
     this.conversationId,
+    this.highlightMessageId,
   });
 
   final String? name;
   final Color? color;
   final String? status;
   final String? conversationId;
+  final String? highlightMessageId;
 
   @override
   State<MessageScreen> createState() => _MessageScreenState();
@@ -54,6 +56,9 @@ class _MessageScreenState extends State<MessageScreen> {
   int? _playingVoiceIndex;
   bool _isPlayingVoice = false;
   bool _isLoadingMessages = false;
+  final Map<String, GlobalKey> _messageKeys = {};
+  String? _highlightedMessageId;
+  Timer? _highlightTimer;
 
   @override
   void initState() {
@@ -128,7 +133,11 @@ class _MessageScreenState extends State<MessageScreen> {
         _isLoadingMessages = false;
       });
       ChatService.markRead(conversationId);
-      _scrollToBottom();
+      if (widget.highlightMessageId != null && widget.highlightMessageId!.isNotEmpty) {
+        _scrollToHighlighted();
+      } else {
+        _scrollToBottom();
+      }
     } catch (_) {
       if (!mounted) return;
       setState(() {
@@ -147,6 +156,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
   @override
   void dispose() {
+    _highlightTimer?.cancel();
     _recordingTicker?.cancel();
     _amplitudeSub?.cancel();
     _positionSub?.cancel();
