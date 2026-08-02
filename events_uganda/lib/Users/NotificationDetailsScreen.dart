@@ -1,23 +1,16 @@
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/Services/notification_service.dart';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
+import 'package:events_uganda/models/app_notification.dart';
 import 'package:flutter/material.dart';
 
 class NotificationDetailsScreen extends StatefulWidget {
-  final IconData icon;
-  final Color iconColor;
-  final String title;
-  final String subtitle;
-  final String timestamp;
-  final bool isRead;
+  final AppNotification notification;
 
   const NotificationDetailsScreen({
     super.key,
-    required this.icon,
-    required this.iconColor,
-    required this.title,
-    required this.subtitle,
-    required this.timestamp,
-    this.isRead = false,
+    required this.notification,
   });
 
   @override
@@ -41,7 +34,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    _isRead = widget.isRead;
+    _isRead = widget.notification.isRead;
     if (_hasVisitedBefore) {
       _canGoForward = true;
     }
@@ -54,6 +47,42 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
         });
       }
     });
+  }
+
+  Future<void> _toggleRead() async {
+    final targetRead = !_isRead;
+    setState(() => _isRead = targetRead);
+    try {
+      if (targetRead) {
+        await NotificationService.markRead(widget.notification.id);
+      } else {
+        await NotificationService.markUnread(widget.notification.id);
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() => _isRead = !targetRead);
+        SnackbarHelper.show(
+          context,
+          'Could not update notification',
+          icon: Icons.error_outline,
+        );
+      }
+    }
+  }
+
+  Future<void> _deleteNotification() async {
+    try {
+      await NotificationService.delete(widget.notification.id);
+      if (mounted) Navigator.of(context).pop(true);
+    } catch (_) {
+      if (mounted) {
+        SnackbarHelper.show(
+          context,
+          'Could not delete notification',
+          icon: Icons.error_outline,
+        );
+      }
+    }
   }
 
   @override
@@ -261,21 +290,21 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          widget.iconColor.withValues(alpha: 0.8),
-                          widget.iconColor,
+                          widget.notification.iconColor.withValues(alpha: 0.8),
+                          widget.notification.iconColor,
                         ],
                       ),
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: widget.iconColor.withValues(alpha: 0.35),
+                          color: widget.notification.iconColor.withValues(alpha: 0.35),
                           blurRadius: 30,
                           offset: const Offset(0, 12),
                         ),
                       ],
                     ),
                     child: Icon(
-                      widget.icon,
+                      widget.notification.icon,
                       size: screenWidth * 0.12,
                       color: Colors.white,
                     ),
@@ -285,7 +314,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
                     child: Text(
-                      widget.title,
+                      widget.notification.title,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
@@ -307,7 +336,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                       ),
                       SizedBox(width: screenWidth * 0.01),
                       Text(
-                        widget.timestamp,
+                        AppNotification.relativeTime(widget.notification.createdAt),
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: screenWidth * 0.03,
@@ -387,7 +416,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                           ),
                           SizedBox(height: screenHeight * 0.015),
                           Text(
-                            widget.subtitle,
+                            widget.notification.bodyText,
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: screenWidth * 0.038,

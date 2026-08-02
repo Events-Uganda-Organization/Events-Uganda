@@ -1748,6 +1748,77 @@ class _NotificationScreenState extends State<NotificationScreen>
     );
   }
 
+  Widget _buildLoadError(double screenWidth) {
+    return Padding(
+      padding: EdgeInsets.only(top: screenWidth * 0.1),
+      child: Center(
+        child: Column(
+          children: [
+            Container(
+              width: screenWidth * 0.16,
+              height: screenWidth * 0.16,
+              decoration: BoxDecoration(
+                color: const Color(0xFFCB471B).withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.cloud_off_rounded,
+                size: screenWidth * 0.09,
+                color: const Color(0xFFCB471B),
+              ),
+            ),
+            SizedBox(height: screenWidth * 0.04),
+            Text(
+              'Could not load notifications',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: screenWidth * 0.04,
+                color: Colors.black87,
+              ),
+            ),
+            SizedBox(height: screenWidth * 0.01),
+            Text(
+              'Check your connection and try again',
+              style: TextStyle(
+                fontSize: screenWidth * 0.032,
+                color: Colors.black38,
+              ),
+            ),
+            SizedBox(height: screenWidth * 0.05),
+            GestureDetector(
+              onTap: _loadNotifications,
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.07,
+                  vertical: screenWidth * 0.025,
+                ),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFCB471B),
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.refresh_rounded, color: Colors.white, size: screenWidth * 0.04),
+                    SizedBox(width: screenWidth * 0.015),
+                    Text(
+                      'Retry',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: screenWidth * 0.035,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   void _showHelpSheet() {
     final w = MediaQuery.of(context).size.width;
 
