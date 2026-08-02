@@ -1256,12 +1256,20 @@ class _NotificationScreenState extends State<NotificationScreen>
 
   List<Widget> _buildNotificationLists(double screenWidth, double screenHeight) {
     final widgets = <Widget>[];
-    if (_filteredToday.isNotEmpty) {
+    final sections = <(String, List<AppNotification>)>[
+      ('Today', _todayActive),
+      ('Yesterday', _yesterdayActive),
+      ('Earlier', _earlierActive),
+    ];
+    for (final section in sections) {
+      final title = section.$1;
+      final items = section.$2;
+      if (items.isEmpty) continue;
       widgets.add(
         Padding(
           padding: EdgeInsets.only(left: screenWidth * 0.04),
           child: Text(
-            'Today',
+            title,
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: screenWidth * 0.04,
@@ -1270,48 +1278,20 @@ class _NotificationScreenState extends State<NotificationScreen>
           ),
         ),
       );
-      for (int i = 0; i < _filteredToday.length; i++) {
+      for (int i = 0; i < items.length; i++) {
         if (i > 0) widgets.add(SizedBox(height: screenHeight * 0.015));
         widgets.add(
           Padding(
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
             child: _buildDismissibleCard(
-              item: _filteredToday[i],
+              item: items[i],
               screenWidth: screenWidth,
-              child: _buildCardContent(_filteredToday[i], screenWidth),
+              child: _buildCardContent(items[i], screenWidth),
             ),
           ),
         );
       }
       widgets.add(SizedBox(height: screenHeight * 0.035));
-    }
-    if (_filteredYesterday.isNotEmpty) {
-      widgets.add(
-        Padding(
-          padding: EdgeInsets.only(left: screenWidth * 0.04),
-          child: Text(
-            'Yesterday',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: screenWidth * 0.04,
-              color: Colors.black,
-            ),
-          ),
-        ),
-      );
-      for (int i = 0; i < _filteredYesterday.length; i++) {
-        if (i > 0) widgets.add(SizedBox(height: screenHeight * 0.015));
-        widgets.add(
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-            child: _buildDismissibleCard(
-              item: _filteredYesterday[i],
-              screenWidth: screenWidth,
-              child: _buildCardContent(_filteredYesterday[i], screenWidth),
-            ),
-          ),
-        );
-      }
     }
     return widgets;
   }
