@@ -1471,9 +1471,10 @@ class _NotificationScreenState extends State<NotificationScreen>
 
   Future<bool> _archiveNotification(AppNotification item) async {
     try {
-      final archived = await NotificationService.archive(item.id);
+      await NotificationService.archive(item.id);
       if (!mounted) return false;
       setState(() {
+        final archived = item.copyWith(archivedAt: DateTime.now());
         _activeNotifications.removeWhere((n) => n.id == item.id);
         _archivedNotifications.removeWhere((n) => n.id == item.id);
         _archivedNotifications.add(archived);
@@ -2233,28 +2234,6 @@ Widget _buildRatingBars(double screenWidth) {
       );
     }),
   );
-}
-
-class _NotificationItem {
-  _NotificationItem({
-    required this.id,
-    required this.icon,
-    required this.iconColor,
-    required this.timestamp,
-    required this.title,
-    required this.subtitle,
-    required this.category,
-    this.isRead = false,
-  });
-
-  final int id;
-  final IconData icon;
-  final Color iconColor;
-  final String timestamp;
-  final String title;
-  final String subtitle;
-  final _NotificationCategory category;
-  bool isRead;
 }
 
 class _DottedLinePainter extends CustomPainter {
