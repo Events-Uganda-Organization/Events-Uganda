@@ -187,6 +187,22 @@ class ChatService {
         .toList();
   }
 
+  static Future<ChatSearchResults> searchChat(
+    String query, {
+    int page = 0,
+    int size = 50,
+  }) async {
+    final response = await http.get(
+      Uri.parse('$_baseUrl/chat/search')
+          .replace(queryParameters: {'q': query, 'page': '$page', 'size': '$size'}),
+      headers: await _authHeaders(),
+    );
+    _ensureOk(response);
+    return ChatSearchResults.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>,
+    );
+  }
+
   static Future<ChatMessage> sendMessage(
     String conversationId,
     String text,
