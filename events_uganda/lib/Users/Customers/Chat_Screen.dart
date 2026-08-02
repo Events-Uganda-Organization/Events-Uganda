@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Services/chat_socket_service.dart';
+import 'package:events_uganda/Services/speech_service.dart';
 import 'package:events_uganda/Users/Customers/Customer_Home_Screen.dart';
 import 'package:events_uganda/Users/Customers/Customer_Profile_Screen.dart';
 import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
@@ -71,6 +72,8 @@ class _ChatScreenState extends State<ChatScreen> {
   String _searchQuery = '';
   ChatSearchResults? _searchResults;
   bool _isSearching = false;
+  bool _isListening = false;
+  bool _handledResult = false;
 
   @override
   void initState() {
@@ -192,6 +195,82 @@ class _ChatScreenState extends State<ChatScreen> {
       _searchResults = null;
       _isSearching = false;
     });
+  }
+
+  Future<void> _toggleListening() async {
+    if (_isListening) {
+      _handledResult = false;
+      await SpeechService.instance.stop();
+      if (!_handledResult) {
+        _applyTranscript(SpeechService.instance.lastWords);
+      }
+      return;
+    }
+
+    final speech = SpeechService.instance;
+    final bool available = await speech.initialize();
+    if (!available) {
+      if (!mounted) return;
+      SnackbarHelper.show(
+        context,
+        'Speech recognition is not available on this device',
+        icon: Icons.mic_off,
+      );
+      return;
+    }
+
+    setState(() {
+      _isListening = true;
+    });
+
+    final bool started = await speech.start(
+      onPartial: (partial) {
+        if (!mounted) return;
+        _searchController.text = partial;
+        _searchController.selection =
+            TextSelection.collapsed(offset: partial.length);
+        setState(() {});
+      },
+      onResult: (finalText) {
+        _handledResult = true;
+        if (finalText.trim().isEmpty) {
+          if (mounted) setState(() => _isListening = false);
+          return;
+        }
+        _applyTranscript(finalText);
+      },
+    );
+
+    if (!started && mounted) {
+      setState(() => _isListening = false);
+      SnackbarHelper.show(
+        context,
+        "Couldn't start listening. Try again.",
+        icon: Icons.mic_off,
+      );
+    }
+  }
+
+  bool _handledResult = false;
+
+  void _applyTranscript(String raw) {
+    if (!mounted) return;
+    final String cleaned = structureSpokenText(raw);
+    _searchController.text = cleaned;
+    _searchController.selection =
+        TextSelection.collapsed(offset: cleaned.length);
+    setState(() {
+      _isListening = false;
+    });
+    if (cleaned.isNotEmpty) {
+      _onSearchChanged(cleaned);
+    } else {
+      SnackbarHelper.show(
+        context,
+        "Didn't catch that. Try again.",
+        icon: Icons.mic_off,
+      );
+    }
   }
 
   void _openBrowseServices() {
