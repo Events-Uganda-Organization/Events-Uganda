@@ -11,6 +11,14 @@ import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/Users/Customers/Message_Screen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
+
+enum _ChatMenuAction {
+  newMessage,
+  markAllRead,
+  notifications,
+  help,
+}
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
