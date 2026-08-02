@@ -319,8 +319,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget _messageHitTile(ChatMessage message, double sw, double sh) {
     final String name =
         _conversationNames[message.conversationId] ?? 'Vendor';
-    return GestureDetector(
-      onTap: () async {
+    return GestureDetector(      onTap: () async {
         await Navigator.push(
           context,
           MaterialPageRoute(
@@ -762,101 +761,24 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
             ),
-            Positioned(
-              top: screenHeight * 0.16 + screenWidth * 0.248,
-              left: screenWidth * 0.04,
-              right: screenWidth * 0.04,
-              child: SizedBox(
-                height: screenWidth * 0.146 + screenHeight * 0.04,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(
-                      7,
-                      (index) => Container(
-                        width: screenWidth * 0.2,
-                        margin: EdgeInsets.only(right: screenWidth * 0.06),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MessageScreen(
-                                      name: _names[index],
-                                      color: _circleColors[index],
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                width: screenWidth * 0.146,
-                                height: screenWidth * 0.146,
-                                decoration: BoxDecoration(
-                                  color: _circleColors[index],
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.black.withValues(alpha: 0.08),
-                                    width: 1,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(
-                                        alpha: 0.08,
-                                      ),
-                                      blurRadius: 6,
-                                      offset: const Offset(0, 3),
-                                    ),
-                                  ],
-                                ),
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    Center(
-                                      child: Text(
-                                        _names[index][0],
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: screenWidth * 0.06,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Positioned(
-                                      right: 0,
-                                      bottom: 0,
-                                      child: Container(
-                                        width: screenWidth * 0.04,
-                                        height: screenWidth * 0.04,
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFF4CAF50),
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                            color: Colors.white,
-                                            width: 2,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: screenHeight * 0.006),
-                            Text(
-                              _names[index],
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: screenWidth * 0.028,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+            if (_recentContacts.isNotEmpty)
+              Positioned(
+                top: screenHeight * 0.16 + screenWidth * 0.248,
+                left: screenWidth * 0.04,
+                right: screenWidth * 0.04,
+                child: SizedBox(
+                  height: screenWidth * 0.146 + screenHeight * 0.04,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (final contact in _recentContacts)
+                          _contactCircle(
+                            contact,
+                            screenWidth,
+                            screenHeight,
+                          ),
+                      ],
                     ),
                   ),
                 ),
