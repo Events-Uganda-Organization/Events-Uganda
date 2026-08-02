@@ -20,4 +20,14 @@ public interface ConversationRepository extends JpaRepository<Conversation, Stri
 
     @Query("SELECT COUNT(c) FROM Conversation c WHERE c.participantIds LIKE %:userId% AND c.lastMessageSenderId != :userId AND (c.lastMessageAt IS NOT NULL AND (SELECT COUNT(m) FROM Message m WHERE m.conversationId = c.id AND m.senderId != :userId AND m.readAt IS NULL) > 0)")
     long countUnreadByUserId(@Param("userId") String userId);
+
+    @Query(value = """
+            SELECT c.* FROM conversations c
+            WHERE CONCAT(',', c.participant_ids, ',') LIKE CONCAT('%,', :userId, ',%')
+              AND c.last_message IS NOT NULL
+              AND c.last_message ILIKE CONCAT('%', :query, '%')
+            ORDER BY c.updated_at DESC
+            """,
+            nativeQuery = true)
+    List<Conversation> searchByLastMessage(@Param("userId") String userId, @Param("query") String query);
 }

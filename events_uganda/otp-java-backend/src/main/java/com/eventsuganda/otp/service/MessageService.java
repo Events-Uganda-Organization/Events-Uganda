@@ -1,5 +1,7 @@
 package com.eventsuganda.otp.service;
 
+import com.eventsuganda.otp.dto.response.ChatSearchResponse;
+import com.eventsuganda.otp.dto.response.ConversationResponse;
 import com.eventsuganda.otp.dto.response.MessageResponse;
 import com.eventsuganda.otp.exception.OtpException;
 import com.eventsuganda.otp.model.Conversation;

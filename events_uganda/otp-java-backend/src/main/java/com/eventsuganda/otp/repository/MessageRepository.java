@@ -23,4 +23,22 @@ public interface MessageRepository extends JpaRepository<Message, String> {
     @Modifying
     @Query("UPDATE Message m SET m.readAt = :readAt WHERE m.conversationId = :conversationId AND m.senderId != :userId AND m.readAt IS NULL")
     int markAsRead(@Param("conversationId") String conversationId, @Param("userId") String userId, @Param("readAt") long readAt);
+
+    @Query(value = """
+            SELECT m.* FROM messages m
+            JOIN conversations c ON c.id = m.conversation_id
+            WHERE CONCAT(',', c.participant_ids, ',') LIKE CONCAT('%,', :userId, ',%')
+              AND m.text IS NOT NULL
+              AND m.text ILIKE CONCAT('%', :query, '%')
+            ORDER BY m.created_at DESC
+            """,
+            countQuery = """
+            SELECT COUNT(*) FROM messages m
+            JOIN conversations c ON c.id = m.conversation_id
+            WHERE CONCAT(',', c.participant_ids, ',') LIKE CONCAT('%,', :userId, ',%')
+              AND m.text IS NOT NULL
+              AND m.text ILIKE CONCAT('%', :query, '%')
+            """,
+            nativeQuery = true)
+    List<Message> searchMessages(@Param("userId") String userId, @Param("query") String query, Pageable pageable);
 }
