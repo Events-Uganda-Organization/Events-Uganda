@@ -53,6 +53,11 @@ class _ChatScreenState extends State<ChatScreen> {
   final Map<String, String> _conversationNames = {};
   bool _isLoadingConversations = false;
   StreamSubscription<ChatMessage>? _socketSub;
+  final TextEditingController _searchController = TextEditingController();
+  Timer? _searchDebounce;
+  String _searchQuery = '';
+  ChatSearchResults? _searchResults;
+  bool _isSearching = false;
 
   @override
   void initState() {
@@ -127,8 +132,417 @@ class _ChatScreenState extends State<ChatScreen> {
     return '$hour:$minute $period';
   }
 
+  void _onSearchChanged(String value) {
+    _searchDebounce?.cancel();
+    setState(() {});
+    final query = value.trim();
+    if (query.isEmpty) {
+      setState(() {
+        _searchQuery = '';
+        _searchResults = null;
+        _isSearching = false;
+      });
+      return;
+    }
+    _searchDebounce = Timer(const Duration(milliseconds: 300), () {
+      if (!mounted) return;
+      setState(() {
+        _searchQuery = query;
+        _isSearching = true;
+      });
+      _runSearch(query);
+    });
+  }
+
+  Future<void> _runSearch(String query) async {
+    try {
+      final results = await ChatService.searchChat(query);
+      if (!mounted || _searchQuery != query) return;
+      setState(() {
+        _searchResults = results;
+        _isSearching = false;
+      });
+    } catch (_) {
+      if (!mounted || _searchQuery != query) return;
+      setState(() {
+        _searchResults = const ChatSearchResults();
+        _isSearching = false;
+      });
+    }
+  }
+
+  void _clearSearch() {
+    _searchDebounce?.cancel();
+    _searchController.clear();
+    setState(() {
+      _searchQuery = '';
+      _searchResults = null;
+      _isSearching = false;
+    });
+  }
+
+  Widget _conversationTile(ChatConversation conv, double sw, double sh) {
+    final String name = _conversationNames[conv.id] ?? 'Vendor';
+    return GestureDetector(
+      onTap: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MessageScreen(
+              conversationId: conv.id,
+              name: name,
+              color: _colorFor(name),
+              status: 'Online',
+            ),
+          ),
+        );
+        _loadConversations();
+      },
+      child: Row(
+        children: [
+          Container(
+            width: sw * 0.13,
+            height: sw * 0.13,
+            decoration: BoxDecoration(
+              color: _colorFor(name),
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.black.withValues(alpha: 0.08),
+                width: 1,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.08),
+                  blurRadius: 6,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Center(
+                  child: Text(
+                    name.isNotEmpty ? name[0] : '?',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: sw * 0.055,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    width: sw * 0.036,
+                    height: sw * 0.036,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF4CAF50),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: sw * 0.03),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: sw * 0.038,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: sh * 0.004),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        conv.lastMessage ?? 'No messages yet',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: Colors.black.withValues(alpha: 0.55),
+                          fontSize: sw * 0.03,
+                        ),
+                      ),
+                    ),
+                    if (conv.unreadCount > 0) ...[
+                      Container(
+                        width: sw * 0.05,
+                        height: sw * 0.05,
+                        decoration: const BoxDecoration(
+                          color: Color(0xFFCD7C20),
+                          shape: BoxShape.circle,
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          '${conv.unreadCount}',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: sw * 0.024,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: sw * 0.02),
+                    ],
+                    Text(
+                      _conversationTime(conv.lastMessageAt),
+                      style: TextStyle(
+                        color: Colors.black.withValues(alpha: 0.4),
+                        fontSize: sw * 0.026,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _messageHitTile(ChatMessage message, double sw, double sh) {
+    final String name =
+        _conversationNames[message.conversationId] ?? 'Vendor';
+    return GestureDetector(
+      onTap: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MessageScreen(
+              conversationId: message.conversationId,
+              name: name,
+              color: _colorFor(name),
+              status: 'Online',
+              highlightMessageId: message.id,
+            ),
+          ),
+        );
+        _loadConversations();
+      },
+      child: Row(
+        children: [
+          Container(
+            width: sw * 0.13,
+            height: sw * 0.13,
+            decoration: BoxDecoration(
+              color: _colorFor(name),
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.black.withValues(alpha: 0.08),
+                width: 1,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.08),
+                  blurRadius: 6,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Center(
+              child: Text(
+                name.isNotEmpty ? name[0] : '?',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: sw * 0.055,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: sw * 0.03),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: sw * 0.038,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: sh * 0.004),
+                Row(
+                  children: [
+                    Expanded(
+                      child: RichText(
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        text: TextSpan(
+                          children: _highlightText(
+                            message.text ?? '',
+                            _searchQuery,
+                            TextStyle(
+                              color: Colors.black.withValues(alpha: 0.55),
+                              fontSize: sw * 0.03,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      _conversationTime(message.createdAt),
+                      style: TextStyle(
+                        color: Colors.black.withValues(alpha: 0.4),
+                        fontSize: sw * 0.026,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  List<TextSpan> _highlightText(
+    String text,
+    String query,
+    TextStyle baseStyle,
+  ) {
+    if (query.isEmpty || text.isEmpty) return [TextSpan(text: text, style: baseStyle)];
+    final q = query.toLowerCase();
+    final lower = text.toLowerCase();
+    final spans = <TextSpan>[];
+    int start = 0;
+    while (true) {
+      final index = lower.indexOf(q, start);
+      if (index == -1) {
+        if (start < text.length) {
+          spans.add(TextSpan(text: text.substring(start), style: baseStyle));
+        }
+        break;
+      }
+      if (index > start) {
+        spans.add(TextSpan(text: text.substring(start, index), style: baseStyle));
+      }
+      spans.add(
+        TextSpan(
+          text: text.substring(index, index + q.length),
+          style: baseStyle.copyWith(
+            color: const Color(0xFFCC471B),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+      start = index + q.length;
+    }
+    return spans;
+  }
+
+  Widget _searchHeader(String text, double sw) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: sw * 0.02),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Colors.black.withValues(alpha: 0.5),
+          fontSize: sw * 0.028,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.3,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSearchResults(double sw, double sh) {
+    if (_isSearching) {
+      return const Center(
+        child: CircularProgressIndicator(color: Color(0xFFCD7C20)),
+      );
+    }
+    final q = _searchQuery.toLowerCase();
+    final merged = <String, ChatConversation>{};
+    for (final c in _conversations) {
+      final name = _conversationNames[c.id] ?? '';
+      if (name.toLowerCase().contains(q) ||
+          (c.lastMessage?.toLowerCase().contains(q) ?? false)) {
+        merged[c.id] = c;
+      }
+    }
+    for (final c in _searchResults?.conversations ?? []) {
+      merged[c.id] = c;
+    }
+    final convResults = merged.values.toList()
+      ..sort((a, b) {
+        final at = a.lastMessageAt?.millisecondsSinceEpoch ?? 0;
+        final bt = b.lastMessageAt?.millisecondsSinceEpoch ?? 0;
+        return bt.compareTo(at);
+      });
+    final messageHits = _searchResults?.messages ?? [];
+
+    if (convResults.isEmpty && messageHits.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.search_off,
+              size: sw * 0.12,
+              color: Colors.black.withValues(alpha: 0.2),
+            ),
+            SizedBox(height: sh * 0.012),
+            Text(
+              'No results',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: sw * 0.045,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: sh * 0.006),
+            Text(
+              'Nothing matches "$_searchQuery".',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black.withValues(alpha: 0.5),
+                fontSize: sw * 0.03,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        if (convResults.isNotEmpty) ...[
+          _searchHeader('Conversations', sw),
+          for (final c in convResults) _conversationTile(c, sw, sh),
+          Divider(
+            color: Colors.black.withValues(alpha: 0.08),
+            height: sh * 0.03,
+            thickness: 1,
+          ),
+        ],
+        if (messageHits.isNotEmpty) ...[
+          _searchHeader('Messages containing "$_searchQuery"', sw),
+          for (final m in messageHits) _messageHitTile(m, sw, sh),
+        ],
+      ],
+    );
+  }
+
   @override
   void dispose() {
+    _searchDebounce?.cancel();
+    _searchController.dispose();
     _socketSub?.cancel();
     _searchFocus.dispose();
     super.dispose();
