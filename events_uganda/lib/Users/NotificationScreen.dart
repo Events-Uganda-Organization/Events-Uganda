@@ -1381,7 +1381,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   }
 
   Widget _buildDismissibleCard({
-    required _NotificationItem item,
+    required AppNotification item,
     required Widget child,
     required double screenWidth,
   }) {
@@ -1457,64 +1457,82 @@ class _NotificationScreenState extends State<NotificationScreen>
           const Duration(seconds: 3),
           onTimeout: () => true,
         );
-        if (result) {
-          setState(() {
-            if (isArchive) {
-              _itemArchived(item);
-            } else {
-              _itemDismissed(item);
-            }
-          });
+        if (result && mounted) {
+          if (isArchive) {
+            return await _archiveNotification(item);
+          }
+          return await _deleteNotification(item);
         }
-        return result;
+        return false;
       },
       child: child,
     );
   }
 
-  void _itemDismissed(_NotificationItem item) {
-    _todayNotifications.removeWhere((e) => e.id == item.id);
-    _yesterdayNotifications.removeWhere((e) => e.id == item.id);
-  }
-
-  void _itemArchived(_NotificationItem item) {
-    _todayNotifications.removeWhere((e) => e.id == item.id);
-    _yesterdayNotifications.removeWhere((e) => e.id == item.id);
-    _archivedNotifications.add(item);
-  }
-
-  List<_NotificationItem> _sortedNotifications(List<_NotificationItem> list) {
-    final sorted = List<_NotificationItem>.from(list);
-    sorted.sort((a, b) => a.isRead == b.isRead ? 0 : a.isRead ? 1 : -1);
-    return sorted;
-  }
-
-  void _markAsRead(_NotificationItem item) {
-    if (!item.isRead) {
-      setState(() => item.isRead = true);
+  Future<bool> _archiveNotification(AppNotification item) async {
+    try {
+      final archived = await NotificationService.archive(item.id);
+      if (!mounted) return false;
+      setState(() {
+        _activeNotifications.removeWhere((n) => n.id == item.id);
+        _archivedNotifications.removeWhere((n) => n.id == item.id);
+        _archivedNotifications.add(archived);
+      });
+      return true;
+    } catch (e) {
+      if (mounted) {
+        SnackbarHelper.show(context, 'Could not archive notification', icon: Icons.error_outline);
+      }
+      return false;
     }
   }
 
-  void _openNotificationDetails(_NotificationItem item) {
+  Future<bool> _deleteNotification(AppNotification item) async {
+    try {
+      await NotificationService.delete(item.id);
+      if (!mounted) return false;
+      setState(() {
+        _activeNotifications.removeWhere((n) => n.id == item.id);
+        _archivedNotifications.removeWhere((n) => n.id == item.id);
+        if (!item.isRead) _unreadCount = _unreadCount > 0 ? _unreadCount - 1 : 0;
+      });
+      return true;
+    } catch (e) {
+      if (mounted) {
+        SnackbarHelper.show(context, 'Could not delete notification', icon: Icons.error_outline);
+      }
+      return false;
+    }
+  }
+
+  void _markAsRead(AppNotification item) {
+    if (item.isRead) return;
+    setState(() {
+      _replaceNotification(item.id, item.copyWith(readAt: DateTime.now()));
+      if (_unreadCount > 0) _unreadCount--;
+    });
+    NotificationService.markRead(item.id).catchError((_) {});
+  }
+
+  void _openNotificationDetails(AppNotification item) {
     if (!item.isRead) {
-      setState(() => item.isRead = true);
+      _markAsRead(item);
     }
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => NotificationDetailsScreen(
-          icon: item.icon,
-          iconColor: item.iconColor,
-          title: item.title,
-          subtitle: item.subtitle,
-          timestamp: item.timestamp,
-          isRead: item.isRead,
+          notification: item,
         ),
       ),
-    );
+    ).then((_) {
+      if (mounted) {
+        _loadNotifications();
+      }
+    });
   }
 
-  Widget _buildCardContent(_NotificationItem item, double screenWidth) {
+  Widget _buildCardContent(AppNotification item, double screenWidth) {
     return GestureDetector(
       onTap: () => _openNotificationDetails(item),
       child: Container(
@@ -1585,7 +1603,7 @@ class _NotificationScreenState extends State<NotificationScreen>
               right: screenWidth * 0.04,
               top: screenWidth * 0.025,
               child: Text(
-                item.timestamp,
+                AppNotification.relativeTime(item.createdAt),
                 style: TextStyle(
                   fontSize: screenWidth * 0.025,
                   color: Colors.grey,
@@ -1612,7 +1630,9 @@ class _NotificationScreenState extends State<NotificationScreen>
                     ),
                     SizedBox(height: screenWidth * 0.01),
                     Text(
-                      item.subtitle,
+                      item.bodyText,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontFamily: 'Abril Fatface',
                         fontWeight: FontWeight.w400,
@@ -1866,13 +1886,13 @@ class _NotificationScreenState extends State<NotificationScreen>
 
   void _markAllAsRead() {
     setState(() {
-      for (final item in _todayNotifications) {
-        item.isRead = true;
-      }
-      for (final item in _yesterdayNotifications) {
-        item.isRead = true;
-      }
+      final now = DateTime.now();
+      _activeNotifications = [
+        for (final n in _activeNotifications) n.copyWith(readAt: n.readAt ?? now)
+      ];
+      _unreadCount = 0;
     });
+    NotificationService.markAllRead().catchError((_) {});
     _showStyledSnackBar('All notifications marked as read', Icons.done_all_rounded);
   }
 
@@ -1984,28 +2004,28 @@ class _NotificationScreenState extends State<NotificationScreen>
     );
 
     if (confirmed == true) {
-      final removedToday = _todayNotifications.where((n) => n.isRead).toList();
-      final removedYesterday = _yesterdayNotifications.where((n) => n.isRead).toList();
-
+      final removed = _activeNotifications.where((n) => n.isRead).toList();
       setState(() {
-        _todayNotifications.removeWhere((n) => n.isRead);
-        _yesterdayNotifications.removeWhere((n) => n.isRead);
+        _activeNotifications.removeWhere((n) => n.isRead);
       });
-
+      try {
+        await NotificationService.deleteRead();
+      } catch (_) {
+        if (mounted) {
+          setState(() {
+            _activeNotifications.addAll(removed);
+          });
+        }
+        if (mounted) {
+          SnackbarHelper.show(context, 'Could not delete read notifications', icon: Icons.error_outline);
+        }
+        return;
+      }
+      if (!mounted) return;
       SnackbarHelper.show(
         context,
         'Read notifications deleted',
         icon: Icons.delete_sweep_outlined,
-        action: SnackBarAction(
-          label: 'Undo',
-          textColor: const Color(0xFFF3CA9B),
-          onPressed: () {
-            setState(() {
-              _todayNotifications.addAll(removedToday);
-              _yesterdayNotifications.addAll(removedYesterday);
-            });
-          },
-        ),
         duration: const Duration(seconds: 4),
       );
     }
