@@ -565,6 +565,62 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    if (_loading)
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.12),
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xFFCB471B),
+                          ),
+                        ),
+                      )
+                    else if (_loadError != null)
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.1),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.cloud_off_rounded,
+                                size: screenWidth * 0.12,
+                                color: const Color(0xFFCB471B).withValues(alpha: 0.6),
+                              ),
+                              SizedBox(height: screenWidth * 0.04),
+                              Text(
+                                'Could not load settings',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: screenWidth * 0.04,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              SizedBox(height: screenWidth * 0.03),
+                              GestureDetector(
+                                onTap: _load,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth * 0.06,
+                                    vertical: screenWidth * 0.02,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFCB471B),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Text(
+                                    'Retry',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: screenWidth * 0.035,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                    else ...[
                     Padding(
                       padding: EdgeInsets.only(
                         left: screenWidth * 0.04,
@@ -588,7 +644,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       value: _pushEnabled,
                       leadingIcon: Icons.phone_android_rounded,
                       iconColor: const Color(0xFF42A5F5),
-                      onChanged: (v) => setState(() => _pushEnabled = v),
+                      onChanged: (v) => _updatePref(
+                        () => _pushEnabled = v,
+                        () => _pushEnabled = !v,
+                      ),
                     ),
                     _buildSettingTile(
                       screenWidth: screenWidth,
@@ -597,7 +656,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       value: _emailEnabled,
                       leadingIcon: Icons.email_rounded,
                       iconColor: const Color(0xFFAB47BC),
-                      onChanged: (v) => setState(() => _emailEnabled = v),
+                      onChanged: (v) => _updatePref(
+                        () => _emailEnabled = v,
+                        () => _emailEnabled = !v,
+                      ),
                     ),
                     _buildSettingTile(
                       screenWidth: screenWidth,
@@ -606,7 +668,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       value: _smsEnabled,
                       leadingIcon: Icons.sms_rounded,
                       iconColor: const Color(0xFF4CAF50),
-                      onChanged: (v) => setState(() => _smsEnabled = v),
+                      onChanged: (v) => _updatePref(
+                        () => _smsEnabled = v,
+                        () => _smsEnabled = !v,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
@@ -631,7 +696,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       value: _bookingUpdates,
                       leadingIcon: Icons.calendar_month_rounded,
                       iconColor: const Color(0xFFF3CA9B),
-                      onChanged: (v) => setState(() => _bookingUpdates = v),
+                      onChanged: (v) => _updatePref(
+                        () => _bookingUpdates = v,
+                        () => _bookingUpdates = !v,
+                      ),
                     ),
                     _buildSettingTile(
                       screenWidth: screenWidth,
@@ -640,7 +708,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       value: _promotions,
                       leadingIcon: Icons.local_offer_rounded,
                       iconColor: const Color(0xFFFF5F5F),
-                      onChanged: (v) => setState(() => _promotions = v),
+                      onChanged: (v) => _updatePref(
+                        () => _promotions = v,
+                        () => _promotions = !v,
+                      ),
                     ),
                     _buildSettingTile(
                       screenWidth: screenWidth,
@@ -649,7 +720,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       value: _messages,
                       leadingIcon: Icons.message_rounded,
                       iconColor: const Color(0xFF42A5F5),
-                      onChanged: (v) => setState(() => _messages = v),
+                      onChanged: (v) => _updatePref(
+                        () => _messages = v,
+                        () => _messages = !v,
+                      ),
                     ),
                     _buildSettingTile(
                       screenWidth: screenWidth,
@@ -658,7 +732,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       value: _reminders,
                       leadingIcon: Icons.notifications_active_rounded,
                       iconColor: const Color(0xFF96E8F4),
-                      onChanged: (v) => setState(() => _reminders = v),
+                      onChanged: (v) => _updatePref(
+                        () => _reminders = v,
+                        () => _reminders = !v,
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
@@ -683,7 +760,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       value: _soundEnabled,
                       leadingIcon: Icons.volume_up_rounded,
                       iconColor: const Color(0xFFCB471B),
-                      onChanged: (v) => setState(() => _soundEnabled = v),
+                      onChanged: (v) => _updatePref(
+                        () => _soundEnabled = v,
+                        () => _soundEnabled = !v,
+                      ),
                     ),
                     _buildSettingTile(
                       screenWidth: screenWidth,
@@ -692,7 +772,10 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       value: _vibrationEnabled,
                       leadingIcon: Icons.vibration_rounded,
                       iconColor: const Color(0xFF546E7A),
-                      onChanged: (v) => setState(() => _vibrationEnabled = v),
+                      onChanged: (v) => _updatePref(
+                        () => _vibrationEnabled = v,
+                        () => _vibrationEnabled = !v,
+                      ),
                     ),
                     SizedBox(height: screenHeight * 0.015),
                     Center(
@@ -723,9 +806,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                             ),
                           ),
                           child: ElevatedButton(
-                            onPressed: () {
-                              // TODO: Restore default settings
-                            },
+                            onPressed: _restoreDefaults,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.transparent,
                               shadowColor: Colors.transparent,
@@ -746,7 +827,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.02),
-                  ],
+                    ],
                 ),
               ),
             ),
