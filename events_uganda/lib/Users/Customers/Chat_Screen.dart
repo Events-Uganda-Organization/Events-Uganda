@@ -251,8 +251,6 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  bool _handledResult = false;
-
   void _applyTranscript(String raw) {
     if (!mounted) return;
     final String cleaned = structureSpokenText(raw);
@@ -891,6 +889,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void dispose() {
+    if (SpeechService.instance.isListening) {
+      SpeechService.instance.cancel();
+    }
     _searchDebounce?.cancel();
     _searchController.dispose();
     _socketSub?.cancel();
@@ -1088,7 +1089,9 @@ class _ChatScreenState extends State<ChatScreen> {
                           fontSize: screenWidth * 0.04,
                         ),
                         decoration: InputDecoration(
-                          hintText: 'Search for messages here...',
+                          hintText: _isListening
+                              ? 'Listening… tap to stop'
+                              : 'Search for messages here...',
                           hintStyle: TextStyle(
                             color: Colors.black.withValues(alpha: 0.5),
                             fontSize: screenWidth * 0.035,
@@ -1116,12 +1119,20 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.03,
+                        horizontal: screenWidth * 0.02,
                       ),
-                      child: Icon(
-                        Icons.mic,
-                        color: Colors.black,
-                        size: screenWidth * 0.055,
+                      child: GestureDetector(
+                        onTap: _toggleListening,
+                        child: _isListening
+                            ? _PulsingMic(
+                                size: screenWidth * 0.055,
+                                pulseColor: const Color(0xFFE53935),
+                              )
+                            : Icon(
+                                Icons.mic,
+                                color: Colors.black,
+                                size: screenWidth * 0.055,
+                              ),
                       ),
                     ),
                   ],
