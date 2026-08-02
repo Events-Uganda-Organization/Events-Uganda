@@ -2,6 +2,7 @@ package com.eventsuganda.otp.controller;
 
 import com.eventsuganda.otp.dto.request.SendMessageRequest;
 import com.eventsuganda.otp.dto.response.ApiResponse;
+import com.eventsuganda.otp.dto.response.ChatSearchResponse;
 import com.eventsuganda.otp.dto.response.MessageResponse;
 import com.eventsuganda.otp.service.MessageService;
 import org.springframework.http.ResponseEntity;
@@ -48,5 +49,15 @@ public class MessageController {
         String userId = (String) auth.getPrincipal();
         int updated = messageService.markAsRead(conversationId, userId);
         return ResponseEntity.ok(ApiResponse.ok(updated + " messages marked as read"));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ChatSearchResponse> search(
+            @RequestParam("q") String query,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            Authentication auth) {
+        String userId = (String) auth.getPrincipal();
+        return ResponseEntity.ok(messageService.search(userId, query, page, size));
     }
 }

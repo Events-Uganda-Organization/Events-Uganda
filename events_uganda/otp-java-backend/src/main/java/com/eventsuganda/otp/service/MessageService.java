@@ -72,4 +72,28 @@ public class MessageService {
     public int markAsRead(String conversationId, String userId) {
         return messageRepository.markAsRead(conversationId, userId, System.currentTimeMillis());
     }
+
+    public ChatSearchResponse search(String userId, String query, int page, int size) {
+        String q = query == null ? "" : query.trim();
+        if (q.isEmpty()) {
+            throw new OtpException("Search query is required");
+        }
+
+        List<ConversationResponse> conversations = conversationRepository.searchByLastMessage(userId, q)
+            .stream()
+            .map(c -> toConversationResponse(c, userId))
+            .collect(Collectors.toList());
+
+        List<MessageResponse> messages = messageRepository.searchMessages(userId, q, PageRequest.of(page, size))
+            .stream()
+            .map(m -> new MessageResponse(m, userId))
+            .collect(Collectors.toList());
+
+        return new ChatSearchResponse(conversations, messages);
+    }
+
+    private ConversationResponse toConversationResponse(Conversation conversation, String userId) {
+        long unread = messageRepository.countByConversationIdAndSenderIdNotAndReadAtIsNull(conversation.getId(), userId);
+        return new ConversationResponse(conversation, unread);
+    }
 }
