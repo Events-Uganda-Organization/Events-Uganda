@@ -288,8 +288,92 @@ class _NotificationScreenState extends State<NotificationScreen>
     setState(() => _isNavbarVisible = true);
   }
 
+  Future<void> _loadNotifications() async {
+    setState(() {
+      _loading = true;
+      _loadError = null;
+    });
+    try {
+      final results = await Future.wait<dynamic>([
+        NotificationService.fetchNotifications(archived: false),
+        NotificationService.fetchNotifications(archived: true),
+        NotificationService.getUnreadCount(),
+      ]);
+      if (!mounted) return;
+      final active = results[0] as List<AppNotification>;
+      final archived = results[1] as List<AppNotification>;
+      final unread = results[2] as int;
+      setState(() {
+        _activeNotifications
+          ..clear()
+          ..addAll(active);
+        _archivedNotifications
+          ..clear()
+          ..addAll(archived);
+        _unreadCount = unread;
+        _loading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _loadError = e.toString();
+        _loading = false;
+      });
+    }
+  }
+
+  void _onSocketNotification(AppNotification notification) {
+    if (!mounted) return;
+    setState(() {
+      _activeNotifications.removeWhere((n) => n.id == notification.id);
+      _activeNotifications.insert(0, notification);
+      if (!notification.isRead) _unreadCount++;
+    });
+    SnackbarHelper.show(
+      context,
+      notification.title,
+      icon: notification.icon,
+    );
+  }
+
+  void _replaceNotification(String id, AppNotification updated) {
+    for (int i = 0; i < _activeNotifications.length; i++) {
+      if (_activeNotifications[i].id == id) {
+        _activeNotifications[i] = updated;
+        return;
+      }
+    }
+    for (int i = 0; i < _archivedNotifications.length; i++) {
+      if (_archivedNotifications[i].id == id) {
+        _archivedNotifications[i] = updated;
+        return;
+      }
+    }
+  }
+
+  Future<void> _recreate(AppNotification item) async {
+    final user = await AuthService.getUser();
+    final userId = user?['id'] as String?;
+    if (userId == null || userId.isEmpty) return;
+    try {
+      final recreated = await NotificationService.create(
+        type: item.type,
+        title: item.title,
+        body: item.body,
+        category: item.category.serverValue,
+        userId: userId,
+      );
+      if (!mounted) return;
+      setState(() {
+        _activeNotifications.insert(0, recreated);
+        if (!recreated.isRead) _unreadCount++;
+      });
+    } catch (_) {}
+  }
+
   @override
   void dispose() {
+    _socketSub?.cancel();
     _animationController.dispose();
     _navbarSlideController.dispose();
     _countdownTimer?.cancel();
