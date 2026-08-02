@@ -105,7 +105,13 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
 
   void _updatePref(VoidCallback apply, VoidCallback revert) {
     setState(apply);
-    NotificationSettingsService.save(_currentPrefs()).catchError((_) {
+    _savePrefs(revert);
+  }
+
+  Future<void> _savePrefs(VoidCallback revert) async {
+    try {
+      await NotificationSettingsService.save(_currentPrefs());
+    } catch (_) {
       if (mounted) {
         setState(revert);
         SnackbarHelper.show(
@@ -114,7 +120,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
           icon: Icons.error_outline,
         );
       }
-    });
+    }
   }
 
   Future<void> _restoreDefaults() async {
@@ -828,6 +834,7 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
                     ),
                     SizedBox(height: screenHeight * 0.02),
                     ],
+                  ],
                 ),
               ),
             ),
