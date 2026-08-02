@@ -595,12 +595,41 @@ class _NotificationScreenState extends State<NotificationScreen>
                     ),
                   ],
                 ),
-                child: Center(
-                  child: Icon(
-                    Icons.notifications_none_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
-                  ),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Center(
+                      child: Icon(
+                        Icons.notifications_none_rounded,
+                        color: Colors.black,
+                        size: screenWidth * 0.07,
+                      ),
+                    ),
+                    if (_unreadCount > 0)
+                      Positioned(
+                        top: -screenWidth * 0.005,
+                        right: -screenWidth * 0.005,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.018,
+                            vertical: screenWidth * 0.004,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFE53935),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Colors.white, width: 1.5),
+                          ),
+                          child: Text(
+                            '$_unreadCount',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: screenWidth * 0.024,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
             ),
@@ -849,9 +878,12 @@ class _NotificationScreenState extends State<NotificationScreen>
                     ),
                     SizedBox(height: screenHeight * 0.02),
                     Expanded(
-                      child: SingleChildScrollView(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        child: Column(
+                      child: RefreshIndicator(
+                        onRefresh: _loadNotifications,
+                        color: const Color(0xFFCB471B),
+                        child: SingleChildScrollView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                         Padding(
@@ -882,16 +914,27 @@ class _NotificationScreenState extends State<NotificationScreen>
                           ),
                         ),
                         SizedBox(height: screenHeight * 0.035),
-                        if (_showArchived)
+                        if (_loading)
+                          Padding(
+                            padding: EdgeInsets.only(top: screenHeight * 0.12),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: const Color(0xFFCB471B),
+                              ),
+                            ),
+                          )
+                        else if (_loadError != null)
+                          _buildLoadError(screenWidth)
+                        else if (_showArchived)
                           _buildArchivedView(screenWidth, screenHeight)
-                        else if (_filteredToday.isEmpty && _filteredYesterday.isEmpty)
+                        else if (_filteredActive.isEmpty)
                           _isFiltering
                               ? _buildNoResults(screenWidth)
                               : Padding(
                                   padding: EdgeInsets.only(
-                                    top: screenHeight * 0.06,
+                                    top: screenHeight * 0.04,
                                   ),
-                                  child: const EmptyNotificationsWidget(),
+                                  child: const NotificationEmptyCartoon(),
                                 )
                         else
                           ..._buildNotificationLists(screenWidth, screenHeight),
@@ -899,6 +942,7 @@ class _NotificationScreenState extends State<NotificationScreen>
                         ),
                       ),
                     ),
+                  ),
 
                   ],
               ),
