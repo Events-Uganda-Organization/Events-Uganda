@@ -1769,3 +1769,65 @@ class _PointingFinger extends StatelessWidget {
     );
   }
 }
+
+class _PulsingMic extends StatefulWidget {
+  const _PulsingMic({required this.size, required this.pulseColor});
+
+  final double size;
+  final Color pulseColor;
+
+  @override
+  State<_PulsingMic> createState() => _PulsingMicState();
+}
+
+class _PulsingMicState extends State<_PulsingMic>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1200),
+  )..repeat();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        final double t = _controller.value;
+        return SizedBox(
+          width: widget.size * 2.0,
+          height: widget.size * 2.0,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              _ring(t),
+              _ring((t + 0.5) % 1.0),
+              Icon(
+                Icons.mic,
+                color: widget.pulseColor,
+                size: widget.size * 0.9,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _ring(double t) {
+    final double diameter = widget.size * (1.0 + t);
+    return Container(
+      width: diameter,
+      height: diameter,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: widget.pulseColor.withValues(alpha: (1 - t) * 0.25),
+      ),
+    );
+  }
+}
