@@ -444,9 +444,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                             children: [
                               Expanded(
                                 child: GestureDetector(
-                                  onTap: () {
-                                    setState(() => _isRead = !_isRead);
-                                  },
+                                  onTap: _toggleRead,
                                   child: Container(
                                     height: screenWidth * 0.11,
                                     decoration: BoxDecoration(
@@ -506,7 +504,7 @@ class _NotificationDetailsScreenState extends State<NotificationDetailsScreen> {
                               ),
                               SizedBox(width: screenWidth * 0.03),
                               GestureDetector(
-                                onTap: () => Navigator.pop(context),
+                                onTap: _deleteNotification,
                                 child: Container(
                                   width: screenWidth * 0.11,
                                   height: screenWidth * 0.11,
