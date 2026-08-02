@@ -49,6 +49,8 @@
 	<string>Events Uganda accesses your photo library so you can select and send photos in chat.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Events Uganda uses your microphone to record and send voice messages in chat.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Events Uganda uses speech recognition to turn your spoken words into text for searching.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>
