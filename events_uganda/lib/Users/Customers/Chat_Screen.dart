@@ -23,16 +23,7 @@ class _ChatScreenState extends State<ChatScreen> {
   int _currentNavIndex = 2;
   final FocusNode _searchFocus = FocusNode();
   bool _isSearchFocused = false;
-  static const List<String> _names = [
-    'Aisha',
-    'Brian',
-    'Cathy',
-    'David',
-    'Emma',
-    'Grace',
-    'Hassan',
-  ];
-  static const List<Color> _circleColors = [
+  static const List<Color> _avatarPalette = [
     Color(0xFF7EED27),
     Color(0xFFFF6B6B),
     Color(0xFF4D96FF),
@@ -44,9 +35,23 @@ class _ChatScreenState extends State<ChatScreen> {
 
   static Color _colorFor(String name) {
     const colors = {'Gregory': Color(0xFF20C997), 'Sarah': Color(0xFFFFD43B)};
-    final index = _names.indexOf(name);
-    if (index != -1) return _circleColors[index];
-    return colors[name] ?? const Color(0xFF7EED27);
+    final special = colors[name];
+    if (special != null) return special;
+    final index = name.codeUnits.fold<int>(
+      0,
+      (acc, c) => (acc + c) % _avatarPalette.length,
+    );
+    return _avatarPalette[index];
+  }
+
+  List<Map<String, String>> get _recentContacts {
+    final contacts = <Map<String, String>>[];
+    for (final conv in _conversations) {
+      final name = _conversationNames[conv.id] ?? 'Vendor';
+      contacts.add({'conversationId': conv.id, 'name': name});
+      if (contacts.length >= 7) break;
+    }
+    return contacts;
   }
 
   final List<ChatConversation> _conversations = [];
