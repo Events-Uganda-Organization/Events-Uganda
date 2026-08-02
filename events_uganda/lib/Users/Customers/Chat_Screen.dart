@@ -495,7 +495,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final String name = contact['name'] ?? 'Vendor';
     final String conversationId = contact['conversationId'] ?? '';
     return Container(
-      width: sw * 0.2,
+      width: sw * 0.146,
       margin: EdgeInsets.only(right: sw * 0.06),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
