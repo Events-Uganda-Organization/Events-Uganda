@@ -151,7 +151,7 @@ class _NotificationScreenState extends State<NotificationScreen>
         .toList();
   }
 
-  final List<AppNotification> _activeNotifications = [];
+  List<AppNotification> _activeNotifications = [];
   final List<AppNotification> _archivedNotifications = [];
   int _unreadCount = 0;
   bool _loading = true;
@@ -349,26 +349,6 @@ class _NotificationScreenState extends State<NotificationScreen>
         return;
       }
     }
-  }
-
-  Future<void> _recreate(AppNotification item) async {
-    final user = await AuthService.getUser();
-    final userId = user?['id'] as String?;
-    if (userId == null || userId.isEmpty) return;
-    try {
-      final recreated = await NotificationService.create(
-        type: item.type,
-        title: item.title,
-        body: item.body,
-        category: item.category.serverValue,
-        userId: userId,
-      );
-      if (!mounted) return;
-      setState(() {
-        _activeNotifications.insert(0, recreated);
-        if (!recreated.isRead) _unreadCount++;
-      });
-    } catch (_) {}
   }
 
   @override
