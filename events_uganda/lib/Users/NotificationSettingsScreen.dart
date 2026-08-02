@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/Services/notification_settings_service.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
+import 'package:events_uganda/models/notification_preferences.dart';
 import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 
 class NotificationSettingsScreen extends StatefulWidget {
@@ -29,6 +32,8 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
   bool _reminders = true;
   bool _soundEnabled = true;
   bool _vibrationEnabled = true;
+  bool _loading = true;
+  String? _loadError;
 
   @override
   void initState() {
@@ -50,6 +55,116 @@ class _NotificationSettingsScreenState extends State<NotificationSettingsScreen>
         });
       }
     });
+    _load();
+  }
+
+  NotificationPreferences _currentPrefs() => NotificationPreferences(
+        pushEnabled: _pushEnabled,
+        emailEnabled: _emailEnabled,
+        smsEnabled: _smsEnabled,
+        bookingUpdates: _bookingUpdates,
+        promotions: _promotions,
+        messages: _messages,
+        reminders: _reminders,
+        soundEnabled: _soundEnabled,
+        vibrationEnabled: _vibrationEnabled,
+      );
+
+  void _applyPrefs(NotificationPreferences prefs) {
+    _pushEnabled = prefs.pushEnabled;
+    _emailEnabled = prefs.emailEnabled;
+    _smsEnabled = prefs.smsEnabled;
+    _bookingUpdates = prefs.bookingUpdates;
+    _promotions = prefs.promotions;
+    _messages = prefs.messages;
+    _reminders = prefs.reminders;
+    _soundEnabled = prefs.soundEnabled;
+    _vibrationEnabled = prefs.vibrationEnabled;
+  }
+
+  Future<void> _load() async {
+    setState(() {
+      _loading = true;
+      _loadError = null;
+    });
+    try {
+      final prefs = await NotificationSettingsService.fetch();
+      if (!mounted) return;
+      setState(() {
+        _applyPrefs(prefs);
+        _loading = false;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _loadError = e.toString();
+        _loading = false;
+      });
+    }
+  }
+
+  void _updatePref(VoidCallback apply, VoidCallback revert) {
+    setState(apply);
+    NotificationSettingsService.save(_currentPrefs()).catchError((_) {
+      if (mounted) {
+        setState(revert);
+        SnackbarHelper.show(
+          context,
+          'Could not save settings',
+          icon: Icons.error_outline,
+        );
+      }
+    });
+  }
+
+  Future<void> _restoreDefaults() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF1A1A2E),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text(
+          'Restore defaults',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+        ),
+        content: const Text(
+          'Reset all notification settings to their default values?',
+          style: TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancel', style: TextStyle(color: Colors.white70)),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text(
+              'Restore',
+              style: TextStyle(color: Color(0xFFF3CA9B), fontWeight: FontWeight.w600),
+            ),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    try {
+      final prefs = await NotificationSettingsService.reset();
+      if (!mounted) return;
+      setState(() => _applyPrefs(prefs));
+      SnackbarHelper.show(
+        context,
+        'Settings restored to defaults',
+        icon: Icons.check_circle_outline,
+      );
+    } catch (_) {
+      if (mounted) {
+        SnackbarHelper.show(
+          context,
+          'Could not restore settings',
+          icon: Icons.error_outline,
+        );
+      }
+    }
   }
 
   @override
