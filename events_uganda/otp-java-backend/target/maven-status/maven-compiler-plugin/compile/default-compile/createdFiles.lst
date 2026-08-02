@@ -13,6 +13,7 @@ com\eventsuganda\otp\dto\request\ResetPasswordRequest.class
 com\eventsuganda\otp\OtpApplication.class
 com\eventsuganda\otp\dto\request\RegisterRequest.class
 com\eventsuganda\otp\dto\request\VerifyOtpRequest.class
+com\eventsuganda\otp\dto\response\ChatSearchResponse.class
 com\eventsuganda\otp\model\Conversation.class
 com\eventsuganda\otp\dto\request\LoginRequest.class
 com\eventsuganda\otp\dto\response\MessageResponse.class

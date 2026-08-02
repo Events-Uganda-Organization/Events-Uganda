@@ -82,6 +82,23 @@ class ChatConversation {
   }
 }
 
+class ChatSearchResults {
+  const ChatSearchResults({this.conversations = const [], this.messages = const []});
+
+  final List<ChatConversation> conversations;
+  final List<ChatMessage> messages;
+
+  factory ChatSearchResults.fromJson(Map<String, dynamic> json) {
+    final List<ChatConversation> conversations = (json['conversations'] as List<dynamic>? ?? [])
+        .map((e) => ChatConversation.fromJson(e as Map<String, dynamic>))
+        .toList();
+    final List<ChatMessage> messages = (json['messages'] as List<dynamic>? ?? [])
+        .map((e) => ChatMessage.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return ChatSearchResults(conversations: conversations, messages: messages);
+  }
+}
+
 class ChatService {
   static const String _baseUrl =
       'https://eventsuganda-backend-production-8c3a.up.railway.app/api';

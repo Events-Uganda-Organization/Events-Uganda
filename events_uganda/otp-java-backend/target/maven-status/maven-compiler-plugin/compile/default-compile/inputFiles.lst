@@ -21,6 +21,7 @@ C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eve
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\request\VerifyOtpRequest.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\ApiResponse.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\AuthResponse.java
+C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\ChatSearchResponse.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\ConversationResponse.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\MessageResponse.java
 C:\Users\User\Events-Uganda\events_uganda\otp-java-backend\src\main\java\com\eventsuganda\otp\dto\response\ReferralStatsResponse.java
