@@ -141,6 +141,7 @@ class _NotificationScreenState extends State<NotificationScreen>
       title: 'Booking Accepted',
       subtitle: 'Your booking has finally been accepted! Congratulations.',
       isRead: true,
+      category: _NotificationCategory.bookings,
     ),
     _NotificationItem(
       id: 2,
@@ -150,6 +151,7 @@ class _NotificationScreenState extends State<NotificationScreen>
       title: 'New Message',
       subtitle: 'You have a new message from the event planner.',
       isRead: false,
+      category: _NotificationCategory.members,
     ),
   ];
 
@@ -162,6 +164,7 @@ class _NotificationScreenState extends State<NotificationScreen>
       title: 'Upcoming Wedding',
       subtitle: 'Your wedding event is coming up this Saturday!',
       isRead: false,
+      category: _NotificationCategory.reminders,
     ),
     _NotificationItem(
       id: 4,
@@ -171,6 +174,7 @@ class _NotificationScreenState extends State<NotificationScreen>
       title: 'Booking Accepted',
       subtitle: 'Your booking has finally been accepted! Congratulations.',
       isRead: true,
+      category: _NotificationCategory.bookings,
     ),
     _NotificationItem(
       id: 5,
@@ -180,6 +184,7 @@ class _NotificationScreenState extends State<NotificationScreen>
       title: 'Birthday Reminder',
       subtitle: "Don't forget the birthday party tomorrow!",
       isRead: false,
+      category: _NotificationCategory.reminders,
     ),
   ];
 
@@ -646,7 +651,11 @@ class _NotificationScreenState extends State<NotificationScreen>
                                 SizedBox(width: screenWidth * 0.03),
                                 Expanded(
                                   child: TextField(
+                                    controller: _searchController,
                                     focusNode: _searchFocus,
+                                    onChanged: (value) {
+                                      setState(() => _searchQuery = value);
+                                    },
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: screenWidth * 0.04,
@@ -668,6 +677,22 @@ class _NotificationScreenState extends State<NotificationScreen>
                                     ),
                                   ),
                                 ),
+                                if (_searchQuery.isNotEmpty)
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      right: screenWidth * 0.03,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: _clearSearch,
+                                      child: Icon(
+                                        Icons.cancel_rounded,
+                                        size: screenWidth * 0.055,
+                                        color: Colors.black.withValues(
+                                          alpha: 0.4,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                               ],
                             ),
                           ),
@@ -802,11 +827,15 @@ class _NotificationScreenState extends State<NotificationScreen>
                         SizedBox(height: screenHeight * 0.035),
                         if (_showArchived)
                           _buildArchivedView(screenWidth, screenHeight)
-                        else if (_sortedToday.isEmpty && _sortedYesterday.isEmpty)
-                          Padding(
-                            padding: EdgeInsets.only(top: screenHeight * 0.06),
-                            child: const EmptyNotificationsWidget(),
-                          )
+                        else if (_filteredToday.isEmpty && _filteredYesterday.isEmpty)
+                          _isFiltering
+                              ? _buildNoResults(screenWidth)
+                              : Padding(
+                                  padding: EdgeInsets.only(
+                                    top: screenHeight * 0.06,
+                                  ),
+                                  child: const EmptyNotificationsWidget(),
+                                )
                         else
                           ..._buildNotificationLists(screenWidth, screenHeight),
                           ],
@@ -1126,7 +1155,7 @@ class _NotificationScreenState extends State<NotificationScreen>
 
   List<Widget> _buildNotificationLists(double screenWidth, double screenHeight) {
     final widgets = <Widget>[];
-    if (_sortedToday.isNotEmpty) {
+    if (_filteredToday.isNotEmpty) {
       widgets.add(
         Padding(
           padding: EdgeInsets.only(left: screenWidth * 0.04),
@@ -1140,22 +1169,22 @@ class _NotificationScreenState extends State<NotificationScreen>
           ),
         ),
       );
-      for (int i = 0; i < _sortedToday.length; i++) {
+      for (int i = 0; i < _filteredToday.length; i++) {
         if (i > 0) widgets.add(SizedBox(height: screenHeight * 0.015));
         widgets.add(
           Padding(
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
             child: _buildDismissibleCard(
-              item: _sortedToday[i],
+              item: _filteredToday[i],
               screenWidth: screenWidth,
-              child: _buildCardContent(_sortedToday[i], screenWidth),
+              child: _buildCardContent(_filteredToday[i], screenWidth),
             ),
           ),
         );
       }
       widgets.add(SizedBox(height: screenHeight * 0.035));
     }
-    if (_sortedYesterday.isNotEmpty) {
+    if (_filteredYesterday.isNotEmpty) {
       widgets.add(
         Padding(
           padding: EdgeInsets.only(left: screenWidth * 0.04),
@@ -1169,15 +1198,15 @@ class _NotificationScreenState extends State<NotificationScreen>
           ),
         ),
       );
-      for (int i = 0; i < _sortedYesterday.length; i++) {
+      for (int i = 0; i < _filteredYesterday.length; i++) {
         if (i > 0) widgets.add(SizedBox(height: screenHeight * 0.015));
         widgets.add(
           Padding(
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
             child: _buildDismissibleCard(
-              item: _sortedYesterday[i],
+              item: _filteredYesterday[i],
               screenWidth: screenWidth,
-              child: _buildCardContent(_sortedYesterday[i], screenWidth),
+              child: _buildCardContent(_filteredYesterday[i], screenWidth),
             ),
           ),
         );
@@ -1239,10 +1268,12 @@ class _NotificationScreenState extends State<NotificationScreen>
           ),
         ),
         SizedBox(height: screenHeight * 0.025),
-        if (_archivedNotifications.isEmpty)
-          _buildArchivedEmptyState(screenWidth)
+        if (_filteredArchived.isEmpty)
+          _isFiltering
+              ? _buildNoResults(screenWidth)
+              : _buildArchivedEmptyState(screenWidth)
         else
-          ..._archivedNotifications.map(
+          ..._filteredArchived.map(
             (item) => Padding(
               padding: EdgeInsets.only(
                 left: screenWidth * 0.04,
