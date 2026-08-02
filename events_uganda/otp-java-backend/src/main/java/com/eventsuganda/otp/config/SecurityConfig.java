@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/chat/**").authenticated()
                 .requestMatchers("/api/messages/**").authenticated()
                 .requestMatchers("/api/referral/**").authenticated()
+                .requestMatchers("/api/notifications/**").authenticated()
                 .requestMatchers("/api/users/me").authenticated()
                 .anyRequest().permitAll()
             )
