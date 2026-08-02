@@ -316,10 +316,102 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  Widget _contactCircle(Map<String, String> contact, double sw, double sh) {
+    final String name = contact['name'] ?? 'Vendor';
+    final String conversationId = contact['conversationId'] ?? '';
+    return Container(
+      width: sw * 0.2,
+      margin: EdgeInsets.only(right: sw * 0.06),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MessageScreen(
+                    conversationId: conversationId,
+                    name: name,
+                    color: _colorFor(name),
+                    status: 'Online',
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              width: sw * 0.146,
+              height: sw * 0.146,
+              decoration: BoxDecoration(
+                color: _colorFor(name),
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.black.withValues(alpha: 0.08),
+                  width: 1,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.08),
+                    blurRadius: 6,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Center(
+                    child: Text(
+                      name.isNotEmpty ? name[0] : '?',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: sw * 0.06,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    bottom: 0,
+                    child: Container(
+                      width: sw * 0.04,
+                      height: sw * 0.04,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF4CAF50),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 2,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: sh * 0.006),
+          Text(
+            name,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: sw * 0.028,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _messageHitTile(ChatMessage message, double sw, double sh) {
     final String name =
         _conversationNames[message.conversationId] ?? 'Vendor';
-    return GestureDetector(      onTap: () async {
+    return GestureDetector(
+      onTap: () async {
         await Navigator.push(
           context,
           MaterialPageRoute(
