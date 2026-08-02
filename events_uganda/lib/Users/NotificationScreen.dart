@@ -3,13 +3,16 @@ import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:events_uganda/Users/NotificationDetailsScreen.dart';
 import 'package:events_uganda/Users/NotificationSettingsScreen.dart';
 import 'package:events_uganda/components/archived_empty_animation.dart';
-import 'package:events_uganda/components/empty_notifications_widget.dart';
+import 'package:events_uganda/components/notification_empty_cartoon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/Services/notification_service.dart';
+import 'package:events_uganda/Services/notification_socket_service.dart';
 import 'package:events_uganda/components/snackbar_helper.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
+import 'package:events_uganda/models/app_notification.dart';
 import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 
 enum _MenuAction {
@@ -19,8 +22,6 @@ enum _MenuAction {
   archived,
   help,
 }
-
-enum _NotificationCategory { members, bookings, reminders }
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -96,99 +97,66 @@ class _NotificationScreenState extends State<NotificationScreen>
   late AnimationController _navbarSlideController;
   late Animation<Offset> _navbarSlideAnimation;
 
-  List<_NotificationItem> get _sortedToday => _sortedNotifications(_todayNotifications);
-  List<_NotificationItem> get _sortedYesterday => _sortedNotifications(_yesterdayNotifications);
-
   bool get _isFiltering =>
       _searchQuery.trim().isNotEmpty || _selectedFilter != 'All';
 
-  bool _matchesSegment(_NotificationItem item) {
+  bool _matchesSegment(AppNotification item) {
     switch (_selectedFilter) {
       case 'Members':
-        return item.category == _NotificationCategory.members;
+        return item.category == AppNotificationCategory.members;
       case 'Bookings':
-        return item.category == _NotificationCategory.bookings;
+        return item.category == AppNotificationCategory.bookings;
       case 'Reminders':
-        return item.category == _NotificationCategory.reminders;
+        return item.category == AppNotificationCategory.reminders;
       default:
         return true;
     }
   }
 
-  bool _matchesQuery(_NotificationItem item) {
+  bool _matchesQuery(AppNotification item) {
     final query = _searchQuery.trim().toLowerCase();
     if (query.isEmpty) return true;
     return item.title.toLowerCase().contains(query) ||
-        item.subtitle.toLowerCase().contains(query);
+        item.bodyText.toLowerCase().contains(query);
   }
 
-  bool _matchesFilter(_NotificationItem item) =>
+  bool _matchesFilter(AppNotification item) =>
       _matchesSegment(item) && _matchesQuery(item);
 
-  List<_NotificationItem> get _filteredToday =>
-      _sortedToday.where(_matchesFilter).toList();
-  List<_NotificationItem> get _filteredYesterday =>
-      _sortedYesterday.where(_matchesFilter).toList();
-  List<_NotificationItem> get _filteredArchived =>
+  List<AppNotification> get _filteredActive =>
+      _activeNotifications.where(_matchesFilter).toList();
+  List<AppNotification> get _filteredArchived =>
       _archivedNotifications.where(_matchesFilter).toList();
 
-  final List<_NotificationItem> _todayNotifications = [
-    _NotificationItem(
-      id: 1,
-      icon: Icons.monetization_on,
-      iconColor: Color(0xFF55FF27),
-      timestamp: '15 secs ago',
-      title: 'Booking Accepted',
-      subtitle: 'Your booking has finally been accepted! Congratulations.',
-      isRead: true,
-      category: _NotificationCategory.bookings,
-    ),
-    _NotificationItem(
-      id: 2,
-      icon: Icons.message,
-      iconColor: Color(0xFFE4351D),
-      timestamp: '5 secs ago',
-      title: 'New Message',
-      subtitle: 'You have a new message from the event planner.',
-      isRead: false,
-      category: _NotificationCategory.members,
-    ),
-  ];
+  static bool _isSameDay(DateTime a, DateTime b) =>
+      a.year == b.year && a.month == b.month && a.day == b.day;
 
-  final List<_NotificationItem> _yesterdayNotifications = [
-    _NotificationItem(
-      id: 3,
-      icon: Icons.notifications_active,
-      iconColor: Color(0xFF96E8F4),
-      timestamp: '2 days ago',
-      title: 'Upcoming Wedding',
-      subtitle: 'Your wedding event is coming up this Saturday!',
-      isRead: false,
-      category: _NotificationCategory.reminders,
-    ),
-    _NotificationItem(
-      id: 4,
-      icon: Icons.message,
-      iconColor: Color(0xFFE4351D),
-      timestamp: '1 day ago',
-      title: 'Booking Accepted',
-      subtitle: 'Your booking has finally been accepted! Congratulations.',
-      isRead: true,
-      category: _NotificationCategory.bookings,
-    ),
-    _NotificationItem(
-      id: 5,
-      icon: Icons.notifications_active,
-      iconColor: Color(0xFF96E8F4),
-      timestamp: '1 day ago',
-      title: 'Birthday Reminder',
-      subtitle: "Don't forget the birthday party tomorrow!",
-      isRead: false,
-      category: _NotificationCategory.reminders,
-    ),
-  ];
+  List<AppNotification> get _todayActive {
+    final now = DateTime.now();
+    return _filteredActive.where((n) => _isSameDay(n.createdAt, now)).toList();
+  }
 
-  final List<_NotificationItem> _archivedNotifications = [];
+  List<AppNotification> get _yesterdayActive {
+    final yesterday = DateTime.now().subtract(const Duration(days: 1));
+    return _filteredActive
+        .where((n) => _isSameDay(n.createdAt, yesterday))
+        .toList();
+  }
+
+  List<AppNotification> get _earlierActive {
+    final yesterday = DateTime.now().subtract(const Duration(days: 1));
+    final yDay = DateTime(yesterday.year, yesterday.month, yesterday.day);
+    return _filteredActive
+        .where((n) => DateTime(n.createdAt.year, n.createdAt.month, n.createdAt.day).isBefore(yDay))
+        .toList();
+  }
+
+  final List<AppNotification> _activeNotifications = [];
+  final List<AppNotification> _archivedNotifications = [];
+  int _unreadCount = 0;
+  bool _loading = true;
+  String? _loadError;
+  StreamSubscription<AppNotification>? _socketSub;
 
   @override
   void initState() {
@@ -225,6 +193,10 @@ class _NotificationScreenState extends State<NotificationScreen>
         });
       }
     });
+    _loadNotifications();
+    _socketSub = NotificationSocketService.instance.notifications
+        .listen(_onSocketNotification);
+    NotificationSocketService.instance.ensureConnected();
   }
 
   String get _greetingText {
