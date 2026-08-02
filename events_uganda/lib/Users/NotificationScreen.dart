@@ -323,6 +323,7 @@ class _NotificationScreenState extends State<NotificationScreen>
     _countdownTimer?.cancel();
     _galleryScrollController.dispose();
     _reviewController.dispose();
+    _searchController.dispose();
     _venueTypeController.dispose();
     _venueTypeFocus.dispose();
     _specialRequestsController.dispose();
@@ -1607,6 +1608,45 @@ class _NotificationScreenState extends State<NotificationScreen>
     SnackbarHelper.show(context, message, icon: icon);
   }
 
+  void _clearSearch() {
+    _searchController.clear();
+    setState(() => _searchQuery = '');
+  }
+
+  Widget _buildNoResults(double screenWidth) {
+    return Padding(
+      padding: EdgeInsets.only(top: screenWidth * 0.1),
+      child: Center(
+        child: Column(
+          children: [
+            Icon(
+              Icons.search_off_rounded,
+              size: screenWidth * 0.14,
+              color: Colors.black.withValues(alpha: 0.2),
+            ),
+            SizedBox(height: screenWidth * 0.03),
+            Text(
+              'No notifications found',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: screenWidth * 0.04,
+                color: Colors.black54,
+              ),
+            ),
+            SizedBox(height: screenWidth * 0.01),
+            Text(
+              'Try a different search or filter',
+              style: TextStyle(
+                fontSize: screenWidth * 0.032,
+                color: Colors.black38,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   void _showHelpSheet() {
     final w = MediaQuery.of(context).size.width;
 
@@ -2103,6 +2143,7 @@ class _NotificationItem {
     required this.timestamp,
     required this.title,
     required this.subtitle,
+    required this.category,
     this.isRead = false,
   });
 
@@ -2112,6 +2153,7 @@ class _NotificationItem {
   final String timestamp;
   final String title;
   final String subtitle;
+  final _NotificationCategory category;
   bool isRead;
 }
 
