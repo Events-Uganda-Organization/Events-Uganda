@@ -1415,6 +1415,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     ),
                     SizedBox(height: screenWidth * 0.02),
                     ],
+                    if (!_isSearching || _matchedCategories.isNotEmpty) ...[
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: screenWidth * 0.04,
@@ -1430,24 +1431,25 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               color: Colors.black,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AllCategoriesScreen(),
+                          if (!_isSearching)
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AllCategoriesScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'View All',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: screenWidth * 0.030,
+                                  color: const Color(0xFFB47A25),
                                 ),
-                              );
-                            },
-                            child: Text(
-                              'View All',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: screenWidth * 0.030,
-                                color: const Color(0xFFB47A25),
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ),
@@ -1460,87 +1462,21 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                       ),
                       child: Row(
                         children: [
-                          _buildCircleItem(
-                            screenWidth,
-                            screenHeight,
-                            'assets/images/deco5.jpg',
-                            'Decoration',
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ServiceListingDecorationScreen(
-                                    category: 'Decoration',
-                                    categoryIndex: 0,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(width: screenWidth * 0.03),
-                          _buildCircleItem(
-                            screenWidth,
-                            screenHeight,
-                            'assets/images/catering.jpg',
-                            'Catering',
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ServiceListingCateringScreen(
-                                    category: 'Catering',
-                                    categoryIndex: 1,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(width: screenWidth * 0.03),
-                          _buildCircleItem(
-                            screenWidth,
-                            screenHeight,
-                            'assets/images/photography.jpg',
-                            'Photography\n& Videography',
-                          ),
-                          SizedBox(width: screenWidth * 0.03),
-                          _buildCircleItem(
-                            screenWidth,
-                            screenHeight,
-                            'assets/images/carhire1.jpg',
-                            'Car Hire',
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ServiceListingCarHiringScreen(
-                                    category: 'Car Hire',
-                                    categoryIndex: 3,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(width: screenWidth * 0.03),
-                          _buildCircleItem(
-                            screenWidth,
-                            screenHeight,
-                            'assets/images/cake2.jpg',
-                            'Cakes',
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ServiceListingCakesScreen(
-                                    category: 'Cakes',
-                                    categoryIndex: 5,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                          for (int i = 0; i < _matchedCategories.length; i++) ...[
+                            if (i > 0) SizedBox(width: screenWidth * 0.03),
+                            _buildCircleItem(
+                              screenWidth,
+                              screenHeight,
+                              _matchedCategories[i].imagePath,
+                              _matchedCategories[i].label,
+                              onTap: _matchedCategories[i].onTap,
+                            ),
+                          ],
                         ],
                       ),
                     ),
+                    ],
+                    if (!_isSearching) ...[
                     SizedBox(height: screenWidth * 0.03),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -1570,6 +1506,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                       }),
                     ),
                     SizedBox(height: screenWidth * 0.02),
+                    ],
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: screenWidth * 0.04,
