@@ -288,6 +288,26 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
   @override
   void initState() {
     super.initState();
+    _featuredProviders = [
+      const _ProviderCardItem('assets/images/tent1.jpg', 'Velvet Petal Decor', '4.8', 0, 'UGX 500K - 2M'),
+      const _ProviderCardItem('assets/images/deco2.jpg', 'Golden Arch Events', '4.6', 1, 'UGX 400K - 1.5M'),
+      const _ProviderCardItem('assets/images/deco4.jpg', 'Twilight Tents', '4.9', 2, 'UGX 600K - 3M'),
+      const _ProviderCardItem('assets/images/deco3.jpg', 'Prestige Styling Co.', '4.7', 3, 'UGX 300K - 1.2M'),
+      const _ProviderCardItem('assets/images/deco2.jpg', 'Bloom & Drape Studio', '4.5', 4, 'UGX 200K - 800K'),
+      const _ProviderCardItem('assets/images/deco5.jpg', 'Celeste Occasions', '4.7', 11, 'UGX 300K - 1.2M'),
+      const _ProviderCardItem('assets/images/deco4.jpg', 'Regal Venue Stylists', '4.9', 10, 'UGX 600K - 3M'),
+      const _ProviderCardItem('assets/images/deco3.jpg', 'Aura Table Designs', '4.6', 9, 'UGX 400K - 1.5M'),
+    ];
+    _allProviders = [
+      const _ProviderCardItem('assets/images/deco2.jpg', 'Splendid Event Decor', '4.8', 8, 'UGX 500K - 2M', showVerified: false),
+      const _ProviderCardItem('assets/images/deco3.jpg', 'Majestic Floral Hub', '4.6', 9, 'UGX 400K - 1.5M', showVerified: false),
+      const _ProviderCardItem('assets/images/deco4.jpg', 'Ivory Chandelier Decor', '4.9', 10, 'UGX 600K - 3M', showVerified: false),
+      const _ProviderCardItem('assets/images/deco5.jpg', 'Opal Backdrops', '4.7', 11, 'UGX 300K - 1.2M', showVerified: false),
+      const _ProviderCardItem('assets/images/deco2.jpg', 'Nova Staging Works', '4.5', 12, 'UGX 200K - 800K', showVerified: false),
+      const _ProviderCardItem('assets/images/glassdeco.jpg', 'Pearl Curtain Events', '4.9', 13, 'UGX 800K - 2.5M', showVerified: false),
+      const _ProviderCardItem('assets/images/deco3.jpg', 'Ember & Twig Decor', '4.4', 14, 'UGX 400K - 1.8M', showVerified: false),
+      const _ProviderCardItem('assets/images/tent1.jpg', 'Crown Event Styling', '4.7', 15, 'UGX 350K - 1.5M', showVerified: false),
+    ];
     _promoScrollController.addListener(_onPromoScroll);
     _circleScrollController.addListener(_onCircleScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
@@ -424,6 +444,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
   void dispose() {
     _countdownTimer?.cancel();
     _searchFocus.dispose();
+    _searchController.dispose();
     _circleScrollController.dispose();
     _promoScrollController.dispose();
     _popularNowScrollController.dispose();
@@ -1415,6 +1436,10 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                     Expanded(
                       child: TextField(
                         focusNode: _searchFocus,
+                        controller: _searchController,
+                        onChanged: (value) {
+                          setState(() => _searchQuery = value);
+                        },
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.04,
@@ -1430,6 +1455,19 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                           contentPadding: EdgeInsets.symmetric(
                             vertical: 0,
                           ), // Change to vertical: 0
+                          suffixIcon: _isSearching
+                              ? GestureDetector(
+                                  onTap: () {
+                                    _searchController.clear();
+                                    setState(() => _searchQuery = '');
+                                  },
+                                  child: const Icon(
+                                    Icons.close_rounded,
+                                    color: Colors.black54,
+                                    size: 20,
+                                  ),
+                                )
+                              : null,
                         ),
                       ),
                     ),
