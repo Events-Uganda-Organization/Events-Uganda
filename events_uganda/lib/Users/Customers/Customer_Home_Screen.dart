@@ -66,8 +66,32 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
   bool _isSearchFocused = false;
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
+  _HomeFilter? _activeFilter;
 
   bool get _isSearching => _searchQuery.trim().isNotEmpty;
+
+  bool get _hasActiveFilter => _activeFilter != null;
+
+  double _parsePrice(String price) {
+    final digits = price.replaceAll(RegExp(r'[^\d]'), '');
+    return digits.isEmpty ? 0 : double.parse(digits);
+  }
+
+  List<_HomeCardItem> _applySort(List<_HomeCardItem> items) {
+    final sorted = List<_HomeCardItem>.from(items);
+    switch (_activeFilter) {
+      case _HomeFilter.rating:
+        sorted.sort((a, b) => double.parse(b.rating).compareTo(double.parse(a.rating)));
+      case _HomeFilter.priceLowToHigh:
+        sorted.sort((a, b) => _parsePrice(a.price).compareTo(_parsePrice(b.price)));
+      case _HomeFilter.priceHighToLow:
+        sorted.sort((a, b) => _parsePrice(b.price).compareTo(_parsePrice(a.price)));
+      case _HomeFilter.clear:
+      case null:
+        break;
+    }
+    return sorted;
+  }
 
   late final List<_CategoryItem> _categories;
   late final List<_HomeCardItem> _forYouItems;
@@ -83,18 +107,22 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
 
   List<_HomeCardItem> get _matchedForYou {
     final query = _searchQuery.trim().toLowerCase();
-    if (query.isEmpty) return _forYouItems;
-    return _forYouItems
-        .where((c) => c.title.toLowerCase().contains(query))
-        .toList();
+    final items = query.isEmpty
+        ? _forYouItems
+        : _forYouItems
+            .where((c) => c.title.toLowerCase().contains(query))
+            .toList();
+    return _applySort(items);
   }
 
   List<_HomeCardItem> get _matchedPopular {
     final query = _searchQuery.trim().toLowerCase();
-    if (query.isEmpty) return _popularItems;
-    return _popularItems
-        .where((c) => c.title.toLowerCase().contains(query))
-        .toList();
+    final items = query.isEmpty
+        ? _popularItems
+        : _popularItems
+            .where((c) => c.title.toLowerCase().contains(query))
+            .toList();
+    return _applySort(items);
   }
 
   bool get _hasNoResults =>
