@@ -11,6 +11,31 @@ import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/components/sidebar_menu.dart';
 
+class _ProviderCardItem {
+  const _ProviderCardItem(
+    this.imagePath,
+    this.title,
+    this.rating,
+    this.index,
+    this.priceRange, {
+    this.showVerified = true,
+  });
+
+  final String imagePath;
+  final String title;
+  final String rating;
+  final int index;
+  final String priceRange;
+  final bool showVerified;
+}
+
+enum _ProviderFilter {
+  rating,
+  priceLowToHigh,
+  priceHighToLow,
+  clear,
+}
+
 class ServiceListingSaloonScreen extends StatefulWidget {
   final String? category;
   final int? categoryIndex;
@@ -50,6 +75,172 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
   String? _profilePicUrl;
   final bool _canForwardReturn =
       false; // Controls the right-side inactive/active return button
+
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+  _ProviderFilter? _activeFilter;
+  late final List<_ProviderCardItem> _featuredProviders;
+  late final List<_ProviderCardItem> _allProviders;
+
+  bool get _isSearching => _searchQuery.trim().isNotEmpty;
+
+  bool get _hasActiveFilter => _activeFilter != null;
+
+  bool get _hasNoResults =>
+      _isSearching && _matchedFeatured.isEmpty && _matchedAll.isEmpty;
+
+  List<_ProviderCardItem> get _matchedFeatured =>
+      _filterProviders(_featuredProviders);
+
+  List<_ProviderCardItem> get _matchedAll => _filterProviders(_allProviders);
+
+  double _parsePrice(String price) {
+    double parseToken(String token) {
+      final t = token.trim().toUpperCase().replaceAll(',', '');
+      if (t.endsWith('M')) {
+        final num = double.tryParse(t.replaceAll('M', ''));
+        return num == null ? 0 : num * 1000000;
+      }
+      if (t.endsWith('K')) {
+        final num = double.tryParse(t.replaceAll('K', ''));
+        return num == null ? 0 : num * 1000;
+      }
+      return double.tryParse(t) ?? 0;
+    }
+
+    final bounds = price.split('-').map(parseToken).toList();
+    if (bounds.isEmpty) return 0;
+    return bounds.reduce((a, b) => a < b ? a : b);
+  }
+
+  List<_ProviderCardItem> _applySort(List<_ProviderCardItem> items) {
+    final sorted = List<_ProviderCardItem>.from(items);
+    switch (_activeFilter) {
+      case _ProviderFilter.rating:
+        sorted.sort((a, b) =>
+            double.parse(b.rating).compareTo(double.parse(a.rating)));
+      case _ProviderFilter.priceLowToHigh:
+        sorted.sort((a, b) =>
+            _parsePrice(a.priceRange).compareTo(_parsePrice(b.priceRange)));
+      case _ProviderFilter.priceHighToLow:
+        sorted.sort((a, b) =>
+            _parsePrice(b.priceRange).compareTo(_parsePrice(a.priceRange)));
+      case _ProviderFilter.clear:
+      case null:
+        break;
+    }
+    return sorted;
+  }
+
+  List<_ProviderCardItem> _filterProviders(List<_ProviderCardItem> items) {
+    final query = _searchQuery.trim().toLowerCase();
+    final filtered = query.isEmpty
+        ? List<_ProviderCardItem>.from(items)
+        : items
+            .where((c) => c.title.toLowerCase().contains(query))
+            .toList();
+    return _applySort(filtered);
+  }
+
+  Widget _buildNoResults(double screenWidth) {
+    return Padding(
+      padding: EdgeInsets.only(top: screenWidth * 0.08),
+      child: Center(
+        child: Column(
+          children: [
+            Icon(
+              Icons.search_off_rounded,
+              size: screenWidth * 0.16,
+              color: Colors.black.withValues(alpha: 0.2),
+            ),
+            SizedBox(height: screenWidth * 0.04),
+            Text(
+              "No services found for '${_searchQuery.trim()}'",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: screenWidth * 0.04,
+                color: Colors.black87,
+              ),
+            ),
+            SizedBox(height: screenWidth * 0.01),
+            Text(
+              'Try a different search term or category',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: screenWidth * 0.032,
+                color: Colors.black38,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  PopupMenuItem<_ProviderFilter> _buildFilterMenuItem({
+    required IconData icon,
+    required String label,
+    required Color dotColor,
+    required _ProviderFilter value,
+    required double screenWidth,
+    bool isActive = false,
+    bool isDestructive = false,
+  }) {
+    return PopupMenuItem<_ProviderFilter>(
+      value: value,
+      height: screenWidth * 0.14,
+      child: SizedBox(
+        width: screenWidth * 0.56,
+        child: Row(
+          children: [
+            Container(
+              width: screenWidth * 0.028,
+              height: screenWidth * 0.028,
+              decoration: BoxDecoration(
+                color: dotColor,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: dotColor.withValues(alpha: 0.4),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: screenWidth * 0.04),
+            Container(
+              width: screenWidth * 0.09,
+              height: screenWidth * 0.09,
+              decoration: BoxDecoration(
+                color: dotColor.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: dotColor, size: screenWidth * 0.048),
+            ),
+            SizedBox(width: screenWidth * 0.035),
+            Expanded(
+              child: Text(
+                label,
+                style: TextStyle(
+                  fontSize: screenWidth * 0.035,
+                  fontWeight: FontWeight.w500,
+                  color: isDestructive ? dotColor : Colors.white,
+                ),
+              ),
+            ),
+            if (isActive)
+              Icon(
+                Icons.check_rounded,
+                color: Colors.white,
+                size: screenWidth * 0.05,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _buildCircleItem(
     double screenWidth,
@@ -97,6 +288,26 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
   @override
   void initState() {
     super.initState();
+    _featuredProviders = [
+      const _ProviderCardItem('assets/images/saloon4.jpg', 'Royal Glam Studios', '4.8', 0, 'UGX 500K - 2M'),
+      const _ProviderCardItem('assets/images/saloonvect.png', 'Aurora Beauty Lounge', '4.6', 1, 'UGX 400K - 1.5M'),
+      const _ProviderCardItem('assets/images/saloon5.jpg', 'Ivory Strand Hair Co.', '4.9', 2, 'UGX 600K - 3M'),
+      const _ProviderCardItem('assets/images/saloon4.jpg', 'Petal Crown Makeup Artistry', '4.7', 3, 'UGX 300K - 1.2M'),
+      const _ProviderCardItem('assets/images/saloon2.jpg', 'Golden Mirror Saloon', '4.5', 4, 'UGX 200K - 800K'),
+      const _ProviderCardItem('assets/images/saloon3.jpg', 'Velvet Touch Stylists', '4.9', 5, 'UGX 800K - 2.5M'),
+      const _ProviderCardItem('assets/images/saloon.jpg', 'Bliss Beauty & Spa', '4.4', 6, 'UGX 400K - 1.8M'),
+      const _ProviderCardItem('assets/images/saloon3.jpg', 'Sugar & Sheen Salon', '4.7', 7, 'UGX 350K - 1.5M'),
+    ];
+    _allProviders = [
+      const _ProviderCardItem('assets/images/saloon5.jpg', 'Heritage Beauty House', '4.8', 8, 'UGX 500K - 2M', showVerified: false),
+      const _ProviderCardItem('assets/images/saloon.jpg', 'Crimson Rose Beauty', '4.6', 9, 'UGX 400K - 1.5M', showVerified: false),
+      const _ProviderCardItem('assets/images/saloon2.jpg', 'Palm Court Hair Studio', '4.9', 10, 'UGX 600K - 3M', showVerified: false),
+      const _ProviderCardItem('assets/images/saloon3.jpg', 'Serene Glow Spa', '4.7', 11, 'UGX 300K - 1.2M', showVerified: false),
+      const _ProviderCardItem('assets/images/saloon4.jpg', 'Bella Beauty Bar', '4.5', 12, 'UGX 200K - 800K', showVerified: false),
+      const _ProviderCardItem('assets/images/saloon5.jpg', 'Nile Hair & Beauty', '4.9', 13, 'UGX 800K - 2.5M', showVerified: false),
+      const _ProviderCardItem('assets/images/saloonvect.png', 'Terra Beauty Collective', '4.4', 14, 'UGX 400K - 1.8M', showVerified: false),
+      const _ProviderCardItem('assets/images/saloon2.jpg', 'Atlas Styling Suites', '4.7', 15, 'UGX 350K - 1.5M', showVerified: false),
+    ];
     _promoScrollController.addListener(_onPromoScroll);
     _circleScrollController.addListener(_onCircleScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
