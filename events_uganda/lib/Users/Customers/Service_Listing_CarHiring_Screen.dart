@@ -143,9 +143,19 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
   List<_ProviderCardItem> _applySort(List<_ProviderCardItem> items) {
     final sorted = List<_ProviderCardItem>.from(items);
     switch (_activeFilter) {
+      case _ProviderFilter.nearest:
+        final origin = _userLocation ?? _defaultLocation;
+        sorted.sort((a, b) => _distanceTo(origin, _coordFor(a.index))
+            .compareTo(_distanceTo(origin, _coordFor(b.index))));
       case _ProviderFilter.rating:
         sorted.sort((a, b) =>
             double.parse(b.rating).compareTo(double.parse(a.rating)));
+      case _ProviderFilter.popular:
+        sorted.sort((a, b) =>
+            double.parse(b.rating).compareTo(double.parse(a.rating)));
+      case _ProviderFilter.popularLow:
+        sorted.sort((a, b) =>
+            double.parse(a.rating).compareTo(double.parse(b.rating)));
       case _ProviderFilter.priceLowToHigh:
         sorted.sort((a, b) =>
             _parsePrice(a.priceRange).compareTo(_parsePrice(b.priceRange)));
@@ -264,6 +274,154 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                 size: screenWidth * 0.05,
               ),
           ],
+        ),
+      ),
+    );
+  }
+
+  double _distanceTo(LatLng a, LatLng b) =>
+      const Distance().as(LengthUnit.Kilometer, a, b);
+
+  LatLng _coordFor(int index) => _providerCoords[index] ?? _defaultLocation;
+
+  Future<void> _resolveUserLocation() async {
+    LatLng resolved = _defaultLocation;
+    try {
+      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (serviceEnabled) {
+        var permission = await Geolocator.checkPermission();
+        if (permission == LocationPermission.denied) {
+          permission = await Geolocator.requestPermission();
+        }
+        if (permission == LocationPermission.whileInUse ||
+            permission == LocationPermission.always) {
+          final pos = await Geolocator.getCurrentPosition(
+            locationSettings: const LocationSettings(
+              accuracy: LocationAccuracy.medium,
+            ),
+          );
+          resolved = LatLng(pos.latitude, pos.longitude);
+        }
+      }
+    } catch (e) {
+      debugPrint('Location error: $e');
+    }
+    _userLocation = resolved;
+  }
+
+  void _onPillTap(_ProviderFilter value) {
+    setState(() {
+      if (_activeFilter == value) {
+        _activeFilter = null;
+      } else {
+        _activeFilter = value;
+      }
+    });
+  }
+
+  Future<void> _onNearestTap() async {
+    if (_activeFilter == _ProviderFilter.nearest) {
+      setState(() => _activeFilter = null);
+      return;
+    }
+    setState(() => _locating = true);
+    await _resolveUserLocation();
+    if (!mounted) return;
+    setState(() {
+      _locating = false;
+      _activeFilter = _ProviderFilter.nearest;
+    });
+  }
+
+  void _onPricePillTap() {
+    setState(() {
+      switch (_activeFilter) {
+        case _ProviderFilter.priceLowToHigh:
+          _activeFilter = _ProviderFilter.priceHighToLow;
+        case _ProviderFilter.priceHighToLow:
+          _activeFilter = null;
+        default:
+          _activeFilter = _ProviderFilter.priceLowToHigh;
+      }
+    });
+  }
+
+  void _onPopularPillTap() {
+    setState(() {
+      switch (_activeFilter) {
+        case _ProviderFilter.popular:
+          _activeFilter = _ProviderFilter.popularLow;
+        case _ProviderFilter.popularLow:
+          _activeFilter = null;
+        default:
+          _activeFilter = _ProviderFilter.popular;
+      }
+    });
+  }
+
+  Widget _buildFilterPill({
+    required IconData icon,
+    required String label,
+    required double screenWidth,
+    required double screenHeight,
+    required bool isActive,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: screenWidth * 0.34,
+        height: screenHeight * 0.055,
+        margin: EdgeInsets.only(right: screenWidth * 0.03),
+        decoration: BoxDecoration(
+          color: isActive ? const Color(0XFFF3CA9B) : Colors.white,
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(left: screenWidth * 0.01),
+          child: Row(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  width: screenWidth * 0.09,
+                  height: screenWidth * 0.09,
+                  decoration: BoxDecoration(
+                    color: isActive ? Colors.white : const Color(0XFFF3CA9B),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.15),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    icon,
+                    color: Colors.black,
+                    size: screenWidth * 0.05,
+                  ),
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.04),
+              Text(
+                label,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: screenWidth * 0.03,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -1405,10 +1563,13 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                 children: [
                   PopupMenuButton<_ProviderFilter>(
                     onSelected: (action) {
-                      setState(() {
-                        _activeFilter =
-                            action == _ProviderFilter.clear ? null : action;
-                      });
+                      if (action == _ProviderFilter.clear) {
+                        setState(() => _activeFilter = null);
+                      } else if (action == _ProviderFilter.nearest) {
+                        _onNearestTap();
+                      } else {
+                        setState(() => _activeFilter = action);
+                      }
                     },
                     offset: Offset(-(screenWidth * 0.432 + 16), 8),
                     elevation: 16,
@@ -1418,11 +1579,28 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                     ),
                     itemBuilder: (ctx) => [
                       _buildFilterMenuItem(
+                        icon: Icons.near_me_rounded,
+                        label: _locating ? 'Finding Nearest...' : 'Nearest',
+                        dotColor: const Color(0xFF26A69A),
+                        value: _ProviderFilter.nearest,
+                        isActive: _activeFilter == _ProviderFilter.nearest,
+                        screenWidth: screenWidth,
+                      ),
+                      _buildFilterMenuItem(
                         icon: Icons.star_rounded,
                         label: 'Top Rated',
                         dotColor: const Color(0xFFFBC02D),
                         value: _ProviderFilter.rating,
                         isActive: _activeFilter == _ProviderFilter.rating,
+                        screenWidth: screenWidth,
+                      ),
+                      _buildFilterMenuItem(
+                        icon: Icons.trending_up_rounded,
+                        label: 'Popular',
+                        dotColor: const Color(0xFFEF6C00),
+                        value: _ProviderFilter.popular,
+                        isActive: _activeFilter == _ProviderFilter.popular ||
+                            _activeFilter == _ProviderFilter.popularLow,
                         screenWidth: screenWidth,
                       ),
                       _buildFilterMenuItem(
