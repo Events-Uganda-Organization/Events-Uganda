@@ -1507,6 +1507,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     ),
                     SizedBox(height: screenWidth * 0.02),
                     ],
+                    if (!_isSearching || _matchedForYou.isNotEmpty) ...[
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: screenWidth * 0.04,
@@ -1522,14 +1523,15 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               color: Colors.black,
                             ),
                           ),
-                          Text(
-                            'View All',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: screenWidth * 0.030,
-                              color: const Color(0xFFB47A25),
+                          if (!_isSearching)
+                            Text(
+                              'View All',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.030,
+                                color: const Color(0xFFB47A25),
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),
@@ -1544,65 +1546,22 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                         ),
                         child: Row(
                           children: [
-                            _buildForYouImage(
-                              'assets/images/cake4.jpg',
-                              0,
-                              '4.8',
-                              'Cake Design',
-                              '1,500,000 UGX',
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ServiceDetailsScreen(),
-                                ),
+                            for (int i = 0; i < _matchedForYou.length; i++) ...[
+                              if (i > 0) SizedBox(width: screenWidth * 0.04),
+                              _buildForYouImage(
+                                _matchedForYou[i].imagePath,
+                                _matchedForYou[i].index,
+                                _matchedForYou[i].rating,
+                                _matchedForYou[i].title,
+                                _matchedForYou[i].price,
+                                onTap: _matchedForYou[i].onTap,
                               ),
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
-                            _buildForYouImage(
-                              'assets/images/deco3.jpg',
-                              1,
-                              '4.5',
-                              'Tent Decoration',
-                              '2,000,000 UGX',
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ServiceDetailsScreen(),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
-                            _buildForYouImage(
-                              'assets/images/blacknwhitemen.jpg',
-                              2,
-                              '4.9',
-                              'Photography',
-                              '3,100,000 UGX',
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ServiceDetailsScreen(),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
-                            _buildForYouImage(
-                              'assets/images/glassdeco.jpg',
-                              3,
-                              '4.7',
-                              'Decoration',
-                              '6,000,000 UGX',
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ServiceDetailsScreen(),
-                                ),
-                              ),
-                            ),
+                            ],
                           ],
                         ),
                       ),
                     ),
+                    ],
                     SizedBox(height: screenWidth * 0.02),
                     Padding(
                       padding: EdgeInsets.symmetric(
