@@ -1573,10 +1573,13 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
                 children: [
                   PopupMenuButton<_ProviderFilter>(
                     onSelected: (action) {
-                      setState(() {
-                        _activeFilter =
-                            action == _ProviderFilter.clear ? null : action;
-                      });
+                      if (action == _ProviderFilter.clear) {
+                        setState(() => _activeFilter = null);
+                      } else if (action == _ProviderFilter.nearest) {
+                        _onNearestTap();
+                      } else {
+                        setState(() => _activeFilter = action);
+                      }
                     },
                     offset: Offset(-(screenWidth * 0.432 + 16), 8),
                     elevation: 16,
@@ -1586,11 +1589,28 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
                     ),
                     itemBuilder: (ctx) => [
                       _buildFilterMenuItem(
+                        icon: Icons.near_me_rounded,
+                        label: _locating ? 'Finding Nearest...' : 'Nearest',
+                        dotColor: const Color(0xFF26A69A),
+                        value: _ProviderFilter.nearest,
+                        isActive: _activeFilter == _ProviderFilter.nearest,
+                        screenWidth: screenWidth,
+                      ),
+                      _buildFilterMenuItem(
                         icon: Icons.star_rounded,
                         label: 'Top Rated',
                         dotColor: const Color(0xFFFBC02D),
                         value: _ProviderFilter.rating,
                         isActive: _activeFilter == _ProviderFilter.rating,
+                        screenWidth: screenWidth,
+                      ),
+                      _buildFilterMenuItem(
+                        icon: Icons.trending_up_rounded,
+                        label: 'Popular',
+                        dotColor: const Color(0xFFEF6C00),
+                        value: _ProviderFilter.popular,
+                        isActive: _activeFilter == _ProviderFilter.popular ||
+                            _activeFilter == _ProviderFilter.popularLow,
                         screenWidth: screenWidth,
                       ),
                       _buildFilterMenuItem(
@@ -1771,236 +1791,39 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    // Nearest
-                    Container(
-                      width: screenWidth * 0.34,
-                      height: screenHeight * 0.055,
-                      margin: EdgeInsets.only(right: screenWidth * 0.03),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: screenWidth * 0.01),
-                        child: Row(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                width: screenWidth * 0.09,
-                                height: screenWidth * 0.09,
-                                decoration: BoxDecoration(
-                                  color: const Color(0XFFF3CA9B),
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.15),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.location_on,
-                                    color: Colors.black,
-                                    size: screenWidth * 0.05,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
-                            Text(
-                              'Nearest',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: screenWidth * 0.03,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    _buildFilterPill(
+                      icon: Icons.location_on,
+                      label: 'Nearest',
+                      screenWidth: screenWidth,
+                      screenHeight: screenHeight,
+                      isActive: _activeFilter == _ProviderFilter.nearest,
+                      onTap: _onNearestTap,
                     ),
-                    // Rating
-                    Container(
-                      width: screenWidth * 0.34,
-                      height: screenHeight * 0.055,
-                      margin: EdgeInsets.only(right: screenWidth * 0.03),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: screenWidth * 0.01),
-                        child: Row(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                width: screenWidth * 0.09,
-                                height: screenWidth * 0.09,
-                                decoration: BoxDecoration(
-                                  color: const Color(0XFFF3CA9B),
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.15),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.star,
-                                    color: Colors.black,
-                                    size: screenWidth * 0.05,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
-                            Text(
-                              'Rating',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: screenWidth * 0.03,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    _buildFilterPill(
+                      icon: Icons.star,
+                      label: 'Rating',
+                      screenWidth: screenWidth,
+                      screenHeight: screenHeight,
+                      isActive: _activeFilter == _ProviderFilter.rating,
+                      onTap: () => _onPillTap(_ProviderFilter.rating),
                     ),
-                    // Price
-                    Container(
-                      width: screenWidth * 0.34,
-                      height: screenHeight * 0.055,
-                      margin: EdgeInsets.only(right: screenWidth * 0.03),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: screenWidth * 0.01),
-                        child: Row(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                width: screenWidth * 0.09,
-                                height: screenWidth * 0.09,
-                                decoration: BoxDecoration(
-                                  color: const Color(0XFFF3CA9B),
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.15),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.attach_money,
-                                    color: Colors.black,
-                                    size: screenWidth * 0.05,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
-                            Text(
-                              'Price',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: screenWidth * 0.03,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    _buildFilterPill(
+                      icon: Icons.attach_money,
+                      label: 'Price',
+                      screenWidth: screenWidth,
+                      screenHeight: screenHeight,
+                      isActive: _activeFilter == _ProviderFilter.priceLowToHigh ||
+                          _activeFilter == _ProviderFilter.priceHighToLow,
+                      onTap: _onPricePillTap,
                     ),
-                    // Popular
-                    Container(
-                      width: screenWidth * 0.34,
-                      height: screenHeight * 0.055,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: screenWidth * 0.01),
-                        child: Row(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                width: screenWidth * 0.09,
-                                height: screenWidth * 0.09,
-                                decoration: BoxDecoration(
-                                  color: const Color(0XFFF3CA9B),
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.15),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.trending_up,
-                                    color: Colors.black,
-                                    size: screenWidth * 0.05,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
-                            Text(
-                              'Popular',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: screenWidth * 0.03,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                    _buildFilterPill(
+                      icon: Icons.trending_up,
+                      label: 'Popular',
+                      screenWidth: screenWidth,
+                      screenHeight: screenHeight,
+                      isActive: _activeFilter == _ProviderFilter.popular ||
+                          _activeFilter == _ProviderFilter.popularLow,
+                      onTap: _onPopularPillTap,
                     ),
                   ],
                 ),
