@@ -15,6 +15,8 @@ import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:events_uganda/components/sidebar_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
 
 class _HomeCardItem {
   const _HomeCardItem(
@@ -47,6 +49,7 @@ class _CategoryItem {
 }
 
 enum _HomeFilter {
+  nearest,
   rating,
   priceLowToHigh,
   priceHighToLow,
