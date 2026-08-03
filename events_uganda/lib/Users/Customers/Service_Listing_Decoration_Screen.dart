@@ -1373,28 +1373,98 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
             Positioned(
               top: screenHeight * 0.122,
               right: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 10,
-                      offset: const Offset(2, 7),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  PopupMenuButton<_ProviderFilter>(
+                    onSelected: (action) {
+                      setState(() {
+                        _activeFilter =
+                            action == _ProviderFilter.clear ? null : action;
+                      });
+                    },
+                    offset: Offset(-(screenWidth * 0.432 + 16), 8),
+                    elevation: 16,
+                    color: const Color(0xFF1A1A2E),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
                     ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.tune_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
+                    itemBuilder: (ctx) => [
+                      _buildFilterMenuItem(
+                        icon: Icons.star_rounded,
+                        label: 'Top Rated',
+                        dotColor: const Color(0xFFFBC02D),
+                        value: _ProviderFilter.rating,
+                        isActive: _activeFilter == _ProviderFilter.rating,
+                        screenWidth: screenWidth,
+                      ),
+                      _buildFilterMenuItem(
+                        icon: Icons.attach_money_rounded,
+                        label: 'Price: Low to High',
+                        dotColor: const Color(0xFF4CAF50),
+                        value: _ProviderFilter.priceLowToHigh,
+                        isActive:
+                            _activeFilter == _ProviderFilter.priceLowToHigh,
+                        screenWidth: screenWidth,
+                      ),
+                      _buildFilterMenuItem(
+                        icon: Icons.attach_money_rounded,
+                        label: 'Price: High to Low',
+                        dotColor: const Color(0xFF42A5F5),
+                        value: _ProviderFilter.priceHighToLow,
+                        isActive:
+                            _activeFilter == _ProviderFilter.priceHighToLow,
+                        screenWidth: screenWidth,
+                      ),
+                      const PopupMenuDivider(height: 1),
+                      _buildFilterMenuItem(
+                        icon: Icons.filter_alt_off_rounded,
+                        label: 'Clear Filters',
+                        dotColor: const Color(0xFFFF5F5F),
+                        value: _ProviderFilter.clear,
+                        isDestructive: true,
+                        screenWidth: screenWidth,
+                      ),
+                    ],
+                    child: Container(
+                      width: screenWidth * 0.128,
+                      height: screenWidth * 0.128,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 3),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.15),
+                            blurRadius: 10,
+                            offset: const Offset(2, 7),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.tune_rounded,
+                          color: Colors.black,
+                          size: screenWidth * 0.07,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  if (_hasActiveFilter)
+                    Positioned(
+                      top: -screenWidth * 0.004,
+                      right: -screenWidth * 0.004,
+                      child: Container(
+                        width: screenWidth * 0.034,
+                        height: screenWidth * 0.034,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF4CAF50),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 2),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             Positioned(
@@ -1790,7 +1860,10 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
               bottom: 0,
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    if (_hasNoResults) _buildNoResults(screenWidth),
+                    if (!_isSearching || _matchedFeatured.isNotEmpty) ...[
                     SizedBox(height: screenWidth * 0.02),
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -1830,73 +1903,21 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                         spacing: screenWidth * 0.04,
                         runSpacing: screenWidth * 0.04,
                         children: [
-                          _buildCategoryCard(
-                            'assets/images/tent1.jpg',
-                            'Provider\'s Name',
-                            '4.8',
-                            0,
-                            'UGX 500K - 2M',
-                            screenWidth,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco2.jpg',
-                            'Provider\'s Name',
-                            '4.6',
-                            1,
-                            'UGX 400K - 1.5M',
-                            screenWidth,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco4.jpg',
-                            'Provider\'s Name',
-                            '4.9',
-                            2,
-                            'UGX 600K - 3M',
-                            screenWidth,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco3.jpg',
-                            'Provider\'s Name',
-                            '4.7',
-                            3,
-                            'UGX 300K - 1.2M',
-                            screenWidth,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco2.jpg',
-                            'Provider\'s Name',
-                            '4.5',
-                            4,
-                            'UGX 200K - 800K',
-                            screenWidth,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco5.jpg',
-                            'Provider\'s Name',
-                            '4.7',
-                            11,
-                            'UGX 300K - 1.2M',
-                            screenWidth,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco4.jpg',
-                            'Provider\'s Name',
-                            '4.9',
-                            10,
-                            'UGX 600K - 3M',
-                            screenWidth,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco3.jpg',
-                            'Provider\'s Name',
-                            '4.6',
-                            9,
-                            'UGX 400K - 1.5M',
-                            screenWidth,
-                          ),
+                          for (int i = 0; i < _matchedFeatured.length; i++)
+                            _buildCategoryCard(
+                              _matchedFeatured[i].imagePath,
+                              _matchedFeatured[i].title,
+                              _matchedFeatured[i].rating,
+                              _matchedFeatured[i].index,
+                              _matchedFeatured[i].priceRange,
+                              screenWidth,
+                              showVerified: _matchedFeatured[i].showVerified,
+                            ),
                         ],
                       ),
                     ),
+                    ],
+                    if (!_isSearching || _matchedAll.isNotEmpty) ...[
                     SizedBox(height: screenWidth * 0.04),
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -1926,81 +1947,20 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
                         spacing: screenWidth * 0.04,
                         runSpacing: screenWidth * 0.04,
                         children: [
-                          _buildCategoryCard(
-                            'assets/images/deco2.jpg',
-                            'Provider\'s Name',
-                            '4.8',
-                            8,
-                            'UGX 500K - 2M',
-                            screenWidth,
-                            showVerified: false,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco3.jpg',
-                            'Provider\'s Name',
-                            '4.6',
-                            9,
-                            'UGX 400K - 1.5M',
-                            screenWidth,
-                            showVerified: false,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco4.jpg',
-                            'Provider\'s Name',
-                            '4.9',
-                            10,
-                            'UGX 600K - 3M',
-                            screenWidth,
-                            showVerified: false,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco5.jpg',
-                            'Provider\'s Name',
-                            '4.7',
-                            11,
-                            'UGX 300K - 1.2M',
-                            screenWidth,
-                            showVerified: false,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco2.jpg',
-                            'Provider\'s Name',
-                            '4.5',
-                            12,
-                            'UGX 200K - 800K',
-                            screenWidth,
-                            showVerified: false,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/glassdeco.jpg',
-                            'Provider\'s Name',
-                            '4.9',
-                            13,
-                            'UGX 800K - 2.5M',
-                            screenWidth,
-                            showVerified: false,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/deco3.jpg',
-                            'Provider\'s Name',
-                            '4.4',
-                            14,
-                            'UGX 400K - 1.8M',
-                            screenWidth,
-                            showVerified: false,
-                          ),
-                          _buildCategoryCard(
-                            'assets/images/tent1.jpg',
-                            'Provider\'s Name',
-                            '4.7',
-                            15,
-                            'UGX 350K - 1.5M',
-                            screenWidth,
-                            showVerified: false,
-                          ),
+                          for (int i = 0; i < _matchedAll.length; i++)
+                            _buildCategoryCard(
+                              _matchedAll[i].imagePath,
+                              _matchedAll[i].title,
+                              _matchedAll[i].rating,
+                              _matchedAll[i].index,
+                              _matchedAll[i].priceRange,
+                              screenWidth,
+                              showVerified: _matchedAll[i].showVerified,
+                            ),
                         ],
                       ),
                     ),
+                    ],
                     SizedBox(height: screenWidth * 0.1),
                   ],
                 ),
