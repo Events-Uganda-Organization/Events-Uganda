@@ -191,6 +191,67 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     );
   }
 
+  PopupMenuItem<_HomeFilter> _buildFilterMenuItem({
+    required IconData icon,
+    required String label,
+    required Color dotColor,
+    required _HomeFilter value,
+    required double screenWidth,
+    bool isActive = false,
+    bool isDestructive = false,
+  }) {
+    return PopupMenuItem<_HomeFilter>(
+      value: value,
+      height: screenWidth * 0.14,
+      child: Row(
+        children: [
+          Container(
+            width: screenWidth * 0.028,
+            height: screenWidth * 0.028,
+            decoration: BoxDecoration(
+              color: dotColor,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: dotColor.withValues(alpha: 0.4),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: screenWidth * 0.04),
+          Container(
+            width: screenWidth * 0.09,
+            height: screenWidth * 0.09,
+            decoration: BoxDecoration(
+              color: dotColor.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: dotColor, size: screenWidth * 0.048),
+          ),
+          SizedBox(width: screenWidth * 0.035),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: screenWidth * 0.035,
+                fontWeight: FontWeight.w500,
+                color: isDestructive ? dotColor : Colors.white,
+              ),
+            ),
+          ),
+          if (isActive)
+            Icon(
+              Icons.check_rounded,
+              color: Colors.white,
+              size: screenWidth * 0.05,
+            ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildCircleItem(
     double screenWidth,
     double screenHeight,
