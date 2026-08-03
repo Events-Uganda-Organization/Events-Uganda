@@ -1563,6 +1563,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     ),
                     ],
                     SizedBox(height: screenWidth * 0.02),
+                    if (!_isSearching || _matchedPopular.isNotEmpty) ...[
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: screenWidth * 0.04,
@@ -1578,14 +1579,15 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                               color: Colors.black,
                             ),
                           ),
-                          Text(
-                            'View All',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: screenWidth * 0.030,
-                              color: const Color(0xFFB47A25),
+                          if (!_isSearching)
+                            Text(
+                              'View All',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: screenWidth * 0.030,
+                                color: const Color(0xFFB47A25),
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),
@@ -1600,41 +1602,21 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                         ),
                         child: Row(
                           children: [
-                            _buildPopularNowImage(
-                              'assets/images/cake4.jpg',
-                              0,
-                              '4.8',
-                              'Cake Design',
-                              '1,500,000 UGX',
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
-                            _buildPopularNowImage(
-                              'assets/images/deco3.jpg',
-                              1,
-                              '4.5',
-                              'Tent Decoration',
-                              '2,000,000 UGX',
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
-                            _buildPopularNowImage(
-                              'assets/images/blacknwhitemen.jpg',
-                              2,
-                              '4.9',
-                              'Photography',
-                              '3,100,000 UGX',
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
-                            _buildPopularNowImage(
-                              'assets/images/glassdeco.jpg',
-                              3,
-                              '4.7',
-                              'Decoration',
-                              '6,000,000 UGX',
-                            ),
+                            for (int i = 0; i < _matchedPopular.length; i++) ...[
+                              if (i > 0) SizedBox(width: screenWidth * 0.04),
+                              _buildPopularNowImage(
+                                _matchedPopular[i].imagePath,
+                                _matchedPopular[i].index,
+                                _matchedPopular[i].rating,
+                                _matchedPopular[i].title,
+                                _matchedPopular[i].price,
+                              ),
+                            ],
                           ],
                         ),
                       ),
                     ),
+                    ],
                   ],
                 ),
               ),
