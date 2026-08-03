@@ -210,7 +210,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
       _CategoryItem(
         'assets/images/deco5.jpg',
         'Decoration',
-        () => Navigator.push(
+        onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
@@ -221,7 +221,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
       _CategoryItem(
         'assets/images/catering.jpg',
         'Catering',
-        () => Navigator.push(
+        onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
@@ -233,7 +233,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
       _CategoryItem(
         'assets/images/carhire1.jpg',
         'Car Hire',
-        () => Navigator.push(
+        onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
@@ -244,7 +244,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
       _CategoryItem(
         'assets/images/cake2.jpg',
         'Cakes',
-        () => Navigator.push(
+        onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
