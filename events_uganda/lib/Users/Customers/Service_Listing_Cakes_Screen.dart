@@ -1959,6 +1959,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
                         ],
                       ),
                     ),
+                    ],
                     SizedBox(height: screenWidth * 0.1),
                   ],
                 ),
