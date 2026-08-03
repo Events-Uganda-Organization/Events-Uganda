@@ -71,6 +71,16 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
   String _searchQuery = '';
   _HomeFilter? _activeFilter;
 
+  static const LatLng _defaultLocation = LatLng(0.3136, 32.5811);
+  static const Map<int, LatLng> _providerCoords = {
+    0: LatLng(0.3136, 32.5811),
+    1: LatLng(0.3202, 32.5776),
+    2: LatLng(0.3056, 32.5954),
+    3: LatLng(0.3310, 32.5690),
+  };
+  LatLng? _userLocation;
+  bool _locating = false;
+
   bool get _isSearching => _searchQuery.trim().isNotEmpty;
 
   bool get _hasActiveFilter => _activeFilter != null;
@@ -83,6 +93,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
   List<_HomeCardItem> _applySort(List<_HomeCardItem> items) {
     final sorted = List<_HomeCardItem>.from(items);
     switch (_activeFilter) {
+      case _HomeFilter.nearest:
+        final origin = _userLocation ?? _defaultLocation;
+        sorted.sort((a, b) => _distanceTo(origin, _coordFor(a.index))
+            .compareTo(_distanceTo(origin, _coordFor(b.index))));
       case _HomeFilter.rating:
         sorted.sort((a, b) => double.parse(b.rating).compareTo(double.parse(a.rating)));
       case _HomeFilter.priceLowToHigh:
@@ -94,6 +108,50 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
         break;
     }
     return sorted;
+  }
+
+  double _distanceTo(LatLng a, LatLng b) =>
+      const Distance().as(LengthUnit.Kilometer, a, b);
+
+  LatLng _coordFor(int index) => _providerCoords[index] ?? _defaultLocation;
+
+  Future<void> _resolveUserLocation() async {
+    LatLng resolved = _defaultLocation;
+    try {
+      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (serviceEnabled) {
+        var permission = await Geolocator.checkPermission();
+        if (permission == LocationPermission.denied) {
+          permission = await Geolocator.requestPermission();
+        }
+        if (permission == LocationPermission.whileInUse ||
+            permission == LocationPermission.always) {
+          final pos = await Geolocator.getCurrentPosition(
+            locationSettings: const LocationSettings(
+              accuracy: LocationAccuracy.medium,
+            ),
+          );
+          resolved = LatLng(pos.latitude, pos.longitude);
+        }
+      }
+    } catch (e) {
+      debugPrint('Location error: $e');
+    }
+    _userLocation = resolved;
+  }
+
+  Future<void> _onNearestTap() async {
+    if (_activeFilter == _HomeFilter.nearest) {
+      setState(() => _activeFilter = null);
+      return;
+    }
+    setState(() => _locating = true);
+    await _resolveUserLocation();
+    if (!mounted) return;
+    setState(() {
+      _locating = false;
+      _activeFilter = _HomeFilter.nearest;
+    });
   }
 
   late final List<_CategoryItem> _categories;
@@ -1363,10 +1421,13 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                 children: [
                   PopupMenuButton<_HomeFilter>(
                     onSelected: (action) {
-                      setState(() {
-                        _activeFilter =
-                            action == _HomeFilter.clear ? null : action;
-                      });
+                      if (action == _HomeFilter.clear) {
+                        setState(() => _activeFilter = null);
+                      } else if (action == _HomeFilter.nearest) {
+                        _onNearestTap();
+                      } else {
+                        setState(() => _activeFilter = action);
+                      }
                     },
                     offset: Offset(-(screenWidth * 0.432 + 16), 8),
                     elevation: 16,
@@ -1375,6 +1436,14 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                       borderRadius: BorderRadius.circular(18),
                     ),
                     itemBuilder: (ctx) => [
+                      _buildFilterMenuItem(
+                        icon: Icons.near_me_rounded,
+                        label: _locating ? 'Finding Nearest...' : 'Nearest',
+                        dotColor: const Color(0xFF26A69A),
+                        value: _HomeFilter.nearest,
+                        isActive: _activeFilter == _HomeFilter.nearest,
+                        screenWidth: screenWidth,
+                      ),
                       _buildFilterMenuItem(
                         icon: Icons.star_rounded,
                         label: 'Top Rated',
