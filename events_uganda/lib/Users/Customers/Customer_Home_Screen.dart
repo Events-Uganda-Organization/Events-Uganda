@@ -27,6 +27,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     with TickerProviderStateMixin {
   final FocusNode _searchFocus = FocusNode();
   bool _isSearchFocused = false;
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+
+  bool get _isSearching => _searchQuery.trim().isNotEmpty;
   Timer? _countdownTimer;
   Duration _remaining = Duration(
     hours: Random().nextInt(24),
