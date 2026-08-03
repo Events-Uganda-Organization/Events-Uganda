@@ -51,6 +51,8 @@
 	<string>Events Uganda uses your microphone to record and send voice messages in chat.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>Events Uganda uses speech recognition to turn your spoken words into text for searching.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Events Uganda uses your location to show nearby service providers.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>
