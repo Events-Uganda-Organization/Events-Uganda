@@ -17,12 +17,12 @@ import 'package:events_uganda/components/sidebar_menu.dart';
 import 'package:flutter/material.dart';
 
 class _HomeCardItem {
-  const _HomeCardItem({
-    required this.imagePath,
-    required this.index,
-    required this.rating,
-    required this.title,
-    required this.price,
+  const _HomeCardItem(
+    this.imagePath,
+    this.index,
+    this.rating,
+    this.title,
+    this.price, {
     this.onTap,
   });
 
@@ -35,9 +35,9 @@ class _HomeCardItem {
 }
 
 class _CategoryItem {
-  const _CategoryItem({
-    required this.imagePath,
-    required this.label,
+  const _CategoryItem(
+    this.imagePath,
+    this.label, {
     this.onTap,
   });
 
