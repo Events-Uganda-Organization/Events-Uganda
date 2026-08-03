@@ -11,6 +11,31 @@ import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/components/sidebar_menu.dart';
 
+class _ProviderCardItem {
+  const _ProviderCardItem(
+    this.imagePath,
+    this.title,
+    this.rating,
+    this.index,
+    this.priceRange, {
+    this.showVerified = true,
+  });
+
+  final String imagePath;
+  final String title;
+  final String rating;
+  final int index;
+  final String priceRange;
+  final bool showVerified;
+}
+
+enum _ProviderFilter {
+  rating,
+  priceLowToHigh,
+  priceHighToLow,
+  clear,
+}
+
 class ServiceListingCarHiringScreen extends StatefulWidget {
   final String? category;
   final int? categoryIndex;
