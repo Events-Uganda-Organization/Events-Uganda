@@ -1330,6 +1330,8 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
               child: SingleChildScrollView(
                 child: Column(
                   children: [
+                    if (_hasNoResults) _buildNoSearchResults(screenWidth),
+                    if (!_isSearching) ...[
                     SizedBox(
                       height: promoHeight + screenWidth * 0.05,
                       child: SingleChildScrollView(
@@ -1412,6 +1414,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                       }),
                     ),
                     SizedBox(height: screenWidth * 0.02),
+                    ],
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: screenWidth * 0.04,
