@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
@@ -30,7 +32,10 @@ class _ProviderCardItem {
 }
 
 enum _ProviderFilter {
+  nearest,
   rating,
+  popular,
+  popularLow,
   priceLowToHigh,
   priceHighToLow,
   clear,
@@ -82,6 +87,28 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
   late final List<_ProviderCardItem> _featuredProviders;
   late final List<_ProviderCardItem> _allProviders;
 
+  static const LatLng _defaultLocation = LatLng(0.3136, 32.5811);
+  static const Map<int, LatLng> _providerCoords = {
+    0: LatLng(0.3136, 32.5811),
+    1: LatLng(0.3202, 32.5776),
+    2: LatLng(0.3056, 32.5954),
+    3: LatLng(0.3310, 32.5690),
+    4: LatLng(0.2935, 32.6022),
+    5: LatLng(0.3402, 32.5600),
+    6: LatLng(0.2800, 32.5700),
+    7: LatLng(0.3480, 32.5520),
+    8: LatLng(0.2720, 32.6100),
+    9: LatLng(0.3020, 32.5560),
+    10: LatLng(0.3160, 32.5400),
+    11: LatLng(0.2890, 32.5200),
+    12: LatLng(0.3220, 32.6100),
+    13: LatLng(0.3500, 32.5900),
+    14: LatLng(0.2680, 32.5460),
+    15: LatLng(0.3060, 32.6300),
+  };
+  LatLng? _userLocation;
+  bool _locating = false;
+
   bool get _isSearching => _searchQuery.trim().isNotEmpty;
 
   bool get _hasActiveFilter => _activeFilter != null;
@@ -116,9 +143,19 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
   List<_ProviderCardItem> _applySort(List<_ProviderCardItem> items) {
     final sorted = List<_ProviderCardItem>.from(items);
     switch (_activeFilter) {
+      case _ProviderFilter.nearest:
+        final origin = _userLocation ?? _defaultLocation;
+        sorted.sort((a, b) => _distanceTo(origin, _coordFor(a.index))
+            .compareTo(_distanceTo(origin, _coordFor(b.index))));
       case _ProviderFilter.rating:
         sorted.sort((a, b) =>
             double.parse(b.rating).compareTo(double.parse(a.rating)));
+      case _ProviderFilter.popular:
+        sorted.sort((a, b) =>
+            double.parse(b.rating).compareTo(double.parse(a.rating)));
+      case _ProviderFilter.popularLow:
+        sorted.sort((a, b) =>
+            double.parse(a.rating).compareTo(double.parse(b.rating)));
       case _ProviderFilter.priceLowToHigh:
         sorted.sort((a, b) =>
             _parsePrice(a.priceRange).compareTo(_parsePrice(b.priceRange)));
@@ -237,6 +274,154 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
                 size: screenWidth * 0.05,
               ),
           ],
+        ),
+      ),
+    );
+  }
+
+  double _distanceTo(LatLng a, LatLng b) =>
+      const Distance().as(LengthUnit.Kilometer, a, b);
+
+  LatLng _coordFor(int index) => _providerCoords[index] ?? _defaultLocation;
+
+  Future<void> _resolveUserLocation() async {
+    LatLng resolved = _defaultLocation;
+    try {
+      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (serviceEnabled) {
+        var permission = await Geolocator.checkPermission();
+        if (permission == LocationPermission.denied) {
+          permission = await Geolocator.requestPermission();
+        }
+        if (permission == LocationPermission.whileInUse ||
+            permission == LocationPermission.always) {
+          final pos = await Geolocator.getCurrentPosition(
+            locationSettings: const LocationSettings(
+              accuracy: LocationAccuracy.medium,
+            ),
+          );
+          resolved = LatLng(pos.latitude, pos.longitude);
+        }
+      }
+    } catch (e) {
+      debugPrint('Location error: $e');
+    }
+    _userLocation = resolved;
+  }
+
+  void _onPillTap(_ProviderFilter value) {
+    setState(() {
+      if (_activeFilter == value) {
+        _activeFilter = null;
+      } else {
+        _activeFilter = value;
+      }
+    });
+  }
+
+  Future<void> _onNearestTap() async {
+    if (_activeFilter == _ProviderFilter.nearest) {
+      setState(() => _activeFilter = null);
+      return;
+    }
+    setState(() => _locating = true);
+    await _resolveUserLocation();
+    if (!mounted) return;
+    setState(() {
+      _locating = false;
+      _activeFilter = _ProviderFilter.nearest;
+    });
+  }
+
+  void _onPricePillTap() {
+    setState(() {
+      switch (_activeFilter) {
+        case _ProviderFilter.priceLowToHigh:
+          _activeFilter = _ProviderFilter.priceHighToLow;
+        case _ProviderFilter.priceHighToLow:
+          _activeFilter = null;
+        default:
+          _activeFilter = _ProviderFilter.priceLowToHigh;
+      }
+    });
+  }
+
+  void _onPopularPillTap() {
+    setState(() {
+      switch (_activeFilter) {
+        case _ProviderFilter.popular:
+          _activeFilter = _ProviderFilter.popularLow;
+        case _ProviderFilter.popularLow:
+          _activeFilter = null;
+        default:
+          _activeFilter = _ProviderFilter.popular;
+      }
+    });
+  }
+
+  Widget _buildFilterPill({
+    required IconData icon,
+    required String label,
+    required double screenWidth,
+    required double screenHeight,
+    required bool isActive,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: screenWidth * 0.34,
+        height: screenHeight * 0.055,
+        margin: EdgeInsets.only(right: screenWidth * 0.03),
+        decoration: BoxDecoration(
+          color: isActive ? const Color(0XFFF3CA9B) : Colors.white,
+          borderRadius: BorderRadius.circular(30),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(left: screenWidth * 0.01),
+          child: Row(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  width: screenWidth * 0.09,
+                  height: screenWidth * 0.09,
+                  decoration: BoxDecoration(
+                    color: isActive ? Colors.white : const Color(0XFFF3CA9B),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.15),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    icon,
+                    color: Colors.black,
+                    size: screenWidth * 0.05,
+                  ),
+                ),
+              ),
+              SizedBox(width: screenWidth * 0.04),
+              Text(
+                label,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600,
+                  fontSize: screenWidth * 0.03,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
