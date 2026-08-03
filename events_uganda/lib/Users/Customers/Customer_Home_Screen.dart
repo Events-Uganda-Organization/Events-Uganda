@@ -1365,6 +1365,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
               bottom: 0,
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     if (_hasNoResults) _buildNoSearchResults(screenWidth),
                     if (!_isSearching) ...[
