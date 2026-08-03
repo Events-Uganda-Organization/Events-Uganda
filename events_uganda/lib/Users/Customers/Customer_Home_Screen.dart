@@ -16,6 +16,36 @@ import 'package:image_picker/image_picker.dart';
 import 'package:events_uganda/components/sidebar_menu.dart';
 import 'package:flutter/material.dart';
 
+class _HomeCardItem {
+  const _HomeCardItem({
+    required this.imagePath,
+    required this.index,
+    required this.rating,
+    required this.title,
+    required this.price,
+    this.onTap,
+  });
+
+  final String imagePath;
+  final int index;
+  final String rating;
+  final String title;
+  final String price;
+  final VoidCallback? onTap;
+}
+
+class _CategoryItem {
+  const _CategoryItem({
+    required this.imagePath,
+    required this.label,
+    this.onTap,
+  });
+
+  final String imagePath;
+  final String label;
+  final VoidCallback? onTap;
+}
+
 class CustomerHomeScreen extends StatefulWidget {
   const CustomerHomeScreen({super.key});
 
@@ -31,6 +61,40 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
   String _searchQuery = '';
 
   bool get _isSearching => _searchQuery.trim().isNotEmpty;
+
+  late final List<_CategoryItem> _categories;
+  late final List<_HomeCardItem> _forYouItems;
+  late final List<_HomeCardItem> _popularItems;
+
+  List<_CategoryItem> get _matchedCategories {
+    final query = _searchQuery.trim().toLowerCase();
+    if (query.isEmpty) return _categories;
+    return _categories
+        .where((c) => c.label.toLowerCase().contains(query))
+        .toList();
+  }
+
+  List<_HomeCardItem> get _matchedForYou {
+    final query = _searchQuery.trim().toLowerCase();
+    if (query.isEmpty) return _forYouItems;
+    return _forYouItems
+        .where((c) => c.title.toLowerCase().contains(query))
+        .toList();
+  }
+
+  List<_HomeCardItem> get _matchedPopular {
+    final query = _searchQuery.trim().toLowerCase();
+    if (query.isEmpty) return _popularItems;
+    return _popularItems
+        .where((c) => c.title.toLowerCase().contains(query))
+        .toList();
+  }
+
+  bool get _hasNoResults =>
+      _isSearching &&
+      _matchedCategories.isEmpty &&
+      _matchedForYou.isEmpty &&
+      _matchedPopular.isEmpty;
   Timer? _countdownTimer;
   Duration _remaining = Duration(
     hours: Random().nextInt(24),
@@ -106,6 +170,105 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
   @override
   void initState() {
     super.initState();
+    _categories = [
+      _CategoryItem(
+        'assets/images/deco5.jpg',
+        'Decoration',
+        () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ServiceListingDecorationScreen(category: 'Decoration', categoryIndex: 0),
+          ),
+        ),
+      ),
+      _CategoryItem(
+        'assets/images/catering.jpg',
+        'Catering',
+        () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ServiceListingCateringScreen(category: 'Catering', categoryIndex: 1),
+          ),
+        ),
+      ),
+      const _CategoryItem('assets/images/photography.jpg', 'Photography\n& Videography'),
+      _CategoryItem(
+        'assets/images/carhire1.jpg',
+        'Car Hire',
+        () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ServiceListingCarHiringScreen(category: 'Car Hire', categoryIndex: 3),
+          ),
+        ),
+      ),
+      _CategoryItem(
+        'assets/images/cake2.jpg',
+        'Cakes',
+        () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ServiceListingCakesScreen(category: 'Cakes', categoryIndex: 5),
+          ),
+        ),
+      ),
+    ];
+    _forYouItems = [
+      _HomeCardItem(
+        'assets/images/cake4.jpg',
+        0,
+        '4.8',
+        'Cake Design',
+        '1,500,000 UGX',
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+        ),
+      ),
+      _HomeCardItem(
+        'assets/images/deco3.jpg',
+        1,
+        '4.5',
+        'Tent Decoration',
+        '2,000,000 UGX',
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+        ),
+      ),
+      _HomeCardItem(
+        'assets/images/blacknwhitemen.jpg',
+        2,
+        '4.9',
+        'Photography',
+        '3,100,000 UGX',
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+        ),
+      ),
+      _HomeCardItem(
+        'assets/images/glassdeco.jpg',
+        3,
+        '4.7',
+        'Decoration',
+        '6,000,000 UGX',
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+        ),
+      ),
+    ];
+    _popularItems = [
+      _HomeCardItem('assets/images/cake4.jpg', 0, '4.8', 'Cake Design', '1,500,000 UGX'),
+      _HomeCardItem('assets/images/deco3.jpg', 1, '4.5', 'Tent Decoration', '2,000,000 UGX'),
+      _HomeCardItem('assets/images/blacknwhitemen.jpg', 2, '4.9', 'Photography', '3,100,000 UGX'),
+      _HomeCardItem('assets/images/glassdeco.jpg', 3, '4.7', 'Decoration', '6,000,000 UGX'),
+    ];
     _promoScrollController.addListener(_onPromoScroll);
     _circleScrollController.addListener(_onCircleScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
