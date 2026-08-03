@@ -264,6 +264,7 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
     _navbarSlideController.dispose();
     _countdownTimer?.cancel();
     _searchFocus.dispose();
+    _searchController.dispose();
     _circleScrollController.dispose();
     _promoScrollController.dispose();
     _popularNowScrollController.dispose();
@@ -1119,6 +1120,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                     Expanded(
                       child: TextField(
                         focusNode: _searchFocus,
+                        controller: _searchController,
+                        onChanged: (value) {
+                          setState(() => _searchQuery = value);
+                        },
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.04,
@@ -1134,6 +1139,19 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
                           contentPadding: EdgeInsets.symmetric(
                             vertical: 0,
                           ), // Change to vertical: 0
+                          suffixIcon: _isSearching
+                              ? GestureDetector(
+                                  onTap: () {
+                                    _searchController.clear();
+                                    setState(() => _searchQuery = '');
+                                  },
+                                  child: const Icon(
+                                    Icons.close_rounded,
+                                    color: Colors.black54,
+                                    size: 20,
+                                  ),
+                                )
+                              : null,
                         ),
                       ),
                     ),
