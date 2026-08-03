@@ -120,6 +120,42 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
   String _userFullName = '';
   String? _profilePicUrl;
 
+  Widget _buildNoSearchResults(double screenWidth) {
+    return Padding(
+      padding: EdgeInsets.only(top: screenWidth * 0.08),
+      child: Center(
+        child: Column(
+          children: [
+            Icon(
+              Icons.search_off_rounded,
+              size: screenWidth * 0.16,
+              color: Colors.black.withValues(alpha: 0.2),
+            ),
+            SizedBox(height: screenWidth * 0.04),
+            Text(
+              "No services found for '${_searchQuery.trim()}'",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: screenWidth * 0.04,
+                color: Colors.black87,
+              ),
+            ),
+            SizedBox(height: screenWidth * 0.01),
+            Text(
+              'Try a different search term or category',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: screenWidth * 0.032,
+                color: Colors.black38,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildCircleItem(
     double screenWidth,
     double screenHeight,
