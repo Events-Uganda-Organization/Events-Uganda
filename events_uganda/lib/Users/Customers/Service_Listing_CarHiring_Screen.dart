@@ -288,6 +288,26 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
   @override
   void initState() {
     super.initState();
+    _featuredProviders = [
+      const _ProviderCardItem('assets/images/rangerover.png', 'Royal Drive Fleet', '4.8', 0, 'UGX 500K - 2M'),
+      const _ProviderCardItem('assets/images/lexus2.png', 'Summit Auto Hire', '4.6', 1, 'UGX 400K - 1.5M'),
+      const _ProviderCardItem('assets/images/lexus1.png', 'Elegance Motors', '4.9', 2, 'UGX 600K - 3M'),
+      const _ProviderCardItem('assets/images/gle.png', 'Safari Wheels Ltd.', '4.7', 3, 'UGX 300K - 1.2M'),
+      const _ProviderCardItem('assets/images/lexus.png', 'Pearl Luxury Cars', '4.5', 4, 'UGX 200K - 800K'),
+      const _ProviderCardItem('assets/images/cybertruck.png', 'Vantage Car Hire', '4.7', 11, 'UGX 300K - 1.2M'),
+      const _ProviderCardItem('assets/images/gle.png', 'CruiseLine Rentals', '4.9', 10, 'UGX 600K - 3M'),
+      const _ProviderCardItem('assets/images/gle1.png', 'Horizon Chauffeurs', '4.6', 9, 'UGX 400K - 1.5M'),
+    ];
+    _allProviders = [
+      const _ProviderCardItem('assets/images/gle1.png', 'Exclusive Wheels Co.', '4.8', 8, 'UGX 500K - 2M', showVerified: false),
+      const _ProviderCardItem('assets/images/rangerover.png', 'Premier Auto Services', '4.6', 9, 'UGX 400K - 1.5M', showVerified: false),
+      const _ProviderCardItem('assets/images/gle.png', 'Aurora Motors', '4.9', 10, 'UGX 600K - 3M', showVerified: false),
+      const _ProviderCardItem('assets/images/lexus.png', 'Palace Limousines', '4.7', 11, 'UGX 300K - 1.2M', showVerified: false),
+      const _ProviderCardItem('assets/images/cybertruck.png', 'CityLink Car Hire', '4.5', 12, 'UGX 200K - 800K', showVerified: false),
+      const _ProviderCardItem('assets/images/lexus1.png', 'Elite Auto Rentals', '4.9', 13, 'UGX 800K - 2.5M', showVerified: false),
+      const _ProviderCardItem('assets/images/gle.png', 'Skyline Motor Works', '4.4', 14, 'UGX 400K - 1.8M', showVerified: false),
+      const _ProviderCardItem('assets/images/lexus2.png', 'Silver Spur Cars', '4.7', 15, 'UGX 350K - 1.5M', showVerified: false),
+    ];
     _promoScrollController.addListener(_onPromoScroll);
     _circleScrollController.addListener(_onCircleScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
@@ -423,6 +443,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
   @override
   void dispose() {
     _countdownTimer?.cancel();
+    _searchController.dispose();
     _searchFocus.dispose();
     _circleScrollController.dispose();
     _promoScrollController.dispose();
@@ -1352,28 +1373,98 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
             Positioned(
               top: screenHeight * 0.122,
               right: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 10,
-                      offset: const Offset(2, 7),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  PopupMenuButton<_ProviderFilter>(
+                    onSelected: (action) {
+                      setState(() {
+                        _activeFilter =
+                            action == _ProviderFilter.clear ? null : action;
+                      });
+                    },
+                    offset: Offset(-(screenWidth * 0.432 + 16), 8),
+                    elevation: 16,
+                    color: const Color(0xFF1A1A2E),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
                     ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.tune_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
+                    itemBuilder: (ctx) => [
+                      _buildFilterMenuItem(
+                        icon: Icons.star_rounded,
+                        label: 'Top Rated',
+                        dotColor: const Color(0xFFFBC02D),
+                        value: _ProviderFilter.rating,
+                        isActive: _activeFilter == _ProviderFilter.rating,
+                        screenWidth: screenWidth,
+                      ),
+                      _buildFilterMenuItem(
+                        icon: Icons.attach_money_rounded,
+                        label: 'Price: Low to High',
+                        dotColor: const Color(0xFF4CAF50),
+                        value: _ProviderFilter.priceLowToHigh,
+                        isActive:
+                            _activeFilter == _ProviderFilter.priceLowToHigh,
+                        screenWidth: screenWidth,
+                      ),
+                      _buildFilterMenuItem(
+                        icon: Icons.attach_money_rounded,
+                        label: 'Price: High to Low',
+                        dotColor: const Color(0xFF42A5F5),
+                        value: _ProviderFilter.priceHighToLow,
+                        isActive:
+                            _activeFilter == _ProviderFilter.priceHighToLow,
+                        screenWidth: screenWidth,
+                      ),
+                      const PopupMenuDivider(height: 1),
+                      _buildFilterMenuItem(
+                        icon: Icons.filter_alt_off_rounded,
+                        label: 'Clear Filters',
+                        dotColor: const Color(0xFFFF5F5F),
+                        value: _ProviderFilter.clear,
+                        isDestructive: true,
+                        screenWidth: screenWidth,
+                      ),
+                    ],
+                    child: Container(
+                      width: screenWidth * 0.128,
+                      height: screenWidth * 0.128,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 3),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.15),
+                            blurRadius: 10,
+                            offset: const Offset(2, 7),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.tune_rounded,
+                          color: Colors.black,
+                          size: screenWidth * 0.07,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  if (_hasActiveFilter)
+                    Positioned(
+                      top: -screenWidth * 0.004,
+                      right: -screenWidth * 0.004,
+                      child: Container(
+                        width: screenWidth * 0.034,
+                        height: screenWidth * 0.034,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF4CAF50),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 2),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             Positioned(
@@ -1415,6 +1506,10 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                     Expanded(
                       child: TextField(
                         focusNode: _searchFocus,
+                        controller: _searchController,
+                        onChanged: (value) {
+                          setState(() => _searchQuery = value);
+                        },
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.04,
@@ -1430,6 +1525,19 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
                           contentPadding: EdgeInsets.symmetric(
                             vertical: 0,
                           ), // Change to vertical: 0
+                          suffixIcon: _isSearching
+                              ? GestureDetector(
+                                  onTap: () {
+                                    _searchController.clear();
+                                    setState(() => _searchQuery = '');
+                                  },
+                                  child: const Icon(
+                                    Icons.close_rounded,
+                                    color: Colors.black54,
+                                    size: 20,
+                                  ),
+                                )
+                              : null,
                         ),
                       ),
                     ),
@@ -1752,7 +1860,10 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
               bottom: 0,
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    if (_hasNoResults) _buildNoResults(screenWidth),
+                    if (!_isSearching || _matchedFeatured.isNotEmpty) ...[
                     SizedBox(height: screenWidth * 0.02),
                     Padding(
                       padding: EdgeInsets.symmetric(
