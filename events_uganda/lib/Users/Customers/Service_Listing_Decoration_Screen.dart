@@ -32,7 +32,10 @@ class _ProviderCardItem {
 }
 
 enum _ProviderFilter {
+  nearest,
   rating,
+  popular,
+  popularLow,
   priceLowToHigh,
   priceHighToLow,
   clear,
@@ -84,6 +87,28 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
   late final List<_ProviderCardItem> _featuredProviders;
   late final List<_ProviderCardItem> _allProviders;
 
+  static const LatLng _defaultLocation = LatLng(0.3136, 32.5811);
+  static const Map<int, LatLng> _providerCoords = {
+    0: LatLng(0.3136, 32.5811),
+    1: LatLng(0.3202, 32.5776),
+    2: LatLng(0.3056, 32.5954),
+    3: LatLng(0.3310, 32.5690),
+    4: LatLng(0.2935, 32.6022),
+    5: LatLng(0.3402, 32.5600),
+    6: LatLng(0.2800, 32.5700),
+    7: LatLng(0.3480, 32.5520),
+    8: LatLng(0.2720, 32.6100),
+    9: LatLng(0.3020, 32.5560),
+    10: LatLng(0.3160, 32.5400),
+    11: LatLng(0.2890, 32.5200),
+    12: LatLng(0.3220, 32.6100),
+    13: LatLng(0.3500, 32.5900),
+    14: LatLng(0.2680, 32.5460),
+    15: LatLng(0.3060, 32.6300),
+  };
+  LatLng? _userLocation;
+  bool _locating = false;
+
   bool get _isSearching => _searchQuery.trim().isNotEmpty;
 
   bool get _hasActiveFilter => _activeFilter != null;
@@ -118,9 +143,19 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
   List<_ProviderCardItem> _applySort(List<_ProviderCardItem> items) {
     final sorted = List<_ProviderCardItem>.from(items);
     switch (_activeFilter) {
+      case _ProviderFilter.nearest:
+        final origin = _userLocation ?? _defaultLocation;
+        sorted.sort((a, b) => _distanceTo(origin, _coordFor(a.index))
+            .compareTo(_distanceTo(origin, _coordFor(b.index))));
       case _ProviderFilter.rating:
         sorted.sort((a, b) =>
             double.parse(b.rating).compareTo(double.parse(a.rating)));
+      case _ProviderFilter.popular:
+        sorted.sort((a, b) =>
+            double.parse(b.rating).compareTo(double.parse(a.rating)));
+      case _ProviderFilter.popularLow:
+        sorted.sort((a, b) =>
+            double.parse(a.rating).compareTo(double.parse(b.rating)));
       case _ProviderFilter.priceLowToHigh:
         sorted.sort((a, b) =>
             _parsePrice(a.priceRange).compareTo(_parsePrice(b.priceRange)));
