@@ -289,6 +289,26 @@ class _ServiceListingCateringScreenState
   @override
   void initState() {
     super.initState();
+    _featuredProviders = [
+      const _ProviderCardItem('assets/images/deco5.jpg', 'Royal Feast Catering', '4.8', 0, 'UGX 500K - 2M'),
+      const _ProviderCardItem('assets/images/catering.jpg', 'Safari Grill Events', '4.6', 1, 'UGX 400K - 1.5M'),
+      const _ProviderCardItem('assets/images/photography.jpg', 'Ivory Pearl Catering', '4.9', 2, 'UGX 600K - 3M'),
+      const _ProviderCardItem('assets/images/carhire1.jpg', 'Lakeview Banquets', '4.7', 3, 'UGX 300K - 1.2M'),
+      const _ProviderCardItem('assets/images/cake2.jpg', 'Golden Spoon Catering', '4.5', 4, 'UGX 200K - 800K'),
+      const _ProviderCardItem('assets/images/cake4.jpg', 'Savanna Smokers', '4.9', 5, 'UGX 800K - 2.5M'),
+      const _ProviderCardItem('assets/images/deco3.jpg', 'Blissful Bites Catering', '4.4', 6, 'UGX 400K - 1.8M'),
+      const _ProviderCardItem('assets/images/glassdeco.jpg', 'Emerald Kitchen Events', '4.7', 7, 'UGX 350K - 1.5M'),
+    ];
+    _allProviders = [
+      const _ProviderCardItem('assets/images/deco5.jpg', 'Heritage Table Catering', '4.8', 8, 'UGX 500K - 2M', showVerified: false),
+      const _ProviderCardItem('assets/images/catering.jpg', 'Crimson Spice Catering', '4.6', 9, 'UGX 400K - 1.5M', showVerified: false),
+      const _ProviderCardItem('assets/images/photography.jpg', 'Palm Court Catering', '4.9', 10, 'UGX 600K - 3M', showVerified: false),
+      const _ProviderCardItem('assets/images/carhire1.jpg', 'Serene Lakeside Catering', '4.7', 11, 'UGX 300K - 1.2M', showVerified: false),
+      const _ProviderCardItem('assets/images/cake2.jpg', 'Bella Cucina Events', '4.5', 12, 'UGX 200K - 800K', showVerified: false),
+      const _ProviderCardItem('assets/images/cake4.jpg', 'Nile Gourmet Catering', '4.9', 13, 'UGX 800K - 2.5M', showVerified: false),
+      const _ProviderCardItem('assets/images/deco3.jpg', 'Terra Bites Catering', '4.4', 14, 'UGX 400K - 1.8M', showVerified: false),
+      const _ProviderCardItem('assets/images/glassdeco.jpg', 'Atlas Catering Co.', '4.7', 15, 'UGX 350K - 1.5M', showVerified: false),
+    ];
     _promoScrollController.addListener(_onPromoScroll);
     _circleScrollController.addListener(_onCircleScroll);
     _popularNowScrollController.addListener(_onPopularNowScroll);
@@ -425,6 +445,7 @@ class _ServiceListingCateringScreenState
   void dispose() {
     _countdownTimer?.cancel();
     _searchFocus.dispose();
+    _searchController.dispose();
     _circleScrollController.dispose();
     _promoScrollController.dispose();
     _popularNowScrollController.dispose();
@@ -1363,28 +1384,98 @@ class _ServiceListingCateringScreenState
             Positioned(
               top: screenHeight * 0.122,
               right: screenWidth * 0.04,
-              child: Container(
-                width: screenWidth * 0.128,
-                height: screenWidth * 0.128,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.15),
-                      blurRadius: 10,
-                      offset: const Offset(2, 7),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  PopupMenuButton<_ProviderFilter>(
+                    onSelected: (action) {
+                      setState(() {
+                        _activeFilter =
+                            action == _ProviderFilter.clear ? null : action;
+                      });
+                    },
+                    offset: Offset(-(screenWidth * 0.432 + 16), 8),
+                    elevation: 16,
+                    color: const Color(0xFF1A1A2E),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
                     ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.tune_rounded,
-                    color: Colors.black,
-                    size: screenWidth * 0.07,
+                    itemBuilder: (ctx) => [
+                      _buildFilterMenuItem(
+                        icon: Icons.star_rounded,
+                        label: 'Top Rated',
+                        dotColor: const Color(0xFFFBC02D),
+                        value: _ProviderFilter.rating,
+                        isActive: _activeFilter == _ProviderFilter.rating,
+                        screenWidth: screenWidth,
+                      ),
+                      _buildFilterMenuItem(
+                        icon: Icons.attach_money_rounded,
+                        label: 'Price: Low to High',
+                        dotColor: const Color(0xFF4CAF50),
+                        value: _ProviderFilter.priceLowToHigh,
+                        isActive:
+                            _activeFilter == _ProviderFilter.priceLowToHigh,
+                        screenWidth: screenWidth,
+                      ),
+                      _buildFilterMenuItem(
+                        icon: Icons.attach_money_rounded,
+                        label: 'Price: High to Low',
+                        dotColor: const Color(0xFF42A5F5),
+                        value: _ProviderFilter.priceHighToLow,
+                        isActive:
+                            _activeFilter == _ProviderFilter.priceHighToLow,
+                        screenWidth: screenWidth,
+                      ),
+                      const PopupMenuDivider(height: 1),
+                      _buildFilterMenuItem(
+                        icon: Icons.filter_alt_off_rounded,
+                        label: 'Clear Filters',
+                        dotColor: const Color(0xFFFF5F5F),
+                        value: _ProviderFilter.clear,
+                        isDestructive: true,
+                        screenWidth: screenWidth,
+                      ),
+                    ],
+                    child: Container(
+                      width: screenWidth * 0.128,
+                      height: screenWidth * 0.128,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 3),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.15),
+                            blurRadius: 10,
+                            offset: const Offset(2, 7),
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.tune_rounded,
+                          color: Colors.black,
+                          size: screenWidth * 0.07,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  if (_hasActiveFilter)
+                    Positioned(
+                      top: -screenWidth * 0.004,
+                      right: -screenWidth * 0.004,
+                      child: Container(
+                        width: screenWidth * 0.034,
+                        height: screenWidth * 0.034,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF4CAF50),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 2),
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             Positioned(
@@ -1426,6 +1517,10 @@ class _ServiceListingCateringScreenState
                     Expanded(
                       child: TextField(
                         focusNode: _searchFocus,
+                        controller: _searchController,
+                        onChanged: (value) {
+                          setState(() => _searchQuery = value);
+                        },
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.04,
@@ -1441,6 +1536,19 @@ class _ServiceListingCateringScreenState
                           contentPadding: EdgeInsets.symmetric(
                             vertical: 0,
                           ), // Change to vertical: 0
+                          suffixIcon: _isSearching
+                              ? GestureDetector(
+                                  onTap: () {
+                                    _searchController.clear();
+                                    setState(() => _searchQuery = '');
+                                  },
+                                  child: const Icon(
+                                    Icons.close_rounded,
+                                    color: Colors.black54,
+                                    size: 20,
+                                  ),
+                                )
+                              : null,
                         ),
                       ),
                     ),
