@@ -46,6 +46,13 @@ class _CategoryItem {
   final VoidCallback? onTap;
 }
 
+enum _HomeFilter {
+  rating,
+  priceLowToHigh,
+  priceHighToLow,
+  clear,
+}
+
 class CustomerHomeScreen extends StatefulWidget {
   const CustomerHomeScreen({super.key});
 
