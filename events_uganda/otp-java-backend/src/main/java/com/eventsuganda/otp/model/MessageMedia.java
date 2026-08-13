@@ -19,7 +19,7 @@ public class MessageMedia {
     private String mimeType;
 
     @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "bytea")
     private byte[] data;
 
     private Long durationMs;
