@@ -8,6 +8,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
+import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Services/chat_socket_service.dart';
 import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
@@ -59,6 +60,7 @@ class _MessageScreenState extends State<MessageScreen> {
   bool _isPlayingVoice = false;
   bool _isLoadingMessages = false;
   bool _sending = false;
+  String? _authToken;
   final Map<String, GlobalKey> _messageKeys = {};
   String? _highlightedMessageId;
   Timer? _highlightTimer;
@@ -66,6 +68,11 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   void initState() {
     super.initState();
+    AuthService.getToken().then((token) {
+      if (mounted && token != null && token.isNotEmpty) {
+        setState(() => _authToken = token);
+      }
+    });
     _playerStateSub = _audioPlayer.playerStateStream.listen((state) {
       if (state.processingState == ProcessingState.completed) {
         _voiceProgress.value = 1;
@@ -316,6 +323,10 @@ class _MessageScreenState extends State<MessageScreen> {
     final int seconds = duration.inSeconds % 60;
     return '$minutes:${seconds.toString().padLeft(2, '0')}';
   }
+
+  Map<String, String>? get _mediaHeaders => _authToken == null
+      ? null
+      : {'Authorization': 'Bearer $_authToken'};
 
   Future<String> _buildRecordingPath() async {
     if (kIsWeb) {
@@ -616,7 +627,10 @@ class _MessageScreenState extends State<MessageScreen> {
       }
       await _audioPlayer.stop();
       if (audioUrl != null && audioUrl.isNotEmpty) {
-        await _audioPlayer.setUrl(ChatService.mediaUrl(audioUrl));
+        await _audioPlayer.setUrl(
+          ChatService.mediaUrl(audioUrl),
+          headers: _mediaHeaders,
+        );
       } else if (path != null && path.isNotEmpty) {
         if (kIsWeb) {
           await _audioPlayer.setUrl(path);
