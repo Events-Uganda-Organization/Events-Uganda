@@ -210,20 +210,20 @@ public class MessageService {
         return "/api/chat/media/" + mediaId;
     }
 
-    private byte[] compressImage(byte[] original, String mimeType) {
+    private ImageResult compressImage(byte[] original, String mimeType) {
         if ("image/gif".equalsIgnoreCase(mimeType)) {
-            return original;
+            return new ImageResult(original, mimeType);
         }
         try {
             BufferedImage image = ImageIO.read(new ByteArrayInputStream(original));
             if (image == null) {
-                return original;
+                return new ImageResult(original, mimeType);
             }
             int maxDim = 1280;
             int width = image.getWidth();
             int height = image.getHeight();
             if (width <= maxDim && height <= maxDim && "image/jpeg".equalsIgnoreCase(mimeType)) {
-                return original;
+                return new ImageResult(original, mimeType);
             }
             double scale = Math.min(1.0, maxDim / (double) Math.max(width, height));
             int newWidth = Math.max(1, (int) Math.round(width * scale));
@@ -237,9 +237,19 @@ public class MessageService {
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             ImageIO.write(resized, "jpg", out);
-            return out.toByteArray();
+            return new ImageResult(out.toByteArray(), "image/jpeg");
         } catch (IOException e) {
-            return original;
+            return new ImageResult(original, mimeType);
+        }
+    }
+
+    private static class ImageResult {
+        private final byte[] bytes;
+        private final String mimeType;
+
+        ImageResult(byte[] bytes, String mimeType) {
+            this.bytes = bytes;
+            this.mimeType = mimeType;
         }
     }
 
