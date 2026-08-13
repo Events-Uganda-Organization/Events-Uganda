@@ -20,6 +20,12 @@ public interface MessageRepository extends JpaRepository<Message, String> {
 
     long countByConversationIdAndSenderIdNotAndReadAtIsNull(String conversationId, String senderId);
 
+    @Query("SELECT m.id FROM Message m WHERE m.conversationId = :conversationId AND m.senderId != :userId AND m.readAt IS NULL")
+    List<String> findUnreadIds(@Param("conversationId") String conversationId, @Param("userId") String userId);
+
+    @Query("SELECT m.id FROM Message m WHERE m.conversationId = :conversationId AND m.senderId != :userId AND m.readAt IS NULL AND m.deliveredAt IS NOT NULL")
+    List<String> findDeliveredUnreadIds(@Param("conversationId") String conversationId, @Param("userId") String userId);
+
     @Modifying
     @Query("UPDATE Message m SET m.readAt = :readAt WHERE m.conversationId = :conversationId AND m.senderId != :userId AND m.readAt IS NULL")
     int markAsRead(@Param("conversationId") String conversationId, @Param("userId") String userId, @Param("readAt") long readAt);

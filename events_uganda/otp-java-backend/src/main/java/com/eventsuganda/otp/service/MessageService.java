@@ -38,13 +38,16 @@ public class MessageService {
     private final MessageRepository messageRepository;
     private final ConversationRepository conversationRepository;
     private final MessageMediaRepository messageMediaRepository;
+    private final PresenceService presenceService;
 
     public MessageService(MessageRepository messageRepository,
                           ConversationRepository conversationRepository,
-                          MessageMediaRepository messageMediaRepository) {
+                          MessageMediaRepository messageMediaRepository,
+                          PresenceService presenceService) {
         this.messageRepository = messageRepository;
         this.conversationRepository = conversationRepository;
         this.messageMediaRepository = messageMediaRepository;
+        this.presenceService = presenceService;
     }
 
     @Transactional
@@ -62,6 +65,7 @@ public class MessageService {
 
         String id = UUID.randomUUID().toString();
         Message message = new Message(id, conversationId, senderId, text.trim());
+        markDeliveryStatus(message, conversation);
         messageRepository.save(message);
 
         long now = System.currentTimeMillis();
@@ -113,6 +117,7 @@ public class MessageService {
         String messageId = UUID.randomUUID().toString();
         String text = caption == null ? null : caption.trim();
         Message message = new Message(messageId, conversationId, senderId, text);
+        markDeliveryStatus(message, conversation);
         messageRepository.save(message);
 
         MessageMedia media = new MessageMedia(UUID.randomUUID().toString(), messageId,
