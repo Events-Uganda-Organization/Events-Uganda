@@ -1129,9 +1129,11 @@ class _MessageScreenState extends State<MessageScreen>
             SizedBox(height: screenHeight * 0.003),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.015),
-              child: Text(
+              child: _timeWithTicks(
+                message,
                 time,
-                style: TextStyle(
+                screenWidth,
+                TextStyle(
                   color: Colors.black.withValues(alpha: 0.5),
                   fontSize: screenWidth * 0.024,
                 ),
@@ -1362,9 +1364,11 @@ class _MessageScreenState extends State<MessageScreen>
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.003),
-                Text(
+                _timeWithTicks(
+                  message,
                   time,
-                  style: TextStyle(
+                  screenWidth,
+                  TextStyle(
                     color: mine
                         ? Colors.white.withValues(alpha: 0.8)
                         : Colors.black.withValues(alpha: 0.5),
@@ -1595,9 +1599,11 @@ class _MessageScreenState extends State<MessageScreen>
                 ),
               ],
               SizedBox(height: screenHeight * 0.003),
-              Text(
+              _timeWithTicks(
+                message,
                 time,
-                style: TextStyle(
+                screenWidth,
+                TextStyle(
                   color: Colors.black.withValues(alpha: 0.5),
                   fontSize: screenWidth * 0.024,
                 ),
@@ -1657,9 +1663,11 @@ class _MessageScreenState extends State<MessageScreen>
               ),
             ),
             SizedBox(height: screenHeight * 0.003),
-            Text(
+            _timeWithTicks(
+              message,
               time,
-              style: TextStyle(
+              screenWidth,
+              TextStyle(
                 color: mine
                     ? Colors.white.withValues(alpha: 0.8)
                     : Colors.black.withValues(alpha: 0.5),
