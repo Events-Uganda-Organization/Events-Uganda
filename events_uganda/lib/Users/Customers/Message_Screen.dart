@@ -710,8 +710,8 @@ class _MessageScreenState extends State<MessageScreen> {
   Future<void> _takePhoto() async {
     final XFile? file = await _imagePicker.pickImage(
       source: ImageSource.camera,
-      maxWidth: 1600,
-      imageQuality: 85,
+      maxWidth: 1280,
+      imageQuality: 72,
     );
     if (file == null) return;
     final Uint8List bytes = await file.readAsBytes();
@@ -723,8 +723,8 @@ class _MessageScreenState extends State<MessageScreen> {
 
   Future<void> _pickFromGallery() async {
     final List<XFile> files = await _imagePicker.pickMultiImage(
-      maxWidth: 1600,
-      imageQuality: 85,
+      maxWidth: 1280,
+      imageQuality: 72,
     );
     if (files.isEmpty) return;
     final List<Uint8List> bytes = <Uint8List>[];
@@ -888,6 +888,177 @@ class _MessageScreenState extends State<MessageScreen> {
     );
   }
 
+  Widget _buildNetworkImageBubble(
+    Map<String, Object> message,
+    String imageUrl,
+    double screenWidth,
+    double screenHeight,
+    bool mine,
+    String time,
+  ) {
+    final String text = message['text'] as String? ?? '';
+    final String fullUrl = ChatService.mediaUrl(imageUrl);
+    return Align(
+      alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        margin: EdgeInsets.only(
+          top: screenHeight * 0.006,
+          bottom: screenHeight * 0.006,
+          left: mine ? screenWidth * 0.15 : 0,
+          right: mine ? 0 : screenWidth * 0.15,
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.01,
+          vertical: screenHeight * 0.008,
+        ),
+        decoration: BoxDecoration(
+          color: mine ? const Color(0xFFCD7C20) : Colors.white,
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 6,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            GestureDetector(
+              onTap: () => _openNetworkImageViewer(fullUrl),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(18),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: screenWidth * 0.55,
+                    maxHeight: screenHeight * 0.35,
+                  ),
+                  child: Image.network(
+                    fullUrl,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, progress) {
+                      if (progress == null) return child;
+                      return SizedBox(
+                        width: screenWidth * 0.3,
+                        height: screenHeight * 0.2,
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Color(0xFFCD7C20),
+                          ),
+                        ),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) => Container(
+                      width: screenWidth * 0.3,
+                      height: screenHeight * 0.2,
+                      color: Colors.black.withValues(alpha: 0.05),
+                      child: const Center(
+                        child: Icon(
+                          Icons.broken_image_outlined,
+                          color: Colors.grey,
+                          size: 32,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            if (text.isNotEmpty) ...[
+              SizedBox(height: screenHeight * 0.006),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.015),
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: screenWidth * 0.035,
+                  ),
+                ),
+              ),
+            ],
+            SizedBox(height: screenHeight * 0.003),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.015),
+              child: Text(
+                time,
+                style: TextStyle(
+                  color: Colors.black.withValues(alpha: 0.5),
+                  fontSize: screenWidth * 0.024,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _openNetworkImageViewer(String url) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          backgroundColor: Colors.black,
+          body: SafeArea(
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: InteractiveViewer(
+                    child: Center(
+                      child: Image.network(
+                        url,
+                        fit: BoxFit.contain,
+                        loadingBuilder: (context, child, progress) {
+                          if (progress == null) return child;
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Center(
+                          child: Icon(
+                            Icons.broken_image_outlined,
+                            color: Colors.white70,
+                            size: 48,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 12,
+                  left: 12,
+                  child: GestureDetector(
+                    onTap: () => Navigator.of(context).maybePop(),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.5),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildPreviewStrip(double screenWidth, double screenHeight) {
     return Container(
       height: screenWidth * 0.36,
@@ -948,7 +1119,7 @@ class _MessageScreenState extends State<MessageScreen> {
   ) {
     final bool mine = message['mine'] as bool;
     final String time = message['time'] as String;
-    final Duration duration = message['duration'] as Duration;
+    final Duration duration = message['duration'] as Duration? ?? Duration.zero;
     final bool playing = _isPlayingVoice && _playingVoiceIndex == index;
     final Color accent = mine ? Colors.white : const Color(0xFFCD7C20);
     final List<double> bars = _voiceBars(index, duration);
@@ -1185,10 +1356,26 @@ class _MessageScreenState extends State<MessageScreen> {
     final List<Uint8List> images = message['images'] as List<Uint8List>? ?? const [];
     final bool hasImages = images.isNotEmpty;
     final String? voice = message['voice'] as String?;
-    final bool hasVoice = voice != null && voice.isNotEmpty;
+    final String? audioUrl = message['audioUrl'] as String?;
+    final bool hasVoice =
+        (voice != null && voice.isNotEmpty) ||
+        (audioUrl != null && audioUrl.isNotEmpty);
+    final String? imageUrl = message['imageUrl'] as String?;
+    final bool hasNetworkImage = imageUrl != null && imageUrl.isNotEmpty;
 
     if (hasVoice) {
       return _buildVoiceBubble(message, index, screenWidth, screenHeight);
+    }
+
+    if (hasNetworkImage) {
+      return _buildNetworkImageBubble(
+        message,
+        imageUrl,
+        screenWidth,
+        screenHeight,
+        mine,
+        time,
+      );
     }
 
     if (hasImages) {
@@ -1622,14 +1809,24 @@ class _MessageScreenState extends State<MessageScreen> {
                                 color: Color(0xFFCD7C20),
                                 shape: BoxShape.circle,
                               ),
-                              child: Transform.rotate(
-                                angle: math.pi * -45 / 180,
-                                child: Icon(
-                                  Icons.send,
-                                  color: Colors.white,
-                                  size: screenWidth * 0.045,
-                                ),
-                              ),
+                              child: _sending
+                                  ? Padding(
+                                      padding: EdgeInsets.all(
+                                        screenWidth * 0.02,
+                                      ),
+                                      child: const CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : Transform.rotate(
+                                      angle: math.pi * -45 / 180,
+                                      child: Icon(
+                                        Icons.send,
+                                        color: Colors.white,
+                                        size: screenWidth * 0.045,
+                                      ),
+                                    ),
                             ),
                           ),
                         ],
