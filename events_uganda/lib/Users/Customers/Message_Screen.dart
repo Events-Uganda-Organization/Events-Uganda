@@ -2334,7 +2334,7 @@ class _MessageEmptyScene extends StatelessWidget {
 }
 
 class _MessageSkeletonLoader extends StatelessWidget {
-  const _MessageSkeletonLoader({super.key});
+  const _MessageSkeletonLoader();
 
   @override
   Widget build(BuildContext context) {
@@ -2423,10 +2423,9 @@ class _MessageSkeletonLoader extends StatelessWidget {
 }
 
 class _ShimmerBox extends StatefulWidget {
-  const _ShimmerBox({super.key, required this.child, this.durationMs = 1400});
+  const _ShimmerBox({required this.child});
 
   final Widget child;
-  final int durationMs;
 
   @override
   State<_ShimmerBox> createState() => _ShimmerBoxState();
@@ -2436,7 +2435,7 @@ class _ShimmerBoxState extends State<_ShimmerBox>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
-    duration: Duration(milliseconds: widget.durationMs),
+    duration: const Duration(milliseconds: 1400),
   )..repeat();
 
   @override
