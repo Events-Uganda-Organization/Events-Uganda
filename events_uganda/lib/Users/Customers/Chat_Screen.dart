@@ -1888,3 +1888,126 @@ class _ListeningWaveformPainter extends CustomPainter {
     return oldDelegate.levels != levels || oldDelegate.color != color;
   }
 }
+
+class _ConversationsSkeletonLoader extends StatelessWidget {
+  const _ConversationsSkeletonLoader({required this.screenWidth});
+
+  final double screenWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    final double w = screenWidth;
+    final Color grey = const Color(0xFFE8E5DF);
+
+    Widget block(double width, double height, {BorderRadius? radius}) {
+      return Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: grey,
+          borderRadius: radius ?? BorderRadius.circular(8),
+        ),
+      );
+    }
+
+    Widget row() {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: w * 0.028),
+        child: Row(
+          children: [
+            block(
+              w * 0.13,
+              w * 0.13,
+              radius: BorderRadius.circular(w * 0.065),
+            ),
+            SizedBox(width: w * 0.03),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  block(w * 0.32, w * 0.03),
+                  SizedBox(height: w * 0.018),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: block(w * 0.52, w * 0.024),
+                      ),
+                      block(w * 0.05, w * 0.022),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    final Widget content = SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: w * 0.04),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          for (int i = 0; i < 7; i++) ...[
+            if (i != 0)
+              Divider(
+                color: Colors.black.withValues(alpha: 0.08),
+                height: 1,
+              ),
+            row(),
+          ],
+        ],
+      ),
+    );
+
+    return _ChatShimmerBox(child: content);
+  }
+}
+
+class _ChatShimmerBox extends StatefulWidget {
+  const _ChatShimmerBox({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_ChatShimmerBox> createState() => _ChatShimmerBoxState();
+}
+
+class _ChatShimmerBoxState extends State<_ChatShimmerBox>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1400),
+  )..repeat();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        final double shift = _controller.value;
+        return ShaderMask(
+          blendMode: BlendMode.srcATop,
+          shaderCallback: (bounds) => LinearGradient(
+            begin: Alignment(-1.5 + shift * 3, 0),
+            end: Alignment(-0.5 + shift * 3, 0),
+            colors: const [
+              Color(0xFFE4E1DA),
+              Color(0xFFFAF8F3),
+              Color(0xFFE4E1DA),
+            ],
+            stops: const [0.35, 0.5, 0.65],
+          ).createShader(bounds),
+          child: widget.child,
+        );
+      },
+    );
+  }
+}
