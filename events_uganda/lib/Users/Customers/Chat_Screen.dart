@@ -91,7 +91,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ? _lastWaveLevel
             : 0.2 + math.Random().nextDouble() * 0.06;
         _waveSamples.add((base + jitter).clamp(0.08, 1.0));
-        if (_waveSamples.length > 36) _waveSamples.removeAt(0);
+        if (_waveSamples.length > 26) _waveSamples.removeAt(0);
       });
     });
   }
@@ -102,6 +102,14 @@ class _ChatScreenState extends State<ChatScreen> {
     _waveTicker?.cancel();
     _waveTicker = null;
     _waveSamples.clear();
+    _listeningStopwatch.stop();
+  }
+
+  String _listeningTime() {
+    final Duration d = _listeningStopwatch.elapsed;
+    final int m = d.inMinutes;
+    final int s = d.inSeconds % 60;
+    return '$m:${s.toString().padLeft(2, '0')}';
   }
   final TextEditingController _searchController = TextEditingController();
   Timer? _searchDebounce;
@@ -110,6 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
   bool _isSearching = false;
   bool _isListening = false;
   bool _handledResult = false;
+  final Stopwatch _listeningStopwatch = Stopwatch();
 
   @override
   void initState() {
@@ -259,6 +268,7 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       _isListening = true;
     });
+    _listeningStopwatch..reset()..start();
     _startWave();
 
     final bool started = await speech.start(
@@ -1167,9 +1177,24 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: GestureDetector(
                         onTap: _toggleListening,
                         child: _isListening
-                            ? _ListeningWaveform(
-                                levels: List.unmodifiable(_waveSamples),
-                                color: const Color(0xFFE53935),
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    _listeningTime(),
+                                    style: TextStyle(
+                                      color: const Color(0xFFE53935),
+                                      fontSize: screenWidth * 0.028,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(width: screenWidth * 0.02),
+                                  _ListeningWaveform(
+                                    levels: List.unmodifiable(_waveSamples),
+                                    color: const Color(0xFFE53935),
+                                  ),
+                                ],
                               )
                             : Icon(
                                 Icons.mic,
