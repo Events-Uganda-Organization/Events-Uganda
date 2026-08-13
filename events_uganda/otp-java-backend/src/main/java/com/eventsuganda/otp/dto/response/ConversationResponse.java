@@ -12,6 +12,8 @@ public class ConversationResponse {
     private long createdAt;
     private long updatedAt;
     private long unreadCount;
+    private String disappearingMode;
+    private boolean blocked;
 
     public ConversationResponse() {}
 
@@ -24,6 +26,7 @@ public class ConversationResponse {
         this.createdAt = conversation.getCreatedAt();
         this.updatedAt = conversation.getUpdatedAt();
         this.unreadCount = unreadCount;
+        this.disappearingMode = conversation.getDisappearingMode();
     }
 
     public String getId() { return id; }
@@ -49,4 +52,10 @@ public class ConversationResponse {
 
     public long getUnreadCount() { return unreadCount; }
     public void setUnreadCount(long unreadCount) { this.unreadCount = unreadCount; }
+
+    public String getDisappearingMode() { return disappearingMode; }
+    public void setDisappearingMode(String disappearingMode) { this.disappearingMode = disappearingMode; }
+
+    public boolean isBlocked() { return blocked; }
+    public void setBlocked(boolean blocked) { this.blocked = blocked; }
 }
