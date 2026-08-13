@@ -1086,14 +1086,11 @@ class _MessageScreenState extends State<MessageScreen>
                     fit: BoxFit.cover,
                     loadingBuilder: (context, child, progress) {
                       if (progress == null) return child;
-                      return SizedBox(
-                        width: screenWidth * 0.3,
-                        height: screenHeight * 0.2,
-                        child: const Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Color(0xFFCD7C20),
-                          ),
+                      return _ShimmerBox(
+                        child: Container(
+                          width: screenWidth * 0.3,
+                          height: screenHeight * 0.2,
+                          color: const Color(0xFFE8E5DF),
                         ),
                       );
                     },
@@ -1884,11 +1881,7 @@ class _MessageScreenState extends State<MessageScreen>
                   previewHeight +
                   recordingBarHeight,
               child: _isLoadingMessages && _messages.isEmpty
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        color: Color(0xFFCD7C20),
-                      ),
-                    )
+                  ? const _MessageSkeletonLoader()
                   : _messages.isEmpty
                       ? _MessageEmptyState(
                       screenWidth: screenWidth,
