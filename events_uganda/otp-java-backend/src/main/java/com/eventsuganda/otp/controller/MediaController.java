@@ -1,12 +1,15 @@
 package com.eventsuganda.otp.controller;
 
+import com.eventsuganda.otp.dto.response.ApiResponse;
 import com.eventsuganda.otp.dto.response.MessageResponse;
 import com.eventsuganda.otp.model.Conversation;
 import com.eventsuganda.otp.model.MessageMedia;
 import com.eventsuganda.otp.repository.ConversationRepository;
 import com.eventsuganda.otp.service.MessageService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -24,6 +29,9 @@ public class MediaController {
     private final MessageService messageService;
     private final ConversationRepository conversationRepository;
     private final SimpMessagingTemplate messagingTemplate;
+
+    @Value("${app.admin-token:}")
+    private String adminToken;
 
     public MediaController(MessageService messageService,
                            ConversationRepository conversationRepository,

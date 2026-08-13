@@ -14,7 +14,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -232,37 +236,110 @@ public class MessageService {
         return "/api/chat/media/" + mediaId;
     }
 
+    private static final int IMAGE_MAX_DIM = 1280;
+    private static final float JPEG_QUALITY = 0.82f;
+    private static final float WEBP_QUALITY = 0.80f;
+
     private ImageResult compressImage(byte[] original, String mimeType) {
         if ("image/gif".equalsIgnoreCase(mimeType)) {
             return new ImageResult(original, mimeType);
         }
         try {
             BufferedImage image = ImageIO.read(new ByteArrayInputStream(original));
-            if (image == null) {
+            if (image == null || image.getWidth() <= 0 || image.getHeight() <= 0) {
                 return new ImageResult(original, mimeType);
             }
-            int maxDim = 1280;
             int width = image.getWidth();
             int height = image.getHeight();
-            if (width <= maxDim && height <= maxDim && "image/jpeg".equalsIgnoreCase(mimeType)) {
-                return new ImageResult(original, mimeType);
-            }
-            double scale = Math.min(1.0, maxDim / (double) Math.max(width, height));
+            double scale = Math.min(1.0, IMAGE_MAX_DIM / (double) Math.max(width, height));
             int newWidth = Math.max(1, (int) Math.round(width * scale));
             int newHeight = Math.max(1, (int) Math.round(height * scale));
 
             BufferedImage resized = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
             Graphics2D g = resized.createGraphics();
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, newWidth, newHeight);
             g.drawImage(image, 0, 0, newWidth, newHeight, null);
             g.dispose();
 
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            ImageIO.write(resized, "jpg", out);
-            return new ImageResult(out.toByteArray(), "image/jpeg");
+            byte[] jpeg = encodeImage(resized, "image/jpeg", JPEG_QUALITY);
+            byte[] webp = encodeImage(resized, "image/webp", WEBP_QUALITY);
+            byte[] best = jpeg;
+            String bestMime = "image/jpeg";
+            if (webp != null && (best == null || webp.length < best.length)) {
+                best = webp;
+                bestMime = "image/webp";
+            }
+            if (best == null || original.length < best.length) {
+                return new ImageResult(original, mimeType);
+            }
+            return new ImageResult(best, bestMime);
         } catch (IOException e) {
             return new ImageResult(original, mimeType);
         }
+    }
+
+    private byte[] encodeImage(BufferedImage image, String mimeType, float quality) {
+        try {
+            ImageWriter writer = ImageIO.getImageWritersByMIMEType(mimeType).next();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            ImageOutputStream ios = ImageIO.createImageOutputStream(out);
+            writer.setOutput(ios);
+            ImageWriteParam param = writer.getDefaultWriteParam();
+            param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            if (param.canWriteCompressed()) {
+                param.setCompressionQuality(quality);
+            }
+            writer.write(null, new IIOImage(image, null, null), param);
+            ios.flush();
+            writer.dispose();
+            return out.toByteArray();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public record RecompressResult(int processed, int shrunk, int skipped, long savedBytes) {}
+
+    @Transactional
+    public RecompressResult recompressImages(int batchSize) {
+        int page = 0;
+        int processed = 0;
+        int shrunk = 0;
+        int skipped = 0;
+        long savedBytes = 0;
+        while (true) {
+            List<MessageMedia> batch = messageMediaRepository.findByMediaTypeOrderByCreatedAtAsc(
+                "IMAGE", PageRequest.of(page, batchSize));
+            if (batch.isEmpty()) {
+                break;
+            }
+            for (MessageMedia media : batch) {
+                byte[] original = media.getData();
+                String mime = media.getMimeType();
+                if (original == null || original.length == 0) {
+                    skipped++;
+                    continue;
+                }
+                ImageResult result = compressImage(original, mime == null ? "image/jpeg" : mime);
+                processed++;
+                if (result.bytes.length < original.length) {
+                    media.setData(result.bytes);
+                    media.setMimeType(result.mimeType);
+                    messageMediaRepository.save(media);
+                    shrunk++;
+                    savedBytes += original.length - result.bytes.length;
+                } else {
+                    skipped++;
+                }
+            }
+            page++;
+            if (batch.size() < batchSize) {
+                break;
+            }
+        }
+        return new RecompressResult(processed, shrunk, skipped, savedBytes);
     }
 
     private static class ImageResult {
