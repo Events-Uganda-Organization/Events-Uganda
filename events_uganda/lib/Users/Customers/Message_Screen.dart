@@ -441,7 +441,15 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   Future<void> _onMicTapped() async {
-    if (_isRecording || _recordingPath != null) return;
+    if (_isRecording) {
+      if (_isPaused) {
+        await _resumeRecording();
+      } else {
+        await _pauseRecording();
+      }
+      return;
+    }
+    if (_recordingPath != null) return;
     await _startRecording();
   }
 
@@ -1010,30 +1018,36 @@ class _MessageScreenState extends State<MessageScreen> {
                 ),
               ),
               SizedBox(width: screenWidth * 0.015),
-              Container(
-                width: screenWidth * 0.09,
-                height: screenWidth * 0.09,
-                decoration: BoxDecoration(
-                  color: cancelling
-                      ? const Color(0xFFE53935)
-                      : Colors.red.shade100,
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.delete,
-                  color: cancelling ? Colors.white : const Color(0xFFE53935),
-                  size: screenWidth * 0.05,
+              GestureDetector(
+                onTap: _cancelRecording,
+                child: Container(
+                  width: screenWidth * 0.09,
+                  height: screenWidth * 0.09,
+                  decoration: BoxDecoration(
+                    color: cancelling
+                        ? const Color(0xFFE53935)
+                        : Colors.red.shade100,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.delete,
+                    color: cancelling ? Colors.white : const Color(0xFFE53935),
+                    size: screenWidth * 0.05,
+                  ),
                 ),
               ),
               SizedBox(width: screenWidth * 0.02),
               Expanded(
-                child: SizedBox(
-                  height: screenWidth * 0.05,
-                  child: CustomPaint(
-                    painter: _WaveformPainter(
-                      levels: _recordingLevels(),
-                      color: const Color(0xFFCD7C20),
-                      playedLevels: 0,
+                child: Opacity(
+                  opacity: _isPaused ? 0.4 : 1.0,
+                  child: SizedBox(
+                    height: screenWidth * 0.05,
+                    child: CustomPaint(
+                      painter: _WaveformPainter(
+                        levels: _recordingLevels(),
+                        color: const Color(0xFFCD7C20),
+                        playedLevels: 0,
+                      ),
                     ),
                   ),
                 ),
@@ -1568,7 +1582,11 @@ class _MessageScreenState extends State<MessageScreen> {
                       ),
                       child: Center(
                         child: Icon(
-                          _isRecording ? Icons.stop : Icons.mic,
+                          _isPaused
+                              ? Icons.play_arrow
+                              : _isRecording
+                                  ? Icons.pause
+                                  : Icons.mic,
                           color: _isRecording
                               ? const Color(0xFFE53935)
                               : Colors.black,
