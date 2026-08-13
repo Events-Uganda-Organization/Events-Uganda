@@ -164,9 +164,19 @@ class _MessageScreenState extends State<MessageScreen>
       if (message.conversationId != widget.conversationId) return;
       if (!mounted) return;
       if (message.isMine && message.hasMedia) return;
-      final exists =
-          _messages.any((m) => m['id'] == message.id && m['id'] != null);
-      if (exists) return;
+      final int idx =
+          _messages.indexWhere((m) => m['id'] == message.id && m['id'] != null);
+      if (idx != -1) {
+        setState(() {
+          if (message.deliveredAt != null) {
+            _messages[idx]['deliveredAt'] = message.deliveredAt!;
+          }
+          if (message.readAt != null) {
+            _messages[idx]['readAt'] = message.readAt!;
+          }
+        });
+        return;
+      }
       setState(() {
         _messages.add({
           'id': message.id,
@@ -178,9 +188,22 @@ class _MessageScreenState extends State<MessageScreen>
           'time': _formatTimeFromEpoch(message.createdAt),
           'mine': message.isMine,
           'date': message.createdAt,
+          if (message.deliveredAt != null) 'deliveredAt': message.deliveredAt!,
+          if (message.readAt != null) 'readAt': message.readAt!,
         });
       });
       _scrollToBottom();
+    });
+    _readReceiptSub = socket.readReceipts.listen((receipt) {
+      if (receipt.conversationId != widget.conversationId) return;
+      if (!mounted) return;
+      setState(() {
+        for (final m in _messages) {
+          if (m['mine'] == true && m['readAt'] == null) {
+            m['readAt'] = receipt.readAt;
+          }
+        }
+      });
     });
   }
 
@@ -206,6 +229,8 @@ class _MessageScreenState extends State<MessageScreen>
             'time': _formatTimeFromEpoch(m.createdAt),
             'mine': m.isMine,
             'date': m.createdAt,
+            if (m.deliveredAt != null) 'deliveredAt': m.deliveredAt!,
+            if (m.readAt != null) 'readAt': m.readAt!,
           });
         }
         _isLoadingMessages = false;
@@ -242,6 +267,7 @@ class _MessageScreenState extends State<MessageScreen>
     _positionSub?.cancel();
     _playerStateSub?.cancel();
     _socketSub?.cancel();
+    _readReceiptSub?.cancel();
     _messageController.dispose();
     _messagesScroll.dispose();
     _voiceProgress.dispose();
