@@ -29,6 +29,7 @@ desktop.ini
 .env
 .env.local
 .env.*.local
+**/.env
 
 # Archives
 *.zip
@@ -40,3 +41,11 @@ desktop.ini
 temp_backup.txt
 *~
 *.tmp
+**/temp_backup.txt
+
+# Flutter build artifacts (Java/Gradle)
+**/android/app/debug
+**/android/app/profile
+**/android/app/release
+**/android/build/
+**/build/reports/
