@@ -534,6 +534,49 @@ class _MessageScreenState extends State<MessageScreen>
     );
   }
 
+  void _showBlockedNotice() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          _amBlocked
+              ? 'This user has blocked you'
+              : 'You blocked this user. Unblock to message them.',
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBlockedBanner(double screenWidth, double screenHeight) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: screenWidth * 0.04,
+        vertical: screenHeight * 0.01,
+      ),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFDE7E7),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFE57373).withValues(alpha: 0.3)),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.block, color: Color(0xFFE53935), size: 18),
+          SizedBox(width: screenWidth * 0.02),
+          Expanded(
+            child: Text(
+              _amBlocked
+                  ? 'This user has blocked you.'
+                  : 'You blocked this user. Unblock to message them.',
+              style: TextStyle(
+                color: const Color(0xFFC62828),
+                fontSize: screenWidth * 0.03,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -715,6 +758,10 @@ class _MessageScreenState extends State<MessageScreen>
   }
 
   Future<void> _sendMessage() async {
+    if (_isBlocked) {
+      _showBlockedNotice();
+      return;
+    }
     final text = _messageController.text.trim();
     if (text.isEmpty && _selectedImages.isEmpty) return;
 
@@ -1091,6 +1138,10 @@ class _MessageScreenState extends State<MessageScreen>
   }
 
   Future<void> _onMicTapped() async {
+    if (_isBlocked) {
+      _showBlockedNotice();
+      return;
+    }
     if (_isRecording) {
       if (_isPaused) {
         await _resumeRecording();
@@ -1218,6 +1269,10 @@ class _MessageScreenState extends State<MessageScreen>
   }
 
   Future<void> _showImageSourceSheet() async {
+    if (_isBlocked) {
+      _showBlockedNotice();
+      return;
+    }
     final ImageSource? source = await showModalBottomSheet<ImageSource>(
       context: context,
       backgroundColor: Colors.white,
