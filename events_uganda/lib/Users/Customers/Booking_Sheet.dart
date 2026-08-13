@@ -428,7 +428,7 @@ class _BookingSheetState extends State<BookingSheet> {
               const SizedBox(width: 8),
               Text(
                 section.title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: screenWidth * 0.038,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
