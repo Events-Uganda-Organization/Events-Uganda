@@ -58,6 +58,7 @@ class _MessageScreenState extends State<MessageScreen> {
   int? _playingVoiceIndex;
   bool _isPlayingVoice = false;
   bool _isLoadingMessages = false;
+  bool _sending = false;
   final Map<String, GlobalKey> _messageKeys = {};
   String? _highlightedMessageId;
   Timer? _highlightTimer;
@@ -183,9 +184,55 @@ class _MessageScreenState extends State<MessageScreen> {
   Future<void> _sendMessage() async {
     final text = _messageController.text.trim();
     if (text.isEmpty && _selectedImages.isEmpty) return;
+    if (_sending) return;
 
     final conversationId = widget.conversationId;
-    if (conversationId != null && text.isNotEmpty) {
+    if (conversationId == null) return;
+
+    if (_selectedImages.isNotEmpty) {
+      final List<Uint8List> images = List<Uint8List>.of(_selectedImages);
+      setState(() => _sending = true);
+      try {
+        for (int i = 0; i < images.length; i++) {
+          final String? caption =
+              (i == 0 && text.isNotEmpty) ? text : null;
+          final sent = await ChatService.sendImage(
+            conversationId,
+            images[i],
+            caption: caption,
+            filename:
+                'photo_${DateTime.now().millisecondsSinceEpoch}.jpg',
+          );
+          if (!mounted) return;
+          setState(() {
+            _messages.add({
+              'id': sent.id,
+              'text': sent.text ?? '',
+              if (sent.imageUrl != null) 'imageUrl': sent.imageUrl!,
+              'time': _formatTimeFromEpoch(sent.createdAt),
+              'mine': true,
+              'date': sent.createdAt,
+            });
+          });
+        }
+        if (!mounted) return;
+        setState(() {
+          _selectedImages.clear();
+          _messageController.clear();
+        });
+        _scrollToBottom();
+      } catch (_) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Photo failed to send. Try again.')),
+        );
+      } finally {
+        if (mounted) setState(() => _sending = false);
+      }
+      return;
+    }
+
+    if (text.isNotEmpty) {
       final socket = ChatSocketService.instance;
       if (socket.isActive && socket.sendMessage(conversationId, text)) {
         _messageController.clear();
@@ -212,21 +259,8 @@ class _MessageScreenState extends State<MessageScreen> {
           const SnackBar(content: Text('Message failed to send. Try again.')),
         );
       }
-      return;
     }
-
-    setState(() {
-      _messages.add({
-        if (text.isNotEmpty) 'text': text,
-        'time': _currentTime(),
-        'mine': true,
-        'date': DateTime.now(),
-        if (_selectedImages.isNotEmpty) 'images': List<Uint8List>.of(_selectedImages),
-      });
-      _selectedImages.clear();
-    });
-    _messageController.clear();
-    _scrollToBottom();
+  }
   }
 
   void _scrollToBottom() {
