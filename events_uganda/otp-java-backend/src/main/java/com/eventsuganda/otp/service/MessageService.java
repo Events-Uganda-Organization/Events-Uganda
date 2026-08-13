@@ -7,9 +7,16 @@ import com.eventsuganda.otp.exception.OtpException;
 import com.eventsuganda.otp.model.Conversation;
 import com.eventsuganda.otp.model.Message;
 import com.eventsuganda.otp.model.MessageMedia;
+import com.eventsuganda.otp.model.Report;
+import com.eventsuganda.otp.model.User;
+import com.eventsuganda.otp.model.UserBlock;
 import com.eventsuganda.otp.repository.ConversationRepository;
 import com.eventsuganda.otp.repository.MessageMediaRepository;
 import com.eventsuganda.otp.repository.MessageRepository;
+import com.eventsuganda.otp.repository.ReportRepository;
+import com.eventsuganda.otp.repository.UserBlockRepository;
+import com.eventsuganda.otp.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,15 +50,27 @@ public class MessageService {
     private final ConversationRepository conversationRepository;
     private final MessageMediaRepository messageMediaRepository;
     private final PresenceService presenceService;
+    private final UserBlockRepository userBlockRepository;
+    private final ReportRepository reportRepository;
+    private final UserRepository userRepository;
+    private final EmailService emailService;
 
     public MessageService(MessageRepository messageRepository,
                           ConversationRepository conversationRepository,
                           MessageMediaRepository messageMediaRepository,
-                          PresenceService presenceService) {
+                          PresenceService presenceService,
+                          UserBlockRepository userBlockRepository,
+                          ReportRepository reportRepository,
+                          UserRepository userRepository,
+                          EmailService emailService) {
         this.messageRepository = messageRepository;
         this.conversationRepository = conversationRepository;
         this.messageMediaRepository = messageMediaRepository;
         this.presenceService = presenceService;
+        this.userBlockRepository = userBlockRepository;
+        this.reportRepository = reportRepository;
+        this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     @Transactional
@@ -67,12 +86,15 @@ public class MessageService {
             throw new OtpException("Message text is required");
         }
 
+        ensureNotBlocked(conversation, senderId);
+
+        long now = System.currentTimeMillis();
         String id = UUID.randomUUID().toString();
         Message message = new Message(id, conversationId, senderId, text.trim());
+        message.setExpiresAt(disappearingExpiry(conversation, now));
         markDeliveryStatus(message, conversation);
         messageRepository.save(message);
 
-        long now = System.currentTimeMillis();
         conversation.setLastMessage(text.trim());
         conversation.setLastMessageSenderId(senderId);
         conversation.setLastMessageAt(now);
@@ -103,6 +125,8 @@ public class MessageService {
             throw new OtpException("Unsupported media format");
         }
 
+        ensureNotBlocked(conversation, senderId);
+
         if (data == null || data.length == 0) {
             throw new OtpException("Media file is empty");
         }
@@ -121,6 +145,7 @@ public class MessageService {
         String messageId = UUID.randomUUID().toString();
         String text = caption == null ? null : caption.trim();
         Message message = new Message(messageId, conversationId, senderId, text);
+        message.setExpiresAt(disappearingExpiry(conversation, System.currentTimeMillis()));
         markDeliveryStatus(message, conversation);
         messageRepository.save(message);
 
