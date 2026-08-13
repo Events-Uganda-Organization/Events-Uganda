@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/Services/chat_outbox.dart';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Services/chat_socket_service.dart';
 import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
