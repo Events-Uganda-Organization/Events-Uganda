@@ -285,6 +285,7 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   void _onAmplitude(Amplitude amplitude) {
+    _receivedAmplitude = true;
     _lastAmplitude = ((amplitude.current + 60) / 60).clamp(0.0, 1.0);
   }
 
@@ -294,8 +295,11 @@ class _MessageScreenState extends State<MessageScreen> {
     _recordingTicker = Timer.periodic(const Duration(milliseconds: 120), (_) {
       if (!mounted || !_isRecording) return;
       setState(() {
-        final double base = _lastAmplitude + (random.nextDouble() - 0.5) * 0.12;
-        _waveSamples.add(base.clamp(0.08, 1.0));
+        final double jitter = (random.nextDouble() - 0.5) * 0.08;
+        final double base = _receivedAmplitude
+            ? math.max(_lastAmplitude, 0.15)
+            : 0.35 + random.nextDouble() * 0.12;
+        _waveSamples.add((base + jitter).clamp(0.15, 1.0));
         if (_waveSamples.length > 44) _waveSamples.removeAt(0);
       });
     });
@@ -332,6 +336,7 @@ class _MessageScreenState extends State<MessageScreen> {
         _recordingPath = path;
         _recordingLocked = false;
         _cancelDragOffset = 0;
+        _receivedAmplitude = false;
         _waveSamples.clear();
       });
       _startRecordingTicker();
@@ -1043,7 +1048,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 child: Opacity(
                   opacity: _isPaused ? 0.4 : 1.0,
                   child: SizedBox(
-                    height: screenWidth * 0.05,
+                    height: screenWidth * 0.08,
                     child: CustomPaint(
                       painter: _WaveformPainter(
                         levels: _recordingLevels(),
