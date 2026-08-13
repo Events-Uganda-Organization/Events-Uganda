@@ -67,6 +67,26 @@ class _ChatScreenState extends State<ChatScreen> {
   final Map<String, String> _conversationNames = {};
   bool _isLoadingConversations = false;
   StreamSubscription<ChatMessage>? _socketSub;
+  final List<double> _waveSamples = [];
+  StreamSubscription<double>? _levelSub;
+
+  void _startWave() {
+    _levelSub?.cancel();
+    _waveSamples.clear();
+    _levelSub = SpeechService.instance.soundLevels.listen((level) {
+      if (!mounted || !_isListening) return;
+      setState(() {
+        _waveSamples.add(level.clamp(0.05, 1.0));
+        if (_waveSamples.length > 36) _waveSamples.removeAt(0);
+      });
+    });
+  }
+
+  void _stopWave() {
+    _levelSub?.cancel();
+    _levelSub = null;
+    _waveSamples.clear();
+  }
   final TextEditingController _searchController = TextEditingController();
   Timer? _searchDebounce;
   String _searchQuery = '';
@@ -201,6 +221,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (_isListening) {
       _handledResult = false;
       await SpeechService.instance.stop();
+      _stopWave();
       if (!_handledResult) {
         _applyTranscript(SpeechService.instance.lastWords);
       }
@@ -222,6 +243,7 @@ class _ChatScreenState extends State<ChatScreen> {
     setState(() {
       _isListening = true;
     });
+    _startWave();
 
     final bool started = await speech.start(
       onPartial: (partial) {
@@ -234,6 +256,7 @@ class _ChatScreenState extends State<ChatScreen> {
       onResult: (finalText) {
         _handledResult = true;
         if (finalText.trim().isEmpty) {
+          _stopWave();
           if (mounted) setState(() => _isListening = false);
           return;
         }
@@ -242,6 +265,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
 
     if (!started && mounted) {
+      _stopWave();
       setState(() => _isListening = false);
       SnackbarHelper.show(
         context,
@@ -257,6 +281,7 @@ class _ChatScreenState extends State<ChatScreen> {
     _searchController.text = cleaned;
     _searchController.selection =
         TextSelection.collapsed(offset: cleaned.length);
+    _stopWave();
     setState(() {
       _isListening = false;
     });
