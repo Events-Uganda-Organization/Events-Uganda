@@ -14,6 +14,7 @@ public class ConversationResponse {
     private long unreadCount;
     private String disappearingMode;
     private boolean blocked;
+    private boolean amBlocked;
 
     public ConversationResponse() {}
 
@@ -58,4 +59,7 @@ public class ConversationResponse {
 
     public boolean isBlocked() { return blocked; }
     public void setBlocked(boolean blocked) { this.blocked = blocked; }
+
+    public boolean isAmBlocked() { return amBlocked; }
+    public void setAmBlocked(boolean amBlocked) { this.amBlocked = amBlocked; }
 }

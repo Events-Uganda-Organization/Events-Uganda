@@ -88,8 +88,12 @@ public class ConversationService {
         conversation.getParticipantIdSet().stream()
             .filter(p -> !p.equals(userId))
             .findFirst()
-            .ifPresent(other -> response.setBlocked(
-                userBlockRepository.existsByBlockerIdAndBlockedId(userId, other)));
+            .ifPresent(other -> {
+                response.setBlocked(
+                    userBlockRepository.existsByBlockerIdAndBlockedId(userId, other));
+                response.setAmBlocked(
+                    userBlockRepository.existsByBlockerIdAndBlockedId(other, userId));
+            });
         return response;
     }
 }

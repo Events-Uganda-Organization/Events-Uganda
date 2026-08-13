@@ -2436,6 +2436,10 @@ class _MessageScreenState extends State<MessageScreen>
                     _buildRecordingPanel(screenWidth, screenHeight),
                     SizedBox(height: screenHeight * 0.01),
                   ],
+                  if (_isBlocked) ...[
+                    _buildBlockedBanner(screenWidth, screenHeight),
+                    SizedBox(height: screenHeight * 0.01),
+                  ],
                   Row(
                 children: [
                   GestureDetector(
