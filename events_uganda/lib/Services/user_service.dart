@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:events_uganda/Auth/auth_service.dart';
 
 class UserService {
-  static const String _baseUrl = 'https://eventsuganda-backend-production-8c3a.up.railway.app/api';
+  static const String _baseUrl = 'https://events-uganda-26.onrender.com/api';
 
   static Future<Map<String, String>> _authHeader() async {
     final token = await AuthService.getToken();

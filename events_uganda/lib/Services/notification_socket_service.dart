@@ -17,7 +17,7 @@ class NotificationSocketService {
   static final NotificationSocketService instance = NotificationSocketService._();
 
   static const String _wsUrl =
-      'wss://eventsuganda-backend-production-8c3a.up.railway.app/ws';
+      'wss://events-uganda-26.onrender.com/ws';
   static const String _userQueue = '/user/queue/notifications';
 
   final StreamController<AppNotification> _notifications =

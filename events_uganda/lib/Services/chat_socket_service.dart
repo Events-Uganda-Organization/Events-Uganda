@@ -18,7 +18,7 @@ class ChatSocketService {
   static final ChatSocketService instance = ChatSocketService._();
 
   static const String _wsUrl =
-      'wss://eventsuganda-backend-production-8c3a.up.railway.app/ws';
+      'wss://events-uganda-26.onrender.com/ws';
   static const String _userQueue = '/user/queue/messages';
   static const String _sendDestination = '/app/chat.sendMessage';
 

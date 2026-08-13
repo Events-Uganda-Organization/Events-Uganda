@@ -8,7 +8,7 @@ class NotificationSettingsService {
   NotificationSettingsService._();
 
   static const String _baseUrl =
-      'https://eventsuganda-backend-production-8c3a.up.railway.app/api';
+      'https://events-uganda-26.onrender.com/api';
 
   static Future<Map<String, String>> _authHeaders() async {
     final token = await AuthService.getToken();
