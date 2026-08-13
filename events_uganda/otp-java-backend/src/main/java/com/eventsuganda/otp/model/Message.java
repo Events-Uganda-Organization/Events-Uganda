@@ -27,6 +27,8 @@ public class Message {
 
     private Long deliveredAt;
 
+    private Long expiresAt;
+
     public Message() {}
 
     public Message(String id, String conversationId, String senderId, String text) {
@@ -36,6 +38,9 @@ public class Message {
         this.text = text;
         this.createdAt = System.currentTimeMillis();
     }
+
+    public Long getExpiresAt() { return expiresAt; }
+    public void setExpiresAt(Long expiresAt) { this.expiresAt = expiresAt; }
 
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }

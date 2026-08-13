@@ -27,6 +27,9 @@ public class Conversation {
     @Column(nullable = false)
     private long updatedAt;
 
+    @Column(nullable = false)
+    private String disappearingMode = "OFF";
+
     public Conversation() {}
 
     public Conversation(String id, Set<String> participantIds) {
@@ -60,4 +63,7 @@ public class Conversation {
 
     public long getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(long updatedAt) { this.updatedAt = updatedAt; }
+
+    public String getDisappearingMode() { return disappearingMode; }
+    public void setDisappearingMode(String disappearingMode) { this.disappearingMode = disappearingMode; }
 }
