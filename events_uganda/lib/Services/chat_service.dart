@@ -11,6 +11,8 @@ class ChatMessage {
     required this.senderId,
     required this.text,
     this.imageUrl,
+    this.audioUrl,
+    this.audioDurationMs,
     required this.createdAt,
     required this.isMine,
   });
@@ -20,8 +22,12 @@ class ChatMessage {
   final String senderId;
   final String? text;
   final String? imageUrl;
+  final String? audioUrl;
+  final int? audioDurationMs;
   final DateTime createdAt;
   final bool isMine;
+
+  bool get hasMedia => imageUrl != null || audioUrl != null;
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) => ChatMessage(
         id: json['id'] as String? ?? '',
@@ -29,6 +35,8 @@ class ChatMessage {
         senderId: json['senderId'] as String? ?? '',
         text: json['text'] as String?,
         imageUrl: json['imageUrl'] as String?,
+        audioUrl: json['audioUrl'] as String?,
+        audioDurationMs: (json['audioDurationMs'] as num?)?.toInt(),
         createdAt: DateTime.fromMillisecondsSinceEpoch(
           (json['createdAt'] as num?)?.toInt() ??
               DateTime.now().millisecondsSinceEpoch,
@@ -132,6 +140,14 @@ class ChatService {
     return (id is String && id.isNotEmpty) ? id : '';
   }
 
+  static String mediaUrl(String? relativePath) {
+    if (relativePath == null || relativePath.isEmpty) return '';
+    if (relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
+      return relativePath;
+    }
+    return '$_baseUrl$relativePath';
+  }
+
   static Future<List<ChatConversation>> getConversations() async {
     final response = await http.get(
       Uri.parse('$_baseUrl/chat/conversations'),
@@ -212,6 +228,61 @@ class ChatService {
       headers: await _authHeaders(),
       body: jsonEncode({'text': text}),
     );
+    _ensureOk(response);
+    return ChatMessage.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
+  }
+
+  static Future<ChatMessage> sendImage(
+    String conversationId,
+    List<int> bytes, {
+    String? caption,
+    String filename = 'photo.jpg',
+  }) =>
+      _uploadMedia(conversationId, 'IMAGE', bytes, filename, caption: caption);
+
+  static Future<ChatMessage> sendVoice(
+    String conversationId,
+    List<int> bytes, {
+    required String filename,
+    required Duration duration,
+  }) =>
+      _uploadMedia(
+        conversationId,
+        'AUDIO',
+        bytes,
+        filename,
+        durationMs: duration.inMilliseconds,
+      );
+
+  static Future<ChatMessage> _uploadMedia(
+    String conversationId,
+    String type,
+    List<int> bytes,
+    String filename, {
+    String? caption,
+    int? durationMs,
+  }) async {
+    final token = await AuthService.getToken();
+    final uri = Uri.parse(
+      '$_baseUrl/chat/conversations/$conversationId/media',
+    ).replace(queryParameters: {
+      'type': type,
+      if (caption != null && caption.isNotEmpty) 'caption': caption,
+      if (durationMs != null) 'durationMs': '$durationMs',
+    });
+
+    final request = http.MultipartRequest('POST', uri);
+    if (token != null && token.isNotEmpty) {
+      request.headers['Authorization'] = 'Bearer $token';
+    }
+    request.files.add(http.MultipartFile.fromBytes(
+      'file',
+      bytes,
+      filename: filename,
+    ));
+
+    final streamed = await request.send();
+    final response = await http.Response.fromStream(streamed);
     _ensureOk(response);
     return ChatMessage.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   }

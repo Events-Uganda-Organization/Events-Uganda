@@ -95,6 +95,8 @@ class ChatSocketService {
       senderId: message.senderId,
       text: message.text,
       imageUrl: message.imageUrl,
+      audioUrl: message.audioUrl,
+      audioDurationMs: message.audioDurationMs,
       createdAt: message.createdAt,
       isMine: senderId.isNotEmpty && senderId == myId,
     );
