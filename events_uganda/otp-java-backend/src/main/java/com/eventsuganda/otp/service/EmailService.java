@@ -19,8 +19,45 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
+    @Value("${app.support-email:}")
+    private String supportEmail;
+
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
+    }
+
+    public void sendGenericEmail(String to, String subject, String body) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(fromEmail);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, false);
+            mailSender.send(message);
+            log.info("Email '{}' sent to {}", subject, to);
+        } catch (Exception e) {
+            log.error("Failed to send email to {}", to, e);
+        }
+    }
+
+    public void sendReportEmail(String reporterName, String reporterEmail,
+                                String reportedName, String reportedEmail, String reason) {
+        String recipient = supportEmail != null && !supportEmail.isBlank() ? supportEmail : fromEmail;
+        String subject = "[Report] User reported - Events Uganda";
+        String body = """
+            A user has been reported.
+
+            Reported by: %s (%s)
+            Reported user: %s (%s)
+            Reason: %s
+            """.formatted(
+                reporterName != null ? reporterName : "Unknown",
+                reporterEmail != null ? reporterEmail : "Unknown",
+                reportedName != null ? reportedName : "Unknown",
+                reportedEmail != null ? reportedEmail : "Unknown",
+                reason != null ? reason : "No reason provided");
+        sendGenericEmail(recipient, subject, body);
     }
 
     public void sendWelcomeEmail(String to, String fullName, String referralCode) {

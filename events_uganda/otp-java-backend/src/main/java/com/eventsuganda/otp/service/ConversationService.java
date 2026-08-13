@@ -6,6 +6,7 @@ import com.eventsuganda.otp.model.Conversation;
 import com.eventsuganda.otp.model.Message;
 import com.eventsuganda.otp.repository.ConversationRepository;
 import com.eventsuganda.otp.repository.MessageRepository;
+import com.eventsuganda.otp.repository.UserBlockRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +18,14 @@ public class ConversationService {
 
     private final ConversationRepository conversationRepository;
     private final MessageRepository messageRepository;
+    private final UserBlockRepository userBlockRepository;
 
-    public ConversationService(ConversationRepository conversationRepository, MessageRepository messageRepository) {
+    public ConversationService(ConversationRepository conversationRepository,
+                               MessageRepository messageRepository,
+                               UserBlockRepository userBlockRepository) {
         this.conversationRepository = conversationRepository;
         this.messageRepository = messageRepository;
+        this.userBlockRepository = userBlockRepository;
     }
 
     @Transactional
@@ -79,6 +84,12 @@ public class ConversationService {
 
     private ConversationResponse toResponse(Conversation conversation, String userId) {
         long unread = messageRepository.countByConversationIdAndSenderIdNotAndReadAtIsNull(conversation.getId(), userId);
-        return new ConversationResponse(conversation, unread);
+        ConversationResponse response = new ConversationResponse(conversation, unread);
+        conversation.getParticipantIdSet().stream()
+            .filter(p -> !p.equals(userId))
+            .findFirst()
+            .ifPresent(other -> response.setBlocked(
+                userBlockRepository.existsByBlockerIdAndBlockedId(userId, other)));
+        return response;
     }
 }
