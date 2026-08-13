@@ -25,6 +25,8 @@ public class Message {
 
     private Long readAt;
 
+    private Long deliveredAt;
+
     public Message() {}
 
     public Message(String id, String conversationId, String senderId, String text) {
@@ -55,4 +57,7 @@ public class Message {
 
     public Long getReadAt() { return readAt; }
     public void setReadAt(Long readAt) { this.readAt = readAt; }
+
+    public Long getDeliveredAt() { return deliveredAt; }
+    public void setDeliveredAt(Long deliveredAt) { this.deliveredAt = deliveredAt; }
 }

@@ -13,6 +13,7 @@ public class MessageResponse {
     private Long audioDurationMs;
     private long createdAt;
     private Long readAt;
+    private Long deliveredAt;
     private boolean isMine;
 
     public MessageResponse() {}
@@ -31,6 +32,7 @@ public class MessageResponse {
         this.audioDurationMs = durationMs;
         this.createdAt = message.getCreatedAt();
         this.readAt = message.getReadAt();
+        this.deliveredAt = message.getDeliveredAt();
         this.isMine = message.getSenderId().equals(currentUserId);
     }
 
@@ -60,6 +62,9 @@ public class MessageResponse {
 
     public Long getReadAt() { return readAt; }
     public void setReadAt(Long readAt) { this.readAt = readAt; }
+
+    public Long getDeliveredAt() { return deliveredAt; }
+    public void setDeliveredAt(Long deliveredAt) { this.deliveredAt = deliveredAt; }
 
     public boolean isMine() { return isMine; }
     public void setMine(boolean mine) { isMine = mine; }
