@@ -300,13 +300,13 @@ class _MessageScreenState extends State<MessageScreen> {
             ? math.max(_lastAmplitude, 0.15)
             : 0.35 + random.nextDouble() * 0.12;
         _waveSamples.add((base + jitter).clamp(0.15, 1.0));
-        if (_waveSamples.length > 44) _waveSamples.removeAt(0);
+        if (_waveSamples.length > 26) _waveSamples.removeAt(0);
       });
     });
   }
 
   List<double> _recordingLevels() {
-    const int count = 44;
+    const int count = 26;
     if (_waveSamples.length >= count) return _waveSamples;
     return [
       ...List<double>.filled(count - _waveSamples.length, 0.15),
@@ -1629,7 +1629,7 @@ class _WaveformPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (levels.isEmpty || size.width <= 0 || size.height <= 0) return;
     final double count = levels.length.toDouble();
-    final double gap = size.width * 0.03;
+    final double gap = math.min(size.width * 0.015, 2.0);
     final double barWidth = (size.width - gap * (count - 1)) / count;
     if (barWidth <= 0) return;
     final Paint paint = Paint();
