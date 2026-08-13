@@ -54,6 +54,7 @@ class _MessageScreenState extends State<MessageScreen> {
   bool _recordingLocked = false;
   double _cancelDragOffset = 0;
   double _lastAmplitude = 0.5;
+  bool _receivedAmplitude = false;
   int? _playingVoiceIndex;
   bool _isPlayingVoice = false;
   bool _isLoadingMessages = false;
