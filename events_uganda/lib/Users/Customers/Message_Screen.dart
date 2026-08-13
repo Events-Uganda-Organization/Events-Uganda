@@ -34,7 +34,8 @@ class MessageScreen extends StatefulWidget {
   State<MessageScreen> createState() => _MessageScreenState();
 }
 
-class _MessageScreenState extends State<MessageScreen> {
+class _MessageScreenState extends State<MessageScreen>
+    with WidgetsBindingObserver {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _messagesScroll = ScrollController();
   final ImagePicker _imagePicker = ImagePicker();
@@ -50,6 +51,7 @@ class _MessageScreenState extends State<MessageScreen> {
   StreamSubscription<Duration>? _positionSub;
   StreamSubscription<PlayerState>? _playerStateSub;
   StreamSubscription<ChatMessage>? _socketSub;
+  StreamSubscription<OutboxEvent>? _outboxSub;
   String? _recordingPath;
   bool _isRecording = false;
   bool _isPaused = false;
@@ -60,7 +62,6 @@ class _MessageScreenState extends State<MessageScreen> {
   int? _playingVoiceIndex;
   bool _isPlayingVoice = false;
   bool _isLoadingMessages = false;
-  bool _sending = false;
   String? _authToken;
   final Map<String, GlobalKey> _messageKeys = {};
   String? _highlightedMessageId;
@@ -69,6 +70,8 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _outboxSub = ChatOutbox.instance.events.listen(_onOutboxEvent);
     AuthService.getToken().then((token) {
       if (mounted && token != null && token.isNotEmpty) {
         setState(() => _authToken = token);
@@ -96,7 +99,46 @@ class _MessageScreenState extends State<MessageScreen> {
     if (widget.conversationId != null) {
       _loadMessages();
       _initSocket();
+      ChatOutbox.instance.drain();
     }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      ChatOutbox.instance.drain();
+    }
+  }
+
+  void _onOutboxEvent(OutboxEvent event) {
+    if (!mounted) return;
+    final int idx = _messages.indexWhere(
+      (m) => m['pendingId'] == event.outboxId,
+    );
+    if (idx == -1) return;
+    final ChatMessage? sent = event.message;
+    if (sent == null) return;
+    setState(() {
+      final Map<String, Object> replacement = <String, Object>{
+        'id': sent.id,
+        'text': sent.text ?? '',
+        'time': _formatTimeFromEpoch(sent.createdAt),
+        'mine': true,
+        'date': sent.createdAt,
+      };
+      final String? imageUrl = sent.imageUrl;
+      if (imageUrl != null && imageUrl.isNotEmpty) {
+        replacement['imageUrl'] = imageUrl;
+      }
+      final String? audioUrl = sent.audioUrl;
+      if (audioUrl != null && audioUrl.isNotEmpty) {
+        replacement['audioUrl'] = audioUrl;
+        replacement['duration'] =
+            Duration(milliseconds: sent.audioDurationMs ?? 0);
+      }
+      _messages[idx] = replacement;
+    });
+    _scrollToBottom();
   }
 
   void _initSocket() {
@@ -105,6 +147,7 @@ class _MessageScreenState extends State<MessageScreen> {
     _socketSub = socket.messages.listen((message) {
       if (message.conversationId != widget.conversationId) return;
       if (!mounted) return;
+      if (message.isMine && message.hasMedia) return;
       final exists =
           _messages.any((m) => m['id'] == message.id && m['id'] != null);
       if (exists) return;
@@ -200,51 +243,68 @@ class _MessageScreenState extends State<MessageScreen> {
   Future<void> _sendMessage() async {
     final text = _messageController.text.trim();
     if (text.isEmpty && _selectedImages.isEmpty) return;
-    if (_sending) return;
 
     final conversationId = widget.conversationId;
     if (conversationId == null) return;
 
     if (_selectedImages.isNotEmpty) {
       final List<Uint8List> images = List<Uint8List>.of(_selectedImages);
-      setState(() => _sending = true);
-      try {
+      final List<String?> outboxIds = <String?>[];
+      for (int i = 0; i < images.length; i++) {
+        final String? caption = (i == 0 && text.isNotEmpty) ? text : null;
+        final String filename =
+            'photo_${DateTime.now().millisecondsSinceEpoch}_$i.jpg';
+        try {
+          outboxIds.add(await ChatOutbox.instance.enqueueMedia(
+            conversationId: conversationId,
+            type: OutboxMediaType.image,
+            bytes: images[i],
+            text: caption,
+            filename: filename,
+          ));
+        } catch (_) {
+          outboxIds.add(null);
+          try {
+            final ChatMessage sent = await ChatService.sendImage(
+              conversationId,
+              images[i],
+              caption: caption,
+              filename: filename,
+            );
+            if (mounted) {
+              setState(() {
+                _messages.add({
+                  'id': sent.id,
+                  'text': sent.text ?? '',
+                  if (sent.imageUrl != null) 'imageUrl': sent.imageUrl!,
+                  'time': _formatTimeFromEpoch(sent.createdAt),
+                  'mine': true,
+                  'date': sent.createdAt,
+                });
+              });
+            }
+          } catch (_) {}
+        }
+      }
+      if (!mounted) return;
+      setState(() {
+        _selectedImages.clear();
+        _messageController.clear();
         for (int i = 0; i < images.length; i++) {
-          final String? caption =
-              (i == 0 && text.isNotEmpty) ? text : null;
-          final sent = await ChatService.sendImage(
-            conversationId,
-            images[i],
-            caption: caption,
-            filename:
-                'photo_${DateTime.now().millisecondsSinceEpoch}.jpg',
-          );
-          if (!mounted) return;
-          setState(() {
-            _messages.add({
-              'id': sent.id,
-              'text': sent.text ?? '',
-              if (sent.imageUrl != null) 'imageUrl': sent.imageUrl!,
-              'time': _formatTimeFromEpoch(sent.createdAt),
-              'mine': true,
-              'date': sent.createdAt,
-            });
+          final String? id = outboxIds[i];
+          if (id == null) continue;
+          _messages.add(<String, Object>{
+            'id': id,
+            'pendingId': id,
+            'images': <Uint8List>[images[i]],
+            if (i == 0 && text.isNotEmpty) 'text': text,
+            'time': _currentTime(),
+            'mine': true,
+            'date': DateTime.now(),
           });
         }
-        if (!mounted) return;
-        setState(() {
-          _selectedImages.clear();
-          _messageController.clear();
-        });
-        _scrollToBottom();
-      } catch (_) {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Photo failed to send. Try again.')),
-        );
-      } finally {
-        if (mounted) setState(() => _sending = false);
-      }
+      });
+      _scrollToBottom();
       return;
     }
 
