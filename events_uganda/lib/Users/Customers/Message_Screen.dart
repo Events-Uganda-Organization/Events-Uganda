@@ -119,6 +119,7 @@ class _MessageScreenState extends State<MessageScreen>
       setState(() {
         _disappearingMode = conv.disappearingMode;
         _blocked = conv.blocked;
+        _amBlocked = conv.amBlocked;
       });
     } catch (_) {}
   }

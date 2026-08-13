@@ -68,6 +68,7 @@ class ChatConversation {
     required this.unreadCount,
     this.disappearingMode = 'OFF',
     this.blocked = false,
+    this.amBlocked = false,
   });
 
   final String id;
@@ -78,6 +79,7 @@ class ChatConversation {
   final int unreadCount;
   final String disappearingMode;
   final bool blocked;
+  final bool amBlocked;
 
   factory ChatConversation.fromJson(Map<String, dynamic> json) {
     final List<String> ids = (json['participantIds'] as String? ?? '')
@@ -98,6 +100,7 @@ class ChatConversation {
       unreadCount: (json['unreadCount'] as num?)?.toInt() ?? 0,
       disappearingMode: json['disappearingMode'] as String? ?? 'OFF',
       blocked: json['blocked'] as bool? ?? false,
+      amBlocked: json['amBlocked'] as bool? ?? false,
     );
   }
 
