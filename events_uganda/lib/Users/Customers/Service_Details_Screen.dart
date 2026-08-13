@@ -1398,9 +1398,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             ),
             Positioned(
               bottom: 20,
-              left: (screenWidth - 270) / 2,
+              left: (screenWidth - 210) / 2,
               child: Container(
-                width: 270,
+                width: 210,
                 height: 45,
                 decoration: BoxDecoration(
                   color: const Color(0xFFF3CA9B),
