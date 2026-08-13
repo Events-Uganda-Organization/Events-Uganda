@@ -218,6 +218,8 @@ class _MessageScreenState extends State<MessageScreen>
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _outboxSub?.cancel();
     _highlightTimer?.cancel();
     _recordingTicker?.cancel();
     _amplitudeSub?.cancel();
@@ -528,7 +530,6 @@ class _MessageScreenState extends State<MessageScreen>
   }
 
   Future<void> _sendVoiceMessage() async {
-    if (_sending) return;
     final Duration duration = _recordingStopwatch.elapsed;
     await _stopRecording();
     final String? path = _recordingPath;
@@ -539,45 +540,65 @@ class _MessageScreenState extends State<MessageScreen>
     final conversationId = widget.conversationId;
     if (!mounted) return;
     setState(() {
-      _sending = true;
       _recordingPath = null;
       _waveSamples.clear();
     });
+    final Uint8List bytes;
     try {
-      final Uint8List bytes = await XFile(path).readAsBytes();
-      if (conversationId == null || bytes.isEmpty) {
-        throw Exception('empty recording');
-      }
-      final String filename =
-          'voice_${DateTime.now().millisecondsSinceEpoch}.${kIsWeb ? 'webm' : 'm4a'}';
-      final ChatMessage sent = await ChatService.sendVoice(
-        conversationId,
-        bytes,
+      bytes = await XFile(path).readAsBytes();
+    } catch (_) {
+      return;
+    }
+    if (conversationId == null || bytes.isEmpty) return;
+    final String filename =
+        'voice_${DateTime.now().millisecondsSinceEpoch}.${kIsWeb ? 'webm' : 'm4a'}';
+    String? outboxId;
+    try {
+      outboxId = await ChatOutbox.instance.enqueueMedia(
+        conversationId: conversationId,
+        type: OutboxMediaType.audio,
+        bytes: bytes,
         filename: filename,
         duration: duration,
       );
-      if (!mounted) return;
-      setState(() {
-        _messages.add({
-          'id': sent.id,
-          'text': sent.text ?? '',
-          if (sent.audioUrl != null) 'audioUrl': sent.audioUrl!,
-          if (sent.audioDurationMs != null)
-            'duration': Duration(milliseconds: sent.audioDurationMs!),
-          'time': _currentTime(),
-          'mine': true,
-          'date': sent.createdAt,
-        });
-      });
-      _scrollToBottom();
     } catch (_) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Voice message failed to send. Try again.')),
-      );
-    } finally {
-      if (mounted) setState(() => _sending = false);
+      try {
+        final ChatMessage sent = await ChatService.sendVoice(
+          conversationId,
+          bytes,
+          filename: filename,
+          duration: duration,
+        );
+        if (!mounted) return;
+        setState(() {
+          _messages.add({
+            'id': sent.id,
+            'text': sent.text ?? '',
+            if (sent.audioUrl != null) 'audioUrl': sent.audioUrl!,
+            if (sent.audioDurationMs != null)
+              'duration': Duration(milliseconds: sent.audioDurationMs!),
+            'time': _currentTime(),
+            'mine': true,
+            'date': sent.createdAt,
+          });
+        });
+        _scrollToBottom();
+      } catch (_) {}
+      return;
     }
+    if (!mounted) return;
+    setState(() {
+      _messages.add(<String, Object>{
+        'id': outboxId!,
+        'pendingId': outboxId!,
+        'voice': path,
+        'duration': duration,
+        'time': _currentTime(),
+        'mine': true,
+        'date': DateTime.now(),
+      });
+    });
+    _scrollToBottom();
   }
 
   void _showMicPermissionMessage() {
@@ -1887,24 +1908,14 @@ class _MessageScreenState extends State<MessageScreen>
                                 color: Color(0xFFCD7C20),
                                 shape: BoxShape.circle,
                               ),
-                              child: _sending
-                                  ? Padding(
-                                      padding: EdgeInsets.all(
-                                        screenWidth * 0.02,
-                                      ),
-                                      child: const CircularProgressIndicator(
-                                        strokeWidth: 2,
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  : Transform.rotate(
-                                      angle: math.pi * -45 / 180,
-                                      child: Icon(
-                                        Icons.send,
-                                        color: Colors.white,
-                                        size: screenWidth * 0.045,
-                                      ),
-                                    ),
+                              child: Transform.rotate(
+                                angle: math.pi * -45 / 180,
+                                child: Icon(
+                                  Icons.send,
+                                  color: Colors.white,
+                                  size: screenWidth * 0.045,
+                                ),
+                              ),
                             ),
                           ),
                         ],
