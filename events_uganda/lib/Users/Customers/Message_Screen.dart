@@ -104,6 +104,10 @@ class _MessageScreenState extends State<MessageScreen> {
         _messages.add({
           'id': message.id,
           'text': message.text ?? '',
+          if (message.imageUrl != null) 'imageUrl': message.imageUrl!,
+          if (message.audioUrl != null) 'audioUrl': message.audioUrl!,
+          if (message.audioUrl != null && message.audioDurationMs != null)
+            'duration': Duration(milliseconds: message.audioDurationMs!),
           'time': _formatTimeFromEpoch(message.createdAt),
           'mine': message.isMine,
           'date': message.createdAt,
@@ -128,6 +132,10 @@ class _MessageScreenState extends State<MessageScreen> {
           _messages.add({
             'id': m.id,
             'text': m.text ?? '',
+            if (m.imageUrl != null) 'imageUrl': m.imageUrl!,
+            if (m.audioUrl != null) 'audioUrl': m.audioUrl!,
+            if (m.audioUrl != null && m.audioDurationMs != null)
+              'duration': Duration(milliseconds: m.audioDurationMs!),
             'time': _formatTimeFromEpoch(m.createdAt),
             'mine': m.isMine,
             'date': m.createdAt,
@@ -260,7 +268,6 @@ class _MessageScreenState extends State<MessageScreen> {
         );
       }
     }
-  }
   }
 
   void _scrollToBottom() {
@@ -449,6 +456,7 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   Future<void> _sendVoiceMessage() async {
+    if (_sending) return;
     final Duration duration = _recordingStopwatch.elapsed;
     await _stopRecording();
     final String? path = _recordingPath;
@@ -456,19 +464,48 @@ class _MessageScreenState extends State<MessageScreen> {
       await _cancelRecording();
       return;
     }
+    final conversationId = widget.conversationId;
     if (!mounted) return;
     setState(() {
-      _messages.add({
-        'voice': path,
-        'duration': duration,
-        'time': _currentTime(),
-        'mine': true,
-        'date': DateTime.now(),
-      });
+      _sending = true;
       _recordingPath = null;
       _waveSamples.clear();
     });
-    _scrollToBottom();
+    try {
+      final Uint8List bytes = await XFile(path).readAsBytes();
+      if (conversationId == null || bytes.isEmpty) {
+        throw Exception('empty recording');
+      }
+      final String filename =
+          'voice_${DateTime.now().millisecondsSinceEpoch}.${kIsWeb ? 'webm' : 'm4a'}';
+      final ChatMessage sent = await ChatService.sendVoice(
+        conversationId,
+        bytes,
+        filename: filename,
+        duration: duration,
+      );
+      if (!mounted) return;
+      setState(() {
+        _messages.add({
+          'id': sent.id,
+          'text': sent.text ?? '',
+          if (sent.audioUrl != null) 'audioUrl': sent.audioUrl!,
+          if (sent.audioDurationMs != null)
+            'duration': Duration(milliseconds: sent.audioDurationMs!),
+          'time': _currentTime(),
+          'mine': true,
+          'date': sent.createdAt,
+        });
+      });
+      _scrollToBottom();
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Voice message failed to send. Try again.')),
+      );
+    } finally {
+      if (mounted) setState(() => _sending = false);
+    }
   }
 
   void _showMicPermissionMessage() {
@@ -564,7 +601,8 @@ class _MessageScreenState extends State<MessageScreen> {
 
   Future<void> _playVoiceMessage(int index) async {
     final Map<String, Object> message = _messages[index];
-    final String path = message['voice'] as String;
+    final String? audioUrl = message['audioUrl'] as String?;
+    final String? path = message['voice'] as String?;
     try {
       if (_isPlayingVoice && _playingVoiceIndex == index) {
         await _audioPlayer.stop();
@@ -577,10 +615,16 @@ class _MessageScreenState extends State<MessageScreen> {
         return;
       }
       await _audioPlayer.stop();
-      if (kIsWeb) {
-        await _audioPlayer.setUrl(path);
+      if (audioUrl != null && audioUrl.isNotEmpty) {
+        await _audioPlayer.setUrl(ChatService.mediaUrl(audioUrl));
+      } else if (path != null && path.isNotEmpty) {
+        if (kIsWeb) {
+          await _audioPlayer.setUrl(path);
+        } else {
+          await _audioPlayer.setFilePath(path);
+        }
       } else {
-        await _audioPlayer.setFilePath(path);
+        return;
       }
       if (!mounted) return;
       setState(() {
