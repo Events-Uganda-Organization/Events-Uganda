@@ -203,342 +203,137 @@ class _MessageScreenState extends State<MessageScreen>
   }
 
   void _openDisappearingSheet() {
-    final double sw = MediaQuery.of(context).size.width;
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (sheetContext) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: sw * 0.05,
-                vertical: sw * 0.04,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Disappearing messages',
-                    style: TextStyle(
-                      fontSize: sw * 0.045,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(height: sw * 0.01),
-                  Text(
-                    'Messages in this chat will disappear after the chosen time.',
-                    style: TextStyle(
-                      fontSize: sw * 0.032,
-                      color: Colors.black.withValues(alpha: 0.5),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            _disappearingOption(sheetContext, 'OFF', 'Off', 'Messages stay forever'),
-            _disappearingOption(sheetContext, '24H', '24 hours', 'Messages disappear after 24 hours'),
-            _disappearingOption(sheetContext, '7D', '7 days', 'Messages disappear after 7 days'),
-            SizedBox(height: sw * 0.03),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _disappearingOption(
-    BuildContext sheetContext,
-    String mode,
-    String title,
-    String subtitle,
-  ) {
-    final double sw = MediaQuery.of(context).size.width;
-    final bool selected = _disappearingMode == mode;
-    return ListTile(
-      onTap: () async {
-        final conversationId = widget.conversationId;
-        if (conversationId == null) {
-          Navigator.of(sheetContext).pop();
-          return;
-        }
-        try {
-          await ChatService.setDisappearingMode(conversationId, mode);
-          if (mounted) setState(() => _disappearingMode = mode);
-        } catch (e) {
-          if (mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Could not update: $e')),
-            );
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetContext) => _DisappearingMessagesSheet(
+        currentMode: _disappearingMode,
+        onSelect: (mode) async {
+          final conversationId = widget.conversationId;
+          if (conversationId == null) {
+            if (sheetContext.mounted) Navigator.of(sheetContext).pop();
+            return;
           }
-        }
-        if (sheetContext.mounted) Navigator.of(sheetContext).pop();
-      },
-      leading: Icon(
-        selected ? Icons.radio_button_checked : Icons.radio_button_off,
-        color: selected ? const Color(0xFFCD7C20) : Colors.black26,
-      ),
-      title: Text(
-        title,
-        style: TextStyle(
-          fontSize: sw * 0.038,
-          fontWeight: FontWeight.w600,
-          color: Colors.black,
-        ),
-      ),
-      subtitle: Text(
-        subtitle,
-        style: TextStyle(
-          fontSize: sw * 0.03,
-          color: Colors.black.withValues(alpha: 0.5),
-        ),
+          try {
+            await ChatService.setDisappearingMode(conversationId, mode);
+            if (mounted) setState(() => _disappearingMode = mode);
+          } catch (e) {
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Could not update: $e')),
+              );
+            }
+          }
+          if (sheetContext.mounted) Navigator.of(sheetContext).pop();
+        },
       ),
     );
   }
 
   Future<void> _confirmClearChat() async {
-    final bool confirmed = await showDialog<bool>(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: const Text('Clear chat?'),
-            content: const Text(
-              'This will delete all messages in this chat for you and the other person. This cannot be undone.',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(false),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(true),
-                child: const Text(
-                  'Clear',
-                  style: TextStyle(color: Color(0xFFE53935)),
-                ),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-    if (!confirmed) return;
     final conversationId = widget.conversationId;
     if (conversationId == null) return;
-    try {
-      await ChatService.clearChat(conversationId);
-      if (!mounted) return;
-      setState(() {
-        _messages.clear();
-        _highlightedMessageId = null;
-      });
-      if (_messagesScroll.hasClients) {
-        _messagesScroll.jumpTo(0);
-      }
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Chat cleared')),
-      );
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not clear chat: $e')),
-        );
-      }
-    }
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetContext) => _ClearChatSheet(
+        contactName: widget.name,
+        onClear: () async {
+          try {
+            await ChatService.clearChat(conversationId);
+            if (mounted) {
+              setState(() {
+                _messages.clear();
+                _highlightedMessageId = null;
+              });
+              if (_messagesScroll.hasClients) {
+                _messagesScroll.jumpTo(0);
+              }
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Chat cleared')),
+              );
+            }
+          } catch (e) {
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Could not clear chat: $e')),
+              );
+            }
+          }
+        },
+      ),
+    );
   }
 
   Future<void> _confirmBlockOrUnblock() async {
     final bool block = !_blocked;
-    final bool confirmed = await showDialog<bool>(
-          context: context,
-          builder: (ctx) => AlertDialog(
-            title: Text(block ? 'Block user?' : 'Unblock user?'),
-            content: Text(
-              block
-                  ? 'Blocking will prevent this user from sending you messages, and you will not be able to message them.'
-                  : 'You will be able to exchange messages with this user again.',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(false),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(true),
-                child: Text(
-                  block ? 'Block' : 'Unblock',
-                  style: const TextStyle(color: Color(0xFFE53935)),
-                ),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-    if (!confirmed) return;
     final conversationId = widget.conversationId;
     if (conversationId == null) return;
-    try {
-      if (block) {
-        await ChatService.blockUser(conversationId);
-      } else {
-        await ChatService.unblockUser(conversationId);
-      }
-      if (!mounted) return;
-      setState(() => _blocked = block);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(block ? 'User blocked' : 'User unblocked')),
-      );
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Could not update: $e')),
-        );
-      }
-    }
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (sheetContext) => _BlockUserSheet(
+        blocking: block,
+        contactName: widget.name,
+        onAction: () async {
+          try {
+            if (block) {
+              await ChatService.blockUser(conversationId);
+            } else {
+              await ChatService.unblockUser(conversationId);
+            }
+            if (mounted) {
+              setState(() => _blocked = block);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(block ? 'User blocked' : 'User unblocked'),
+                ),
+              );
+            }
+          } catch (e) {
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Could not update: $e')),
+              );
+            }
+          }
+        },
+      ),
+    );
   }
 
   void _showReportSheet() {
-    final double sw = MediaQuery.of(context).size.width;
-    final TextEditingController controller = TextEditingController();
-    final List<String> quickReasons = [
-      'Spam or scam',
-      'Harassment',
-      'Inappropriate content',
-      'Impersonation',
-    ];
-
+    final conversationId = widget.conversationId;
+    if (conversationId == null) return;
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (sheetContext) => Padding(
-        padding: EdgeInsets.only(
-          left: sw * 0.05,
-          right: sw * 0.05,
-          top: sw * 0.04,
-          bottom: MediaQuery.of(sheetContext).viewInsets.bottom + sw * 0.04,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Report user',
-              style: TextStyle(
-                fontSize: sw * 0.045,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(height: sw * 0.01),
-            Text(
-              'Tell us what happened. Your report is confidential.',
-              style: TextStyle(
-                fontSize: sw * 0.032,
-                color: Colors.black.withValues(alpha: 0.5),
-              ),
-            ),
-            SizedBox(height: sw * 0.03),
-            Wrap(
-              spacing: sw * 0.02,
-              runSpacing: sw * 0.02,
-              children: quickReasons.map((reason) {
-                return GestureDetector(
-                  onTap: () {
-                    controller.text = reason;
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: sw * 0.04,
-                      vertical: sw * 0.02,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFCD7C20).withValues(alpha: 0.12),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      reason,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFFCD7C20),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
-            SizedBox(height: sw * 0.03),
-            TextField(
-              controller: controller,
-              maxLines: 3,
-              maxLength: 500,
-              decoration: InputDecoration(
-                hintText: 'Add details (optional)',
-                filled: true,
-                fillColor: const Color(0xFFF5F2EC),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-            SizedBox(height: sw * 0.02),
-            SizedBox(
-              height: sw * 0.12,
-              child: ElevatedButton(
-                onPressed: () async {
-                  final String reason = controller.text.trim().isEmpty
-                      ? 'General'
-                      : controller.text.trim();
-                  final conversationId = widget.conversationId;
-                  if (conversationId == null) return;
-                  try {
-                    await ChatService.reportUser(conversationId, reason);
-                    if (sheetContext.mounted) {
-                      Navigator.of(sheetContext).pop();
-                    }
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Report submitted. Thank you for keeping the community safe.',
-                          ),
-                        ),
-                      );
-                    }
-                  } catch (e) {
-                    if (sheetContext.mounted) {
-                      Navigator.of(sheetContext).pop();
-                    }
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Could not submit report: $e')),
-                      );
-                    }
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFCD7C20),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+      backgroundColor: Colors.transparent,
+      builder: (sheetContext) => _ReportUserSheet(
+        contactName: widget.name,
+        onSubmit: (reason) async {
+          try {
+            await ChatService.reportUser(conversationId, reason);
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                    'Report submitted. Thank you for keeping the community safe.',
                   ),
                 ),
-                child: const Text(
-                  'Submit report',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-          ],
-        ),
+              );
+            }
+          } catch (e) {
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Could not submit report: $e')),
+              );
+            }
+          }
+        },
       ),
     );
   }
