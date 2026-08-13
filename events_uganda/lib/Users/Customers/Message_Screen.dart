@@ -400,8 +400,9 @@ class _MessageScreenState extends State<MessageScreen> {
     if (!mounted) return;
     setState(() {
       _recordingPath = null;
-      _recordingLocked = false;
+      _isRecording = false;
       _isPaused = false;
+      _recordingLocked = false;
       _cancelDragOffset = 0;
       _waveSamples.clear();
     });
