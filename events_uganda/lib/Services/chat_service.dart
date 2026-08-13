@@ -66,6 +66,8 @@ class ChatConversation {
     this.lastMessageSenderId,
     this.lastMessageAt,
     required this.unreadCount,
+    this.disappearingMode = 'OFF',
+    this.blocked = false,
   });
 
   final String id;
@@ -74,6 +76,8 @@ class ChatConversation {
   final String? lastMessageSenderId;
   final DateTime? lastMessageAt;
   final int unreadCount;
+  final String disappearingMode;
+  final bool blocked;
 
   factory ChatConversation.fromJson(Map<String, dynamic> json) {
     final List<String> ids = (json['participantIds'] as String? ?? '')
@@ -92,6 +96,8 @@ class ChatConversation {
             )
           : null,
       unreadCount: (json['unreadCount'] as num?)?.toInt() ?? 0,
+      disappearingMode: json['disappearingMode'] as String? ?? 'OFF',
+      blocked: json['blocked'] as bool? ?? false,
     );
   }
 
@@ -351,6 +357,62 @@ class ChatService {
     final response = await http.post(
       Uri.parse('$_baseUrl/chat/conversations/$conversationId/read'),
       headers: await _authHeaders(),
+    );
+    _ensureOk(response);
+  }
+
+  static Future<ChatConversation> getConversation(String conversationId) async {
+    final response = await http.get(
+      Uri.parse('$_baseUrl/chat/conversations/$conversationId'),
+      headers: await _authHeaders(),
+    );
+    _ensureOk(response);
+    return ChatConversation.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>,
+    );
+  }
+
+  static Future<void> clearChat(String conversationId) async {
+    final response = await http.delete(
+      Uri.parse('$_baseUrl/chat/conversations/$conversationId/messages'),
+      headers: await _authHeaders(),
+    );
+    _ensureOk(response);
+  }
+
+  static Future<void> setDisappearingMode(
+    String conversationId,
+    String mode,
+  ) async {
+    final response = await http.put(
+      Uri.parse('$_baseUrl/chat/conversations/$conversationId/disappearing'),
+      headers: await _authHeaders(),
+      body: jsonEncode({'mode': mode}),
+    );
+    _ensureOk(response);
+  }
+
+  static Future<void> blockUser(String conversationId) async {
+    final response = await http.post(
+      Uri.parse('$_baseUrl/chat/conversations/$conversationId/block'),
+      headers: await _authHeaders(),
+    );
+    _ensureOk(response);
+  }
+
+  static Future<void> unblockUser(String conversationId) async {
+    final response = await http.post(
+      Uri.parse('$_baseUrl/chat/conversations/$conversationId/unblock'),
+      headers: await _authHeaders(),
+    );
+    _ensureOk(response);
+  }
+
+  static Future<void> reportUser(String conversationId, String reason) async {
+    final response = await http.post(
+      Uri.parse('$_baseUrl/chat/conversations/$conversationId/report'),
+      headers: await _authHeaders(),
+      body: jsonEncode({'reason': reason}),
     );
     _ensureOk(response);
   }
