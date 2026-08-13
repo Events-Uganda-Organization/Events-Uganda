@@ -58,6 +58,10 @@ class SpeechService {
         cancelOnError: true,
         partialResults: true,
       ),
+      onSoundLevelChange: (level) {
+        _lastLevel = level;
+        _levelCtrl.add(level);
+      },
       onResult: (SpeechRecognitionResult result) {
         _lastWords = result.recognizedWords;
         if (result.finalResult) {
