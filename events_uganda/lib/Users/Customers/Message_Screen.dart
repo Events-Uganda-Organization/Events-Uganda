@@ -2340,6 +2340,143 @@ class _MessageEmptyScene extends StatelessWidget {
   }
 }
 
+class _MessageSkeletonLoader extends StatelessWidget {
+  const _MessageSkeletonLoader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    final double w = size.width;
+    final double h = size.height;
+    final Color grey = const Color(0xFFE8E5DF);
+
+    final BorderRadius leftRadius = const BorderRadius.only(
+      topLeft: Radius.circular(0),
+      topRight: Radius.circular(25),
+      bottomLeft: Radius.circular(25),
+      bottomRight: Radius.circular(25),
+    );
+    final BorderRadius rightRadius = const BorderRadius.only(
+      topLeft: Radius.circular(25),
+      topRight: Radius.circular(0),
+      bottomLeft: Radius.circular(25),
+      bottomRight: Radius.circular(25),
+    );
+
+    Widget block(double width, double height, BorderRadius radius) {
+      return Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(color: grey, borderRadius: radius),
+      );
+    }
+
+    Widget avatar() => block(
+          w * 0.09,
+          w * 0.09,
+          BorderRadius.circular(w * 0.045),
+        );
+
+    Widget theirs(double width, double height) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          avatar(),
+          SizedBox(width: w * 0.02),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: block(width, height, leftRadius),
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget mine(double width, double height) {
+      return Align(
+        alignment: Alignment.centerRight,
+        child: block(width, height, rightRadius),
+      );
+    }
+
+    final double gap = h * 0.014;
+
+    final Widget content = SingleChildScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.symmetric(horizontal: w * 0.04, vertical: h * 0.01),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          theirs(w * 0.55, h * 0.05),
+          SizedBox(height: gap),
+          mine(w * 0.42, h * 0.04),
+          SizedBox(height: gap),
+          mine(w * 0.62, h * 0.065),
+          SizedBox(height: gap),
+          theirs(w * 0.68, h * 0.055),
+          SizedBox(height: gap),
+          mine(w * 0.5, h * 0.05),
+          SizedBox(height: gap),
+          theirs(w * 0.4, h * 0.045),
+          SizedBox(height: gap),
+          mine(w * 0.66, h * 0.08),
+        ],
+      ),
+    );
+
+    return _ShimmerBox(child: content);
+  }
+}
+
+class _ShimmerBox extends StatefulWidget {
+  const _ShimmerBox({super.key, required this.child, this.durationMs = 1400});
+
+  final Widget child;
+  final int durationMs;
+
+  @override
+  State<_ShimmerBox> createState() => _ShimmerBoxState();
+}
+
+class _ShimmerBoxState extends State<_ShimmerBox>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: Duration(milliseconds: widget.durationMs),
+  )..repeat();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, _) {
+        final double shift = _controller.value;
+        return ShaderMask(
+          blendMode: BlendMode.srcATop,
+          shaderCallback: (bounds) => LinearGradient(
+            begin: Alignment(-1.5 + shift * 3, 0),
+            end: Alignment(-0.5 + shift * 3, 0),
+            colors: const [
+              Color(0xFFE4E1DA),
+              Color(0xFFFAF8F3),
+              Color(0xFFE4E1DA),
+            ],
+            stops: const [0.35, 0.5, 0.65],
+          ).createShader(bounds),
+          child: widget.child,
+        );
+      },
+    );
+  }
+}
+
 class _Sparkle extends StatelessWidget {
   const _Sparkle({
     required this.sw,
