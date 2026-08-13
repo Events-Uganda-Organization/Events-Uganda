@@ -33,8 +33,12 @@ public class ChatWebSocketController {
             return;
         }
         String senderId = principal.getName();
+        String text = request.getText();
+        if (text == null || text.trim().isEmpty()) {
+            return;
+        }
         MessageResponse response = messageService.sendMessage(
-            request.getConversationId(), senderId, request.getText());
+            request.getConversationId(), senderId, text);
 
         messagingTemplate.convertAndSend("/topic/chat/" + request.getConversationId(), response);
 
