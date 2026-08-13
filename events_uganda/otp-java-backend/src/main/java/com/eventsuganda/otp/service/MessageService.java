@@ -289,6 +289,10 @@ public class MessageService {
             ImageWriteParam param = writer.getDefaultWriteParam();
             param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
             if (param.canWriteCompressed()) {
+                String[] types = param.getCompressionTypes();
+                if (types != null && types.length > 0) {
+                    param.setCompressionType(types[0]);
+                }
                 param.setCompressionQuality(quality);
             }
             writer.write(null, new IIOImage(image, null, null), param);
