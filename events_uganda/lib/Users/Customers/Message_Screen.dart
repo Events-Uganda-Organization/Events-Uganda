@@ -951,6 +951,7 @@ class _MessageScreenState extends State<MessageScreen> {
                   ),
                   child: Image.network(
                     fullUrl,
+                    headers: _mediaHeaders,
                     fit: BoxFit.cover,
                     loadingBuilder: (context, child, progress) {
                       if (progress == null) return child;
@@ -1012,6 +1013,7 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   void _openNetworkImageViewer(String url) {
+    final Map<String, String>? headers = _mediaHeaders;
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Scaffold(
@@ -1024,6 +1026,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     child: Center(
                       child: Image.network(
                         url,
+                        headers: headers,
                         fit: BoxFit.contain,
                         loadingBuilder: (context, child, progress) {
                           if (progress == null) return child;
