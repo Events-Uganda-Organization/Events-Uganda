@@ -69,14 +69,28 @@ class _ChatScreenState extends State<ChatScreen> {
   StreamSubscription<ChatMessage>? _socketSub;
   final List<double> _waveSamples = [];
   StreamSubscription<double>? _levelSub;
+  Timer? _waveTicker;
+  double _lastWaveLevel = 0.15;
+  bool _receivedWaveLevel = false;
 
   void _startWave() {
     _levelSub?.cancel();
+    _waveTicker?.cancel();
     _waveSamples.clear();
+    _lastWaveLevel = 0.15;
+    _receivedWaveLevel = false;
     _levelSub = SpeechService.instance.soundLevels.listen((level) {
+      _receivedWaveLevel = true;
+      _lastWaveLevel = level.clamp(0.05, 1.0);
+    });
+    _waveTicker = Timer.periodic(const Duration(milliseconds: 110), (_) {
       if (!mounted || !_isListening) return;
       setState(() {
-        _waveSamples.add(level.clamp(0.05, 1.0));
+        final double jitter = (math.Random().nextDouble() - 0.5) * 0.1;
+        final double base = _receivedWaveLevel
+            ? _lastWaveLevel
+            : 0.2 + math.Random().nextDouble() * 0.06;
+        _waveSamples.add((base + jitter).clamp(0.08, 1.0));
         if (_waveSamples.length > 36) _waveSamples.removeAt(0);
       });
     });
@@ -85,6 +99,8 @@ class _ChatScreenState extends State<ChatScreen> {
   void _stopWave() {
     _levelSub?.cancel();
     _levelSub = null;
+    _waveTicker?.cancel();
+    _waveTicker = null;
     _waveSamples.clear();
   }
   final TextEditingController _searchController = TextEditingController();
@@ -918,6 +934,7 @@ class _ChatScreenState extends State<ChatScreen> {
       SpeechService.instance.cancel();
     }
     _stopWave();
+    _waveTicker?.cancel();
     _searchDebounce?.cancel();
     _searchController.dispose();
     _socketSub?.cancel();
@@ -1805,8 +1822,8 @@ class _ListeningWaveform extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 46,
-      height: 22,
+      width: 56,
+      height: 26,
       child: CustomPaint(
         painter: _ListeningWaveformPainter(levels: levels, color: color),
       ),
@@ -1823,16 +1840,18 @@ class _ListeningWaveformPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (size.width <= 0 || size.height <= 0) return;
-    final int count = math.max(levels.length, 1);
-    final double gap = size.width * 0.04;
+    final List<double> bars =
+        levels.isEmpty ? List<double>.filled(9, 0.22) : levels;
+    final int count = bars.length;
+    final double gap = size.width * 0.035;
     final double barWidth = (size.width - gap * (count - 1)) / count;
     if (barWidth <= 0) return;
     final Paint paint = Paint();
-    for (int i = 0; i < levels.length; i++) {
-      final double height = levels[i].clamp(0.08, 1.0) * size.height;
+    for (int i = 0; i < bars.length; i++) {
+      final double height = bars[i].clamp(0.08, 1.0) * size.height;
       final double x = i * (barWidth + gap);
       paint.color =
-          color.withValues(alpha: 0.35 + 0.65 * (i / math.max(levels.length - 1, 1)));
+          color.withValues(alpha: 0.35 + 0.65 * (i / math.max(bars.length - 1, 1)));
       final RRect rect = RRect.fromRectAndRadius(
         Rect.fromLTWH(x, (size.height - height) / 2, barWidth, height),
         Radius.circular(barWidth / 2),
