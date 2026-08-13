@@ -23,3 +23,5 @@ services:
         sync: false
       - key: SPRING_PROFILES_ACTIVE
         value: prod
+      - key: APP_SUPPORT_EMAIL
+        sync: false
