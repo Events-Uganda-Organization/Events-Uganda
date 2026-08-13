@@ -27,6 +27,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/ws", "/ws/**").permitAll()
+                .requestMatchers("/api/chat/admin/media/recompress").permitAll()
                 .requestMatchers("/api/chat/**").authenticated()
                 .requestMatchers("/api/messages/**").authenticated()
                 .requestMatchers("/api/referral/**").authenticated()
