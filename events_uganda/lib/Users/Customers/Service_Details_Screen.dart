@@ -1359,7 +1359,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           ),
                                         ),
                                         const SizedBox(height: 8),
-                                        _buildStarRating(4.8, starSize: 24),
+                                        _buildStarRating(4.8, starSize: 20),
                                       ],
                                     ),
                                     SizedBox(width: screenWidth * 0.03),
@@ -1381,7 +1381,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     ),
                                     SizedBox(width: screenWidth * 0.03),
                                     // RIGHT: Rating distribution bars
-                                    _buildRatingBars(screenWidth),
+                                    Expanded(
+                                      child: _buildRatingBars(screenWidth),
+                                    ),
                                   ],
                                 ),
                                 SizedBox(height: screenHeight * 0.025),
@@ -1881,26 +1883,29 @@ Widget _buildRatingBars(double screenWidth) {
             const SizedBox(width: 6),
 
             // Bar background + fill
-            Stack(
-              children: [
-                Container(
-                  width: screenWidth * 0.33,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(20),
+            Expanded(
+              child: Stack(
+                children: [
+                  Container(
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                   ),
-                ),
-
-                Container(
-                  width: screenWidth * 0.33 * ratings[index],
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: Colors.amber,
-                    borderRadius: BorderRadius.circular(20),
+                  FractionallySizedBox(
+                    alignment: Alignment.centerLeft,
+                    widthFactor: ratings[index],
+                    child: Container(
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),
