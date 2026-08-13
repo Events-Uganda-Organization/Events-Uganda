@@ -2874,3 +2874,706 @@ class _BounceArrow extends StatelessWidget {
     );
   }
 }
+
+class _SheetGrabber extends StatelessWidget {
+  const _SheetGrabber();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        width: 44,
+        height: 5,
+        decoration: BoxDecoration(
+          color: Colors.black.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(3),
+        ),
+      ),
+    );
+  }
+}
+
+class _SheetIconHeader extends StatelessWidget {
+  const _SheetIconHeader({
+    required this.icon,
+    required this.color,
+    required this.background,
+    required this.title,
+    required this.subtitle,
+  });
+
+  final IconData icon;
+  final Color color;
+  final Color background;
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    final double sw = MediaQuery.of(context).size.width;
+    final double sh = MediaQuery.of(context).size.height;
+    return Row(
+      children: [
+        Container(
+          width: sw * 0.11,
+          height: sw * 0.11,
+          decoration: BoxDecoration(
+            color: background,
+            borderRadius: BorderRadius.circular(sw * 0.03),
+          ),
+          child: Icon(icon, color: color, size: 26),
+        ),
+        SizedBox(width: sw * 0.03),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: sw * 0.042,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(height: sh * 0.004),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: sw * 0.03,
+                  height: 1.3,
+                  color: Colors.black.withValues(alpha: 0.55),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DisappearingOption {
+  const _DisappearingOption({
+    required this.mode,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+  });
+
+  final String mode;
+  final String title;
+  final String subtitle;
+  final IconData icon;
+}
+
+class _DisappearingMessagesSheet extends StatelessWidget {
+  const _DisappearingMessagesSheet({
+    required this.currentMode,
+    required this.onSelect,
+  });
+
+  final String currentMode;
+  final Future<void> Function(String mode) onSelect;
+
+  static const List<_DisappearingOption> _options = [
+    _DisappearingOption(
+      mode: 'OFF',
+      title: 'Off',
+      subtitle: 'Messages stay forever',
+      icon: Icons.timer_off_outlined,
+    ),
+    _DisappearingOption(
+      mode: '24H',
+      title: '24 hours',
+      subtitle: 'Messages disappear after 24 hours',
+      icon: Icons.schedule_outlined,
+    ),
+    _DisappearingOption(
+      mode: '7D',
+      title: '7 days',
+      subtitle: 'Messages disappear after 7 days',
+      icon: Icons.calendar_month_outlined,
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final double sw = MediaQuery.of(context).size.width;
+    final double sh = MediaQuery.of(context).size.height;
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        sw * 0.05,
+        sh * 0.014,
+        sw * 0.05,
+        sh * 0.03,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const _SheetGrabber(),
+          SizedBox(height: sh * 0.02),
+          const _SheetIconHeader(
+            icon: Icons.timer_outlined,
+            color: Color(0xFFCC471B),
+            background: Color(0xFFFFE9DE),
+            title: 'Disappearing messages',
+            subtitle:
+                'New messages in this chat disappear after the time you choose.',
+          ),
+          SizedBox(height: sh * 0.02),
+          for (final option in _options) ...[
+            _disappearingCard(context, option, sw, sh),
+            SizedBox(height: sh * 0.012),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _disappearingCard(
+    BuildContext context,
+    _DisappearingOption option,
+    double sw,
+    double sh,
+  ) {
+    final bool selected = currentMode == option.mode;
+    return GestureDetector(
+      onTap: () => onSelect(option.mode),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 220),
+        curve: Curves.easeOut,
+        padding: EdgeInsets.symmetric(
+          horizontal: sw * 0.04,
+          vertical: sh * 0.014,
+        ),
+        decoration: BoxDecoration(
+          color: selected ? const Color(0xFFFFF1EA) : Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(
+            color: selected ? const Color(0xFFCC471B) : const Color(0xFFEFE7DD),
+            width: selected ? 1.5 : 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: sw * 0.09,
+              height: sw * 0.09,
+              decoration: BoxDecoration(
+                color: selected
+                    ? const Color(0xFFCC471B)
+                    : const Color(0xFFF5F2EC),
+                borderRadius: BorderRadius.circular(sw * 0.045),
+              ),
+              child: Icon(
+                option.icon,
+                color: selected ? Colors.white : Colors.black54,
+                size: sw * 0.045,
+              ),
+            ),
+            SizedBox(width: sw * 0.03),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    option.title,
+                    style: TextStyle(
+                      fontSize: sw * 0.036,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: sh * 0.003),
+                  Text(
+                    option.subtitle,
+                    style: TextStyle(
+                      fontSize: sw * 0.028,
+                      color: Colors.black.withValues(alpha: 0.5),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 220),
+              width: sw * 0.05,
+              height: sw * 0.05,
+              decoration: BoxDecoration(
+                color: selected ? const Color(0xFFCC471B) : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: selected
+                      ? const Color(0xFFCC471B)
+                      : const Color(0xFFCFC8BF),
+                  width: 1.5,
+                ),
+              ),
+              child: selected
+                  ? const Icon(Icons.check, color: Colors.white, size: 18)
+                  : null,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ClearChatSheet extends StatefulWidget {
+  const _ClearChatSheet({required this.contactName, required this.onClear});
+
+  final String? contactName;
+  final Future<void> Function() onClear;
+
+  @override
+  State<_ClearChatSheet> createState() => _ClearChatSheetState();
+}
+
+class _ClearChatSheetState extends State<_ClearChatSheet> {
+  bool _busy = false;
+
+  Future<void> _handleClear() async {
+    setState(() => _busy = true);
+    await widget.onClear();
+    if (mounted) Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double sw = MediaQuery.of(context).size.width;
+    final double sh = MediaQuery.of(context).size.height;
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        sw * 0.05,
+        sh * 0.014,
+        sw * 0.05,
+        sh * 0.03,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const _SheetGrabber(),
+          SizedBox(height: sh * 0.02),
+          _SheetIconHeader(
+            icon: Icons.delete_outline_rounded,
+            color: const Color(0xFFE53935),
+            background: const Color(0xFFFDECEA),
+            title: 'Clear chat?',
+            subtitle:
+                'This deletes every message in this chat for both of you. This cannot be undone.',
+          ),
+          SizedBox(height: sh * 0.024),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: _busy ? null : () => Navigator.of(context).pop(),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.black87,
+                    side: const BorderSide(color: Color(0xFFE0D8CD)),
+                    padding: EdgeInsets.symmetric(vertical: sh * 0.017),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+              SizedBox(width: sw * 0.03),
+              Expanded(
+                child: FilledButton(
+                  onPressed: _busy ? null : _handleClear,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: const Color(0xFFE53935),
+                    padding: EdgeInsets.symmetric(vertical: sh * 0.017),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: _busy
+                      ? const SizedBox(
+                          width: 22,
+                          height: 22,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2.5,
+                          ),
+                        )
+                      : const Text(
+                          'Clear chat',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _BlockUserSheet extends StatefulWidget {
+  const _BlockUserSheet({
+    required this.blocking,
+    required this.contactName,
+    required this.onAction,
+  });
+
+  final bool blocking;
+  final String? contactName;
+  final Future<void> Function() onAction;
+
+  @override
+  State<_BlockUserSheet> createState() => _BlockUserSheetState();
+}
+
+class _BlockUserSheetState extends State<_BlockUserSheet> {
+  bool _busy = false;
+
+  Future<void> _handleAction() async {
+    setState(() => _busy = true);
+    await widget.onAction();
+    if (mounted) Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double sw = MediaQuery.of(context).size.width;
+    final double sh = MediaQuery.of(context).size.height;
+    final String name = widget.contactName ?? 'this user';
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      padding: EdgeInsets.fromLTRB(
+        sw * 0.05,
+        sh * 0.014,
+        sw * 0.05,
+        sh * 0.03,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const _SheetGrabber(),
+          SizedBox(height: sh * 0.02),
+          _SheetIconHeader(
+            icon: widget.blocking
+                ? Icons.person_off_outlined
+                : Icons.person_add_alt_1_outlined,
+            color: widget.blocking
+                ? const Color(0xFFE53935)
+                : const Color(0xFF4CAF50),
+            background: widget.blocking
+                ? const Color(0xFFFDECEA)
+                : const Color(0xFFE7F5E3),
+            title: widget.blocking ? 'Block $name?' : 'Unblock $name?',
+            subtitle: widget.blocking
+                ? 'They will no longer be able to send you messages, and you will not see their activity. You can unblock them anytime.'
+                : 'You will be able to message and call each other again.',
+          ),
+          SizedBox(height: sh * 0.024),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton(
+                  onPressed: _busy ? null : () => Navigator.of(context).pop(),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.black87,
+                    side: const BorderSide(color: Color(0xFFE0D8CD)),
+                    padding: EdgeInsets.symmetric(vertical: sh * 0.017),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+              SizedBox(width: sw * 0.03),
+              Expanded(
+                child: FilledButton(
+                  onPressed: _busy ? null : _handleAction,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: widget.blocking
+                        ? const Color(0xFFE53935)
+                        : const Color(0xFF4CAF50),
+                    padding: EdgeInsets.symmetric(vertical: sh * 0.017),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: _busy
+                      ? const SizedBox(
+                          width: 22,
+                          height: 22,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2.5,
+                          ),
+                        )
+                      : Text(
+                          widget.blocking ? 'Block' : 'Unblock',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ReportReason {
+  const _ReportReason({required this.title, required this.icon});
+
+  final String title;
+  final IconData icon;
+}
+
+class _ReportUserSheet extends StatefulWidget {
+  const _ReportUserSheet({required this.contactName, required this.onSubmit});
+
+  final String? contactName;
+  final Future<void> Function(String reason) onSubmit;
+
+  @override
+  State<_ReportUserSheet> createState() => _ReportUserSheetState();
+}
+
+class _ReportUserSheetState extends State<_ReportUserSheet> {
+  static const List<_ReportReason> _reasons = [
+    _ReportReason(title: 'Spam or scam', icon: Icons.campaign_outlined),
+    _ReportReason(title: 'Harassment', icon: Icons.thumb_down_outlined),
+    _ReportReason(
+      title: 'Inappropriate content',
+      icon: Icons.warning_amber_outlined,
+    ),
+    _ReportReason(title: 'Impersonation', icon: Icons.badge_outlined),
+  ];
+
+  final TextEditingController _details = TextEditingController();
+  int? _selectedIndex;
+  bool _busy = false;
+
+  @override
+  void dispose() {
+    _details.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleSubmit() async {
+    final String? picked =
+        _selectedIndex != null ? _reasons[_selectedIndex!].title : null;
+    final String custom = _details.text.trim();
+    final String reason = picked ?? (custom.isEmpty ? '' : custom);
+    if (reason.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please choose a reason for your report'),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+      return;
+    }
+    setState(() => _busy = true);
+    await widget.onSubmit(reason);
+    if (mounted) Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final double sw = MediaQuery.of(context).size.width;
+    final double sh = MediaQuery.of(context).size.height;
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+        ),
+        padding: EdgeInsets.fromLTRB(
+          sw * 0.05,
+          sh * 0.014,
+          sw * 0.05,
+          sh * 0.03,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const _SheetGrabber(),
+              SizedBox(height: sh * 0.02),
+              _SheetIconHeader(
+                icon: Icons.flag_outlined,
+                color: const Color(0xFFCD7C20),
+                background: const Color(0xFFFFF1DC),
+                title: 'Report ${widget.contactName ?? 'user'}',
+                subtitle:
+                    'Tell us what happened. Your report is confidential and helps keep the community safe.',
+              ),
+              SizedBox(height: sh * 0.02),
+              for (int i = 0; i < _reasons.length; i++) ...[
+                _reasonCard(context, i, sw, sh),
+                SizedBox(height: sh * 0.01),
+              ],
+              SizedBox(height: sh * 0.006),
+              TextField(
+                controller: _details,
+                maxLines: 3,
+                maxLength: 200,
+                enabled: !_busy,
+                decoration: InputDecoration(
+                  hintText: 'Add more details (optional)',
+                  hintStyle: TextStyle(
+                    color: Colors.black.withValues(alpha: 0.4),
+                  ),
+                  filled: true,
+                  fillColor: const Color(0xFFF7F4EE),
+                  counterText: '',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    borderSide: const BorderSide(
+                      color: Color(0xFFCC471B),
+                      width: 1.5,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: sh * 0.018),
+              SizedBox(
+                height: sh * 0.055,
+                child: FilledButton(
+                  onPressed: _busy ? null : _handleSubmit,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: const Color(0xFFCC471B),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: _busy
+                      ? const SizedBox(
+                          width: 22,
+                          height: 22,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2.5,
+                          ),
+                        )
+                      : const Text(
+                          'Submit report',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _reasonCard(
+    BuildContext context,
+    int index,
+    double sw,
+    double sh,
+  ) {
+    final bool selected = _selectedIndex == index;
+    final _ReportReason reason = _reasons[index];
+    return GestureDetector(
+      onTap: _busy ? null : () => setState(() => _selectedIndex = index),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: EdgeInsets.symmetric(
+          horizontal: sw * 0.04,
+          vertical: sh * 0.013,
+        ),
+        decoration: BoxDecoration(
+          color: selected ? const Color(0xFFFFF1EA) : Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: selected ? const Color(0xFFCC471B) : const Color(0xFFEFE7DD),
+            width: selected ? 1.5 : 1,
+          ),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: sw * 0.08,
+              height: sw * 0.08,
+              decoration: BoxDecoration(
+                color: selected
+                    ? const Color(0xFFCC471B)
+                    : const Color(0xFFF5F2EC),
+                borderRadius: BorderRadius.circular(sw * 0.04),
+              ),
+              child: Icon(
+                reason.icon,
+                color: selected ? Colors.white : Colors.black54,
+                size: sw * 0.04,
+              ),
+            ),
+            SizedBox(width: sw * 0.03),
+            Expanded(
+              child: Text(
+                reason.title,
+                style: TextStyle(
+                  fontSize: sw * 0.034,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              width: sw * 0.045,
+              height: sw * 0.045,
+              decoration: BoxDecoration(
+                color: selected ? const Color(0xFFCC471B) : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: selected
+                      ? const Color(0xFFCC471B)
+                      : const Color(0xFFCFC8BF),
+                  width: 1.5,
+                ),
+              ),
+              child: selected
+                  ? const Icon(Icons.check, color: Colors.white, size: 16)
+                  : null,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
