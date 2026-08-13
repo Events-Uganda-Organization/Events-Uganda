@@ -102,7 +102,13 @@ public class MessageService {
             throw new OtpException("Media file exceeds the 8MB limit");
         }
 
-        byte[] stored = isImage ? compressImage(data, mimeType) : data;
+        byte[] stored = data;
+        String storedMime = mimeType;
+        if (isImage) {
+            ImageResult result = compressImage(data, mimeType);
+            stored = result.bytes;
+            storedMime = result.mimeType;
+        }
 
         String messageId = UUID.randomUUID().toString();
         String text = caption == null ? null : caption.trim();
@@ -110,7 +116,7 @@ public class MessageService {
         messageRepository.save(message);
 
         MessageMedia media = new MessageMedia(UUID.randomUUID().toString(), messageId,
-            mediaType, mimeType, stored, durationMs);
+            mediaType, storedMime, stored, durationMs);
         messageMediaRepository.save(media);
 
         long now = System.currentTimeMillis();

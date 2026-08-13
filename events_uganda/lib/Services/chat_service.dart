@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatMessage {
@@ -238,7 +239,14 @@ class ChatService {
     String? caption,
     String filename = 'photo.jpg',
   }) =>
-      _uploadMedia(conversationId, 'IMAGE', bytes, filename, caption: caption);
+      _uploadMedia(
+        conversationId,
+        'IMAGE',
+        bytes,
+        filename,
+        contentType: _detectImageType(bytes),
+        caption: caption,
+      );
 
   static Future<ChatMessage> sendVoice(
     String conversationId,
@@ -251,14 +259,53 @@ class ChatService {
         'AUDIO',
         bytes,
         filename,
+        contentType: filename.toLowerCase().endsWith('.webm')
+            ? const MediaType('audio', 'webm')
+            : const MediaType('audio', 'mp4'),
         durationMs: duration.inMilliseconds,
       );
+
+  static MediaType _detectImageType(List<int> bytes) {
+    if (bytes.length >= 3 &&
+        bytes[0] == 0xFF &&
+        bytes[1] == 0xD8 &&
+        bytes[2] == 0xFF) {
+      return const MediaType('image', 'jpeg');
+    }
+    if (bytes.length >= 8 &&
+        bytes[0] == 0x89 &&
+        bytes[1] == 0x50 &&
+        bytes[2] == 0x4E &&
+        bytes[3] == 0x47 &&
+        bytes[4] == 0x0D &&
+        bytes[5] == 0x0A &&
+        bytes[6] == 0x1A &&
+        bytes[7] == 0x0A) {
+      return const MediaType('image', 'png');
+    }
+    if (bytes.length >= 4 &&
+        bytes[0] == 0x52 &&
+        bytes[1] == 0x49 &&
+        bytes[2] == 0x46 &&
+        bytes[3] == 0x46) {
+      return const MediaType('image', 'webp');
+    }
+    if (bytes.length >= 4 &&
+        bytes[0] == 0x47 &&
+        bytes[1] == 0x49 &&
+        bytes[2] == 0x46 &&
+        bytes[3] == 0x38) {
+      return const MediaType('image', 'gif');
+    }
+    return const MediaType('image', 'jpeg');
+  }
 
   static Future<ChatMessage> _uploadMedia(
     String conversationId,
     String type,
     List<int> bytes,
     String filename, {
+    required MediaType contentType,
     String? caption,
     int? durationMs,
   }) async {
@@ -279,6 +326,7 @@ class ChatService {
       'file',
       bytes,
       filename: filename,
+      contentType: contentType,
     ));
 
     final streamed = await request.send();

@@ -364,8 +364,8 @@ class _MessageScreenState extends State<MessageScreen> {
       }
       final String path = await _buildRecordingPath();
       final RecordConfig config = kIsWeb
-          ? const RecordConfig(encoder: AudioEncoder.opus, bitRate: 64000)
-          : const RecordConfig(encoder: AudioEncoder.aacLc, bitRate: 64000);
+          ? const RecordConfig(encoder: AudioEncoder.opus, bitRate: 32000)
+          : const RecordConfig(encoder: AudioEncoder.aacLc, bitRate: 32000);
       await _audioRecorder.start(config, path: path);
       _amplitudeSub = _audioRecorder
           .onAmplitudeChanged(const Duration(milliseconds: 120))
