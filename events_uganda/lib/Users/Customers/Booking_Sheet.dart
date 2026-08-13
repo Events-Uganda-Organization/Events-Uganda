@@ -290,6 +290,7 @@ class _BookingSheetState extends State<BookingSheet> {
       return _SuccessView(
         screenWidth: screenWidth,
         screenHeight: screenHeight,
+        contactName: widget.contactName,
         onDone: () => Navigator.of(context).pop(),
       );
     }
@@ -628,11 +629,13 @@ class _SuccessView extends StatelessWidget {
   const _SuccessView({
     required this.screenWidth,
     required this.screenHeight,
+    required this.contactName,
     required this.onDone,
   });
 
   final double screenWidth;
   final double screenHeight;
+  final String? contactName;
   final VoidCallback onDone;
 
   @override
@@ -671,7 +674,8 @@ class _SuccessView extends StatelessWidget {
           ),
           SizedBox(height: screenHeight * 0.008),
           Text(
-            'Your booking has been sent to ${''}. '
+            'Your booking has been sent to '
+            '${contactName ?? 'the vendor'}. '
             'You will be notified once it is confirmed.',
             textAlign: TextAlign.center,
             style: TextStyle(
