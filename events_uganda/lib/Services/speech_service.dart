@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -10,10 +12,18 @@ class SpeechService {
   bool _available = false;
   bool _listening = false;
   String _lastWords = '';
+  double _lastLevel = 0.0;
+
+  final StreamController<double> _levelCtrl =
+      StreamController<double>.broadcast();
 
   bool get isListening => _listening;
   bool get isAvailable => _available;
   String get lastWords => _lastWords;
+  double get lastLevel => _lastLevel;
+
+  /// Live microphone sound level (0.0 - 1.0) while listening.
+  Stream<double> get soundLevels => _levelCtrl.stream;
 
   Future<bool> initialize() async {
     if (_available) return true;
@@ -25,6 +35,10 @@ class SpeechService {
       },
       onError: (error) {
         _listening = false;
+      },
+      onSoundLevelChange: (level) {
+        _lastLevel = level;
+        _levelCtrl.add(level);
       },
     );
     return _available;
