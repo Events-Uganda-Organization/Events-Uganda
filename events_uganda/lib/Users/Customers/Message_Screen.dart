@@ -50,6 +50,7 @@ class _MessageScreenState extends State<MessageScreen> {
   StreamSubscription<ChatMessage>? _socketSub;
   String? _recordingPath;
   bool _isRecording = false;
+  bool _isPaused = false;
   bool _recordingLocked = false;
   double _cancelDragOffset = 0;
   double _lastAmplitude = 0.5;
@@ -286,8 +287,8 @@ class _MessageScreenState extends State<MessageScreen> {
     _lastAmplitude = ((amplitude.current + 60) / 60).clamp(0.0, 1.0);
   }
 
-  void _startRecordingTicker() {
-    _recordingStopwatch..reset()..start();
+  void _startRecordingTicker({bool resetTimer = true}) {
+    if (resetTimer) _recordingStopwatch..reset()..start();
     final math.Random random = math.Random();
     _recordingTicker = Timer.periodic(const Duration(milliseconds: 120), (_) {
       if (!mounted || !_isRecording) return;
@@ -326,6 +327,7 @@ class _MessageScreenState extends State<MessageScreen> {
       if (!mounted) return false;
       setState(() {
         _isRecording = true;
+        _isPaused = false;
         _recordingPath = path;
         _recordingLocked = false;
         _cancelDragOffset = 0;
@@ -337,6 +339,31 @@ class _MessageScreenState extends State<MessageScreen> {
       if (mounted) _showMicPermissionMessage();
       return false;
     }
+  }
+
+  Future<void> _pauseRecording() async {
+    _recordingTicker?.cancel();
+    _recordingTicker = null;
+    _recordingStopwatch.stop();
+    try {
+      await _audioRecorder.pause();
+    } catch (_) {}
+    if (!mounted) return;
+    setState(() {
+      _isPaused = true;
+    });
+  }
+
+  Future<void> _resumeRecording() async {
+    try {
+      await _audioRecorder.resume();
+    } catch (_) {}
+    if (!mounted) return;
+    setState(() {
+      _isPaused = false;
+    });
+    _recordingStopwatch.start();
+    _startRecordingTicker(resetTimer: false);
   }
 
   Future<void> _stopRecording() async {
@@ -355,6 +382,7 @@ class _MessageScreenState extends State<MessageScreen> {
     if (!mounted) return;
     setState(() {
       _isRecording = false;
+      _isPaused = false;
       _recordingLocked = false;
       _cancelDragOffset = 0;
     });
@@ -373,6 +401,7 @@ class _MessageScreenState extends State<MessageScreen> {
     setState(() {
       _recordingPath = null;
       _recordingLocked = false;
+      _isPaused = false;
       _cancelDragOffset = 0;
       _waveSamples.clear();
     });
