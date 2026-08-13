@@ -12,6 +12,7 @@ import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Services/chat_outbox.dart';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Services/chat_socket_service.dart';
+import 'package:events_uganda/Users/Customers/Booking_Sheet.dart';
 import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
 
 enum _ChatMenuAction { disappearing, clearChat, block, report }
@@ -108,6 +109,15 @@ class _MessageScreenState extends State<MessageScreen>
       _initSocket();
       ChatOutbox.instance.drain();
     }
+  }
+
+  void _openBookingSheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => BookingSheet(contactName: widget.name),
+    );
   }
 
   Future<void> _loadConversationSettings() async {
@@ -2341,6 +2351,15 @@ class _MessageScreenState extends State<MessageScreen>
                     Icons.phone_outlined,
                     color: const Color(0xFFCD7C20),
                     size: screenWidth * 0.08,
+                  ),
+                  SizedBox(width: screenWidth * 0.02),
+                  GestureDetector(
+                    onTap: _openBookingSheet,
+                    child: Icon(
+                      Icons.shopping_bag_outlined,
+                      color: const Color(0xFFCD7C20),
+                      size: screenWidth * 0.08,
+                    ),
                   ),
                   SizedBox(width: screenWidth * 0.02),
                   PopupMenuButton<_ChatMenuAction>(
