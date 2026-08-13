@@ -18,7 +18,6 @@ public class MessageMedia {
     @Column(nullable = false)
     private String mimeType;
 
-    @Lob
     @Column(nullable = false, columnDefinition = "bytea")
     private byte[] data;
 
