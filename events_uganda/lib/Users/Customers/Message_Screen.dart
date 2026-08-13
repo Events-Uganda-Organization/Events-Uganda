@@ -292,7 +292,6 @@ class _MessageScreenState extends State<MessageScreen>
   }
 
   Future<void> _confirmClearChat() async {
-    final double sw = MediaQuery.of(context).size.width;
     final bool confirmed = await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -342,7 +341,6 @@ class _MessageScreenState extends State<MessageScreen>
   }
 
   Future<void> _confirmBlockOrUnblock() async {
-    final double sw = MediaQuery.of(context).size.width;
     final bool block = !_blocked;
     final bool confirmed = await showDialog<bool>(
           context: context,
