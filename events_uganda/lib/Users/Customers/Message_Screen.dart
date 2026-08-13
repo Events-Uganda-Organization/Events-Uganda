@@ -64,6 +64,9 @@ class _MessageScreenState extends State<MessageScreen>
   bool _isPlayingVoice = false;
   bool _isLoadingMessages = false;
   String? _authToken;
+  String _disappearingMode = 'OFF';
+  bool _blocked = false;
+  bool _amBlocked = false;
   final Map<String, GlobalKey> _messageKeys = {};
   String? _highlightedMessageId;
   Timer? _highlightTimer;
@@ -99,9 +102,23 @@ class _MessageScreenState extends State<MessageScreen>
     });
     if (widget.conversationId != null) {
       _loadMessages();
+      _loadConversationSettings();
       _initSocket();
       ChatOutbox.instance.drain();
     }
+  }
+
+  Future<void> _loadConversationSettings() async {
+    final conversationId = widget.conversationId;
+    if (conversationId == null) return;
+    try {
+      final conv = await ChatService.getConversation(conversationId);
+      if (!mounted) return;
+      setState(() {
+        _disappearingMode = conv.disappearingMode;
+        _blocked = conv.blocked;
+      });
+    } catch (_) {}
   }
 
   @override
