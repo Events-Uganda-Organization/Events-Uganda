@@ -136,6 +136,18 @@ public class MessageService {
         return new MessageResponse(message, senderId, mediaUrl(media.getId()), mediaType, durationMs);
     }
 
+    private void markDeliveryStatus(Message message, Conversation conversation) {
+        if (message.getDeliveredAt() != null) {
+            return;
+        }
+        for (String participant : conversation.getParticipantIdSet()) {
+            if (!participant.equals(message.getSenderId()) && presenceService.isOnline(participant)) {
+                message.setDeliveredAt(System.currentTimeMillis());
+                return;
+            }
+        }
+    }
+
     @Transactional(readOnly = true)
     public MessageMedia getMedia(String mediaId, String userId) {
         MessageMedia media = messageMediaRepository.findById(mediaId)
@@ -180,8 +192,13 @@ public class MessageService {
     }
 
     @Transactional
-    public int markAsRead(String conversationId, String userId) {
-        return messageRepository.markAsRead(conversationId, userId, System.currentTimeMillis());
+    public List<String> markAsRead(String conversationId, String userId) {
+        List<String> unreadIds = messageRepository.findUnreadIds(conversationId, userId);
+        if (unreadIds.isEmpty()) {
+            return unreadIds;
+        }
+        messageRepository.markAsRead(conversationId, userId, System.currentTimeMillis());
+        return unreadIds;
     }
 
     public ChatSearchResponse search(String userId, String query, int page, int size) {

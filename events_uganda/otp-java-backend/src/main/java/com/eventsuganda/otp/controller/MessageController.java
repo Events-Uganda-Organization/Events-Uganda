@@ -4,22 +4,32 @@ import com.eventsuganda.otp.dto.request.SendMessageRequest;
 import com.eventsuganda.otp.dto.response.ApiResponse;
 import com.eventsuganda.otp.dto.response.ChatSearchResponse;
 import com.eventsuganda.otp.dto.response.MessageResponse;
+import com.eventsuganda.otp.model.Conversation;
+import com.eventsuganda.otp.repository.ConversationRepository;
 import com.eventsuganda.otp.service.MessageService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/chat")
 public class MessageController {
 
     private final MessageService messageService;
+    private final ConversationRepository conversationRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
-    public MessageController(MessageService messageService) {
+    public MessageController(MessageService messageService,
+                             ConversationRepository conversationRepository,
+                             SimpMessagingTemplate messagingTemplate) {
         this.messageService = messageService;
+        this.conversationRepository = conversationRepository;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @PostMapping("/conversations/{conversationId}/messages")
@@ -47,8 +57,21 @@ public class MessageController {
             @PathVariable String conversationId,
             Authentication auth) {
         String userId = (String) auth.getPrincipal();
-        int updated = messageService.markAsRead(conversationId, userId);
-        return ResponseEntity.ok(ApiResponse.ok(updated + " messages marked as read"));
+        List<String> messageIds = messageService.markAsRead(conversationId, userId);
+        if (!messageIds.isEmpty()) {
+            long readAt = System.currentTimeMillis();
+            Map<String, Object> payload = Map.of(
+                "conversationId", conversationId,
+                "readAt", readAt);
+            conversationRepository.findById(conversationId)
+                .map(Conversation::getParticipantIdSet)
+                .ifPresent(participants -> participants.stream()
+                    .filter(participant -> !participant.equals(userId))
+                    .forEach(participant ->
+                        messagingTemplate.convertAndSendToUser(
+                            participant, "/queue/message-status", payload)));
+        }
+        return ResponseEntity.ok(ApiResponse.ok(messageIds.size() + " messages marked as read"));
     }
 
     @GetMapping("/search")
