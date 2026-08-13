@@ -1265,10 +1265,8 @@ class _ChatScreenState extends State<ChatScreen> {
               child: _searchQuery.isNotEmpty
                   ? _buildSearchResults(screenWidth, screenHeight)
                   : _isLoadingConversations && _conversations.isEmpty
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Color(0xFFCD7C20),
-                          ),
+                      ? _ConversationsSkeletonLoader(
+                          screenWidth: screenWidth,
                         )
                       : _conversations.isEmpty
                           ? _ChatEmptyState(
