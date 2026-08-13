@@ -1382,7 +1382,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     SizedBox(width: screenWidth * 0.03),
                                     // RIGHT: Rating distribution bars
                                     Expanded(
-                                      child: _buildRatingBars(screenWidth),
+                                      child: _buildRatingBars(),
                                     ),
                                   ],
                                 ),
@@ -1858,7 +1858,7 @@ class ReviewModel {
   });
 }
 
-Widget _buildRatingBars(double screenWidth) {
+Widget _buildRatingBars() {
   final List<double> ratings = [
     0.9, // 5 stars
     0.6, // 4 stars
