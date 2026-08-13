@@ -69,13 +69,44 @@ public class MediaController {
     }
 
     @GetMapping("/media/{mediaId}")
-    public ResponseEntity<byte[]> download(@PathVariable String mediaId, Authentication auth) {
+    public ResponseEntity<byte[]> download(
+            @PathVariable String mediaId,
+            Authentication auth,
+            @RequestHeader(value = HttpHeaders.IF_NONE_MATCH, required = false) String ifNoneMatch) {
         String userId = (String) auth.getPrincipal();
         MessageMedia media = messageService.getMedia(mediaId, userId);
+        String etag = "\"" + media.getId() + "-" + media.getData().length + "-" + media.getCreatedAt() + "\"";
+        if (etag.equals(ifNoneMatch)) {
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).eTag(etag).build();
+        }
         return ResponseEntity.ok()
             .contentType(MediaType.parseMediaType(media.getMimeType()))
             .cacheControl(CacheControl.maxAge(365, TimeUnit.DAYS).cachePublic())
             .header(HttpHeaders.CONTENT_DISPOSITION, "inline")
+            .eTag(etag)
             .body(media.getData());
+    }
+
+    @PostMapping("/admin/media/recompress")
+    public ResponseEntity<ApiResponse> recompressMedia(
+            @RequestHeader(value = "X-Admin-Token", required = false) String token) {
+        if (adminToken == null || adminToken.isEmpty() || !constantTimeEquals(adminToken, token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ApiResponse.error("Unauthorized"));
+        }
+        MessageService.RecompressResult result = messageService.recompressImages(20);
+        return ResponseEntity.ok(ApiResponse.ok(
+            "Recompressed " + result.processed() + " items, shrank " + result.shrunk()
+                + ", saved " + result.savedBytes() + " bytes",
+            result));
+    }
+
+    private boolean constantTimeEquals(String expected, String actual) {
+        if (expected == null || actual == null) {
+            return false;
+        }
+        return MessageDigest.isEqual(
+            expected.getBytes(StandardCharsets.UTF_8),
+            actual.getBytes(StandardCharsets.UTF_8));
     }
 }
