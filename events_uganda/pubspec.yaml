@@ -47,6 +47,8 @@ dependencies:
   firebase_app_check: ^0.4.1+3
   # http requests
   http:
+  # http media types for uploads
+  http_parser:
   # video player
   video_player:
   url_launcher: ^6.2.6
