@@ -20,15 +20,21 @@ class ChatSocketService {
   static const String _wsUrl =
       'wss://events-uganda-26.onrender.com/ws';
   static const String _userQueue = '/user/queue/messages';
+  static const String _statusQueue = '/user/queue/message-status';
   static const String _sendDestination = '/app/chat.sendMessage';
 
   final StreamController<ChatMessage> _messages =
       StreamController<ChatMessage>.broadcast();
 
+  final StreamController<ChatReadReceipt> _readReceipts =
+      StreamController<ChatReadReceipt>.broadcast();
+
   StompClient? _client;
   String? _myUserId;
 
   Stream<ChatMessage> get messages => _messages.stream;
+
+  Stream<ChatReadReceipt> get readReceipts => _readReceipts.stream;
 
   bool get isActive => _client?.connected ?? false;
 
@@ -60,6 +66,7 @@ class ChatSocketService {
         stompConnectHeaders: {'Authorization': 'Bearer $token'},
         onConnect: (_) {
           _subscribeUserQueue();
+          _subscribeStatusQueue();
         },
         onStompError: (_) {},
         onWebSocketError: (_) {},
@@ -85,6 +92,28 @@ class ChatSocketService {
     );
   }
 
+  void _subscribeStatusQueue() {
+    final client = _client;
+    if (client == null || !client.connected) return;
+    client.subscribe(
+      destination: _statusQueue,
+      callback: (frame) {
+        final body = frame.body;
+        if (body == null || body.isEmpty) return;
+        try {
+          final raw = jsonDecode(body) as Map<String, dynamic>;
+          final conversationId = raw['conversationId'] as String?;
+          final readAt = raw['readAt'] as num?;
+          if (conversationId == null || conversationId.isEmpty) return;
+          _readReceipts.add(ChatReadReceipt(
+            conversationId: conversationId,
+            readAt: DateTime.fromMillisecondsSinceEpoch(readAt!.toInt()),
+          ));
+        } catch (_) {}
+      },
+    );
+  }
+
   ChatMessage? _parseMessage(Map<String, dynamic> raw) {
     final senderId = raw['senderId'] as String? ?? '';
     final myId = _myUserId ?? '';
@@ -99,6 +128,8 @@ class ChatSocketService {
       audioDurationMs: message.audioDurationMs,
       createdAt: message.createdAt,
       isMine: senderId.isNotEmpty && senderId == myId,
+      readAt: message.readAt,
+      deliveredAt: message.deliveredAt,
     );
   }
 

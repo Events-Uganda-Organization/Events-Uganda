@@ -16,6 +16,8 @@ class ChatMessage {
     this.audioDurationMs,
     required this.createdAt,
     required this.isMine,
+    this.readAt,
+    this.deliveredAt,
   });
 
   final String id;
@@ -27,6 +29,8 @@ class ChatMessage {
   final int? audioDurationMs;
   final DateTime createdAt;
   final bool isMine;
+  final DateTime? readAt;
+  final DateTime? deliveredAt;
 
   bool get hasMedia => imageUrl != null || audioUrl != null;
 
@@ -43,7 +47,15 @@ class ChatMessage {
               DateTime.now().millisecondsSinceEpoch,
         ),
         isMine: (json['mine'] ?? json['isMine']) as bool? ?? false,
+        readAt: _parseEpoch(json['readAt']),
+        deliveredAt: _parseEpoch(json['deliveredAt']),
       );
+
+  static DateTime? _parseEpoch(dynamic value) {
+    final num? ms = value as num?;
+    if (ms == null) return null;
+    return DateTime.fromMillisecondsSinceEpoch(ms.toInt());
+  }
 }
 
 class ChatConversation {
