@@ -51,6 +51,7 @@ class _MessageScreenState extends State<MessageScreen>
   StreamSubscription<Duration>? _positionSub;
   StreamSubscription<PlayerState>? _playerStateSub;
   StreamSubscription<ChatMessage>? _socketSub;
+  StreamSubscription<ChatReadReceipt>? _readReceiptSub;
   StreamSubscription<OutboxEvent>? _outboxSub;
   String? _recordingPath;
   bool _isRecording = false;
@@ -151,6 +152,8 @@ class _MessageScreenState extends State<MessageScreen>
       map['audioUrl'] = audioUrl;
       map['duration'] = Duration(milliseconds: sent.audioDurationMs ?? 0);
     }
+    if (sent.readAt != null) map['readAt'] = sent.readAt!;
+    if (sent.deliveredAt != null) map['deliveredAt'] = sent.deliveredAt!;
     return map;
   }
 

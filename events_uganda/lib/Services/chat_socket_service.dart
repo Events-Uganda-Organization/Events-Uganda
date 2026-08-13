@@ -153,5 +153,15 @@ class ChatSocketService {
   void dispose() {
     disconnect();
     _messages.close();
+    _readReceipts.close();
   }
+}
+
+/// Raised when a conversation is marked as read by the other participant,
+/// used to flip the sender's ticks to blue in real time.
+class ChatReadReceipt {
+  const ChatReadReceipt({required this.conversationId, required this.readAt});
+
+  final String conversationId;
+  final DateTime readAt;
 }
