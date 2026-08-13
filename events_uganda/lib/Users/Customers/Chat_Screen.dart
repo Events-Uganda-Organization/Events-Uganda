@@ -1847,8 +1847,8 @@ class _ListeningWaveform extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 56,
-      height: 26,
+      width: 100,
+      height: 34,
       child: CustomPaint(
         painter: _ListeningWaveformPainter(levels: levels, color: color),
       ),
@@ -1868,7 +1868,7 @@ class _ListeningWaveformPainter extends CustomPainter {
     final List<double> bars =
         levels.isEmpty ? List<double>.filled(9, 0.22) : levels;
     final int count = bars.length;
-    final double gap = size.width * 0.035;
+    final double gap = size.width * 0.02;
     final double barWidth = (size.width - gap * (count - 1)) / count;
     if (barWidth <= 0) return;
     final Paint paint = Paint();
@@ -1876,7 +1876,7 @@ class _ListeningWaveformPainter extends CustomPainter {
       final double height = bars[i].clamp(0.08, 1.0) * size.height;
       final double x = i * (barWidth + gap);
       paint.color =
-          color.withValues(alpha: 0.35 + 0.65 * (i / math.max(bars.length - 1, 1)));
+          color.withValues(alpha: 0.45 + 0.55 * (i / math.max(bars.length - 1, 1)));
       final RRect rect = RRect.fromRectAndRadius(
         Rect.fromLTWH(x, (size.height - height) / 2, barWidth, height),
         Radius.circular(barWidth / 2),
