@@ -917,6 +917,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (SpeechService.instance.isListening) {
       SpeechService.instance.cancel();
     }
+    _stopWave();
     _searchDebounce?.cancel();
     _searchController.dispose();
     _socketSub?.cancel();
@@ -1149,9 +1150,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       child: GestureDetector(
                         onTap: _toggleListening,
                         child: _isListening
-                            ? _PulsingMic(
-                                size: screenWidth * 0.055,
-                                pulseColor: const Color(0xFFE53935),
+                            ? _ListeningWaveform(
+                                levels: List.unmodifiable(_waveSamples),
+                                color: const Color(0xFFE53935),
                               )
                             : Icon(
                                 Icons.mic,
@@ -1795,64 +1796,53 @@ class _PointingFinger extends StatelessWidget {
   }
 }
 
-class _PulsingMic extends StatefulWidget {
-  const _PulsingMic({required this.size, required this.pulseColor});
+class _ListeningWaveform extends StatelessWidget {
+  const _ListeningWaveform({required this.levels, required this.color});
 
-  final double size;
-  final Color pulseColor;
-
-  @override
-  State<_PulsingMic> createState() => _PulsingMicState();
-}
-
-class _PulsingMicState extends State<_PulsingMic>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 1200),
-  )..repeat();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  final List<double> levels;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, _) {
-        final double t = _controller.value;
-        return SizedBox(
-          width: widget.size * 2.0,
-          height: widget.size * 2.0,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              _ring(t),
-              _ring((t + 0.5) % 1.0),
-              Icon(
-                Icons.mic,
-                color: widget.pulseColor,
-                size: widget.size * 0.9,
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _ring(double t) {
-    final double diameter = widget.size * (1.0 + t);
-    return Container(
-      width: diameter,
-      height: diameter,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: widget.pulseColor.withValues(alpha: (1 - t) * 0.25),
+    return SizedBox(
+      width: 46,
+      height: 22,
+      child: CustomPaint(
+        painter: _ListeningWaveformPainter(levels: levels, color: color),
       ),
     );
+  }
+}
+
+class _ListeningWaveformPainter extends CustomPainter {
+  _ListeningWaveformPainter({required this.levels, required this.color});
+
+  final List<double> levels;
+  final Color color;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (size.width <= 0 || size.height <= 0) return;
+    final int count = math.max(levels.length, 1);
+    final double gap = size.width * 0.04;
+    final double barWidth = (size.width - gap * (count - 1)) / count;
+    if (barWidth <= 0) return;
+    final Paint paint = Paint();
+    for (int i = 0; i < levels.length; i++) {
+      final double height = levels[i].clamp(0.08, 1.0) * size.height;
+      final double x = i * (barWidth + gap);
+      paint.color =
+          color.withValues(alpha: 0.35 + 0.65 * (i / math.max(levels.length - 1, 1)));
+      final RRect rect = RRect.fromRectAndRadius(
+        Rect.fromLTWH(x, (size.height - height) / 2, barWidth, height),
+        Radius.circular(barWidth / 2),
+      );
+      canvas.drawRRect(rect, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(_ListeningWaveformPainter oldDelegate) {
+    return oldDelegate.levels != levels || oldDelegate.color != color;
   }
 }
