@@ -324,6 +324,9 @@ class _MessageScreenState extends State<MessageScreen>
                   'time': _formatTimeFromEpoch(sent.createdAt),
                   'mine': true,
                   'date': sent.createdAt,
+                  if (sent.deliveredAt != null)
+                    'deliveredAt': sent.deliveredAt!,
+                  if (sent.readAt != null) 'readAt': sent.readAt!,
                 });
               });
             }
@@ -369,6 +372,8 @@ class _MessageScreenState extends State<MessageScreen>
             'time': _formatTimeFromEpoch(sent.createdAt),
             'mine': true,
             'date': sent.createdAt,
+            if (sent.deliveredAt != null) 'deliveredAt': sent.deliveredAt!,
+            if (sent.readAt != null) 'readAt': sent.readAt!,
           });
         });
         _messageController.clear();
@@ -622,6 +627,8 @@ class _MessageScreenState extends State<MessageScreen>
             'time': _currentTime(),
             'mine': true,
             'date': sent.createdAt,
+            if (sent.deliveredAt != null) 'deliveredAt': sent.deliveredAt!,
+            if (sent.readAt != null) 'readAt': sent.readAt!,
           });
         });
         _scrollToBottom();
@@ -1482,6 +1489,45 @@ class _MessageScreenState extends State<MessageScreen>
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildDeliveryTicks(Map<String, Object> message, double screenWidth) {
+    if (!(message['mine'] as bool? ?? false)) return const SizedBox.shrink();
+    final double size = screenWidth * 0.03;
+    if (message['pendingId'] != null) {
+      return Icon(Icons.schedule, size: size, color: Colors.white70);
+    }
+    if (message['readAt'] != null) {
+      return Icon(
+        Icons.done_all,
+        size: size,
+        color: const Color(0xFF40C4FF),
+      );
+    }
+    if (message['deliveredAt'] != null) {
+      return Icon(Icons.done_all, size: size, color: Colors.white70);
+    }
+    return Icon(Icons.done, size: size, color: Colors.white70);
+  }
+
+  Widget _timeWithTicks(
+    Map<String, Object> message,
+    String time,
+    double screenWidth,
+    TextStyle style,
+  ) {
+    final bool mine = message['mine'] as bool? ?? false;
+    if (!mine) {
+      return Text(time, style: style);
+    }
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _buildDeliveryTicks(message, screenWidth),
+        SizedBox(width: screenWidth * 0.008),
+        Text(time, style: style),
+      ],
     );
   }
 
