@@ -589,8 +589,8 @@ class _MessageScreenState extends State<MessageScreen>
     if (!mounted) return;
     setState(() {
       _messages.add(<String, Object>{
-        'id': outboxId!,
-        'pendingId': outboxId!,
+        'id': outboxId,
+        'pendingId': outboxId,
         'voice': path,
         'duration': duration,
         'time': _currentTime(),

@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'outbox/outbox_storage.dart';
 import 'outbox/outbox_storage_io.dart'
     if (dart.library.html) 'outbox/outbox_storage_web.dart' as storage;
 
