@@ -260,8 +260,8 @@ class ChatService {
         bytes,
         filename,
         contentType: filename.toLowerCase().endsWith('.webm')
-            ? const MediaType('audio', 'webm')
-            : const MediaType('audio', 'mp4'),
+            ? MediaType('audio', 'webm')
+            : MediaType('audio', 'mp4'),
         durationMs: duration.inMilliseconds,
       );
 
@@ -270,7 +270,7 @@ class ChatService {
         bytes[0] == 0xFF &&
         bytes[1] == 0xD8 &&
         bytes[2] == 0xFF) {
-      return const MediaType('image', 'jpeg');
+      return MediaType('image', 'jpeg');
     }
     if (bytes.length >= 8 &&
         bytes[0] == 0x89 &&
@@ -281,23 +281,23 @@ class ChatService {
         bytes[5] == 0x0A &&
         bytes[6] == 0x1A &&
         bytes[7] == 0x0A) {
-      return const MediaType('image', 'png');
+      return MediaType('image', 'png');
     }
     if (bytes.length >= 4 &&
         bytes[0] == 0x52 &&
         bytes[1] == 0x49 &&
         bytes[2] == 0x46 &&
         bytes[3] == 0x46) {
-      return const MediaType('image', 'webp');
+      return MediaType('image', 'webp');
     }
     if (bytes.length >= 4 &&
         bytes[0] == 0x47 &&
         bytes[1] == 0x49 &&
         bytes[2] == 0x46 &&
         bytes[3] == 0x38) {
-      return const MediaType('image', 'gif');
+      return MediaType('image', 'gif');
     }
-    return const MediaType('image', 'jpeg');
+    return MediaType('image', 'jpeg');
   }
 
   static Future<ChatMessage> _uploadMedia(
