@@ -36,10 +36,6 @@ class SpeechService {
       onError: (error) {
         _listening = false;
       },
-      onSoundLevelChange: (level) {
-        _lastLevel = level;
-        _levelCtrl.add(level);
-      },
     );
     return _available;
   }
