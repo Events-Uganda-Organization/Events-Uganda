@@ -112,33 +112,46 @@ class _MessageScreenState extends State<MessageScreen>
 
   void _onOutboxEvent(OutboxEvent event) {
     if (!mounted) return;
+    final ChatMessage? sent = event.message;
+    if (sent == null) return;
     final int idx = _messages.indexWhere(
       (m) => m['pendingId'] == event.outboxId,
     );
-    if (idx == -1) return;
-    final ChatMessage? sent = event.message;
-    if (sent == null) return;
+    if (idx != -1) {
+      setState(() {
+        _messages[idx] = _realMessageMap(sent);
+      });
+      _scrollToBottom();
+      return;
+    }
+    if (sent.conversationId != widget.conversationId) return;
+    final bool exists =
+        _messages.any((m) => m['id'] == sent.id && m['id'] != null);
+    if (exists) return;
     setState(() {
-      final Map<String, Object> replacement = <String, Object>{
-        'id': sent.id,
-        'text': sent.text ?? '',
-        'time': _formatTimeFromEpoch(sent.createdAt),
-        'mine': true,
-        'date': sent.createdAt,
-      };
-      final String? imageUrl = sent.imageUrl;
-      if (imageUrl != null && imageUrl.isNotEmpty) {
-        replacement['imageUrl'] = imageUrl;
-      }
-      final String? audioUrl = sent.audioUrl;
-      if (audioUrl != null && audioUrl.isNotEmpty) {
-        replacement['audioUrl'] = audioUrl;
-        replacement['duration'] =
-            Duration(milliseconds: sent.audioDurationMs ?? 0);
-      }
-      _messages[idx] = replacement;
+      _messages.add(_realMessageMap(sent));
     });
     _scrollToBottom();
+  }
+
+  Map<String, Object> _realMessageMap(ChatMessage sent) {
+    final Map<String, Object> map = <String, Object>{
+      'id': sent.id,
+      'text': sent.text ?? '',
+      'time': _formatTimeFromEpoch(sent.createdAt),
+      'mine': true,
+      'date': sent.createdAt,
+    };
+    final String? imageUrl = sent.imageUrl;
+    if (imageUrl != null && imageUrl.isNotEmpty) {
+      map['imageUrl'] = imageUrl;
+    }
+    final String? audioUrl = sent.audioUrl;
+    if (audioUrl != null && audioUrl.isNotEmpty) {
+      map['audioUrl'] = audioUrl;
+      map['duration'] = Duration(milliseconds: sent.audioDurationMs ?? 0);
+    }
+    return map;
   }
 
   void _initSocket() {
