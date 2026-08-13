@@ -49,3 +49,6 @@ temp_backup.txt
 **/android/app/release
 **/android/build/
 **/build/reports/
+
+# Maven build output
+**/target/
