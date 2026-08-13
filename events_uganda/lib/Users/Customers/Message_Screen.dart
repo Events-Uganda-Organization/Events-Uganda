@@ -552,9 +552,9 @@ class _MessageScreenState extends State<MessageScreen>
     if (conversationId == null || bytes.isEmpty) return;
     final String filename =
         'voice_${DateTime.now().millisecondsSinceEpoch}.${kIsWeb ? 'webm' : 'm4a'}';
-    String? outboxId;
+    final String id;
     try {
-      outboxId = await ChatOutbox.instance.enqueueMedia(
+      id = await ChatOutbox.instance.enqueueMedia(
         conversationId: conversationId,
         type: OutboxMediaType.audio,
         bytes: bytes,
@@ -589,8 +589,8 @@ class _MessageScreenState extends State<MessageScreen>
     if (!mounted) return;
     setState(() {
       _messages.add(<String, Object>{
-        'id': outboxId,
-        'pendingId': outboxId,
+        'id': id,
+        'pendingId': id,
         'voice': path,
         'duration': duration,
         'time': _currentTime(),
