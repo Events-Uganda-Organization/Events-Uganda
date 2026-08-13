@@ -230,6 +230,106 @@ public class MessageService {
         return unreadIds;
     }
 
+    @Transactional
+    public int clearChat(String conversationId, String userId) {
+        Conversation conversation = findParticipantConversation(conversationId, userId);
+        int deleted = messageRepository.deleteByConversationId(conversationId);
+        conversation.setLastMessage(null);
+        conversation.setLastMessageSenderId(null);
+        conversation.setLastMessageAt(null);
+        conversation.setUpdatedAt(System.currentTimeMillis());
+        conversationRepository.save(conversation);
+        return deleted;
+    }
+
+    @Transactional
+    public void setDisappearingMode(String conversationId, String userId, String mode) {
+        String normalized = mode == null ? "OFF" : mode.toUpperCase();
+        if (!Set.of("OFF", "24H", "7D").contains(normalized)) {
+            throw new OtpException("Invalid disappearing mode");
+        }
+        Conversation conversation = findParticipantConversation(conversationId, userId);
+        conversation.setDisappearingMode(normalized);
+        conversation.setUpdatedAt(System.currentTimeMillis());
+        conversationRepository.save(conversation);
+    }
+
+    @Transactional
+    public void blockUser(String conversationId, String userId) {
+        Conversation conversation = findParticipantConversation(conversationId, userId);
+        String other = otherParticipant(conversation, userId);
+        if (other == null) {
+            throw new OtpException("Cannot block a group conversation");
+        }
+        if (!userBlockRepository.existsByBlockerIdAndBlockedId(userId, other)) {
+            userBlockRepository.save(new UserBlock(userId, other));
+        }
+    }
+
+    @Transactional
+    public void unblockUser(String conversationId, String userId) {
+        Conversation conversation = findParticipantConversation(conversationId, userId);
+        String other = otherParticipant(conversation, userId);
+        if (other != null) {
+            userBlockRepository.deleteByBlockerIdAndBlockedId(userId, other);
+        }
+    }
+
+    @Transactional
+    public void reportUser(String conversationId, String userId, String reason) {
+        Conversation conversation = findParticipantConversation(conversationId, userId);
+        String other = otherParticipant(conversation, userId);
+        if (other == null) {
+            throw new OtpException("Cannot report a group conversation");
+        }
+        reportRepository.save(new Report(userId, other, conversationId, reason));
+        User reporter = userRepository.findById(userId).orElse(null);
+        User reported = userRepository.findById(other).orElse(null);
+        emailService.sendReportEmail(
+            reporter != null ? reporter.getFullName() : null,
+            reporter != null ? reporter.getEmail() : null,
+            reported != null ? reported.getFullName() : null,
+            reported != null ? reported.getEmail() : null,
+            reason);
+    }
+
+    private void ensureNotBlocked(Conversation conversation, String userId) {
+        conversation.getParticipantIdSet().stream()
+            .filter(p -> !p.equals(userId))
+            .findFirst()
+            .ifPresent(other -> {
+                if (userBlockRepository.existsByBlockerIdAndBlockedId(userId, other)
+                        || userBlockRepository.existsByBlockerIdAndBlockedId(other, userId)) {
+                    throw new OtpException("Messaging is not available with this user");
+                }
+            });
+    }
+
+    private Long disappearingExpiry(Conversation conversation, long now) {
+        long durationMillis = switch (conversation.getDisappearingMode()) {
+            case "24H" -> 24L * 60 * 60 * 1000;
+            case "7D" -> 7L * 24 * 60 * 60 * 1000;
+            default -> 0L;
+        };
+        return durationMillis > 0 ? now + durationMillis : null;
+    }
+
+    private Conversation findParticipantConversation(String conversationId, String userId) {
+        Conversation conversation = conversationRepository.findById(conversationId)
+            .orElseThrow(() -> new OtpException("Conversation not found"));
+        if (!conversation.getParticipantIdSet().contains(userId)) {
+            throw new OtpException("Access denied");
+        }
+        return conversation;
+    }
+
+    private String otherParticipant(Conversation conversation, String userId) {
+        return conversation.getParticipantIdSet().stream()
+            .filter(p -> !p.equals(userId))
+            .findFirst()
+            .orElse(null);
+    }
+
     public ChatSearchResponse search(String userId, String query, int page, int size) {
         String q = query == null ? "" : query.trim();
         if (q.isEmpty()) {

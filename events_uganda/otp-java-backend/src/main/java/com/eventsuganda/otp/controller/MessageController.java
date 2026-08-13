@@ -1,5 +1,7 @@
 package com.eventsuganda.otp.controller;
 
+import com.eventsuganda.otp.dto.request.DisappearingModeRequest;
+import com.eventsuganda.otp.dto.request.ReportRequest;
 import com.eventsuganda.otp.dto.request.SendMessageRequest;
 import com.eventsuganda.otp.dto.response.ApiResponse;
 import com.eventsuganda.otp.dto.response.ChatSearchResponse;
@@ -82,5 +84,52 @@ public class MessageController {
             Authentication auth) {
         String userId = (String) auth.getPrincipal();
         return ResponseEntity.ok(messageService.search(userId, query, page, size));
+    }
+
+    @DeleteMapping("/conversations/{conversationId}/messages")
+    public ResponseEntity<ApiResponse> clearChat(
+            @PathVariable String conversationId,
+            Authentication auth) {
+        String userId = (String) auth.getPrincipal();
+        int deleted = messageService.clearChat(conversationId, userId);
+        return ResponseEntity.ok(ApiResponse.ok(deleted + " messages cleared"));
+    }
+
+    @PutMapping("/conversations/{conversationId}/disappearing")
+    public ResponseEntity<ApiResponse> setDisappearingMode(
+            @PathVariable String conversationId,
+            @Valid @RequestBody DisappearingModeRequest request,
+            Authentication auth) {
+        String userId = (String) auth.getPrincipal();
+        messageService.setDisappearingMode(conversationId, userId, request.getMode());
+        return ResponseEntity.ok(ApiResponse.ok("Disappearing messages updated"));
+    }
+
+    @PostMapping("/conversations/{conversationId}/block")
+    public ResponseEntity<ApiResponse> blockUser(
+            @PathVariable String conversationId,
+            Authentication auth) {
+        String userId = (String) auth.getPrincipal();
+        messageService.blockUser(conversationId, userId);
+        return ResponseEntity.ok(ApiResponse.ok("User blocked"));
+    }
+
+    @PostMapping("/conversations/{conversationId}/unblock")
+    public ResponseEntity<ApiResponse> unblockUser(
+            @PathVariable String conversationId,
+            Authentication auth) {
+        String userId = (String) auth.getPrincipal();
+        messageService.unblockUser(conversationId, userId);
+        return ResponseEntity.ok(ApiResponse.ok("User unblocked"));
+    }
+
+    @PostMapping("/conversations/{conversationId}/report")
+    public ResponseEntity<ApiResponse> reportUser(
+            @PathVariable String conversationId,
+            @Valid @RequestBody ReportRequest request,
+            Authentication auth) {
+        String userId = (String) auth.getPrincipal();
+        messageService.reportUser(conversationId, userId, request.getReason());
+        return ResponseEntity.ok(ApiResponse.ok("Report submitted. Thank you for keeping the community safe."));
     }
 }
