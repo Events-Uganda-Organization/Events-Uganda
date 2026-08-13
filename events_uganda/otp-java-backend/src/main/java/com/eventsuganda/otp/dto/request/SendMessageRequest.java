@@ -1,10 +1,10 @@
 package com.eventsuganda.otp.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class SendMessageRequest {
 
-    @NotBlank(message = "Message text is required")
+    @Size(max = 5000, message = "Message text is too long")
     private String text;
 
     public String getText() { return text; }

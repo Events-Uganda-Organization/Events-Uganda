@@ -14,12 +14,13 @@ import java.util.Optional;
 public interface MessageMediaRepository extends JpaRepository<MessageMedia, String> {
 
     interface MediaMeta {
+        String getMessageId();
         String getId();
         String getMediaType();
         Long getDurationMs();
     }
 
-    @Query("SELECT m.id AS id, m.mediaType AS mediaType, m.durationMs AS durationMs " +
+    @Query("SELECT m.messageId AS messageId, m.id AS id, m.mediaType AS mediaType, m.durationMs AS durationMs " +
            "FROM MessageMedia m WHERE m.messageId IN :ids")
     List<MediaMeta> findMetaByMessageIdIn(@Param("ids") Collection<String> ids);
 

@@ -160,7 +160,7 @@ public class MessageService {
                     messages.stream().map(Message::getId).collect(Collectors.toList()))
                 .stream()
                 .collect(Collectors.toMap(
-                    MessageMediaRepository.MediaMeta::getId,
+                    MessageMediaRepository.MediaMeta::getMessageId,
                     meta -> meta));
 
         return messages.stream()

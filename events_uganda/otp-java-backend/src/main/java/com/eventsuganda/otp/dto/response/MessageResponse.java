@@ -9,6 +9,8 @@ public class MessageResponse {
     private String senderId;
     private String text;
     private String imageUrl;
+    private String audioUrl;
+    private Long audioDurationMs;
     private long createdAt;
     private Long readAt;
     private boolean isMine;
@@ -16,11 +18,17 @@ public class MessageResponse {
     public MessageResponse() {}
 
     public MessageResponse(Message message, String currentUserId) {
+        this(message, currentUserId, null, null, null);
+    }
+
+    public MessageResponse(Message message, String currentUserId, String mediaUrl, String mediaType, Long durationMs) {
         this.id = message.getId();
         this.conversationId = message.getConversationId();
         this.senderId = message.getSenderId();
         this.text = message.getText();
-        this.imageUrl = message.getImageUrl();
+        this.imageUrl = "IMAGE".equals(mediaType) ? mediaUrl : message.getImageUrl();
+        this.audioUrl = "AUDIO".equals(mediaType) ? mediaUrl : null;
+        this.audioDurationMs = durationMs;
         this.createdAt = message.getCreatedAt();
         this.readAt = message.getReadAt();
         this.isMine = message.getSenderId().equals(currentUserId);
@@ -40,6 +48,12 @@ public class MessageResponse {
 
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+
+    public String getAudioUrl() { return audioUrl; }
+    public void setAudioUrl(String audioUrl) { this.audioUrl = audioUrl; }
+
+    public Long getAudioDurationMs() { return audioDurationMs; }
+    public void setAudioDurationMs(Long audioDurationMs) { this.audioDurationMs = audioDurationMs; }
 
     public long getCreatedAt() { return createdAt; }
     public void setCreatedAt(long createdAt) { this.createdAt = createdAt; }
