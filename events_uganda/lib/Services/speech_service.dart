@@ -78,12 +78,16 @@ class SpeechService {
   Future<void> stop() async {
     await _speech.stop();
     _listening = false;
+    _lastLevel = 0.0;
+    _levelCtrl.add(0.0);
   }
 
   Future<void> cancel() async {
     await _speech.cancel();
     _listening = false;
     _lastWords = '';
+    _lastLevel = 0.0;
+    _levelCtrl.add(0.0);
   }
 }
 
