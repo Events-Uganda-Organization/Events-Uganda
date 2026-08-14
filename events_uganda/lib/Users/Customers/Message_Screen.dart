@@ -2323,7 +2323,7 @@ class _MessageScreenState extends State<MessageScreen>
                               controller: _messageController,
                               focusNode: _messageFocusNode,
                               onSubmitted: (_) => _sendMessage(),
-                              textAlignVertical: TextAlignVertical.center,
+                              textAlignVertical: const TextAlignVertical(y: -0.35),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: screenWidth * 0.035,
