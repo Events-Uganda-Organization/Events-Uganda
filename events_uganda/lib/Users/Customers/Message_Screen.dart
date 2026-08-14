@@ -79,6 +79,7 @@ class _MessageScreenState extends State<MessageScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _messageFocusNode.addListener(_onMessageFocusChanged);
     _outboxSub = ChatOutbox.instance.events.listen(_onOutboxEvent);
     AuthService.getToken().then((token) {
       if (mounted && token != null && token.isNotEmpty) {
@@ -119,6 +120,10 @@ class _MessageScreenState extends State<MessageScreen>
       backgroundColor: Colors.transparent,
       builder: (ctx) => BookingSheet(contactName: widget.name),
     );
+  }
+
+  void _onMessageFocusChanged() {
+    if (mounted) setState(() {});
   }
 
   Future<void> _loadConversationSettings() async {
@@ -538,6 +543,8 @@ class _MessageScreenState extends State<MessageScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _messageFocusNode.removeListener(_onMessageFocusChanged);
+    _messageFocusNode.dispose();
     _outboxSub?.cancel();
     _highlightTimer?.cancel();
     _recordingTicker?.cancel();
@@ -2292,6 +2299,12 @@ class _MessageScreenState extends State<MessageScreen>
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(30),
+                        border: Border.all(
+                          color: _messageFocusNode.hasFocus
+                              ? const Color(0xFFCC471B)
+                              : Colors.transparent,
+                          width: 1.6,
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withValues(alpha: 0.1),
@@ -2308,6 +2321,7 @@ class _MessageScreenState extends State<MessageScreen>
                           Expanded(
                             child: TextField(
                               controller: _messageController,
+                              focusNode: _messageFocusNode,
                               onSubmitted: (_) => _sendMessage(),
                               textAlignVertical: TextAlignVertical.center,
                               style: TextStyle(
