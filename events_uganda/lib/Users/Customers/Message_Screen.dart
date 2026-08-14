@@ -12,7 +12,6 @@ import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Services/chat_outbox.dart';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Services/chat_socket_service.dart';
-import 'package:events_uganda/Users/Customers/Booking_Sheet.dart';
 import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
 import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 
@@ -112,15 +111,6 @@ class _MessageScreenState extends State<MessageScreen>
       _initSocket();
       ChatOutbox.instance.drain();
     }
-  }
-
-  void _openBookingSheet() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) => BookingSheet(contactName: widget.name),
-    );
   }
 
   void _onMessageFocusChanged() {
