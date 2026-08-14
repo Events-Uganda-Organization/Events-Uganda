@@ -40,6 +40,7 @@ class MessageScreen extends StatefulWidget {
 class _MessageScreenState extends State<MessageScreen>
     with WidgetsBindingObserver {
   final TextEditingController _messageController = TextEditingController();
+  final FocusNode _messageFocusNode = FocusNode();
   final ScrollController _messagesScroll = ScrollController();
   final ImagePicker _imagePicker = ImagePicker();
   final List<Uint8List> _selectedImages = [];
