@@ -214,7 +214,7 @@ class ChatService {
       body['initialMessage'] = initialMessage;
     }
     final response = await _mutatingRequest(
-      () => http.post(
+      () async => http.post(
         Uri.parse('$_baseUrl/chat/conversations'),
         headers: await _authHeaders(),
         body: jsonEncode(body),
@@ -401,7 +401,7 @@ class ChatService {
 
   static Future<void> clearChat(String conversationId) async {
     final response = await _mutatingRequest(
-      () => http.delete(
+      () async => http.delete(
         Uri.parse('$_baseUrl/chat/conversations/$conversationId/messages'),
         headers: await _authHeaders(),
       ),
@@ -414,7 +414,7 @@ class ChatService {
     String mode,
   ) async {
     final response = await _mutatingRequest(
-      () => http.put(
+      () async => http.put(
         Uri.parse('$_baseUrl/chat/conversations/$conversationId/disappearing'),
         headers: await _authHeaders(),
         body: jsonEncode({'mode': mode}),
@@ -425,7 +425,7 @@ class ChatService {
 
   static Future<void> blockUser(String conversationId) async {
     final response = await _mutatingRequest(
-      () => http.post(
+      () async => http.post(
         Uri.parse('$_baseUrl/chat/conversations/$conversationId/block'),
         headers: await _authHeaders(),
       ),
@@ -435,7 +435,7 @@ class ChatService {
 
   static Future<void> unblockUser(String conversationId) async {
     final response = await _mutatingRequest(
-      () => http.post(
+      () async => http.post(
         Uri.parse('$_baseUrl/chat/conversations/$conversationId/unblock'),
         headers: await _authHeaders(),
       ),
