@@ -213,10 +213,12 @@ class ChatService {
     if (initialMessage != null && initialMessage.isNotEmpty) {
       body['initialMessage'] = initialMessage;
     }
-    final response = await http.post(
-      Uri.parse('$_baseUrl/chat/conversations'),
-      headers: await _authHeaders(),
-      body: jsonEncode(body),
+    final response = await _mutatingRequest(
+      () => http.post(
+        Uri.parse('$_baseUrl/chat/conversations'),
+        headers: await _authHeaders(),
+        body: jsonEncode(body),
+      ),
     );
     _ensureOk(response);
     final conversation = ChatConversation.fromJson(
@@ -398,9 +400,11 @@ class ChatService {
   }
 
   static Future<void> clearChat(String conversationId) async {
-    final response = await http.delete(
-      Uri.parse('$_baseUrl/chat/conversations/$conversationId/messages'),
-      headers: await _authHeaders(),
+    final response = await _mutatingRequest(
+      () => http.delete(
+        Uri.parse('$_baseUrl/chat/conversations/$conversationId/messages'),
+        headers: await _authHeaders(),
+      ),
     );
     _ensureOk(response);
   }
@@ -409,26 +413,32 @@ class ChatService {
     String conversationId,
     String mode,
   ) async {
-    final response = await http.put(
-      Uri.parse('$_baseUrl/chat/conversations/$conversationId/disappearing'),
-      headers: await _authHeaders(),
-      body: jsonEncode({'mode': mode}),
+    final response = await _mutatingRequest(
+      () => http.put(
+        Uri.parse('$_baseUrl/chat/conversations/$conversationId/disappearing'),
+        headers: await _authHeaders(),
+        body: jsonEncode({'mode': mode}),
+      ),
     );
     _ensureOk(response);
   }
 
   static Future<void> blockUser(String conversationId) async {
-    final response = await http.post(
-      Uri.parse('$_baseUrl/chat/conversations/$conversationId/block'),
-      headers: await _authHeaders(),
+    final response = await _mutatingRequest(
+      () => http.post(
+        Uri.parse('$_baseUrl/chat/conversations/$conversationId/block'),
+        headers: await _authHeaders(),
+      ),
     );
     _ensureOk(response);
   }
 
   static Future<void> unblockUser(String conversationId) async {
-    final response = await http.post(
-      Uri.parse('$_baseUrl/chat/conversations/$conversationId/unblock'),
-      headers: await _authHeaders(),
+    final response = await _mutatingRequest(
+      () => http.post(
+        Uri.parse('$_baseUrl/chat/conversations/$conversationId/unblock'),
+        headers: await _authHeaders(),
+      ),
     );
     _ensureOk(response);
   }
