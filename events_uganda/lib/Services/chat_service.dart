@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -402,12 +404,14 @@ class ChatService {
   }
 
   static Future<void> clearChat(String conversationId) async {
+    debugPrint('[ChatService] clearChat called, conversationId=$conversationId');
     final response = await _mutatingRequest(
       () async => http.delete(
         Uri.parse('$_baseUrl/chat/conversations/$conversationId/messages'),
         headers: await _authHeaders(),
       ),
     );
+    debugPrint('[ChatService] clearChat response status=${response.statusCode}, conversationId=$conversationId');
     _ensureOk(response);
   }
 
@@ -415,6 +419,7 @@ class ChatService {
     String conversationId,
     String mode,
   ) async {
+    debugPrint('[ChatService] setDisappearingMode called, mode="$mode", conversationId=$conversationId');
     final response = await _mutatingRequest(
       () async => http.put(
         Uri.parse('$_baseUrl/chat/conversations/$conversationId/disappearing'),
@@ -422,35 +427,42 @@ class ChatService {
         body: jsonEncode({'mode': mode}),
       ),
     );
+    debugPrint('[ChatService] setDisappearingMode response status=${response.statusCode}, conversationId=$conversationId');
     _ensureOk(response);
   }
 
   static Future<void> blockUser(String conversationId) async {
+    debugPrint('[ChatService] blockUser called, conversationId=$conversationId');
     final response = await _mutatingRequest(
       () async => http.post(
         Uri.parse('$_baseUrl/chat/conversations/$conversationId/block'),
         headers: await _authHeaders(),
       ),
     );
+    debugPrint('[ChatService] blockUser response status=${response.statusCode}, conversationId=$conversationId');
     _ensureOk(response);
   }
 
   static Future<void> unblockUser(String conversationId) async {
+    debugPrint('[ChatService] unblockUser called, conversationId=$conversationId');
     final response = await _mutatingRequest(
       () async => http.post(
         Uri.parse('$_baseUrl/chat/conversations/$conversationId/unblock'),
         headers: await _authHeaders(),
       ),
     );
+    debugPrint('[ChatService] unblockUser response status=${response.statusCode}, conversationId=$conversationId');
     _ensureOk(response);
   }
 
   static Future<void> reportUser(String conversationId, String reason) async {
+    debugPrint('[ChatService] reportUser called, reason="$reason", conversationId=$conversationId');
     final response = await http.post(
       Uri.parse('$_baseUrl/chat/conversations/$conversationId/report'),
       headers: await _authHeaders(),
       body: jsonEncode({'reason': reason}),
     );
+    debugPrint('[ChatService] reportUser response status=${response.statusCode}, conversationId=$conversationId');
     _ensureOk(response);
   }
 

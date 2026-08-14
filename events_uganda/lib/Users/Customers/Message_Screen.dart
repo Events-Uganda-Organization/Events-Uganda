@@ -187,6 +187,7 @@ class _MessageScreenState extends State<MessageScreen>
   }
 
   void _handleChatMenuAction(_ChatMenuAction action) {
+    debugPrint('[MessageScreen] Chat menu action selected: $action');
     switch (action) {
       case _ChatMenuAction.disappearing:
         _openDisappearingSheet();
@@ -209,13 +210,17 @@ class _MessageScreenState extends State<MessageScreen>
         onSelect: (mode) async {
           final conversationId = widget.conversationId;
           if (conversationId == null) {
+            debugPrint('[MessageScreen] Disappearing mode aborted: conversationId is null');
             if (sheetContext.mounted) Navigator.of(sheetContext).pop();
             return;
           }
+          debugPrint('[MessageScreen] Setting disappearing mode to "$mode" for conversationId=$conversationId');
           try {
             await ChatService.setDisappearingMode(conversationId, mode);
+            debugPrint('[MessageScreen] Disappearing mode set to "$mode" successfully for conversationId=$conversationId');
             if (mounted) setState(() => _disappearingMode = mode);
           } catch (e) {
+            debugPrint('[MessageScreen] Failed to set disappearing mode "$mode" for conversationId=$conversationId: $e');
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Could not update: $e')),
@@ -230,7 +235,11 @@ class _MessageScreenState extends State<MessageScreen>
 
   Future<void> _confirmClearChat() async {
     final conversationId = widget.conversationId;
-    if (conversationId == null) return;
+    debugPrint('[MessageScreen] _confirmClearChat called, conversationId=$conversationId');
+    if (conversationId == null) {
+      debugPrint('[MessageScreen] _confirmClearChat aborted: conversationId is null');
+      return;
+    }
     await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -238,8 +247,10 @@ class _MessageScreenState extends State<MessageScreen>
       builder: (sheetContext) => _ClearChatSheet(
         contactName: widget.name,
         onClear: () async {
+          debugPrint('[MessageScreen] Clear chat confirmed, conversationId=$conversationId');
           try {
             await ChatService.clearChat(conversationId);
+            debugPrint('[MessageScreen] Chat cleared successfully, conversationId=$conversationId');
             if (mounted) {
               setState(() {
                 _messages.clear();
@@ -253,6 +264,7 @@ class _MessageScreenState extends State<MessageScreen>
               );
             }
           } catch (e) {
+            debugPrint('[MessageScreen] Failed to clear chat, conversationId=$conversationId: $e');
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Could not clear chat: $e')),
@@ -267,7 +279,11 @@ class _MessageScreenState extends State<MessageScreen>
   Future<void> _confirmBlockOrUnblock() async {
     final bool block = !_blocked;
     final conversationId = widget.conversationId;
-    if (conversationId == null) return;
+    debugPrint('[MessageScreen] _confirmBlockOrUnblock called, block=$block, conversationId=$conversationId, _blocked=$_blocked, _amBlocked=$_amBlocked');
+    if (conversationId == null) {
+      debugPrint('[MessageScreen] _confirmBlockOrUnblock aborted: conversationId is null');
+      return;
+    }
     await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -276,11 +292,14 @@ class _MessageScreenState extends State<MessageScreen>
         blocking: block,
         contactName: widget.name,
         onAction: () async {
+          debugPrint('[MessageScreen] Block/unblock confirmed, block=$block, conversationId=$conversationId');
           try {
             if (block) {
               await ChatService.blockUser(conversationId);
+              debugPrint('[MessageScreen] User blocked successfully, conversationId=$conversationId');
             } else {
               await ChatService.unblockUser(conversationId);
+              debugPrint('[MessageScreen] User unblocked successfully, conversationId=$conversationId');
             }
             if (mounted) {
               setState(() => _blocked = block);
@@ -291,6 +310,7 @@ class _MessageScreenState extends State<MessageScreen>
               );
             }
           } catch (e) {
+            debugPrint('[MessageScreen] Failed to ${block ? 'block' : 'unblock'} user, conversationId=$conversationId: $e');
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Could not update: $e')),
@@ -304,7 +324,11 @@ class _MessageScreenState extends State<MessageScreen>
 
   void _showReportSheet() {
     final conversationId = widget.conversationId;
-    if (conversationId == null) return;
+    debugPrint('[MessageScreen] _showReportSheet called, conversationId=$conversationId');
+    if (conversationId == null) {
+      debugPrint('[MessageScreen] _showReportSheet aborted: conversationId is null');
+      return;
+    }
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -312,8 +336,10 @@ class _MessageScreenState extends State<MessageScreen>
       builder: (sheetContext) => _ReportUserSheet(
         contactName: widget.name,
         onSubmit: (reason) async {
+          debugPrint('[MessageScreen] Report submitted, reason="$reason", conversationId=$conversationId');
           try {
             await ChatService.reportUser(conversationId, reason);
+            debugPrint('[MessageScreen] Report submitted successfully, conversationId=$conversationId');
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -324,6 +350,7 @@ class _MessageScreenState extends State<MessageScreen>
               );
             }
           } catch (e) {
+            debugPrint('[MessageScreen] Failed to submit report, conversationId=$conversationId: $e');
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Could not submit report: $e')),
