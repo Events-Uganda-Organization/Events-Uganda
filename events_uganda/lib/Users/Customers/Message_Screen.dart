@@ -14,6 +14,7 @@ import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Services/chat_socket_service.dart';
 import 'package:events_uganda/Users/Customers/Booking_Sheet.dart';
 import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
+import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 
 enum _ChatMenuAction { disappearing, clearChat, block, report }
 
@@ -2157,7 +2158,12 @@ class _MessageScreenState extends State<MessageScreen>
                   ),
                   SizedBox(width: screenWidth * 0.02),
                   GestureDetector(
-                    onTap: _openBookingSheet,
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ServiceDetailsScreen(),
+                      ),
+                    ),
                     child: Icon(
                       Icons.shopping_bag_outlined,
                       color: const Color(0xFFCD7C20),
