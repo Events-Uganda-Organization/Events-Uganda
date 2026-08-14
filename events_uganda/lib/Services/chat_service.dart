@@ -175,7 +175,7 @@ class ChatService {
       }
     }
     if (lastResponse != null) return lastResponse!;
-    throw lastError!;
+    throw lastError;
   }
 
   static Future<String> myUserId() async {
