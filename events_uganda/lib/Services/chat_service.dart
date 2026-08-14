@@ -156,6 +156,28 @@ class ChatService {
     throw Exception(message);
   }
 
+  static Future<http.Response> _mutatingRequest(
+    Future<http.Response> Function() request, {
+    int attempts = 2,
+  }) async {
+    Object? lastError;
+    http.Response? lastResponse;
+    for (int attempt = 0; attempt < attempts; attempt++) {
+      try {
+        final response = await request();
+        if (response.statusCode < 500) return response;
+        lastResponse = response;
+      } catch (e) {
+        lastError = e;
+      }
+      if (attempt < attempts - 1) {
+        await Future<void>.delayed(const Duration(milliseconds: 700));
+      }
+    }
+    if (lastResponse != null) return lastResponse!;
+    throw lastError!;
+  }
+
   static Future<String> myUserId() async {
     final user = await AuthService.getUser();
     final id = user?['id'];
