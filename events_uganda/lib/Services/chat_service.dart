@@ -174,8 +174,10 @@ class ChatService {
         await Future<void>.delayed(const Duration(milliseconds: 700));
       }
     }
-    if (lastResponse != null) return lastResponse!;
-    throw lastError;
+    if (lastResponse != null) {
+      return lastResponse;
+    }
+    throw lastError!;
   }
 
   static Future<String> myUserId() async {
