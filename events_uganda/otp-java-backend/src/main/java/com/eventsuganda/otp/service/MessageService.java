@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -39,6 +41,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
+
+    private static final Logger log = LoggerFactory.getLogger(MessageService.class);
 
     private static final long MAX_MEDIA_BYTES = 8L * 1024 * 1024;
     private static final Set<String> IMAGE_MIME_TYPES = Set.of(
