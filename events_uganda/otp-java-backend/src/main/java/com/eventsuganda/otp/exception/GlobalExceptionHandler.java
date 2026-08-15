@@ -38,10 +38,28 @@ public class GlobalExceptionHandler {
             .body(ApiResponse.error("Authentication required"));
     }
 
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiResponse> handleMaxUpload(MaxUploadSizeExceededException ex) {
+        log.error("Upload too large", ex);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ApiResponse.error("Upload too large: " + ex.getMessage()));
+    }
+
+    @ExceptionHandler(MultipartException.class)
+    public ResponseEntity<ApiResponse> handleMultipart(MultipartException ex) {
+        log.error("Multipart upload failed", ex);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(ApiResponse.error("Upload failed: " + ex.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse> handleGeneral(Exception ex) {
         log.error("Unexpected error", ex);
+        String detail = ex.getClass().getSimpleName();
+        if (ex.getMessage() != null && !ex.getMessage().isBlank()) {
+            detail = detail + ": " + ex.getMessage();
+        }
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ApiResponse.error("Internal server error"));
+            .body(ApiResponse.error(detail));
     }
 }
