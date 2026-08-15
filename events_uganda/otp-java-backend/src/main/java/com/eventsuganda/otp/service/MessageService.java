@@ -272,6 +272,7 @@ public class MessageService {
 
     @Transactional
     public void blockUser(String conversationId, String userId) {
+        log.info("blockUser started, conversationId={}, userId={}", conversationId, userId);
         Conversation conversation = findParticipantConversation(conversationId, userId);
         String other = otherParticipant(conversation, userId);
         if (other == null) {
@@ -280,19 +281,23 @@ public class MessageService {
         if (!userBlockRepository.existsByBlockerIdAndBlockedId(userId, other)) {
             userBlockRepository.save(new UserBlock(userId, other));
         }
+        log.info("blockUser completed, conversationId={}, userId={}, blockedId={}", conversationId, userId, other);
     }
 
     @Transactional
     public void unblockUser(String conversationId, String userId) {
+        log.info("unblockUser started, conversationId={}, userId={}", conversationId, userId);
         Conversation conversation = findParticipantConversation(conversationId, userId);
         String other = otherParticipant(conversation, userId);
         if (other != null) {
             userBlockRepository.deleteByBlockerIdAndBlockedId(userId, other);
         }
+        log.info("unblockUser completed, conversationId={}, userId={}, unblockedId={}", conversationId, userId, other);
     }
 
     @Transactional
     public void reportUser(String conversationId, String userId, String reason) {
+        log.info("reportUser started, conversationId={}, userId={}, reason={}", conversationId, userId, reason);
         Conversation conversation = findParticipantConversation(conversationId, userId);
         String other = otherParticipant(conversation, userId);
         if (other == null) {
