@@ -315,7 +315,7 @@ class CallService {
     _pc = await webrtc.createPeerConnection({'iceServers': _iceServers});
     _pc!.addStream(_localStream!);
     _pc!.onIceCandidate = (candidate) {
-      if (candidate == null || candidate.candidate == null) return;
+      if (candidate.candidate == null) return;
       final id = callId.value;
       if (id == null || id.isEmpty) return;
       CallSignalingService.instance.send('ice', {
