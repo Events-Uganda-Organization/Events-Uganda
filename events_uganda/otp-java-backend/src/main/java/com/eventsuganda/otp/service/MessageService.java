@@ -314,6 +314,7 @@ public class MessageService {
             reported != null ? reported.getFullName() : null,
             reported != null ? reported.getEmail() : null,
             reason);
+        log.info("reportUser completed, conversationId={}, userId={}, reportedId={}, reason={}", conversationId, userId, other, reason);
     }
 
     private void ensureNotBlocked(Conversation conversation, String userId) {
