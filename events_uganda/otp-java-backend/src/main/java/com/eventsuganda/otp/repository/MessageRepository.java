@@ -31,6 +31,9 @@ public interface MessageRepository extends JpaRepository<Message, String> {
     @Query("DELETE FROM Message m WHERE m.conversationId = :conversationId")
     int deleteByConversationId(@Param("conversationId") String conversationId);
 
+    @Query("SELECT m.id FROM Message m WHERE m.expiresAt IS NOT NULL AND m.expiresAt <= :now")
+    List<String> findExpiredIds(@Param("now") long now);
+
     @Modifying
     @Query("DELETE FROM Message m WHERE m.expiresAt IS NOT NULL AND m.expiresAt <= :now")
     int deleteExpired(@Param("now") long now);
