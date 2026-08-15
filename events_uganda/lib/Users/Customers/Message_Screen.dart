@@ -2297,10 +2297,31 @@ class _MessageScreenState extends State<MessageScreen>
                     ),
                   ),
                   SizedBox(width: screenWidth * 0.02),
-                  Icon(
-                    Icons.phone_outlined,
-                    color: const Color(0xFFCD7C20),
-                    size: screenWidth * 0.08,
+                  GestureDetector(
+                    onTap: () async {
+                      if (CallService.instance.inCall) return;
+                      try {
+                        final myId = await ChatService.myUserId();
+                        final convs = await ChatService.getConversations();
+                        String? target;
+                        for (final c in convs) {
+                          if (c.id == widget.conversationId) {
+                            target = c.otherParticipantId(myId);
+                            break;
+                          }
+                        }
+                        target = (target == null || target.isEmpty) ? myId : target;
+                        CallService.instance.startCall(
+                          peerId: target,
+                          peerName: widget.name ?? 'Contact',
+                        );
+                      } catch (_) {}
+                    },
+                    child: Icon(
+                      Icons.phone_outlined,
+                      color: const Color(0xFFCD7C20),
+                      size: screenWidth * 0.08,
+                    ),
                   ),
                   SizedBox(width: screenWidth * 0.02),
                   GestureDetector(
