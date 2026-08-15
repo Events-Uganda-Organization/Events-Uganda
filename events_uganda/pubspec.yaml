@@ -83,6 +83,7 @@ flutter:
     - assets/vectors/
     - assets/backgroundcolors/
     - assets/videos/
+    - assets/audio/
 
   fonts:
     - family: Poppins
