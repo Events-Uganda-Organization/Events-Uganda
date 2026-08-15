@@ -58,7 +58,7 @@ public class CallService {
      * Caller requests a call to {@code calleeId}. Rings the callee if they are
      * online and free, otherwise replies UNREACHABLE / BUSY immediately.
      */
-    public void dial(String callerId, String calleeId, String callerName) {
+    public void dial(String callerId, String calleeId, String callerName, String sdp) {
         if (callerId == null || callerId.isEmpty()
                 || calleeId == null || calleeId.isEmpty()) {
             return;
@@ -88,7 +88,7 @@ public class CallService {
         activeByUser.put(calleeId, call.getId());
 
         notifyUser(calleeId, CallSignalResponse.of("call.incoming", call.getId())
-            .callerId(callerId).calleeId(calleeId).callerName(callerName));
+            .callerId(callerId).calleeId(calleeId).callerName(callerName).sdp(sdp));
         notifyUser(callerId, CallSignalResponse.of("call.ringing", call.getId())
             .callerId(callerId).calleeId(calleeId));
 
