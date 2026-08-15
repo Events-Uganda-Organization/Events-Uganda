@@ -45,7 +45,6 @@ class CallService {
   AudioPlayer? _tonePlayer;
   Timer? _ticker;
   DateTime? _tickerBase;
-  StreamSubscription<CallSignal>? _subscription;
   bool _initialized = false;
 
   String get roleName => _role?.name ?? '';
@@ -57,7 +56,6 @@ class CallService {
     try {
       await remoteRenderer.initialize();
     } catch (_) {}
-    _subscription = null;
     CallSignalingService.instance.signals.listen(_onSignal);
   }
 
