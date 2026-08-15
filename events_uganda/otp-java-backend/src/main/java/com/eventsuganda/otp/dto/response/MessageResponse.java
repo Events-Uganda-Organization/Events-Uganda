@@ -14,6 +14,7 @@ public class MessageResponse {
     private long createdAt;
     private Long readAt;
     private Long deliveredAt;
+    private Long expiresAt;
     private boolean isMine;
 
     public MessageResponse() {}
@@ -33,6 +34,7 @@ public class MessageResponse {
         this.createdAt = message.getCreatedAt();
         this.readAt = message.getReadAt();
         this.deliveredAt = message.getDeliveredAt();
+        this.expiresAt = message.getExpiresAt();
         this.isMine = message.getSenderId().equals(currentUserId);
     }
 
@@ -65,6 +67,9 @@ public class MessageResponse {
 
     public Long getDeliveredAt() { return deliveredAt; }
     public void setDeliveredAt(Long deliveredAt) { this.deliveredAt = deliveredAt; }
+
+    public Long getExpiresAt() { return expiresAt; }
+    public void setExpiresAt(Long expiresAt) { this.expiresAt = expiresAt; }
 
     public boolean isMine() { return isMine; }
     public void setMine(boolean mine) { isMine = mine; }
