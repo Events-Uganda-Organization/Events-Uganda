@@ -313,17 +313,21 @@ class _MessageScreenState extends State<MessageScreen>
             }
             if (mounted) {
               setState(() => _blocked = block);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(block ? 'User blocked' : 'User unblocked'),
-                ),
+              SnackbarHelper.show(
+                context,
+                block ? 'User blocked' : 'User unblocked',
+                icon: Icons.check_circle_rounded,
+                backgroundColor: const Color(0xFFCC471B),
               );
             }
           } catch (e) {
             debugPrint('[MessageScreen] Failed to ${block ? 'block' : 'unblock'} user, conversationId=$conversationId: $e');
             if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Could not update: $e')),
+              SnackbarHelper.show(
+                context,
+                'Could not update: $e',
+                icon: Icons.error_outline_rounded,
+                backgroundColor: const Color(0xFFCC471B),
               );
             }
           }
@@ -351,19 +355,21 @@ class _MessageScreenState extends State<MessageScreen>
             await ChatService.reportUser(conversationId, reason);
             debugPrint('[MessageScreen] Report submitted successfully, conversationId=$conversationId');
             if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    'Report submitted. Thank you for keeping the community safe.',
-                  ),
-                ),
+              SnackbarHelper.show(
+                context,
+                'Report submitted. Thank you for keeping the community safe.',
+                icon: Icons.check_circle_rounded,
+                backgroundColor: const Color(0xFFCC471B),
               );
             }
           } catch (e) {
             debugPrint('[MessageScreen] Failed to submit report, conversationId=$conversationId: $e');
             if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Could not submit report: $e')),
+              SnackbarHelper.show(
+                context,
+                'Could not submit report: $e',
+                icon: Icons.error_outline_rounded,
+                backgroundColor: const Color(0xFFCC471B),
               );
             }
           }
