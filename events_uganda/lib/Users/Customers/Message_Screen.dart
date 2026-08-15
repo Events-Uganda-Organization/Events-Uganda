@@ -120,6 +120,27 @@ class _MessageScreenState extends State<MessageScreen>
     if (mounted) setState(() {});
   }
 
+  void _startDisappearingTimer() {
+    _disappearingTimer?.cancel();
+    _disappearingTimer = Timer.periodic(
+      const Duration(seconds: 10),
+      (_) => _pruneExpiredMessages(),
+    );
+  }
+
+  void _pruneExpiredMessages() {
+    if (!mounted) return;
+    final int before = _messages.length;
+    _messages.removeWhere((m) {
+      final Object? expiresAt = m['expiresAt'];
+      if (expiresAt is! int) return false;
+      return expiresAt <= DateTime.now().millisecondsSinceEpoch;
+    });
+    if (before != _messages.length) {
+      setState(() {});
+    }
+  }
+
   Future<void> _loadConversationSettings() async {
     final conversationId = widget.conversationId;
     if (conversationId == null) return;
@@ -494,6 +515,9 @@ class _MessageScreenState extends State<MessageScreen>
     }
     if (sent.readAt != null) map['readAt'] = sent.readAt!;
     if (sent.deliveredAt != null) map['deliveredAt'] = sent.deliveredAt!;
+    if (sent.expiresAt != null) {
+      map['expiresAt'] = sent.expiresAt!.millisecondsSinceEpoch;
+    }
     return map;
   }
 
@@ -530,6 +554,8 @@ class _MessageScreenState extends State<MessageScreen>
           'date': message.createdAt,
           if (message.deliveredAt != null) 'deliveredAt': message.deliveredAt!,
           if (message.readAt != null) 'readAt': message.readAt!,
+          if (message.expiresAt != null)
+            'expiresAt': message.expiresAt!.millisecondsSinceEpoch,
         });
       });
       _scrollToBottom();
@@ -571,6 +597,8 @@ class _MessageScreenState extends State<MessageScreen>
             'date': m.createdAt,
             if (m.deliveredAt != null) 'deliveredAt': m.deliveredAt!,
             if (m.readAt != null) 'readAt': m.readAt!,
+            if (m.expiresAt != null)
+              'expiresAt': m.expiresAt!.millisecondsSinceEpoch,
           });
         }
         _isLoadingMessages = false;
@@ -674,6 +702,8 @@ class _MessageScreenState extends State<MessageScreen>
                   if (sent.deliveredAt != null)
                     'deliveredAt': sent.deliveredAt!,
                   if (sent.readAt != null) 'readAt': sent.readAt!,
+                  if (sent.expiresAt != null)
+                    'expiresAt': sent.expiresAt!.millisecondsSinceEpoch,
                 });
               });
             }
