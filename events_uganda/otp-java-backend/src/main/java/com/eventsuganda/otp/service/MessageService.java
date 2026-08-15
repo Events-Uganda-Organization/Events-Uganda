@@ -428,7 +428,8 @@ public class MessageService {
                 return new ImageResult(original, mimeType);
             }
             return new ImageResult(best, bestMime);
-        } catch (IOException e) {
+        } catch (Throwable e) {
+            log.warn("Image compression failed for mimeType={}, returning original", mimeType, e);
             return new ImageResult(original, mimeType);
         }
     }
@@ -452,7 +453,11 @@ public class MessageService {
             ios.flush();
             writer.dispose();
             return out.toByteArray();
-        } catch (Exception e) {
+        } catch (Throwable e) {
+            // WebP encoding needs a native libwebp which may be unavailable on
+            // some hosts (e.g. Render) and throws an UnsatisfiedLinkError.
+            // Treat any encode failure as "not supported" and fall back to JPEG.
+            log.warn("Image encoding failed for mimeType={}, falling back", mimeType, e);
             return null;
         }
     }
