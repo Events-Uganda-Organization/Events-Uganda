@@ -751,6 +751,8 @@ class _MessageScreenState extends State<MessageScreen>
             'date': sent.createdAt,
             if (sent.deliveredAt != null) 'deliveredAt': sent.deliveredAt!,
             if (sent.readAt != null) 'readAt': sent.readAt!,
+            if (sent.expiresAt != null)
+              'expiresAt': sent.expiresAt!.millisecondsSinceEpoch,
           });
         });
         _messageController.clear();
@@ -1009,6 +1011,8 @@ class _MessageScreenState extends State<MessageScreen>
             'date': sent.createdAt,
             if (sent.deliveredAt != null) 'deliveredAt': sent.deliveredAt!,
             if (sent.readAt != null) 'readAt': sent.readAt!,
+            if (sent.expiresAt != null)
+              'expiresAt': sent.expiresAt!.millisecondsSinceEpoch,
           });
         });
         _scrollToBottom();
