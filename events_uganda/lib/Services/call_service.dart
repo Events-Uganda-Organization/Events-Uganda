@@ -68,15 +68,16 @@ class CallService {
   // ─── Caller ───────────────────────────────────────
 
   /// Dials [peerId]. [peerName] is shown to the callee.
-  Future<void> startCall({
+  /// Returns true if the call was initiated (false if already in a call).
+  Future<bool> startCall({
     required String peerId,
     required String peerName,
   }) async {
-    if (inCall || peerId.isEmpty) return;
+    if (inCall || peerId.isEmpty) return false;
     await CallSignalingService.instance.ensureConnected();
     if (!CallSignalingService.instance.isActive) {
       status.value = CallStatus.unreachable;
-      return;
+      return false;
     }
 
     _role = CallRole.caller;
@@ -100,10 +101,12 @@ class CallService {
         'callerName': (myName == null || myName.isEmpty) ? 'Caller' : myName,
         'sdp': offer.sdp,
       });
+      return true;
     } catch (e) {
       debugPrint('CallService startCall failed: $e');
       await _cleanup();
       status.value = CallStatus.unreachable;
+      return false;
     }
   }
 
