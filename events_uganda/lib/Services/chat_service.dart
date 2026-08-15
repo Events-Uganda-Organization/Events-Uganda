@@ -383,6 +383,10 @@ class ChatService {
 
     final streamed = await request.send();
     final response = await http.Response.fromStream(streamed);
+    debugPrint('[ChatService] _uploadMedia response status=${response.statusCode}, type=$type, conversationId=$conversationId');
+    if (response.statusCode < 200 || response.statusCode >= 300) {
+      debugPrint('[ChatService] _uploadMedia failed, body=${response.body}');
+    }
     _ensureOk(response);
     return ChatMessage.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   }
