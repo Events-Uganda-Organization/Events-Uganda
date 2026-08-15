@@ -208,10 +208,13 @@ class _CallScreenState extends State<CallScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _RoundButton(
-          icon: service.micMuted.value ? Icons.mic_off : Icons.mic,
-          color: service.micMuted.value ? const Color(0xFFFFB74D) : Colors.white24,
-          onTap: () => service.toggleMic(),
+        ValueListenableBuilder<bool>(
+          valueListenable: service.micMuted,
+          builder: (_, muted, _) => _RoundButton(
+            icon: muted ? Icons.mic_off : Icons.mic,
+            color: muted ? const Color(0xFFFFB74D) : Colors.white24,
+            onTap: () => service.toggleMic(),
+          ),
         ),
         SizedBox(
           width: 64,
@@ -221,10 +224,13 @@ class _CallScreenState extends State<CallScreen> {
             objectFit: webrtc.RTCVideoViewObjectFit.RTCVideoViewObjectFitContain,
           ),
         ),
-        _RoundButton(
-          icon: service.speakerOn.value ? Icons.volume_up : Icons.volume_off,
-          color: service.speakerOn.value ? const Color(0xFF25D366) : Colors.white24,
-          onTap: () => service.toggleSpeaker(),
+        ValueListenableBuilder<bool>(
+          valueListenable: service.speakerOn,
+          builder: (_, speaker, _) => _RoundButton(
+            icon: speaker ? Icons.volume_up : Icons.volume_off,
+            color: speaker ? const Color(0xFF25D366) : Colors.white24,
+            onTap: () => service.toggleSpeaker(),
+          ),
         ),
         const SizedBox(width: 16),
         _RoundButton(
