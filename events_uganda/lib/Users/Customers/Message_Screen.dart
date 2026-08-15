@@ -208,8 +208,7 @@ class _MessageScreenState extends State<MessageScreen>
       backgroundColor: Colors.transparent,
       builder: (sheetContext) => _DisappearingMessagesSheet(
         currentMode: _disappearingMode,
-        onSelect: (mode) async {
-          final conversationId = widget.conversationId;
+        onSelect: (mode) async {          final conversationId = widget.conversationId;
           if (conversationId == null) {
             debugPrint('[MessageScreen] Disappearing mode aborted: conversationId is null');
             if (sheetContext.mounted) Navigator.of(sheetContext).pop();
@@ -220,6 +219,18 @@ class _MessageScreenState extends State<MessageScreen>
             await ChatService.setDisappearingMode(conversationId, mode);
             debugPrint('[MessageScreen] Disappearing mode set to "$mode" successfully for conversationId=$conversationId');
             if (mounted) setState(() => _disappearingMode = mode);
+            if (mounted) {
+              SnackbarHelper.show(
+                context,
+                mode == 'OFF'
+                    ? 'Disappearing messages turned off'
+                    : 'Disappearing messages set to ${_disappearingLabel(mode)}',
+                icon: mode == 'OFF'
+                    ? Icons.timer_off_outlined
+                    : Icons.schedule_outlined,
+                backgroundColor: const Color(0xFFCC471B),
+              );
+            }
           } catch (e) {
             debugPrint('[MessageScreen] Failed to set disappearing mode "$mode" for conversationId=$conversationId: $e');
             if (mounted) {
