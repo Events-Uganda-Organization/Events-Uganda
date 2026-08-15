@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
 import 'package:events_uganda/Services/chat_outbox.dart';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Services/chat_socket_service.dart';
@@ -222,8 +223,11 @@ class _MessageScreenState extends State<MessageScreen>
           } catch (e) {
             debugPrint('[MessageScreen] Failed to set disappearing mode "$mode" for conversationId=$conversationId: $e');
             if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Could not update: $e')),
+              SnackbarHelper.show(
+                context,
+                'Could not update: $e',
+                icon: Icons.error_outline_rounded,
+                backgroundColor: const Color(0xFFCC471B),
               );
             }
           }
@@ -259,15 +263,21 @@ class _MessageScreenState extends State<MessageScreen>
               if (_messagesScroll.hasClients) {
                 _messagesScroll.jumpTo(0);
               }
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Chat cleared')),
+              SnackbarHelper.show(
+                context,
+                'Chat cleared',
+                icon: Icons.check_circle_rounded,
+                backgroundColor: const Color(0xFFCC471B),
               );
             }
           } catch (e) {
             debugPrint('[MessageScreen] Failed to clear chat, conversationId=$conversationId: $e');
             if (mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Could not clear chat: $e')),
+              SnackbarHelper.show(
+                context,
+                'Could not clear chat: $e',
+                icon: Icons.error_outline_rounded,
+                backgroundColor: const Color(0xFFCC471B),
               );
             }
           }
