@@ -3444,11 +3444,11 @@ class _ReportUserSheetState extends State<_ReportUserSheet> {
     final String custom = _details.text.trim();
     final String reason = picked ?? (custom.isEmpty ? '' : custom);
     if (reason.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please choose a reason for your report'),
-          behavior: SnackBarBehavior.floating,
-        ),
+      SnackbarHelper.show(
+        context,
+        'Please choose a reason for your report',
+        icon: Icons.error_outline_rounded,
+        backgroundColor: const Color(0xFFCC471B),
       );
       return;
     }
