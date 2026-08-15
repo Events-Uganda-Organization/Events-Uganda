@@ -475,10 +475,20 @@ class _MessageScreenState extends State<MessageScreen>
   void _onOutboxEvent(OutboxEvent event) {
     if (!mounted) return;
     final ChatMessage? sent = event.message;
-    if (sent == null) return;
     final int idx = _messages.indexWhere(
       (m) => m['pendingId'] == event.outboxId,
     );
+    if (sent == null) {
+      if (event.failed && idx != -1) {
+        setState(() {
+          _messages[idx] = <String, Object>{
+            ..._messages[idx],
+            'failed': true,
+          };
+        });
+      }
+      return;
+    }
     if (idx != -1) {
       setState(() {
         _messages[idx] = _realMessageMap(sent);
@@ -1887,6 +1897,13 @@ class _MessageScreenState extends State<MessageScreen>
   Widget _buildDeliveryTicks(Map<String, Object> message, double screenWidth) {
     if (!(message['mine'] as bool? ?? false)) return const SizedBox.shrink();
     final double size = screenWidth * 0.03;
+    if (message['failed'] as bool? ?? false) {
+      return Icon(
+        Icons.error_outline_rounded,
+        size: size,
+        color: const Color(0xFFEF5350),
+      );
+    }
     if (message['pendingId'] != null) {
       return Icon(Icons.schedule, size: size, color: Colors.white70);
     }
