@@ -327,12 +327,12 @@ class CallService {
         }),
       });
     };
-    _pc!.onTrack = (event) {
+    _pc!.onTrack = (event) async {
       if (event.streams.isNotEmpty) {
         remoteRenderer.srcObject = event.streams.first;
       } else if (event.track != null) {
-        final stream = webrtc.MediaStream();
-        stream.addTrack(event.track!);
+        final stream = await webrtc.createLocalMediaStream('remote-audio');
+        await stream.addTrack(event.track!);
         remoteRenderer.srcObject = stream;
       }
     };
