@@ -10,7 +10,7 @@ import 'outbox/outbox_storage.dart';
 import 'outbox/outbox_storage_io.dart'
     if (dart.library.html) 'outbox/outbox_storage_web.dart' as storage;
 
-enum OutboxMediaType { image, audio }
+enum OutboxMediaType { text, image, audio }
 
 class OutboxItem {
   OutboxItem({
