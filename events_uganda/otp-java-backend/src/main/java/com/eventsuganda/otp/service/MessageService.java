@@ -385,7 +385,7 @@ public class MessageService {
     }
 
     private String mediaUrl(String mediaId) {
-        return "/api/chat/media/" + mediaId;
+        return "/chat/media/" + mediaId;
     }
 
     private static final int IMAGE_MAX_DIM = 1280;

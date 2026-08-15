@@ -193,10 +193,15 @@ class ChatService {
 
   static String mediaUrl(String? relativePath) {
     if (relativePath == null || relativePath.isEmpty) return '';
-    if (relativePath.startsWith('http://') || relativePath.startsWith('https://')) {
+    if (relativePath.startsWith('http://') ||
+        relativePath.startsWith('https://')) {
       return relativePath;
     }
-    return '$_baseUrl$relativePath';
+    String path = relativePath;
+    if (path.startsWith('/api')) {
+      path = path.replaceFirst(RegExp(r'^/api'), '');
+    }
+    return '$_baseUrl$path';
   }
 
   static Future<List<ChatConversation>> getConversations() async {
