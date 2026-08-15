@@ -3,6 +3,7 @@ package com.eventsuganda.otp.repository;
 import com.eventsuganda.otp.model.MessageMedia;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -28,4 +29,8 @@ public interface MessageMediaRepository extends JpaRepository<MessageMedia, Stri
     Optional<MessageMedia> findByMessageId(String messageId);
 
     List<MessageMedia> findByMediaTypeOrderByCreatedAtAsc(String mediaType, Pageable pageable);
+
+    @Modifying
+    @Query("DELETE FROM MessageMedia m WHERE m.messageId IN :ids")
+    int deleteByMessageIdIn(@Param("ids") Collection<String> ids);
 }

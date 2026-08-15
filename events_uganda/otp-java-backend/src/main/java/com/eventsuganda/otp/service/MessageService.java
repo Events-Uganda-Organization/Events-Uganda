@@ -232,13 +232,25 @@ public class MessageService {
 
     @Transactional
     public int clearChat(String conversationId, String userId) {
+        log.info("clearChat started, conversationId={}, userId={}", conversationId, userId);
         Conversation conversation = findParticipantConversation(conversationId, userId);
+        List<String> messageIds = messageRepository
+            .findByConversationIdOrderByCreatedAtAsc(conversationId)
+            .stream()
+            .map(Message::getId)
+            .collect(Collectors.toList());
+        int deletedMedia = 0;
+        if (!messageIds.isEmpty()) {
+            deletedMedia = messageMediaRepository.deleteByMessageIdIn(messageIds);
+        }
         int deleted = messageRepository.deleteByConversationId(conversationId);
         conversation.setLastMessage(null);
         conversation.setLastMessageSenderId(null);
         conversation.setLastMessageAt(null);
         conversation.setUpdatedAt(System.currentTimeMillis());
         conversationRepository.save(conversation);
+        log.info("clearChat completed, conversationId={}, messagesDeleted={}, mediaDeleted={}",
+            conversationId, deleted, deletedMedia);
         return deleted;
     }
 
