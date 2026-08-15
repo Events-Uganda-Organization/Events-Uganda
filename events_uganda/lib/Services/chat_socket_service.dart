@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:events_uganda/Auth/auth_service.dart';
+import 'package:events_uganda/Services/chat_outbox.dart';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
@@ -67,6 +68,7 @@ class ChatSocketService {
         onConnect: (_) {
           _subscribeUserQueue();
           _subscribeStatusQueue();
+          ChatOutbox.instance.drain();
         },
         onStompError: (_) {},
         onWebSocketError: (_) {},

@@ -154,6 +154,29 @@ class ChatOutbox {
     return id;
   }
 
+  /// Queues a text message. Persisted so it survives app restarts and is
+  /// uploaded the moment connectivity returns. Returns the outbox id so the
+  /// caller can render an optimistic bubble.
+  Future<String> enqueueText({
+    required String conversationId,
+    required String text,
+  }) async {
+    await _ensureLoaded();
+    final String id =
+        'ox_${DateTime.now().millisecondsSinceEpoch}_${_random()}';
+    final OutboxItem item = OutboxItem(
+      id: id,
+      conversationId: conversationId,
+      type: OutboxMediaType.text,
+      text: text,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+    );
+    _items.add(item);
+    await _persist();
+    unawaited(drain());
+    return id;
+  }
+
   String _random() {
     final math.Random rnd = math.Random();
     return rnd.nextInt(0xFFFFFF).toRadixString(16).padLeft(6, '0');
@@ -193,7 +216,7 @@ class ChatOutbox {
     if (_items.isNotEmpty) {
       _retryTimer?.cancel();
       _retryTimer = Timer(Duration(seconds: _retrySeconds), drain);
-      _retrySeconds = math.min(_retrySeconds * 2, 300);
+      _retrySeconds = math.min(_retrySeconds * 2, 30);
     } else {
       _retryTimer?.cancel();
       _retryTimer = null;
@@ -202,6 +225,14 @@ class ChatOutbox {
   }
 
   Future<ChatMessage?> _upload(OutboxItem item) async {
+    if (item.type == OutboxMediaType.text) {
+      final String? text = item.text;
+      if (text == null || text.isEmpty) {
+        await _removeItem(item);
+        return null;
+      }
+      return ChatService.sendMessage(item.conversationId, text);
+    }
     final Uint8List? bytes = await _storage.readBytes(item.storageKey);
     if (bytes == null || bytes.isEmpty) {
       await _removeItem(item);

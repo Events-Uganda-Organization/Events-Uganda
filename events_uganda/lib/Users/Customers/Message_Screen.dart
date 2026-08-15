@@ -768,13 +768,33 @@ class _MessageScreenState extends State<MessageScreen>
         _messageController.clear();
         _scrollToBottom();
       } catch (_) {
-        if (!mounted) return;
-        SnackbarHelper.show(
-          context,
-          'Message failed to send. Try again.',
-          icon: Icons.error_outline_rounded,
-          backgroundColor: const Color(0xFFCC471B),
-        );
+        try {
+          final String outboxId = await ChatOutbox.instance.enqueueText(
+            conversationId: conversationId,
+            text: text,
+          );
+          if (!mounted) return;
+          setState(() {
+            _messages.add(<String, Object>{
+              'id': outboxId,
+              'pendingId': outboxId,
+              'text': text,
+              'time': _currentTime(),
+              'mine': true,
+              'date': DateTime.now(),
+            });
+          });
+          _messageController.clear();
+          _scrollToBottom();
+        } catch (_) {
+          if (!mounted) return;
+          SnackbarHelper.show(
+            context,
+            'Message failed to send. Try again.',
+            icon: Icons.error_outline_rounded,
+            backgroundColor: const Color(0xFFCC471B),
+          );
+        }
       }
     }
   }
