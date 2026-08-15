@@ -16,6 +16,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -25,6 +27,8 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/api/chat")
 public class MediaController {
+
+    private static final Logger log = LoggerFactory.getLogger(MediaController.class);
 
     private final MessageService messageService;
     private final ConversationRepository conversationRepository;
@@ -51,21 +55,34 @@ public class MediaController {
             Authentication auth) throws IOException {
         String userId = (String) auth.getPrincipal();
 
-        MessageResponse response = messageService.sendMedia(
-            conversationId,
-            userId,
-            caption,
-            file.getBytes(),
-            type.toUpperCase(),
-            file.getContentType(),
-            durationMs);
+        try {
+            MessageResponse response = messageService.sendMedia(
+                conversationId,
+                userId,
+                caption,
+                file.getBytes(),
+                type.toUpperCase(),
+                file.getContentType(),
+                durationMs);
 
-        conversationRepository.findById(conversationId)
-            .map(Conversation::getParticipantIdSet)
-            .ifPresent(participants -> participants.forEach(participant ->
-                messagingTemplate.convertAndSendToUser(participant, "/queue/messages", response)));
+            conversationRepository.findById(conversationId)
+                .map(Conversation::getParticipantIdSet)
+                .ifPresent(participants -> participants.forEach(participant -> {
+                    try {
+                        messagingTemplate.convertAndSendToUser(
+                            participant, "/queue/messages", response);
+                    } catch (Exception e) {
+                        log.error("Failed to broadcast media message to participant {}, mediaId={}",
+                            participant, response.getId(), e);
+                    }
+                }));
 
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            log.error("Failed to read uploaded media file, conversationId={}, userId={}, type={}, size={}",
+                conversationId, userId, type, file.getSize(), e);
+            throw new com.eventsuganda.otp.exception.OtpException("Could not read uploaded file");
+        }
     }
 
     @GetMapping("/media/{mediaId}")

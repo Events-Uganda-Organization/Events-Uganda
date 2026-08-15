@@ -111,6 +111,8 @@ public class MessageService {
     @Transactional
     public MessageResponse sendMedia(String conversationId, String senderId, String caption,
                                      byte[] data, String mediaType, String mimeType, Long durationMs) {
+        log.info("sendMedia started, conversationId={}, senderId={}, mediaType={}, mimeType={}, bytes={}",
+            conversationId, senderId, mediaType, mimeType, data == null ? 0 : data.length);
         Conversation conversation = conversationRepository.findById(conversationId)
             .orElseThrow(() -> new OtpException("Conversation not found"));
 
@@ -166,6 +168,8 @@ public class MessageService {
         conversation.setUpdatedAt(now);
         conversationRepository.save(conversation);
 
+        log.info("sendMedia completed, conversationId={}, senderId={}, messageId={}, mediaId={}, storedBytes={}, storedMime={}",
+            conversationId, senderId, message.getId(), media.getId(), stored.length, storedMime);
         return new MessageResponse(message, senderId, mediaUrl(media.getId()), mediaType, durationMs);
     }
 
