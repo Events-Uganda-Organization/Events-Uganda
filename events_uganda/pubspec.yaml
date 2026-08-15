@@ -65,6 +65,7 @@ dependencies:
   # speech to text
   speech_to_text: ^6.6.2
   geolocator: ^14.0.2
+  flutter_webrtc: ^1.6.0
 
 dev_dependencies:
   flutter_test:
