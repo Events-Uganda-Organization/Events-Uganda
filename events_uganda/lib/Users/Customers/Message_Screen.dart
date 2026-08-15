@@ -1464,6 +1464,7 @@ class _MessageScreenState extends State<MessageScreen>
   ) {
     final String text = message['text'] as String? ?? '';
     final String fullUrl = ChatService.mediaUrl(imageUrl);
+    debugPrint('[MessageScreen] loading network image: $fullUrl');
     return Align(
       alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
