@@ -260,6 +260,7 @@ public class MessageService {
 
     @Transactional
     public void setDisappearingMode(String conversationId, String userId, String mode) {
+        log.info("setDisappearingMode started, conversationId={}, userId={}, mode={}", conversationId, userId, mode);
         String normalized = mode == null ? "OFF" : mode.toUpperCase();
         if (!Set.of("OFF", "24H", "7D").contains(normalized)) {
             throw new OtpException("Invalid disappearing mode");
@@ -268,6 +269,7 @@ public class MessageService {
         conversation.setDisappearingMode(normalized);
         conversation.setUpdatedAt(System.currentTimeMillis());
         conversationRepository.save(conversation);
+        log.info("setDisappearingMode completed, conversationId={}, userId={}, normalizedMode={}", conversationId, userId, normalized);
     }
 
     @Transactional
