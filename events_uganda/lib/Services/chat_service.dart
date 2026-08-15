@@ -20,6 +20,7 @@ class ChatMessage {
     required this.isMine,
     this.readAt,
     this.deliveredAt,
+    this.expiresAt,
   });
 
   final String id;
@@ -33,6 +34,7 @@ class ChatMessage {
   final bool isMine;
   final DateTime? readAt;
   final DateTime? deliveredAt;
+  final DateTime? expiresAt;
 
   bool get hasMedia => imageUrl != null || audioUrl != null;
 
@@ -51,6 +53,7 @@ class ChatMessage {
         isMine: (json['mine'] ?? json['isMine']) as bool? ?? false,
         readAt: _parseEpoch(json['readAt']),
         deliveredAt: _parseEpoch(json['deliveredAt']),
+        expiresAt: _parseEpoch(json['expiresAt']),
       );
 
   static DateTime? _parseEpoch(dynamic value) {

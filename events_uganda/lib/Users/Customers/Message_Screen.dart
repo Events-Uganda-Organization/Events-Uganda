@@ -52,6 +52,7 @@ class _MessageScreenState extends State<MessageScreen>
   final List<double> _waveSamples = [];
   final ValueNotifier<double> _voiceProgress = ValueNotifier<double>(0);
   Timer? _recordingTicker;
+  Timer? _disappearingTimer;
   StreamSubscription<Amplitude>? _amplitudeSub;
   StreamSubscription<Duration>? _positionSub;
   StreamSubscription<PlayerState>? _playerStateSub;
@@ -111,6 +112,7 @@ class _MessageScreenState extends State<MessageScreen>
       _loadConversationSettings();
       _initSocket();
       ChatOutbox.instance.drain();
+      _startDisappearingTimer();
     }
   }
 
@@ -608,6 +610,7 @@ class _MessageScreenState extends State<MessageScreen>
     _playerStateSub?.cancel();
     _socketSub?.cancel();
     _readReceiptSub?.cancel();
+    _disappearingTimer?.cancel();
     _messageController.dispose();
     _messagesScroll.dispose();
     _voiceProgress.dispose();
