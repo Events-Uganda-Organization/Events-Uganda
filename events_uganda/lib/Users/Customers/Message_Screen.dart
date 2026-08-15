@@ -379,14 +379,13 @@ class _MessageScreenState extends State<MessageScreen>
   }
 
   void _showBlockedNotice() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          _amBlocked
-              ? 'This user has blocked you'
-              : 'You blocked this user. Unblock to message them.',
-        ),
-      ),
+    SnackbarHelper.show(
+      context,
+      _amBlocked
+          ? 'This user has blocked you'
+          : 'You blocked this user. Unblock to message them.',
+      icon: Icons.info_outline_rounded,
+      backgroundColor: const Color(0xFFCC471B),
     );
   }
 
@@ -703,8 +702,11 @@ class _MessageScreenState extends State<MessageScreen>
         _scrollToBottom();
       } catch (_) {
         if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Message failed to send. Try again.')),
+        SnackbarHelper.show(
+          context,
+          'Message failed to send. Try again.',
+          icon: Icons.error_outline_rounded,
+          backgroundColor: const Color(0xFFCC471B),
         );
       }
     }
@@ -974,12 +976,11 @@ class _MessageScreenState extends State<MessageScreen>
   }
 
   void _showMicPermissionMessage() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'Microphone permission is required to record voice messages.',
-        ),
-      ),
+    SnackbarHelper.show(
+      context,
+      'Microphone permission is required to record voice messages.',
+      icon: Icons.mic_off,
+      backgroundColor: const Color(0xFFCC471B),
     );
   }
 
