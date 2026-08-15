@@ -55,6 +55,8 @@ public class MediaController {
             @RequestParam("file") MultipartFile file,
             Authentication auth) throws IOException {
         String userId = (String) auth.getPrincipal();
+        log.info("Media upload request received, conversationId={}, userId={}, type={}, contentType={}, size={}",
+            conversationId, userId, type, file.getContentType(), file.getSize());
 
         try {
             MessageResponse response = messageService.sendMedia(
