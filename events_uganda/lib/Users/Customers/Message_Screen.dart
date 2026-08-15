@@ -2100,6 +2100,20 @@ class _MessageScreenState extends State<MessageScreen>
       }
       final String? messageId = message['id'] as String?;
       Widget bubble = _buildBubble(message, i, screenWidth, screenHeight);
+      if (message['failed'] as bool? ?? false) {
+        bubble = GestureDetector(
+          onTap: () {
+            SnackbarHelper.show(
+              context,
+              'Retrying send...',
+              icon: Icons.info_outline_rounded,
+              backgroundColor: const Color(0xFFCC471B),
+            );
+            ChatOutbox.instance.drain();
+          },
+          child: bubble,
+        );
+      }
       if (messageId != null && messageId.isNotEmpty) {
         if (messageId == _highlightedMessageId) {
           bubble = Container(
