@@ -248,6 +248,17 @@ class _MessageScreenState extends State<MessageScreen>
     );
   }
 
+  String _disappearingLabel(String mode) {
+    switch (mode) {
+      case '24H':
+        return '24 hours';
+      case '7D':
+        return '7 days';
+      default:
+        return 'Off';
+    }
+  }
+
   Future<void> _confirmClearChat() async {
     final conversationId = widget.conversationId;
     debugPrint('[MessageScreen] _confirmClearChat called, conversationId=$conversationId');
