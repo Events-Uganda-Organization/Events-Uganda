@@ -57,7 +57,8 @@ class CallService {
     try {
       await remoteRenderer.initialize();
     } catch (_) {}
-    _subscription = CallSignalingService.instance.signals.listen(_onSignal);
+    _subscription = null;
+    CallSignalingService.instance.signals.listen(_onSignal);
   }
 
   bool get inCall =>
@@ -270,7 +271,7 @@ class CallService {
     if (raw == null || raw.isEmpty || _pc == null) return;
     try {
       final map = jsonDecode(raw) as Map<String, dynamic>;
-      _pc!.addIceCandidate(webrtc.RTCIceCandidate(
+      _pc!.addCandidate(webrtc.RTCIceCandidate(
         map['candidate'] as String,
         map['sdpMid'] as String?,
         (map['sdpMLineIndex'] as num?)?.toInt(),
@@ -330,9 +331,9 @@ class CallService {
     _pc!.onTrack = (event) async {
       if (event.streams.isNotEmpty) {
         remoteRenderer.srcObject = event.streams.first;
-      } else if (event.track != null) {
+      } else {
         final stream = await webrtc.createLocalMediaStream('remote-audio');
-        await stream.addTrack(event.track!);
+        await stream.addTrack(event.track);
         remoteRenderer.srcObject = stream;
       }
     };
