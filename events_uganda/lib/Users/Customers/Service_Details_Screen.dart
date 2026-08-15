@@ -617,12 +617,20 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   GestureDetector(
-                                    onTap: () {
+                                    onTap: () async {
                                       if (CallService.instance.inCall) return;
-                                      CallService.instance.startCall(
+                                      final ok = await CallService.instance.startCall(
                                         peerId: ChatService.kDefaultVendorId,
                                         peerName: 'Vendor',
                                       );
+                                      if (ok && context.mounted) {
+                                        CallService.instance.openCallScreen();
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (_) => const CallScreen(),
+                                          ),
+                                        );
+                                      }
                                     },
                                     child: Container(
                                       width: screenWidth * 0.38,
