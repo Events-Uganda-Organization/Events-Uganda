@@ -207,8 +207,10 @@ class ChatOutbox {
           } else {
             _events.add(OutboxEvent(outboxId: item.id, failed: true));
           }
-        } catch (_) {
-          _events.add(OutboxEvent(outboxId: item.id, failed: true));
+        } catch (e) {
+          if (!_isOfflineError(e)) {
+            _events.add(OutboxEvent(outboxId: item.id, failed: true));
+          }
         }
       }
     } finally {
@@ -223,6 +225,15 @@ class ChatOutbox {
       _retryTimer = null;
       _retrySeconds = 10;
     }
+  }
+
+  /// True when the upload failed because there is no connection, in which case
+  /// the bubble stays in the pending (waiting) state and is retried later
+  /// instead of being marked as failed.
+  bool _isOfflineError(Object error) {
+    if (error is http.ClientException) return true;
+    if (error is TimeoutException) return true;
+    return error.runtimeType.toString() == 'SocketException';
   }
 
   Future<ChatMessage?> _upload(OutboxItem item) async {
