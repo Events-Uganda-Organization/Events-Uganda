@@ -6,6 +6,7 @@ import 'package:events_uganda/Auth/auth_service.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:events_uganda/Services/chat_service.dart';
+import 'package:events_uganda/Services/call_service.dart';
 import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:events_uganda/Users/Customers/Message_Screen.dart';
 
@@ -615,17 +616,26 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    width: screenWidth * 0.38,
-                                    height: 30,
-                                    decoration: BoxDecoration(color: Color(0xFFFFC107), borderRadius: BorderRadius.circular(20)),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.call, color: Color(0xFF5A5A00), size: 20),
-                                        SizedBox(width: 8),
-                                        Text('Call Now', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034)),
-                                      ],
+                                  GestureDetector(
+                                    onTap: () {
+                                      if (CallService.instance.inCall) return;
+                                      CallService.instance.startCall(
+                                        peerId: ChatService.kDefaultVendorId,
+                                        peerName: 'Vendor',
+                                      );
+                                    },
+                                    child: Container(
+                                      width: screenWidth * 0.38,
+                                      height: 30,
+                                      decoration: BoxDecoration(color: Color(0xFFFFC107), borderRadius: BorderRadius.circular(20)),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.call, color: Color(0xFF5A5A00), size: 20),
+                                          SizedBox(width: 8),
+                                          Text('Call Now', style: TextStyle(color: Color(0xFF5A5A00), fontWeight: FontWeight.bold, fontSize: screenWidth * 0.034)),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   GestureDetector(
