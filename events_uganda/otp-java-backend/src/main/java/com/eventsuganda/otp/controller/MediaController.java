@@ -2,6 +2,7 @@ package com.eventsuganda.otp.controller;
 
 import com.eventsuganda.otp.dto.response.ApiResponse;
 import com.eventsuganda.otp.dto.response.MessageResponse;
+import com.eventsuganda.otp.exception.OtpException;
 import com.eventsuganda.otp.model.Conversation;
 import com.eventsuganda.otp.model.MessageMedia;
 import com.eventsuganda.otp.repository.ConversationRepository;
@@ -81,7 +82,7 @@ public class MediaController {
         } catch (IOException e) {
             log.error("Failed to read uploaded media file, conversationId={}, userId={}, type={}, size={}",
                 conversationId, userId, type, file.getSize(), e);
-            throw new com.eventsuganda.otp.exception.OtpException("Could not read uploaded file");
+            throw new OtpException("Could not read uploaded file");
         }
     }
 
