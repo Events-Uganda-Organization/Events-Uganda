@@ -115,6 +115,9 @@ public class CallService {
         notifyUser(call.getCallerId(), CallSignalResponse.of("call.accepted", callId)
             .callerId(call.getCallerId()).calleeId(call.getCalleeId())
             .sdp(sdp).startedAt(call.getStartedAt()));
+        notifyUser(call.getCalleeId(), CallSignalResponse.of("call.accepted", callId)
+            .callerId(call.getCallerId()).calleeId(call.getCalleeId())
+            .sdp(sdp).startedAt(call.getStartedAt()));
         log.info("Call {} accepted by {}", callId, userId);
     }
 

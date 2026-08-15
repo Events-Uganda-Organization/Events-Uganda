@@ -27,7 +27,7 @@ public class CallWebSocketController {
         if (principal == null || request == null) {
             return;
         }
-        callService.dial(principal.getName(), request.getCalleeId(), request.getCallerName());
+        callService.dial(principal.getName(), request.getCalleeId(), request.getCallerName(), request.getSdp());
     }
 
     @MessageMapping("/call.cancel")
