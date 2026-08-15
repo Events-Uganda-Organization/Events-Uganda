@@ -126,7 +126,7 @@ class _CallScreenState extends State<CallScreen> {
                 const SizedBox(height: 24),
                 ValueListenableBuilder<String?>(
                   valueListenable: service.peerName,
-                  builder: (_, name, __) => Text(
+                  builder: (_, name, _) => Text(
                     name ?? '',
                     style: const TextStyle(
                       color: Colors.white,
@@ -138,9 +138,9 @@ class _CallScreenState extends State<CallScreen> {
                 const SizedBox(height: 10),
                 ValueListenableBuilder<CallStatus>(
                   valueListenable: service.status,
-                  builder: (_, status, __) => ValueListenableBuilder<Duration>(
+                  builder: (_, status, _) => ValueListenableBuilder<Duration>(
                     valueListenable: service.elapsed,
-                    builder: (_, elapsed, ___) => Text(
+                    builder: (_, elapsed, _) => Text(
                       _statusLabel(status),
                       style: TextStyle(
                         color: status == CallStatus.active
@@ -154,7 +154,7 @@ class _CallScreenState extends State<CallScreen> {
                 const Spacer(flex: 2),
                 ValueListenableBuilder<CallStatus>(
                   valueListenable: service.status,
-                  builder: (_, status, __) => _buildActions(context, status),
+                  builder: (_, status, _) => _buildActions(context, status),
                 ),
                 const SizedBox(height: 48),
               ],
@@ -213,7 +213,7 @@ class _CallScreenState extends State<CallScreen> {
           color: service.micMuted.value ? const Color(0xFFFFB74D) : Colors.white24,
           onTap: () => service.toggleMic(),
         ),
-        const SizedBox(
+        SizedBox(
           width: 64,
           height: 64,
           child: webrtc.RTCVideoView(

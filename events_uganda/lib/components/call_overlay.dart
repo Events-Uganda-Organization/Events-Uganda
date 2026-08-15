@@ -203,7 +203,7 @@ class _Card extends StatelessWidget {
   }
 
   String _formatElapsed(Duration d) {
-    final two = (int n) => n.toString().padLeft(2, '0');
+    String two(int n) => n.toString().padLeft(2, '0');
     final h = d.inHours;
     final m = d.inMinutes.remainder(60);
     final s = d.inSeconds.remainder(60);
