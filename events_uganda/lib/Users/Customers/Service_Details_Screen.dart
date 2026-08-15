@@ -8,6 +8,7 @@ import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Services/call_service.dart';
 import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
+import 'package:events_uganda/Users/Customers/Call_Screen.dart';
 import 'package:events_uganda/Users/Customers/Message_Screen.dart';
 
 class ServiceDetailsScreen extends StatefulWidget {

@@ -15,6 +15,7 @@ import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Services/call_service.dart';
 import 'package:events_uganda/Services/chat_socket_service.dart';
 import 'package:events_uganda/Users/Customers/Empty_State_Art.dart';
+import 'package:events_uganda/Users/Customers/Call_Screen.dart';
 import 'package:events_uganda/Users/Customers/Service_Details_Screen.dart';
 
 enum _ChatMenuAction { disappearing, clearChat, block, report }
@@ -2300,22 +2301,32 @@ class _MessageScreenState extends State<MessageScreen>
                   GestureDetector(
                     onTap: () async {
                       if (CallService.instance.inCall) return;
+                      String target = '';
                       try {
                         final myId = await ChatService.myUserId();
                         final convs = await ChatService.getConversations();
-                        String? target;
                         for (final c in convs) {
                           if (c.id == widget.conversationId) {
-                            target = c.otherParticipantId(myId);
+                            target = c.otherParticipantId(myId) ?? '';
                             break;
                           }
                         }
-                        target = (target == null || target.isEmpty) ? myId : target;
-                        CallService.instance.startCall(
-                          peerId: target,
-                          peerName: widget.name ?? 'Contact',
+                        target = target.isEmpty ? myId : target;
+                      } catch (_) {
+                        target = ChatService.kDefaultVendorId;
+                      }
+                      final ok = await CallService.instance.startCall(
+                        peerId: target,
+                        peerName: widget.name ?? 'Contact',
+                      );
+                      if (ok && context.mounted) {
+                        CallService.instance.openCallScreen();
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const CallScreen(),
+                          ),
                         );
-                      } catch (_) {}
+                      }
                     },
                     child: Icon(
                       Icons.phone_outlined,
