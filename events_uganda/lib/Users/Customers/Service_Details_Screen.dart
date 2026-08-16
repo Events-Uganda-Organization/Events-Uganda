@@ -1756,10 +1756,63 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     );
   }
 
-  Widget _reviewMenu(ReviewModel review) {
-    return PopupMenuButton<String>(
+  PopupMenuItem<_ReviewMenuAction> _buildReviewMenuItem({
+    required IconData icon,
+    required String label,
+    required Color dotColor,
+    required _ReviewMenuAction value,
+    required double screenWidth,
+  }) {
+    return PopupMenuItem<_ReviewMenuAction>(
+      value: value,
+      height: screenWidth * 0.14,
+      child: Row(
+        children: [
+          Container(
+            width: screenWidth * 0.028,
+            height: screenWidth * 0.028,
+            decoration: BoxDecoration(
+              color: dotColor,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: dotColor.withValues(alpha: 0.4),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: screenWidth * 0.04),
+          Container(
+            width: screenWidth * 0.09,
+            height: screenWidth * 0.09,
+            decoration: BoxDecoration(
+              color: dotColor.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: dotColor, size: screenWidth * 0.048),
+          ),
+          SizedBox(width: screenWidth * 0.035),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: screenWidth * 0.035,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _reviewMenu(ReviewModel review, double screenWidth) {
+    return PopupMenuButton<_ReviewMenuAction>(
       onSelected: (value) {
-        if (value == 'delete') {
+        if (value == _ReviewMenuAction.delete) {
           ReviewService.deleteReview(review.id).then((_) {
             if (mounted) {
               setState(() {
@@ -1775,7 +1828,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
             }
           });
         }
-        if (value == 'edit') {
+        if (value == _ReviewMenuAction.edit) {
           _reviewController.text = review.reviewText;
           setState(() {
             _rating = review.rating;
@@ -1788,9 +1841,28 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
           );
         }
       },
+      offset: const Offset(0, 8),
+      elevation: 16,
+      color: const Color(0xFF1A1A2E),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+      ),
       itemBuilder: (context) => [
-        const PopupMenuItem(value: 'edit', child: Text('Edit')),
-        const PopupMenuItem(value: 'delete', child: Text('Delete')),
+        _buildReviewMenuItem(
+          icon: Icons.edit_outlined,
+          label: 'Edit',
+          dotColor: const Color(0xFFF3CA9B),
+          value: _ReviewMenuAction.edit,
+          screenWidth: screenWidth,
+        ),
+        const PopupMenuDivider(height: 1),
+        _buildReviewMenuItem(
+          icon: Icons.delete_outline,
+          label: 'Delete',
+          dotColor: const Color(0xFFE57373),
+          value: _ReviewMenuAction.delete,
+          screenWidth: screenWidth,
+        ),
       ],
     );
   }
