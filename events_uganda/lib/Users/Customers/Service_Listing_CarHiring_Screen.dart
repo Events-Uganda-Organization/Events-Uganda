@@ -1120,7 +1120,7 @@ class _ServiceListingCarHiringScreenState extends State<ServiceListingCarHiringS
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen(serviceId: 'car-hiring')),
         );
       },
       child: Container(

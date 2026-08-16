@@ -1121,7 +1121,7 @@ class _ServiceListingCateringScreenState
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen(serviceId: 'catering')),
         );
       },
       child: Container(

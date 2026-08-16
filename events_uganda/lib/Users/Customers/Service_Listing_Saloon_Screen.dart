@@ -1120,7 +1120,7 @@ class _ServiceListingSaloonScreenState extends State<ServiceListingSaloonScreen>
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen(serviceId: 'saloon')),
         );
       },
       child: Container(

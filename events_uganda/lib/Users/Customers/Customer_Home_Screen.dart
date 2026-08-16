@@ -422,7 +422,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
         '1,500,000 UGX',
         onTap: () => Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+          MaterialPageRoute(
+            builder: (context) =>
+                const ServiceDetailsScreen(serviceId: 'cake-design'),
+          ),
         ),
       ),
       _HomeCardItem(
@@ -433,7 +436,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
         '2,000,000 UGX',
         onTap: () => Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+          MaterialPageRoute(
+            builder: (context) =>
+                const ServiceDetailsScreen(serviceId: 'tent-decoration'),
+          ),
         ),
       ),
       _HomeCardItem(
@@ -444,7 +450,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
         '3,100,000 UGX',
         onTap: () => Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+          MaterialPageRoute(
+            builder: (context) =>
+                const ServiceDetailsScreen(serviceId: 'photography'),
+          ),
         ),
       ),
       _HomeCardItem(
@@ -455,7 +464,10 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen>
         '6,000,000 UGX',
         onTap: () => Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+          MaterialPageRoute(
+            builder: (context) =>
+                const ServiceDetailsScreen(serviceId: 'decoration'),
+          ),
         ),
       ),
     ];

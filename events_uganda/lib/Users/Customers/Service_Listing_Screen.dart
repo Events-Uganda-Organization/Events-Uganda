@@ -690,7 +690,11 @@ class _ServiceListingScreenState extends State<ServiceListingScreen>
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+          MaterialPageRoute(
+            builder: (context) => ServiceDetailsScreen(
+              serviceId: title.toLowerCase().split(' ').join('-'),
+            ),
+          ),
         );
       },
       child: Container(

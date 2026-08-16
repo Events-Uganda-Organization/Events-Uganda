@@ -1120,7 +1120,7 @@ class _ServiceListingDecorationScreenState extends State<ServiceListingDecoratio
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen(serviceId: 'decoration')),
         );
       },
       child: Container(

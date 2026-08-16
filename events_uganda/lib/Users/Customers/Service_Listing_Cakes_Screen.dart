@@ -1120,7 +1120,7 @@ class _ServiceListingCakesScreenState extends State<ServiceListingCakesScreen>
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen()),
+          MaterialPageRoute(builder: (context) => const ServiceDetailsScreen(serviceId: 'cakes')),
         );
       },
       child: Container(
