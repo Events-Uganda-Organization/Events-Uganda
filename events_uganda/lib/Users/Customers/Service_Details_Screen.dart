@@ -1418,6 +1418,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                         horizontal: screenWidth * 0.025,
                       ),
                       child: Container(
+                        width: double.infinity,
                         padding: EdgeInsets.symmetric(
                           horizontal: screenWidth * 0.02,
                           vertical: screenHeight * 0.006,
@@ -1712,11 +1713,14 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                       children: [
                         _buildStaticStars(review.rating),
                         const SizedBox(width: 8),
-                        Text(
-                          review.date,
-                          style: const TextStyle(
-                            fontSize: 11,
-                            color: Colors.black54,
+                        Expanded(
+                          child: Text(
+                            review.date,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 11,
+                              color: Colors.black54,
+                            ),
                           ),
                         ),
                       ],
