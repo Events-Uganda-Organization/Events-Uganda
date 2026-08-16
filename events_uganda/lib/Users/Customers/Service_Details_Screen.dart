@@ -1318,16 +1318,17 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
                       child: Container(
+                        width: double.infinity,
                         padding: EdgeInsets.symmetric(
                           horizontal: screenWidth * 0.02,
                           vertical: screenHeight * 0.006,
                         ),
                         decoration: BoxDecoration(
                           color: const Color(0xFFF3F3F3),
-                            borderRadius: BorderRadius.circular(
-                              32 * (screenWidth / 412),
-                            ),
+                          borderRadius: BorderRadius.circular(
+                            32 * (screenWidth / 412),
                           ),
+                        ),
                           child: Container(
                             padding: EdgeInsets.symmetric(
                               horizontal: screenWidth * 0.04,
