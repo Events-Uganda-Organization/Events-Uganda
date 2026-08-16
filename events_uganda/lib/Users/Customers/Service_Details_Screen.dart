@@ -1400,13 +1400,67 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: screenHeight * 0.025),
-                                _buildReviewsList(screenWidth),
                               ],
                             ),
                           ),
                         ),
                       ),
+                    SizedBox(height: screenHeight * 0.025),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.025,
+                      ),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.02,
+                          vertical: screenHeight * 0.006,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF3F3F3),
+                          borderRadius: BorderRadius.circular(
+                            32 * (screenWidth / 412),
+                          ),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.04,
+                            vertical: screenHeight * 0.02,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(
+                              24 * (screenWidth / 412),
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Posted Reviews',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: screenWidth * 0.041,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              SizedBox(height: screenHeight * 0.012),
+                              if (_reviews.isEmpty)
+                                Text(
+                                  'No reviews yet',
+                                  style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: screenWidth * 0.034,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Abril Fatface',
+                                  ),
+                                )
+                              else
+                                _buildReviewsList(screenWidth),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(height: screenHeight * 0.03),
                   ],
                 ),
