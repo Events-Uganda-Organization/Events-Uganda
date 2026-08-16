@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:events_uganda/Users/Date_Of_Booking_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:events_uganda/Auth/auth_service.dart';
-import 'package:events_uganda/Users/NotificationScreen.dart';
+import 'package:events_uganda/Users/NotificationScreen.dart' hide ReviewModel;
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Services/call_service.dart';
