@@ -207,6 +207,9 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                         child: ListView(
                             controller: _scrollController,
                             children: [
+                                if (searching) ...[
+                                    SizedBox(height: h * 0.04),
+                                ],
                                 if (!searching) ...[
                                     SizedBox(height: h * 0.025),
                                     Center(
