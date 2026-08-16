@@ -13,6 +13,8 @@ import 'package:events_uganda/Users/Customers/Call_Screen.dart';
 import 'package:events_uganda/Users/Customers/Message_Screen.dart';
 import 'package:events_uganda/models/review_model.dart';
 
+enum _ReviewMenuAction { edit, delete }
+
 class ServiceDetailsScreen extends StatefulWidget {
   const ServiceDetailsScreen({super.key, this.serviceId = 'default-service'});
 
@@ -1457,7 +1459,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                   'No reviews yet',
                                   style: TextStyle(
                                     color: Colors.black54,
-                                    fontSize: screenWidth * 0.034,
+                                    fontSize: screenWidth * 0.028,
                                     fontWeight: FontWeight.w500,
                                     fontFamily: 'Abril Fatface',
                                   ),
@@ -1707,7 +1709,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                   children: [
                     Text(
                       review.userName,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.5,
+                      ),
                     ),
                     Row(
                       children: [
@@ -1729,7 +1734,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                 ),
               ),
 
-              _reviewMenu(review),
+              _reviewMenu(review, screenWidth),
             ],
           ),
 
@@ -1741,7 +1746,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
               borderRadius: BorderRadius.circular(14),
               border: Border.all(color: Colors.black),
             ),
-            child: Text(review.reviewText),
+            child: Text(
+              review.reviewText,
+              style: const TextStyle(fontSize: 12.5),
+            ),
           ),
         ],
       ),
