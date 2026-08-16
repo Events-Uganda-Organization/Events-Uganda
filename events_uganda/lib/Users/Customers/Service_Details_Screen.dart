@@ -7,12 +7,16 @@ import 'package:events_uganda/Users/NotificationScreen.dart';
 import 'package:events_uganda/components/Bottom_Navbar.dart';
 import 'package:events_uganda/Services/chat_service.dart';
 import 'package:events_uganda/Services/call_service.dart';
+import 'package:events_uganda/Services/review_service.dart';
 import 'package:events_uganda/Users/Customers/Chat_Screen.dart';
 import 'package:events_uganda/Users/Customers/Call_Screen.dart';
 import 'package:events_uganda/Users/Customers/Message_Screen.dart';
+import 'package:events_uganda/models/review_model.dart';
 
 class ServiceDetailsScreen extends StatefulWidget {
-  const ServiceDetailsScreen({super.key});
+  const ServiceDetailsScreen({super.key, this.serviceId = 'default-service'});
+
+  final String serviceId;
 
   @override
   State<ServiceDetailsScreen> createState() => _ServiceDetailsScreenState();
@@ -23,6 +27,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
   final TextEditingController _reviewController = TextEditingController();
   bool _hasText = false;
   final List<ReviewModel> _reviews = [];
+  double _avgRating = 0;
+  int _totalReviews = 0;
+  List<int> _starCounts = List<int>.filled(6, 0);
+  String? _editingReviewId;
   final ScrollController _galleryScrollController = ScrollController();
   int _galleryScrollIndex = 0;
 
@@ -88,6 +96,26 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
         });
       }
     });
+    _loadReviews();
+  }
+
+  Future<void> _loadReviews() async {
+    try {
+      final reviews = await ReviewService.fetchReviews(widget.serviceId);
+      final summary = await ReviewService.fetchSummary(widget.serviceId);
+      if (mounted) {
+        setState(() {
+          _reviews
+            ..clear()
+            ..addAll(reviews);
+          _avgRating = summary.avgRating;
+          _totalReviews = summary.totalCount;
+          _starCounts = summary.starCounts;
+        });
+      }
+    } catch (_) {
+      // Keep existing (empty) data if the request fails.
+    }
   }
 
   String get _greetingText {
@@ -582,7 +610,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                       Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Text("4.8", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w900, fontSize: screenWidth * 0.03, color: Colors.black)),
+                                          Text(_avgRating.toStringAsFixed(1), style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w900, fontSize: screenWidth * 0.03, color: Colors.black)),
                                           SizedBox(width: screenWidth * 0.008),
                                           Icon(Icons.star, color: Colors.black, size: screenWidth * 0.03),
                                           SizedBox(width: screenWidth * 0.006),
@@ -590,7 +618,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                         ],
                                       ),
                                       SizedBox(height: screenHeight * 0.004),
-                                      Text("(120 Reviews)", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w500, fontSize: screenWidth * 0.025, color: Colors.black)),
+                                      Text("($_totalReviews Reviews)", style: TextStyle(fontFamily: 'Abril Fatface', fontWeight: FontWeight.w500, fontSize: screenWidth * 0.025, color: Colors.black)),
                                     ],
                                   ),
                                   Container(width: 5, height: 45, decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(5))),
@@ -1241,43 +1269,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                             ),
                                             child: GestureDetector(
                                               onTap: _hasText
-                                                  ? () async {
-                                                      final now =
-                                                          DateTime.now();
-                                                      final date =
-                                                          '${now.day.toString().padLeft(2, '0')}/'
-                                                          '${now.month.toString().padLeft(2, '0')}/'
-                                                          '${now.year}';
-                                                      final userData =
-                                                          await AuthService.getUser();
-                                                      final newReview = ReviewModel(
-                                                        id: DateTime.now()
-                                                            .millisecondsSinceEpoch
-                                                            .toString(),
-                                                        userName:
-                                                            userData?['fullName']
-                                                                as String? ??
-                                                            'User Name',
-                                                        userImageUrl: '',
-                                                        reviewText:
-                                                            _reviewController
-                                                                .text
-                                                                .trim(),
-                                                        date: date,
-                                                        rating: _rating > 0
-                                                            ? _rating
-                                                            : 5,
-                                                      );
-
-                                                      setState(() {
-                                                        _reviews.insert(
-                                                          0,
-                                                          newReview,
-                                                        );
-                                                        _hasText = false;
-                                                      });
-                                                      _reviewController.clear();
-                                                    }
+                                                  ? _submitReview
                                                   : null,
                                               child: Container(
                                                 width: 42,
