@@ -1361,7 +1361,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '4.8',
+                                          _avgRating.toStringAsFixed(1),
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: screenWidth * 0.128,
@@ -1370,7 +1370,10 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           ),
                                         ),
                                         const SizedBox(height: 8),
-                                        _buildStarRating(4.8, starSize: 20),
+                                        _buildStarRating(
+                                          _avgRating,
+                                          starSize: 20,
+                                        ),
                                       ],
                                     ),
                                     SizedBox(width: screenWidth * 0.03),
