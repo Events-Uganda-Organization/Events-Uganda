@@ -1754,7 +1754,7 @@ Widget _availabilityCard(double screenWidth) {
           style: TextStyle(
             fontFamily: 'Abril Fatface',
             fontWeight: FontWeight.w600,
-            fontSize: 13,
+            fontSize: 11,
             color: Colors.black,
           ),
         ),
@@ -1792,7 +1792,7 @@ Widget _priceCard(double screenWidth) {
           style: TextStyle(
             fontFamily: 'Abril Fatface',
             fontWeight: FontWeight.w600,
-            fontSize: 13,
+            fontSize: 11,
             color: Colors.black,
           ),
         ),
