@@ -1245,6 +1245,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                           child: TextField(
                                             controller: _reviewController,
                                             maxLines: 3,
+                                            style: const TextStyle(
+                                              fontSize: 13,
+                                            ),
                                             onChanged: (value) {
                                               setState(() {
                                                 _hasText = value
@@ -1255,6 +1258,9 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                             decoration: const InputDecoration(
                                               hintText:
                                                   'Write your review here...',
+                                              hintStyle: TextStyle(
+                                                fontSize: 13,
+                                              ),
                                               border: InputBorder.none,
                                             ),
                                           ),
@@ -1794,7 +1800,8 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
           text: text,
         );
       }
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint('Review submission failed: $e\n$st');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Review failed: $e')),

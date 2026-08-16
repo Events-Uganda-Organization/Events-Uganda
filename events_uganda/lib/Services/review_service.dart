@@ -38,7 +38,7 @@ class ReviewService {
   static Future<Map<String, String>> _authHeaders() async {
     final token = await AuthService.getToken();
     return <String, String>{
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
       if (token != null) 'Authorization': 'Bearer $token',
     };
   }
