@@ -75,6 +75,24 @@ class _SidebarTransitionState extends State<_SidebarTransition> {
     }
 }
 
+/// A single sidebar navigation entry, used both for the static sections and
+/// for live filtering by the search bar.
+class _SidebarEntry {
+    const _SidebarEntry({
+        required this.icon,
+        required this.label,
+        this.isActive = false,
+        this.iconColor,
+        this.onTap,
+    });
+
+    final IconData icon;
+    final String label;
+    final bool isActive;
+    final Color? iconColor;
+    final VoidCallback? onTap;
+}
+
 class _SidebarPanel extends StatefulWidget {
     const _SidebarPanel();
 
@@ -85,11 +103,78 @@ class _SidebarPanel extends StatefulWidget {
 class _SidebarPanelState extends State<_SidebarPanel> {
     final TextEditingController _searchCtrl = TextEditingController();
     final FocusNode _searchFocus = FocusNode();
+    final ScrollController _scrollController = ScrollController();
+    String _searchQuery = '';
+
+    List<_SidebarEntry> get _mainNav => [
+        const _SidebarEntry(icon: Icons.home_rounded, label: 'Home', isActive: true),
+        const _SidebarEntry(icon: Icons.calendar_month_rounded, label: 'My Bookings'),
+        const _SidebarEntry(icon: Icons.favorite_rounded, label: 'My Favorites'),
+        _SidebarEntry(icon: Icons.chat_rounded, label: 'Messages', onTap: () {
+            Navigator.of(context).pop();
+            Navigator.push(context, MaterialPageRoute(builder: (ctx) => const ChatScreen()));
+        }),
+        _SidebarEntry(
+            icon: Icons.card_giftcard,
+            label: 'Share Referral Code',
+            iconColor: const Color(0xFFE94560),
+            onTap: () {
+                Navigator.of(context).pop();
+                Navigator.push(context, MaterialPageRoute(builder: (ctx) => const ReferralShareScreen()));
+            },
+        ),
+    ];
+
+    List<_SidebarEntry> get _eventNav => [
+        const _SidebarEntry(icon: Icons.event_rounded, label: 'My Events'),
+        const _SidebarEntry(icon: Icons.checklist_rounded, label: 'Event Checklist'),
+    ];
+
+    List<_SidebarEntry> get _supportNav => [
+        const _SidebarEntry(icon: Icons.headset_mic_rounded, label: 'Contact Support'),
+        _SidebarEntry(icon: Icons.quiz_rounded, label: 'FAQs', onTap: () {
+            Navigator.of(context).pop();
+            Navigator.push(context, MaterialPageRoute(builder: (ctx) => const FAQsScreen()));
+        }),
+        const _SidebarEntry(icon: Icons.flag_rounded, label: 'Report a Problem'),
+    ];
+
+    _SidebarEntry get _logoutEntry => _SidebarEntry(
+        icon: Icons.logout_rounded,
+        label: 'Log Out',
+        iconColor: const Color(0xFFFF5F5F),
+        onTap: () {
+            Navigator.of(context).pop();
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (ctx) => const SignInScreen()),
+                (route) => false,
+            );
+        },
+    );
+
+    List<_SidebarEntry> get _allEntries => [..._mainNav, ..._eventNav, ..._supportNav, _logoutEntry];
+
+    void _onSearchChanged(String value) {
+        _searchQuery = value;
+        setState(() {});
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (_scrollController.hasClients) _scrollController.jumpTo(0);
+        });
+    }
+
+    void _clearSearch() {
+        _searchCtrl.clear();
+        _searchQuery = '';
+        _searchFocus.unfocus();
+        setState(() {});
+    }
 
     @override
     void dispose() {
         _searchCtrl.dispose();
         _searchFocus.dispose();
+        _scrollController.dispose();
         super.dispose();
     }
 
@@ -98,6 +183,7 @@ class _SidebarPanelState extends State<_SidebarPanel> {
         final w = MediaQuery.of(context).size.width;
         final h = MediaQuery.of(context).size.height;
         final panelWidth = w * 0.78;
+        final searching = _searchQuery.trim().isNotEmpty;
 
         return Align(
             alignment: Alignment.centerLeft,
@@ -119,7 +205,9 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                             ],
                         ),
                         child: ListView(
+                            controller: _scrollController,
                             children: [
+                                if (!searching) ...[
                                     SizedBox(height: h * 0.025),
                                     Center(
                                         child: Row(
@@ -237,344 +325,246 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                                         ),
                                     ),
                                     SizedBox(height: h * 0.02),
-                                    Padding(
-                                        padding: EdgeInsets.only(left: w * 0.046, right: w * 0.046),
-                                        child: Container(
-                                            height: h * 0.045,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(30),
-                                                border: Border.all(
-                                                    color: const Color(0xFFCD7C20),
-                                                    width: 1.5,
-                                                ),
-                                                boxShadow: [
-                                                    BoxShadow(
-                                                        color: const Color(0xFFCD7C20).withValues(alpha: 0.2),
-                                                        blurRadius: 6,
-                                                        offset: const Offset(0, 3),
-                                                    ),
-                                                ],
-                                            ),
-                                            child: Material(
-                                                color: Colors.transparent,
-                                                child: TextField(
-                                                    controller: _searchCtrl,
-                                                    focusNode: _searchFocus,
-                                                    style: TextStyle(
-                                                        fontSize: w * 0.028,
-                                                        color: Colors.black,
-                                                    ),
-                                                    textAlignVertical: TextAlignVertical.center,
-                                                    decoration: InputDecoration(
-                                                        border: InputBorder.none,
-                                                        isDense: true,
-                                                        contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: w * 0.025),
-                                                        prefixIcon: Icon(
-                                                            Icons.search,
-                                                            color: Colors.black,
-                                                            size: w * 0.035,
-                                                        ),
-                                                        hintText: 'Search...',
-                                                        hintStyle: TextStyle(
-                                                            fontSize: w * 0.028,
-                                                            color: const Color(0xFFCD7C20),
-                                                        ),
-                                                        suffixIcon: _searchCtrl.text.isNotEmpty
-                                                            ? GestureDetector(
-                                                                onTap: () {
-                                                                    _searchCtrl.clear();
-                                                                    _searchFocus.unfocus();
-                                                                    setState(() {});
-                                                                },
-                                                                child: Icon(
-                                                                    Icons.close,
-                                                                    color: Colors.black54,
-                                                                    size: w * 0.035,
-                                                                ),
-                                                            )
-                                                            : null,
-                                                    ),
-                                                    onChanged: (_) => setState(() {}),
-                                                    onSubmitted: (value) {
-                                                        if (value.trim().isNotEmpty) {
-                                                            _searchFocus.unfocus();
-                                                            Navigator.of(context).pop();
-                                                            ScaffoldMessenger.of(context).showSnackBar(
-                                                                SnackBar(content: Text('Searching for "$value"...')),
-                                                            );
-                                                        }
-                                                    },
-                                                ),
-                                            ),
-                                        ),
-                                    ),
-                                    SizedBox(height: h * 0.02),
-                                    Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: w * 0.046),
-                                        child: Row(
-                                            children: [
-                                                const Expanded(
-                                                    child: Divider(
-                                                        color: Colors.grey,
-                                                        thickness: 0.8,
-                                                    ),
-                                                ),
-                                                Padding(
-                                                    padding: EdgeInsets.symmetric(horizontal: w * 0.025),
-                                                    child: Text(
-                                                        'Main Navigation',
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                            color: Colors.black87,
-                                                            fontSize: w * 0.03,
-                                                            fontFamily: 'Epunda Slab',
-                                                            fontWeight: FontWeight.w400,
-                                                        ),
-                                                    ),
-                                                ),
-                                                const Expanded(
-                                                    child: Divider(
-                                                        color: Colors.grey,
-                                                        thickness: 0.8,
-                                                    ),
-                                                ),
-                                            ],
-                                        ),
-                                    ),
-                                    SizedBox(height: h * 0.015),
-                                    Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: w * 0.046),
-                                        child: Column(
-                                            children: [
-                                                _NavItem(
-                                                    icon: Icons.home_rounded,
-                                                    label: 'Home',
-                                                    isActive: true,
-                                                    w: w,
-                                                    h: h,
-                                                ),
-                                                SizedBox(height: h * 0.006),
-                                                _NavItem(
-                                                    icon: Icons.calendar_month_rounded,
-                                                    label: 'My Bookings',
-                                                    w: w,
-                                                    h: h,
-                                                ),
-                                                SizedBox(height: h * 0.006),
-                                                _NavItem(
-                                                    icon: Icons.favorite_rounded,
-                                                    label: 'My Favorites',
-                                                    w: w,
-                                                    h: h,
-                                                ),
-                                                SizedBox(height: h * 0.006),
-                                                _NavItem(
-                                                    icon: Icons.chat_rounded,
-                                                    label: 'Messages',
-                                                    w: w,
-                                                    h: h,
-                                                    onTap: () {
-                                                        Navigator.of(context).pop();
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(builder: (ctx) => const ChatScreen()),
-                                                        );
-                                                    },
-                                                ),
-                                                SizedBox(height: h * 0.006),
-                                                _NavItem(
-                                                    icon: Icons.card_giftcard,
-                                                    label: 'Share Referral Code',
-                                                    w: w,
-                                                    h: h,
-                                                    iconColor: const Color(0xFFE94560),
-                                                    onTap: () {
-                                                        Navigator.of(context).pop();
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(builder: (ctx) => const ReferralShareScreen()),
-                                                        );
-                                                    },
-                                                ),
-                                            ],
-                                        ),
-                                    ),
-                                    SizedBox(height: h * 0.02),
-                                    Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: w * 0.046),
-                                        child: Row(
-                                            children: [
-                                                const Expanded(
-                                                    child: Divider(
-                                                        color: Colors.grey,
-                                                        thickness: 0.8,
-                                                    ),
-                                                ),
-                                                Padding(
-                                                    padding: EdgeInsets.symmetric(horizontal: w * 0.025),
-                                                    child: Text(
-                                                        'Event Management',
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                            color: Colors.black87,
-                                                            fontSize: w * 0.03,
-                                                            fontFamily: 'Epunda Slab',
-                                                            fontWeight: FontWeight.w400,
-                                                        ),
-                                                    ),
-                                                ),
-                                                const Expanded(
-                                                    child: Divider(
-                                                        color: Colors.grey,
-                                                        thickness: 0.8,
-                                                    ),
-                                                ),
-                                            ],
-                                        ),
-                                    ),
-                                    SizedBox(height: h * 0.015),
-                                    Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: w * 0.046),
-                                        child: Column(
-                                            children: [
-                                                _NavItem(
-                                                    icon: Icons.event_rounded,
-                                                    label: 'My Events',
-                                                    w: w,
-                                                    h: h,
-                                                ),
-                                                SizedBox(height: h * 0.006),
-                                                _NavItem(
-                                                    icon: Icons.checklist_rounded,
-                                                    label: 'Event Checklist',
-                                                    w: w,
-                                                    h: h,
-                                                ),
-                                            ],
-                                        ),
-                                    ),
-                                    SizedBox(height: h * 0.02),
-                                    Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: w * 0.046),
-                                        child: Row(
-                                            children: [
-                                                const Expanded(
-                                                    child: Divider(
-                                                        color: Colors.grey,
-                                                        thickness: 0.8,
-                                                    ),
-                                                ),
-                                                Padding(
-                                                    padding: EdgeInsets.symmetric(horizontal: w * 0.025),
-                                                    child: Text(
-                                                        'Support',
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                            color: Colors.black87,
-                                                            fontSize: w * 0.03,
-                                                            fontFamily: 'Epunda Slab',
-                                                            fontWeight: FontWeight.w400,
-                                                        ),
-                                                    ),
-                                                ),
-                                                const Expanded(
-                                                    child: Divider(
-                                                        color: Colors.grey,
-                                                        thickness: 0.8,
-                                                    ),
-                                                ),
-                                            ],
-                                        ),
-                                    ),
-                                    SizedBox(height: h * 0.015),
-                                    Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: w * 0.046),
-                                        child: Column(
-                                            children: [
-                                                _NavItem(
-                                                    icon: Icons.headset_mic_rounded,
-                                                    label: 'Contact Support',
-                                                    w: w,
-                                                    h: h,
-                                                ),
-                                                SizedBox(height: h * 0.006),
-                                                _NavItem(
-                                                    icon: Icons.quiz_rounded,
-                                                    label: 'FAQs',
-                                                    w: w,
-                                                    h: h,
-                                                    onTap: () {
-                                                        Navigator.of(context).pop();
-                                                        Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(builder: (ctx) => const FAQsScreen()),
-                                                        );
-                                                    },
-                                                ),
-                                                SizedBox(height: h * 0.006),
-                                                _NavItem(
-                                                    icon: Icons.flag_rounded,
-                                                    label: 'Report a Problem',
-                                                    w: w,
-                                                    h: h,
-                                                ),
-                                                SizedBox(height: h * 0.015),
-                                                Padding(
-                                                    padding: EdgeInsets.symmetric(horizontal: w * 0.0),
-                                                    child: Material(
-                                                        color: Colors.transparent,
-                                                        borderRadius: BorderRadius.circular(14),
-                                                        child: InkWell(
-                                                            borderRadius: BorderRadius.circular(14),
-                                                            onTap: () {
-                                                                Navigator.of(context).pop();
-                                                                Navigator.pushAndRemoveUntil(
-                                                                    context,
-                                                                    MaterialPageRoute(builder: (ctx) => const SignInScreen()),
-                                                                    (route) => false,
-                                                                );
-                                                            },
-                                                            child: Container(
-                                                                padding: EdgeInsets.symmetric(
-                                                                    horizontal: w * 0.03,
-                                                                    vertical: h * 0.015,
-                                                                ),
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius: BorderRadius.circular(14),
-                                                                    color: const Color(0xFFFF5F5F).withValues(alpha: 0.08),
-                                                                ),
-                                                                child: Row(
-                                                                    children: [
-                                                                        Icon(
-                                                                            Icons.logout_rounded,
-                                                                            color: const Color(0xFFFF5F5F),
-                                                                            size: w * 0.045,
-                                                                        ),
-                                                                        SizedBox(width: w * 0.03),
-                                                                        Text(
-                                                                            'Log Out',
-                                                                            overflow: TextOverflow.ellipsis,
-                                                                            style: TextStyle(
-                                                                                fontSize: w * 0.034,
-                                                                                fontWeight: FontWeight.w600,
-                                                                                color: const Color(0xFFFF5F5F),
-                                                                            ),
-                                                                        ),
-                                                                    ],
-                                                                ),
-                                                            ),
-                                                        ),
-                                                    ),
-                                                ),
-                                            ],
-                                        ),
-                                    ),
-                                    SizedBox(height: h * 0.025),
-                                    _AnimatedInviteCard(w: w, h: h),
                                 ],
+                                Padding(
+                                    padding: EdgeInsets.only(left: w * 0.046, right: w * 0.046),
+                                    child: Container(
+                                        height: h * 0.045,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(30),
+                                            border: Border.all(
+                                                color: const Color(0xFFCD7C20),
+                                                width: 1.5,
+                                            ),
+                                            boxShadow: [
+                                                BoxShadow(
+                                                    color: const Color(0xFFCD7C20).withValues(alpha: 0.2),
+                                                    blurRadius: 6,
+                                                    offset: const Offset(0, 3),
+                                                ),
+                                            ],
+                                        ),
+                                        child: Material(
+                                            color: Colors.transparent,
+                                            child: TextField(
+                                                controller: _searchCtrl,
+                                                focusNode: _searchFocus,
+                                                style: TextStyle(
+                                                    fontSize: w * 0.028,
+                                                    color: Colors.black,
+                                                ),
+                                                textAlignVertical: TextAlignVertical.center,
+                                                decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    isDense: true,
+                                                    contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: w * 0.025),
+                                                    prefixIcon: Icon(
+                                                        Icons.search,
+                                                        color: Colors.black,
+                                                        size: w * 0.035,
+                                                    ),
+                                                    hintText: 'Search...',
+                                                    hintStyle: TextStyle(
+                                                        fontSize: w * 0.028,
+                                                        color: const Color(0xFFCD7C20),
+                                                    ),
+                                                    suffixIcon: _searchCtrl.text.isNotEmpty
+                                                        ? GestureDetector(
+                                                            onTap: _clearSearch,
+                                                            child: Icon(
+                                                                Icons.close,
+                                                                color: Colors.black54,
+                                                                size: w * 0.035,
+                                                            ),
+                                                        )
+                                                        : null,
+                                                ),
+                                                onChanged: _onSearchChanged,
+                                                onSubmitted: (value) {
+                                                    _searchFocus.unfocus();
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                                if (searching) ...[
+                                    SizedBox(height: h * 0.015),
+                                    _buildSearchResults(w, h),
+                                    SizedBox(height: h * 0.02),
+                                ] else ...[
+                                    ..._buildFullMenu(w, h),
+                                ],
+                            ],
                         ),
                     ),
                 ),
+            ),
+        );
+    }
+
+    List<Widget> _buildFullMenu(double w, double h) {
+        return [
+            ..._section('Main Navigation', _mainNav, w, h),
+            ..._section('Event Management', _eventNav, w, h),
+            ..._section('Support', _supportNav, w, h),
+            SizedBox(height: h * 0.015),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: w * 0.0),
+                child: Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(14),
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(14),
+                        onTap: _logoutEntry.onTap,
+                        child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: w * 0.03,
+                                vertical: h * 0.015,
+                            ),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                color: const Color(0xFFFF5F5F).withValues(alpha: 0.08),
+                            ),
+                            child: Row(
+                                children: [
+                                    Icon(
+                                        Icons.logout_rounded,
+                                        color: const Color(0xFFFF5F5F),
+                                        size: w * 0.045,
+                                    ),
+                                    SizedBox(width: w * 0.03),
+                                    Text(
+                                        'Log Out',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: w * 0.034,
+                                            fontWeight: FontWeight.w600,
+                                            color: const Color(0xFFFF5F5F),
+                                        ),
+                                    ),
+                                ],
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            SizedBox(height: h * 0.025),
+            _AnimatedInviteCard(w: w, h: h),
+        ];
+    }
+
+    List<Widget> _section(String title, List<_SidebarEntry> entries, double w, double h) {
+        return [
+            SizedBox(height: h * 0.02),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: w * 0.046),
+                child: Row(
+                    children: [
+                        const Expanded(
+                            child: Divider(
+                                color: Colors.grey,
+                                thickness: 0.8,
+                            ),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.symmetric(horizontal: w * 0.025),
+                            child: Text(
+                                title,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: w * 0.03,
+                                    fontFamily: 'Epunda Slab',
+                                    fontWeight: FontWeight.w400,
+                                ),
+                            ),
+                        ),
+                        const Expanded(
+                            child: Divider(
+                                color: Colors.grey,
+                                thickness: 0.8,
+                            ),
+                        ),
+                    ],
+                ),
+            ),
+            SizedBox(height: h * 0.015),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: w * 0.046),
+                child: Column(
+                    children: [
+                        for (int i = 0; i < entries.length; i++) ...[
+                            _navItem(entries[i], w, h),
+                            if (i != entries.length - 1) SizedBox(height: h * 0.006),
+                        ],
+                    ],
+                ),
+            ),
+        ];
+    }
+
+    Widget _navItem(_SidebarEntry e, double w, double h) {
+        return _NavItem(
+            icon: e.icon,
+            label: e.label,
+            isActive: e.isActive,
+            w: w,
+            h: h,
+            onTap: e.onTap,
+            iconColor: e.iconColor,
+        );
+    }
+
+    Widget _buildSearchResults(double w, double h) {
+        final query = _searchQuery.trim().toLowerCase();
+        final matches = _allEntries
+            .where((e) => e.label.toLowerCase().contains(query))
+            .toList();
+        if (matches.isEmpty) {
+            return _buildNoResults(w, h);
+        }
+        return Padding(
+            padding: EdgeInsets.symmetric(horizontal: w * 0.046),
+            child: Column(
+                children: [
+                    for (int i = 0; i < matches.length; i++) ...[
+                        _navItem(matches[i], w, h),
+                        if (i != matches.length - 1) SizedBox(height: h * 0.006),
+                    ],
+                ],
+            ),
+        );
+    }
+
+    Widget _buildNoResults(double w, double h) {
+        return Padding(
+            padding: EdgeInsets.symmetric(horizontal: w * 0.06, vertical: h * 0.05),
+            child: Column(
+                children: [
+                    Icon(
+                        Icons.search_off_rounded,
+                        color: Colors.black.withValues(alpha: 0.4),
+                        size: w * 0.14,
+                    ),
+                    SizedBox(height: h * 0.015),
+                    Text(
+                        "No matches found for '${_searchQuery.trim()}'",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: w * 0.03,
+                        ),
+                    ),
+                    SizedBox(height: h * 0.006),
+                    Text(
+                        'Try a different search',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black38,
+                            fontSize: w * 0.026,
+                        ),
+                    ),
+                ],
             ),
         );
     }
@@ -905,4 +895,3 @@ class _AnimatedInviteCardState extends State<_AnimatedInviteCard> with SingleTic
         );
     }
 }
-
