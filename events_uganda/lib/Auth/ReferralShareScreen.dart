@@ -146,50 +146,6 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                 ),
               ),
             ),
-            Positioned(
-              top: screenHeight * 0.10 + screenWidth * 0.22 + screenHeight * 0.015 + screenWidth * 0.13,
-              left: screenWidth * 0.03,
-              right: screenWidth * 0.03,
-              bottom: 0,
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth * 0.08,
-                  vertical: screenHeight * 0.03,
-                ),
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(36),
-                    topRight: Radius.circular(36),
-                  ),
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Your Referral Code',
-                        style: TextStyle(
-                          fontSize: screenWidth * 0.03,
-                          color: Colors.grey.shade600,
-                          letterSpacing: 1,
-                        ),
-                      ),
-                      SizedBox(height: screenHeight * 0.02),
-                      Text(
-                        _referralCode,
-                        style: TextStyle(
-                          fontSize: screenWidth * 0.14,
-                          fontWeight: FontWeight.bold,
-                          color: const Color(0xFFE94560),
-                          letterSpacing: 6,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),
