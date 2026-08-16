@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 
 class ReferralShareScreen extends StatefulWidget {
@@ -10,21 +9,6 @@ class ReferralShareScreen extends StatefulWidget {
 }
 
 class _ReferralShareScreenState extends State<ReferralShareScreen> {
-  String _referralCode = 'Loading...';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadReferralCode();
-  }
-
-  Future<void> _loadReferralCode() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _referralCode = prefs.getString('userReferralCode') ?? 'No referral code yet';
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
