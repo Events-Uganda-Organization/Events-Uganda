@@ -1393,7 +1393,7 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
                                     SizedBox(width: screenWidth * 0.03),
                                     // RIGHT: Rating distribution bars
                                     Expanded(
-                                      child: _buildRatingBars(),
+                                      child: _buildRatingBars(_starCounts),
                                     ),
                                   ],
                                 ),
@@ -1684,12 +1684,32 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
     return PopupMenuButton<String>(
       onSelected: (value) {
         if (value == 'delete') {
-          setState(() {
-            _reviews.removeWhere((r) => r.id == review.id);
+          ReviewService.deleteReview(review.id).then((_) {
+            if (mounted) {
+              setState(() {
+                _reviews.removeWhere((r) => r.id == review.id);
+              });
+            }
+            _loadReviews();
+          }).catchError((e) {
+            if (mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Delete failed: $e')),
+              );
+            }
           });
         }
         if (value == 'edit') {
           _reviewController.text = review.reviewText;
+          setState(() {
+            _rating = review.rating;
+            _editingReviewId = review.id;
+            _showReviewSection = true;
+            _hasText = review.reviewText.trim().isNotEmpty;
+          });
+          _animationController.forward().then(
+            (_) => _animationController.reverse(),
+          );
         }
       },
       itemBuilder: (context) => [
@@ -1697,6 +1717,43 @@ class _ServiceDetailsScreenState extends State<ServiceDetailsScreen>
         const PopupMenuItem(value: 'delete', child: Text('Delete')),
       ],
     );
+  }
+
+  Future<void> _submitReview() async {
+    final text = _reviewController.text.trim();
+    final rating = _rating > 0 ? _rating : 5;
+    try {
+      if (_editingReviewId != null) {
+        await ReviewService.updateReview(
+          _editingReviewId!,
+          rating: rating,
+          text: text,
+        );
+      } else {
+        await ReviewService.submitReview(
+          widget.serviceId,
+          rating: rating,
+          text: text,
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Review failed: $e')),
+        );
+      }
+      return;
+    }
+    _reviewController.clear();
+    if (mounted) {
+      setState(() {
+        _hasText = false;
+        _rating = 0;
+        _editingReviewId = null;
+        _showReviewSection = false;
+      });
+    }
+    await _loadReviews();
   }
 
 
@@ -1851,32 +1908,14 @@ class _StarClipper extends CustomClipper<Rect> {
   }
 }
 
-class ReviewModel {
-  final String id;
-  final String userName;
-  final String userImageUrl;
-  final String reviewText;
-  final String date;
-  final int rating;
-
-  ReviewModel({
-    required this.id,
-    required this.userName,
-    required this.userImageUrl,
-    required this.reviewText,
-    required this.date,
-    required this.rating,
+Widget _buildRatingBars(List<int> starCounts) {
+  final total = starCounts.length >= 6
+      ? starCounts.fold<int>(0, (sum, c) => sum + c)
+      : 0;
+  final fractions = List<double>.generate(5, (index) {
+    final count = starCounts.length >= 6 ? starCounts[5 - index] : 0;
+    return total == 0 ? 0 : count / total;
   });
-}
-
-Widget _buildRatingBars() {
-  final List<double> ratings = [
-    0.9, // 5 stars
-    0.6, // 4 stars
-    0.2, // 3 stars
-    0.1, // 2 stars
-    0.05, // 1 star
-  ];
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -1906,7 +1945,7 @@ Widget _buildRatingBars() {
                   ),
                   FractionallySizedBox(
                     alignment: Alignment.centerLeft,
-                    widthFactor: ratings[index],
+                    widthFactor: fractions[index],
                     child: Container(
                       height: 8,
                       decoration: BoxDecoration(
