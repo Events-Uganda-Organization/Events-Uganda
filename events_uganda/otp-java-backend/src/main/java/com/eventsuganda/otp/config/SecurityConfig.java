@@ -33,6 +33,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/referral/**").authenticated()
                 .requestMatchers("/api/notifications/**").authenticated()
                 .requestMatchers("/api/notification-settings/**").authenticated()
+                .requestMatchers("/api/reviews/**").authenticated()
                 .requestMatchers("/api/users/me").authenticated()
                 .anyRequest().permitAll()
             )
