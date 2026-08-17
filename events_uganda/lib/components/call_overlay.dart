@@ -192,8 +192,8 @@ class _Card extends StatelessWidget {
                 backgroundColor: const Color(0xFF25D366),
               ),
               onPressed: () {
-                service.acceptCall();
                 _openCallScreen(context);
+                service.acceptCall();
               },
             ),
           ],
