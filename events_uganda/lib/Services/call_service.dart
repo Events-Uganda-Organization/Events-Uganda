@@ -24,6 +24,15 @@ class CallService {
 
   static const List<Map<String, dynamic>> _iceServers = [
     {'urls': ['stun:stun.l.google.com:19302']},
+    {
+      'urls': [
+        'turn:openrelay.metered.ca:80',
+        'turn:openrelay.metered.ca:443',
+        'turn:openrelay.metered.ca:443?transport=tcp',
+      ],
+      'username': 'openrelayproject',
+      'credential': 'openrelayproject',
+    },
   ];
 
   // ─── Observable state ─────────────────────────────
@@ -65,6 +74,9 @@ class CallService {
       await remoteRenderer.initialize();
     } catch (_) {}
     CallSignalingService.instance.signals.listen(_onSignal);
+    // Proactively connect so incoming calls are received even if the
+    // user has never placed an outgoing call.
+    CallSignalingService.instance.ensureConnected();
   }
 
   bool get inCall =>
