@@ -2306,24 +2306,40 @@ class _MessageScreenState extends State<MessageScreen>
                   GestureDetector(
                     onTap: () async {
                       if (CallService.instance.inCall) return;
-                      String target = '';
-                      try {
-                        final myId = await ChatService.myUserId();
-                        final convs = await ChatService.getConversations();
-                        for (final c in convs) {
-                          if (c.id == widget.conversationId) {
-                            target = c.otherParticipantId(myId) ?? '';
-                            break;
+                      if (_isInitiatingCall) return;
+                      if (!mounted) return;
+
+                      // Use the cached peer ID from conversation settings.
+                      String target = _peerId ?? '';
+                      if (target.isEmpty) {
+                        // Fallback: try to resolve from the conversation.
+                        try {
+                          final myId = await ChatService.myUserId();
+                          if (myId.isNotEmpty) {
+                            final conv =
+                                await ChatService.getConversation(widget.conversationId ?? '');
+                            target = conv.otherParticipantId(myId) ?? '';
                           }
-                        }
-                        target = target.isEmpty ? myId : target;
-                      } catch (_) {
-                        target = ChatService.kDefaultVendorId;
+                        } catch (_) {}
                       }
+                      if (target.isEmpty) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Cannot determine who to call'),
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                        }
+                        return;
+                      }
+
+                      setState(() => _isInitiatingCall = true);
                       final ok = await CallService.instance.startCall(
                         peerId: target,
                         peerName: widget.name ?? 'Contact',
                       );
+                      if (mounted) setState(() => _isInitiatingCall = false);
                       if (ok && context.mounted) {
                         CallService.instance.openCallScreen();
                         Navigator.of(context).push(
@@ -2333,11 +2349,20 @@ class _MessageScreenState extends State<MessageScreen>
                         );
                       }
                     },
-                    child: Icon(
-                      Icons.phone_outlined,
-                      color: const Color(0xFFCD7C20),
-                      size: screenWidth * 0.08,
-                    ),
+                    child: _isInitiatingCall
+                        ? SizedBox(
+                            width: screenWidth * 0.08,
+                            height: screenWidth * 0.08,
+                            child: const CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Color(0xFFCD7C20),
+                            ),
+                          )
+                        : Icon(
+                            Icons.phone_outlined,
+                            color: const Color(0xFFCD7C20),
+                            size: screenWidth * 0.08,
+                          ),
                   ),
                   SizedBox(width: screenWidth * 0.02),
                   GestureDetector(
