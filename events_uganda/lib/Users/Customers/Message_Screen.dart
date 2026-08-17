@@ -2322,8 +2322,8 @@ class _MessageScreenState extends State<MessageScreen>
                           }
                         } catch (_) {}
                       }
+                      if (!mounted) return;
                       if (target.isEmpty) {
-                        if (!mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Cannot determine who to call'),
