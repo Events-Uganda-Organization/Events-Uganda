@@ -410,8 +410,7 @@ class CallService {
         remoteRenderer.srcObject = stream;
       }
     };
-    _pc!.onIceConnectionState = () {
-      final state = _pc?.iceConnectionState;
+    _pc!.onIceConnectionState = (state) {
       debugPrint('CallService ICE connection state: $state');
       if (state == webrtc.RTCIceConnectionState.RTCIceConnectionStateFailed ||
           state == webrtc.RTCIceConnectionState.RTCIceConnectionStateClosed ||
@@ -422,8 +421,7 @@ class CallService {
         }
       }
     };
-    _pc!.onConnectionState = () {
-      final state = _pc?.connectionState;
+    _pc!.onConnectionState = (state) {
       debugPrint('CallService peer connection state: $state');
       if (state == webrtc.RTCPeerConnectionState.RTCPeerConnectionStateFailed ||
           state == webrtc.RTCPeerConnectionState.RTCPeerConnectionStateClosed) {
