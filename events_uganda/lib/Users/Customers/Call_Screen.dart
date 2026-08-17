@@ -93,19 +93,30 @@ class _CallScreenState extends State<CallScreen> {
 
   bool get _terminal => !service.inCall;
 
+  /// During connecting/active, back minimizes the screen (call keeps running
+  /// in the overlay). For incoming/outgoing, back declines/cancels the call.
+  bool get _canPop =>
+      _terminal ||
+      service.status.value == CallStatus.connecting ||
+      service.status.value == CallStatus.active;
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: _terminal,
+      canPop: _canPop,
       onPopInvokedWithResult: (didPop, _) {
-        if (didPop) return;
+        if (didPop) {
+          // Route was popped. If call is still live, minimize to overlay.
+          if (service.inCall) {
+            service.closeCallScreen();
+          }
+          return;
+        }
         final s = service.status.value;
         if (s == CallStatus.incoming) {
           service.declineCall();
         } else if (s == CallStatus.outgoing) {
           service.cancelCall();
-        } else if (s == CallStatus.connecting || s == CallStatus.active) {
-          service.closeCallScreen();
         }
       },
       child: Scaffold(
