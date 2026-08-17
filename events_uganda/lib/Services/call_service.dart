@@ -47,6 +47,14 @@ class CallService {
   DateTime? _tickerBase;
   bool _initialized = false;
 
+  /// Buffers ICE candidates received before the peer connection or
+  /// remote description is ready. Applied once the peer connection
+  /// is fully set up.
+  final List<webrtc.RTCIceCandidate> _pendingCandidates = [];
+
+  /// Set to true when the caller taps cancel before the callId arrives.
+  bool _pendingCancel = false;
+
   String get roleName => _role?.name ?? '';
 
   /// Subscribes to incoming signals. Call once from main().
@@ -80,6 +88,7 @@ class CallService {
       return false;
     }
 
+    _pendingCancel = false;
     _role = CallRole.caller;
     this.peerId.value = peerId;
     this.peerName.value = peerName;
@@ -115,6 +124,10 @@ class CallService {
     final id = callId.value;
     if (id != null && id.isNotEmpty) {
       CallSignalingService.instance.send('cancel', {'callId': id});
+    } else {
+      // callId may not have arrived yet from call.ringing; flag it so
+      // the signal handler sends the cancel once the id is known.
+      _pendingCancel = true;
     }
     await _stopTone();
     status.value = CallStatus.cancelled;
@@ -138,6 +151,7 @@ class CallService {
       await _pc!.setRemoteDescription(
         webrtc.RTCSessionDescription(_incomingOfferSdp!, 'offer'),
       );
+      _applyPendingCandidates();
       final answer = await _pc!.createAnswer();
       await _pc!.setLocalDescription(answer);
       CallSignalingService.instance.send('accept', {
@@ -213,7 +227,18 @@ class CallService {
       case 'call.incoming':
         _onIncoming(s);
       case 'call.ringing':
-        if (s.callId != null) callId.value = s.callId;
+        if (s.callId != null) {
+          callId.value = s.callId;
+          // If the caller cancelled before the ringing signal arrived,
+          // send the cancel now.
+          if (_pendingCancel) {
+            _pendingCancel = false;
+            CallSignalingService.instance.send('cancel', {'callId': s.callId});
+            _stopTone();
+            status.value = CallStatus.cancelled;
+            _cleanup();
+          }
+        }
       case 'call.accepted':
         _onAccepted(s);
       case 'call.ice':
@@ -249,13 +274,23 @@ class CallService {
     _startTone('assets/audio/ringtone.wav');
   }
 
-  void _onAccepted(CallSignal s) {
+  Future<void> _onAccepted(CallSignal s) async {
+    if (status.value == CallStatus.ended ||
+        status.value == CallStatus.idle) {
+      return;
+    }
+
     if (_role == CallRole.caller) {
       _stopTone();
-      if (s.sdp != null && s.sdp!.isNotEmpty) {
+      if (s.sdp != null && s.sdp!.isNotEmpty && _pc != null) {
         try {
-          _pc!.setRemoteDescription(webrtc.RTCSessionDescription(s.sdp!, 'answer'));
-        } catch (_) {}
+          await _pc!.setRemoteDescription(
+            webrtc.RTCSessionDescription(s.sdp!, 'answer'),
+          );
+          _applyPendingCandidates();
+        } catch (e) {
+          debugPrint('CallService setRemoteDescription (answer) failed: $e');
+        }
       }
     } else {
       _stopTone();
@@ -269,16 +304,36 @@ class CallService {
 
   void _onIce(CallSignal s) {
     final raw = s.candidate;
-    if (raw == null || raw.isEmpty || _pc == null) return;
+    if (raw == null || raw.isEmpty) return;
+
     try {
       final map = jsonDecode(raw) as Map<String, dynamic>;
-      _pc!.addCandidate(webrtc.RTCIceCandidate(
+      final candidate = webrtc.RTCIceCandidate(
         map['candidate'] as String,
         map['sdpMid'] as String?,
         (map['sdpMLineIndex'] as num?)?.toInt(),
-      ));
+      );
+
+      if (_pc == null) {
+        // Peer connection not created yet — buffer for later.
+        _pendingCandidates.add(candidate);
+        return;
+      }
+
+      // If the remote description hasn't been set yet, buffer the candidate.
+      // addCandidate() will fail withSTATE_EXCHANGE if called too early.
+      if (candidate.sdpMid == null) {
+        _pendingCandidates.add(candidate);
+        return;
+      }
+
+      _pc!.addCandidate(candidate).catchError((e) {
+        debugPrint('CallService addIceCandidate failed: $e');
+        // Buffer so we can retry after remote description is set.
+        _pendingCandidates.add(candidate);
+      });
     } catch (e) {
-      debugPrint('CallService addIceCandidate failed: $e');
+      debugPrint('CallService parse ICE candidate failed: $e');
     }
   }
 
@@ -305,6 +360,23 @@ class CallService {
     }
     status.value = terminal;
     _cleanup();
+  }
+
+  // ─── ICE candidate buffering ──────────────────────
+
+  /// Applies all pending ICE candidates to the peer connection.
+  /// Called after the remote description has been set.
+  void _applyPendingCandidates() {
+    if (_pc == null || _pendingCandidates.isEmpty) return;
+    final candidates = List<webrtc.RTCIceCandidate>.from(_pendingCandidates);
+    _pendingCandidates.clear();
+    for (final c in candidates) {
+      try {
+        _pc!.addCandidate(c).catchError((e) {
+          debugPrint('CallService deferred addCandidate failed: $e');
+        });
+      } catch (_) {}
+    }
   }
 
   // ─── WebRTC media ─────────────────────────────────
@@ -338,12 +410,45 @@ class CallService {
         remoteRenderer.srcObject = stream;
       }
     };
+    _pc!.onIceConnectionState = () {
+      final state = _pc?.iceConnectionState;
+      debugPrint('CallService ICE connection state: $state');
+      if (state == webrtc.RTCIceConnectionState.RTCIceConnectionStateFailed ||
+          state == webrtc.RTCIceConnectionState.RTCIceConnectionStateClosed ||
+          state == webrtc.RTCIceConnectionState.RTCIceConnectionStateDisconnected) {
+        if (inCall) {
+          debugPrint('CallService ICE connection lost, ending call');
+          endCall();
+        }
+      }
+    };
+    _pc!.onConnectionState = () {
+      final state = _pc?.connectionState;
+      debugPrint('CallService peer connection state: $state');
+      if (state == webrtc.RTCPeerConnectionState.RTCPeerConnectionStateFailed ||
+          state == webrtc.RTCPeerConnectionState.RTCPeerConnectionStateClosed) {
+        if (inCall) {
+          debugPrint('CallService peer connection lost, ending call');
+          endCall();
+        }
+      }
+    };
+
+    // Apply any candidates that arrived before the PC was created.
+    if (_pendingCandidates.isNotEmpty) {
+      // Wait briefly for the remote description to be set by the caller
+      // (acceptCall sets it), then apply. If we're the caller, the
+      // remote description will be set in _onAccepted.
+      Future.delayed(const Duration(milliseconds: 500), _applyPendingCandidates);
+    }
   }
 
   Future<void> _cleanup() async {
     _ticker?.cancel();
     _ticker = null;
     _tickerBase = null;
+    _pendingCandidates.clear();
+    _pendingCancel = false;
     try {
       _localStream?.getTracks().forEach((t) => t.stop());
       _localStream?.dispose();
