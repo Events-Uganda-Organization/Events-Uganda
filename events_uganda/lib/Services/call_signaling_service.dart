@@ -25,6 +25,8 @@ class CallSignalingService {
       StreamController<CallSignal>.broadcast();
 
   StompClient? _client;
+  Timer? _reconnectTimer;
+  bool _disposed = false;
 
   Stream<CallSignal> get signals => _signals.stream;
 
@@ -33,29 +35,56 @@ class CallSignalingService {
   /// Ensures the socket is connected, (re)connecting if needed.
   Future<void> ensureConnected() async {
     if (isActive) return;
+    if (_disposed) return;
+    await _connect();
+  }
+
+  /// Creates a fresh STOMP client with a current token and connects.
+  Future<void> _connect() async {
     final token = await AuthService.getToken();
     if (token == null || token.isEmpty) return;
+    if (_disposed) return;
 
-    if (_client != null) {
-      _client!.activate();
-      return;
-    }
+    // Tear down any stale client.
+    try {
+      _client?.deactivate();
+    } catch (_) {}
+    _client = null;
 
     _client = StompClient(
       config: StompConfig(
         url: _wsUrl,
-        reconnectDelay: const Duration(seconds: 5),
-        heartbeatIncoming: const Duration(seconds: 0),
-        heartbeatOutgoing: const Duration(seconds: 0),
+        // We handle reconnection manually so we can refresh the JWT.
+        reconnectDelay: Duration.zero,
+        heartbeatIncoming: const Duration(seconds: 30),
+        heartbeatOutgoing: const Duration(seconds: 30),
         stompConnectHeaders: {'Authorization': 'Bearer $token'},
         onConnect: (_) {
           _subscribeUserQueue();
         },
-        onStompError: (_) {},
-        onWebSocketError: (_) {},
+        onDisconnect: (_) {
+          _scheduleReconnect();
+        },
+        onStompError: (_) {
+          _scheduleReconnect();
+        },
+        onWebSocketError: (_) {
+          _scheduleReconnect();
+        },
       ),
     );
     _client!.activate();
+  }
+
+  void _scheduleReconnect() {
+    if (_disposed) return;
+    _reconnectTimer?.cancel();
+    _reconnectTimer = Timer(const Duration(seconds: 5), () {
+      if (_disposed) return;
+      if (!isActive) {
+        _connect();
+      }
+    });
   }
 
   void _subscribeUserQueue() {
@@ -86,11 +115,16 @@ class CallSignalingService {
   }
 
   void disconnect() {
-    _client?.deactivate();
+    _reconnectTimer?.cancel();
+    _reconnectTimer = null;
+    try {
+      _client?.deactivate();
+    } catch (_) {}
     _client = null;
   }
 
   void dispose() {
+    _disposed = true;
     disconnect();
     _signals.close();
   }
