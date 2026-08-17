@@ -75,6 +75,8 @@ class _MessageScreenState extends State<MessageScreen>
   String _disappearingMode = 'OFF';
   bool _blocked = false;
   bool _amBlocked = false;
+  String? _peerId;
+  bool _isInitiatingCall = false;
   final Map<String, GlobalKey> _messageKeys = {};
   String? _highlightedMessageId;
   Timer? _highlightTimer;
@@ -149,10 +151,13 @@ class _MessageScreenState extends State<MessageScreen>
     try {
       final conv = await ChatService.getConversation(conversationId);
       if (!mounted) return;
+      final myId = await ChatService.myUserId();
+      if (!mounted) return;
       setState(() {
         _disappearingMode = conv.disappearingMode;
         _blocked = conv.blocked;
         _amBlocked = conv.amBlocked;
+        _peerId = conv.otherParticipantId(myId);
       });
     } catch (_) {}
   }
