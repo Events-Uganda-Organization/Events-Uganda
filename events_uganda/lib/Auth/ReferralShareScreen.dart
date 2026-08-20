@@ -46,16 +46,22 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                         color: Colors.black,
                       ),
                     ),
-                    SizedBox(height: screenHeight * 0.009),
-                    Text(
-                      'Invite friends & earn rewards',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: screenWidth * 0.035,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+                     SizedBox(height: screenHeight * 0.009),
+                     Text(
+                       'Invite friends & earn rewards',
+                       style: TextStyle(
+                         fontWeight: FontWeight.w500,
+                         fontSize: screenWidth * 0.035,
+                         color: Colors.black,
+                       ),
+                     ),
+                     SizedBox(height: screenHeight * 0.03),
+                     Image.asset(
+                       'assets/images/referralcode.png',
+                       width: screenWidth * 0.75,
+                       fit: BoxFit.contain,
+                     ),
+                   ],
                 ),
               ),
             ),
