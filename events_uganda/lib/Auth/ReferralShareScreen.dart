@@ -56,12 +56,25 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                        ),
                      ),
                      SizedBox(height: screenHeight * 0.03),
-                     Image.asset(
-                       'assets/images/referralcode.png',
-                       width: screenWidth * 0.75,
-                       fit: BoxFit.contain,
-                     ),
-                   ],
+                    Image.asset(
+                      'assets/images/referralcode.png',
+                      width: screenWidth * 0.75,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(height: screenHeight * 0.02),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
+                      child: Text(
+                        'Here is your referral code that you can share with friends and family who have not yet joined the app to win gifts.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: screenWidth * 0.032,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
