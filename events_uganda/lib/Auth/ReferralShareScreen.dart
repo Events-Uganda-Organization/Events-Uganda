@@ -11,6 +11,11 @@ class ReferralShareScreen extends StatefulWidget {
 }
 
 class _ReferralShareScreenState extends State<ReferralShareScreen> {
+  Future<String> _getReferralCode() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userReferralCode') ?? 'No referral code yet';
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -37,46 +42,93 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
               left: 0,
               right: 0,
               child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Share Your Code',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: screenWidth * 0.048,
-                        color: Colors.black,
-                      ),
-                    ),
-                     SizedBox(height: screenHeight * 0.009),
-                     Text(
-                       'Invite friends & earn rewards',
-                       style: TextStyle(
-                         fontWeight: FontWeight.w500,
-                         fontSize: screenWidth * 0.035,
-                         color: Colors.black,
-                       ),
-                     ),
-                     SizedBox(height: screenHeight * 0.03),
-                    Image.asset(
-                      'assets/images/referralcode.png',
-                      width: screenWidth * 0.75,
-                      fit: BoxFit.contain,
-                    ),
-                    SizedBox(height: screenHeight * 0.02),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
-                      child: Text(
-                        'Here is your referral code that you can share with friends and family who have not yet joined the app to win gifts.',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: screenWidth * 0.032,
-                          color: Colors.black87,
+                child: FutureBuilder<String>(
+                  future: _getReferralCode(),
+                  builder: (context, snapshot) {
+                    final referralCode = snapshot.data ?? 'Loading...';
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Share Your Code',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: screenWidth * 0.048,
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
+                         SizedBox(height: screenHeight * 0.009),
+                         Text(
+                           'Invite friends & earn rewards',
+                           style: TextStyle(
+                             fontWeight: FontWeight.w500,
+                             fontSize: screenWidth * 0.035,
+                             color: Colors.black,
+                           ),
+                         ),
+                         SizedBox(height: screenHeight * 0.03),
+                        Image.asset(
+                          'assets/images/referralcode.png',
+                          width: screenWidth * 0.75,
+                          fit: BoxFit.contain,
+                        ),
+                        SizedBox(height: screenHeight * 0.02),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08),
+                          child: Text(
+                            'Here is your referral code that you can share with friends and family who have not yet joined the app to win gifts.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: screenWidth * 0.032,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.03),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
+                          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenHeight * 0.015),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFCD7C20),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  referralCode,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: screenWidth * 0.04,
+                                    color: Colors.white,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Clipboard.setData(ClipboardData(text: referralCode));
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Referral code copied!'),
+                                      backgroundColor: const Color(0xFFCD7C20),
+                                    ),
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.copy,
+                                  color: Colors.white,
+                                  size: screenWidth * 0.05,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
