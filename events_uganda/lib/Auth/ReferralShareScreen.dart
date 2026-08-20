@@ -31,7 +31,7 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
               ),
             ),
             Positioned(
-              top: screenHeight * 0.16,
+              top: screenHeight * 0.13,
               left: 0,
               right: 0,
               child: Center(
