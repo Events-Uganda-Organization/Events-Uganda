@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:events_uganda/components/snackbar_helper.dart';
 import 'package:events_uganda/Users/NotificationScreen.dart';
 
 class ReferralShareScreen extends StatefulWidget {
@@ -146,15 +147,15 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () {
-                                    Clipboard.setData(ClipboardData(text: referralCode));
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('Referral code copied!'),
-                                        backgroundColor: const Color(0xFFCD7C20),
-                                      ),
-                                    );
-                                  },
+                                onTap: () {
+                                  Clipboard.setData(ClipboardData(text: referralCode));
+                                  SnackbarHelper.show(
+                                    context,
+                                    'Referral code copied!',
+                                    icon: Icons.check_circle_rounded,
+                                    backgroundColor: const Color(0xFFCD7C20),
+                                  );
+                                },
                                   child: Icon(
                                     Icons.copy,
                                     color: Colors.white,
