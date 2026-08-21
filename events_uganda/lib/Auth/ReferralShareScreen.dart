@@ -13,75 +13,52 @@ class ReferralShareScreen extends StatefulWidget {
 
 class _NotchedButtonClipper extends CustomClipper<Path> {
   final double radius;
-  final double notchRadius;
+  final double notchDepth;
+  final double notchWidth;
 
   _NotchedButtonClipper({
-    this.radius = 15,
-    this.notchRadius = 6,
+    this.radius = 20,
+    this.notchDepth = 12,
+    this.notchWidth = 16,
   });
 
   @override
   Path getClip(Size size) {
     final path = Path();
     final r = radius;
-    final nr = notchRadius;
-    final notchWidth = size.width * 0.08;
-    final notchHeight = (size.height / 2 - r - nr - 4).clamp(4.0, size.height * 0.12);
-    final centerY = size.height / 2;
+    final nd = notchDepth;
+    final nw = notchWidth;
+    final w = size.width;
+    final h = size.height;
+    final cy = h / 2;
 
-    // Top edge & Top-Right outer corner
     path.moveTo(r, 0);
-    path.lineTo(size.width - r, 0);
-    path.quadraticBezierTo(size.width, 0, size.width, r);
+    path.lineTo(w - r, 0);
+    path.arcToPoint(Offset(w, r), radius: Radius.circular(r));
 
-    // Right Notch (Rounded upper tip, inner apex, and lower tip)
-    path.lineTo(size.width, centerY - notchHeight - nr);
-    path.quadraticBezierTo(
-      size.width, centerY - notchHeight, 
-      size.width - (notchWidth * 0.5), centerY - (notchHeight * 0.5)
-    );
-    path.quadraticBezierTo(
-      size.width - notchWidth, centerY, 
-      size.width - (notchWidth * 0.5), centerY + (notchHeight * 0.5)
-    );
-    path.quadraticBezierTo(
-      size.width, centerY + notchHeight, 
-      size.width, centerY + notchHeight + nr
-    );
+    path.lineTo(w, cy - nd);
+    path.lineTo(w - nw, cy);
+    path.lineTo(w, cy + nd);
 
-    // Right edge & Bottom-Right outer corner
-    path.lineTo(size.width, size.height - r);
-    path.quadraticBezierTo(size.width, size.height, size.width - r, size.height);
+    path.lineTo(w, h - r);
+    path.arcToPoint(Offset(w - r, h), radius: Radius.circular(r));
 
-    // Bottom edge & Bottom-Left outer corner
-    path.lineTo(r, size.height);
-    path.quadraticBezierTo(0, size.height, 0, size.height - r);
+    path.lineTo(r, h);
+    path.arcToPoint(Offset(0, h - r), radius: Radius.circular(r));
 
-    // Left Notch (Rounded lower tip, inner apex, and upper tip)
-    path.lineTo(0, centerY + notchHeight + nr);
-    path.quadraticBezierTo(
-      0, centerY + notchHeight, 
-      notchWidth * 0.5, centerY + (notchHeight * 0.5)
-    );
-    path.quadraticBezierTo(
-      notchWidth, centerY, 
-      notchWidth * 0.5, centerY - (notchHeight * 0.5)
-    );
-    path.quadraticBezierTo(
-      0, centerY - notchHeight, 
-      0, centerY - notchHeight - nr
-    );
+    path.lineTo(0, cy + nd);
+    path.lineTo(nw, cy);
+    path.lineTo(0, cy - nd);
 
-    // Left edge & Top-Left outer corner
     path.lineTo(0, r);
-    path.quadraticBezierTo(0, 0, r, 0);
-    path.close();
+    path.arcToPoint(Offset(r, 0), radius: Radius.circular(r));
 
+    path.close();
     return path;
   }
 
   @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
 
 class _ReferralShareScreenState extends State<ReferralShareScreen> {
