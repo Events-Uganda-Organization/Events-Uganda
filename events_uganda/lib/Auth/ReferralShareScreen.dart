@@ -18,42 +18,42 @@ class _NotchedButtonClipper extends CustomClipper<Path> {
 
   _NotchedButtonClipper({
     this.radius = 20,
-    this.notchDepth = 12,
-    this.notchWidth = 16,
+    this.notchDepth = 10,
+    this.notchWidth = 14,
   });
 
   @override
   Path getClip(Size size) {
     final path = Path();
     final r = radius;
-    final nd = notchDepth;
-    final nw = notchWidth;
     final w = size.width;
     final h = size.height;
     final cy = h / 2;
+    final nd = (cy - r - 2).clamp(6.0, cy - 2);
+    final nw = notchWidth;
 
     path.moveTo(r, 0);
     path.lineTo(w - r, 0);
-    path.arcToPoint(Offset(w, r), radius: Radius.circular(r));
+    path.quadraticBezierTo(w, 0, w, r);
 
     path.lineTo(w, cy - nd);
     path.lineTo(w - nw, cy);
     path.lineTo(w, cy + nd);
 
     path.lineTo(w, h - r);
-    path.arcToPoint(Offset(w - r, h), radius: Radius.circular(r));
+    path.quadraticBezierTo(w, h, w - r, h);
 
     path.lineTo(r, h);
-    path.arcToPoint(Offset(0, h - r), radius: Radius.circular(r));
+    path.quadraticBezierTo(0, h, 0, h - r);
 
     path.lineTo(0, cy + nd);
     path.lineTo(nw, cy);
     path.lineTo(0, cy - nd);
 
     path.lineTo(0, r);
-    path.arcToPoint(Offset(r, 0), radius: Radius.circular(r));
-
+    path.quadraticBezierTo(0, 0, r, 0);
     path.close();
+
     return path;
   }
 
