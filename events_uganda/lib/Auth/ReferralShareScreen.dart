@@ -123,7 +123,7 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                         ),
                         SizedBox(height: screenHeight * 0.03),
                         ClipPath(
-                          clipper: _NotchedButtonClipper(radius: screenWidth * 0.02),
+                          clipper: _NotchedButtonClipper(radius: screenWidth * 0.05),
                           child: Container(
                             margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
                             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenHeight * 0.015),
