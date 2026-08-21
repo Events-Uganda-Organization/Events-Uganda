@@ -153,8 +153,10 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      Clipboard.setData(ClipboardData(text: referralCode));
+                    onTap: () async {
+                      final prefs = await SharedPreferences.getInstance();
+                      final code = prefs.getString('userReferralCode') ?? 'No referral code yet';
+                      Clipboard.setData(ClipboardData(text: code));
                       SnackbarHelper.show(
                         context,
                         'Referral code copied!',
