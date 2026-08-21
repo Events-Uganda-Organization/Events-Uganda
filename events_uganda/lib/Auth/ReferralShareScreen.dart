@@ -20,7 +20,7 @@ class _NotchedButtonClipper extends CustomClipper<Path> {
     final path = Path();
     final r = radius;
     final notchWidth = size.width * 0.1;
-    final notchHeight = size.height * 0.2;
+    final notchHeight = (size.height / 2 - r - 2).clamp(4.0, size.height * 0.12);
 
     path.moveTo(r, 0);
     path.lineTo(size.width - r, 0);
