@@ -163,7 +163,6 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                             ],
                           ),
                         ),
-                        ),
                       ],
                     );
                   },
