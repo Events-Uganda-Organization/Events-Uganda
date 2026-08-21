@@ -123,15 +123,14 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                           ),
                         ),
                         SizedBox(height: screenHeight * 0.03),
-                        ClipPath(
-                          clipper: _NotchedButtonClipper(radius: 20),
-                          child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
-                            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenHeight * 0.015),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFCD7C20),
-                            ),
-                            child: Row(
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
+                          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenHeight * 0.015),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFCD7C20),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Expanded(
