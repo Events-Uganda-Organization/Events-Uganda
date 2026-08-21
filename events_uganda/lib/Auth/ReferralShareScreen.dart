@@ -11,42 +11,6 @@ class ReferralShareScreen extends StatefulWidget {
   State<ReferralShareScreen> createState() => _ReferralShareScreenState();
 }
 
-class _NotchedButtonClipper extends CustomClipper<Path> {
-  final double radius;
-  final double notchDepth;
-  final double notchWidth;
-
-  _NotchedButtonClipper({
-    this.radius = 20,
-    this.notchDepth = 12,
-    this.notchWidth = 16,
-  });
-
-  @override
-  Path getClip(Size size) {
-    final rect = Rect.fromLTWH(0, 0, size.width, size.height);
-    final roundedRect = Path()..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(radius)));
-
-    final rightNotch = Path()
-      ..moveTo(size.width, size.height / 2 - notchDepth)
-      ..lineTo(size.width - notchWidth, size.height / 2)
-      ..lineTo(size.width, size.height / 2 + notchDepth)
-      ..close();
-
-    final leftNotch = Path()
-      ..moveTo(0, size.height / 2 - notchDepth)
-      ..lineTo(notchWidth, size.height / 2)
-      ..lineTo(0, size.height / 2 + notchDepth)
-      ..close();
-
-    final notches = Path.combine(PathOperation.union, rightNotch, leftNotch);
-    return Path.combine(PathOperation.difference, roundedRect, notches);
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
 class _ReferralShareScreenState extends State<ReferralShareScreen> {
   Future<String> _getReferralCode() async {
     final prefs = await SharedPreferences.getInstance();
