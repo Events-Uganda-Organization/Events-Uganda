@@ -26,7 +26,7 @@ class _NotchedButtonClipper extends CustomClipper<Path> {
     final r = radius;
     final nr = notchRadius;
     final notchWidth = size.width * 0.08;
-    final notchHeight = (size.height / 2 - r - 2).clamp(4.0, size.height * 0.12);
+    final notchHeight = (size.height / 2 - r - nr - 4).clamp(4.0, size.height * 0.12);
     final centerY = size.height / 2;
 
     // Top edge & Top-Right outer corner
