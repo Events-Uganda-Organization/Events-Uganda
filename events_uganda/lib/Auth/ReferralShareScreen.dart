@@ -122,8 +122,8 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                               color: const Color(0xFFCD7C20),
                             ),
                             child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
                               Expanded(
                                 child: Text(
                                   referralCode,
