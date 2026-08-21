@@ -157,13 +157,7 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                     onTap: () async {
                       final prefs = await SharedPreferences.getInstance();
                       final code = prefs.getString('userReferralCode') ?? 'No referral code yet';
-                      Clipboard.setData(ClipboardData(text: code));
-                      SnackbarHelper.show(
-                        context,
-                        'Referral code copied!',
-                        icon: Icons.check_circle_rounded,
-                        backgroundColor: const Color(0xFFCD7C20),
-                      );
+                      Share.share(code);
                     },
                     child: Container(
                       width: screenWidth * 0.128,
