@@ -136,6 +136,7 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                               Expanded(
                                 child: Text(
                                   referralCode,
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: screenWidth * 0.04,
