@@ -10,6 +10,31 @@ class ReferralShareScreen extends StatefulWidget {
   State<ReferralShareScreen> createState() => _ReferralShareScreenState();
 }
 
+class _NotchedButtonClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    final notchWidth = size.width * 0.1;
+    final notchHeight = size.height * 0.2;
+
+    path.moveTo(0, 0);
+    path.lineTo(size.width - notchWidth, 0);
+    path.lineTo(size.width - notchWidth / 2, notchHeight);
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(notchWidth, size.height);
+    path.lineTo(notchWidth / 2, size.height - notchHeight);
+    path.lineTo(0, size.height);
+    path.lineTo(0, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 class _ReferralShareScreenState extends State<ReferralShareScreen> {
   Future<String> _getReferralCode() async {
     final prefs = await SharedPreferences.getInstance();
@@ -86,14 +111,15 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                           ),
                         ),
                         SizedBox(height: screenHeight * 0.03),
-                        Container(
-                          margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
-                          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenHeight * 0.015),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFCD7C20),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Row(
+                        ClipPath(
+                          clipper: _NotchedButtonClipper(),
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
+                            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenHeight * 0.015),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFCD7C20),
+                            ),
+                            child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
