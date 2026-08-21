@@ -133,39 +133,38 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                              Expanded(
-                                child: Text(
-                                  referralCode,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: screenWidth * 0.04,
-                                    color: Colors.white,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Clipboard.setData(ClipboardData(text: referralCode));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('Referral code copied!'),
-                                      backgroundColor: const Color(0xFFCD7C20),
+                                Expanded(
+                                  child: Text(
+                                    referralCode,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: screenWidth * 0.04,
+                                      color: Colors.white,
                                     ),
-                                  );
-                                },
-                                child: Icon(
-                                  Icons.copy,
-                                  color: Colors.white,
-                                  size: screenWidth * 0.05,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                              ),
-                            ],
+                                GestureDetector(
+                                  onTap: () {
+                                    Clipboard.setData(ClipboardData(text: referralCode));
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Referral code copied!'),
+                                        backgroundColor: const Color(0xFFCD7C20),
+                                      ),
+                                    );
+                                  },
+                                  child: Icon(
+                                    Icons.copy,
+                                    color: Colors.white,
+                                    size: screenWidth * 0.05,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
                       ],
                     );
                   },
