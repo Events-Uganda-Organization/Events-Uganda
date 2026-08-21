@@ -18,43 +18,29 @@ class _NotchedButtonClipper extends CustomClipper<Path> {
 
   _NotchedButtonClipper({
     this.radius = 20,
-    this.notchDepth = 10,
-    this.notchWidth = 14,
+    this.notchDepth = 12,
+    this.notchWidth = 16,
   });
 
   @override
   Path getClip(Size size) {
-    final path = Path();
-    final r = radius;
-    final w = size.width;
-    final h = size.height;
-    final cy = h / 2;
-    final nd = (cy - r - 2).clamp(6.0, cy - 2);
-    final nw = notchWidth;
+    final rect = Rect.fromLTWH(0, 0, size.width, size.height);
+    final roundedRect = Path()..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(radius)));
 
-    path.moveTo(r, 0);
-    path.lineTo(w - r, 0);
-    path.quadraticBezierTo(w, 0, w, r);
+    final rightNotch = Path()
+      ..moveTo(size.width, size.height / 2 - notchDepth)
+      ..lineTo(size.width - notchWidth, size.height / 2)
+      ..lineTo(size.width, size.height / 2 + notchDepth)
+      ..close();
 
-    path.lineTo(w, cy - nd);
-    path.lineTo(w - nw, cy);
-    path.lineTo(w, cy + nd);
+    final leftNotch = Path()
+      ..moveTo(0, size.height / 2 - notchDepth)
+      ..lineTo(notchWidth, size.height / 2)
+      ..lineTo(0, size.height / 2 + notchDepth)
+      ..close();
 
-    path.lineTo(w, h - r);
-    path.quadraticBezierTo(w, h, w - r, h);
-
-    path.lineTo(r, h);
-    path.quadraticBezierTo(0, h, 0, h - r);
-
-    path.lineTo(0, cy + nd);
-    path.lineTo(nw, cy);
-    path.lineTo(0, cy - nd);
-
-    path.lineTo(0, r);
-    path.quadraticBezierTo(0, 0, r, 0);
-    path.close();
-
-    return path;
+    final notches = Path.combine(PathOperation.union, rightNotch, leftNotch);
+    return Path.combine(PathOperation.difference, roundedRect, notches);
   }
 
   @override
