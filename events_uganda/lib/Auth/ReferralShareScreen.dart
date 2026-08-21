@@ -11,23 +11,32 @@ class ReferralShareScreen extends StatefulWidget {
 }
 
 class _NotchedButtonClipper extends CustomClipper<Path> {
+  final double radius;
+
+  _NotchedButtonClipper({this.radius = 15});
+
   @override
   Path getClip(Size size) {
     final path = Path();
+    final r = radius;
     final notchWidth = size.width * 0.1;
     final notchHeight = size.height * 0.2;
 
-    path.moveTo(0, 0);
-    path.lineTo(size.width, 0);
+    path.moveTo(r, 0);
+    path.lineTo(size.width - r, 0);
+    path.quadraticBezierTo(size.width, 0, size.width, r);
     path.lineTo(size.width, size.height / 2 - notchHeight);
     path.lineTo(size.width - notchWidth, size.height / 2);
     path.lineTo(size.width, size.height / 2 + notchHeight);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, size.height);
+    path.lineTo(size.width, size.height - r);
+    path.quadraticBezierTo(size.width, size.height, size.width - r, size.height);
+    path.lineTo(r, size.height);
+    path.quadraticBezierTo(0, size.height, 0, size.height - r);
     path.lineTo(0, size.height / 2 + notchHeight);
     path.lineTo(notchWidth, size.height / 2);
     path.lineTo(0, size.height / 2 - notchHeight);
-    path.lineTo(0, 0);
+    path.lineTo(0, r);
+    path.quadraticBezierTo(0, 0, r, 0);
     path.close();
 
     return path;
@@ -114,7 +123,7 @@ class _ReferralShareScreenState extends State<ReferralShareScreen> {
                         ),
                         SizedBox(height: screenHeight * 0.03),
                         ClipPath(
-                          clipper: _NotchedButtonClipper(),
+                          clipper: _NotchedButtonClipper(radius: screenWidth * 0.02),
                           child: Container(
                             margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
                             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05, vertical: screenHeight * 0.015),
