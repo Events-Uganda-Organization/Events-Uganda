@@ -401,6 +401,7 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                                 ],
                             ],
                         ),
+                        ),
                     ),
                 ),
             ),
