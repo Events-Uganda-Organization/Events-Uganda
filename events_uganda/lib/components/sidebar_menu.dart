@@ -192,7 +192,9 @@ class _SidebarPanelState extends State<_SidebarPanel> {
                 child: SizedBox(
                     width: panelWidth,
                     height: h - 10,
-                    child: Container(
+                    child: Material(
+                        type: MaterialType.transparency,
+                        child: Container(
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(30),
