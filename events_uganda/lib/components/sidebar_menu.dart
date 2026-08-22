@@ -117,7 +117,6 @@ class _SidebarPanelState extends State<_SidebarPanel> {
         _SidebarEntry(
             icon: Icons.card_giftcard,
             label: 'Share Referral Code',
-            iconColor: const Color(0xFFE94560),
             onTap: () {
                 Navigator.of(context).pop();
                 Navigator.push(context, MaterialPageRoute(builder: (ctx) => const ReferralShareScreen()));
