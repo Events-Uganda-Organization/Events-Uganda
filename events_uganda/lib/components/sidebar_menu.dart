@@ -515,10 +515,13 @@ class _SidebarPanelState extends State<_SidebarPanel> {
         return _NavItem(
             icon: e.icon,
             label: e.label,
-            isActive: e.isActive,
+            isActive: e.label == _activeLabel,
             w: w,
             h: h,
-            onTap: e.onTap,
+            onTap: () {
+                setState(() => _activeLabel = e.label);
+                e.onTap?.call();
+            },
             iconColor: e.iconColor,
         );
     }
