@@ -4,6 +4,7 @@ import '../Users/FAQsScreen.dart';
 import '../Users/Customers/Chat_Screen.dart';
 import '../Auth/ReferralShareScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Users/Contact_Support_Screen.dart';
 
 class SidebarMenu {
     static void show(BuildContext context) {
@@ -130,7 +131,10 @@ class _SidebarPanelState extends State<_SidebarPanel> {
     ];
 
     List<_SidebarEntry> get _supportNav => [
-        const _SidebarEntry(icon: Icons.headset_mic_rounded, label: 'Contact Support'),
+        _SidebarEntry(icon: Icons.headset_mic_rounded, label: 'Contact Support', onTap: () {
+            Navigator.of(context).pop();
+            Navigator.push(context, MaterialPageRoute(builder: (ctx) => const ContactSupportScreen()));
+        }),
         _SidebarEntry(icon: Icons.quiz_rounded, label: 'FAQs', onTap: () {
             Navigator.of(context).pop();
             Navigator.push(context, MaterialPageRoute(builder: (ctx) => const FAQsScreen()));
