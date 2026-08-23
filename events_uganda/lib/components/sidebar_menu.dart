@@ -82,14 +82,12 @@ class _SidebarEntry {
     const _SidebarEntry({
         required this.icon,
         required this.label,
-        this.isActive = false,
         this.iconColor,
         this.onTap,
     });
 
     final IconData icon;
     final String label;
-    final bool isActive;
     final Color? iconColor;
     final VoidCallback? onTap;
 }
@@ -106,9 +104,10 @@ class _SidebarPanelState extends State<_SidebarPanel> {
     final FocusNode _searchFocus = FocusNode();
     final ScrollController _scrollController = ScrollController();
     String _searchQuery = '';
+    String _activeLabel = 'Home';
 
     List<_SidebarEntry> get _mainNav => [
-        const _SidebarEntry(icon: Icons.home_rounded, label: 'Home', isActive: true),
+        const _SidebarEntry(icon: Icons.home_rounded, label: 'Home'),
         const _SidebarEntry(icon: Icons.calendar_month_rounded, label: 'My Bookings'),
         const _SidebarEntry(icon: Icons.favorite_rounded, label: 'My Favorites'),
         _SidebarEntry(icon: Icons.chat_rounded, label: 'Messages', onTap: () {
